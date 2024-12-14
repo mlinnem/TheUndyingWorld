@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_chat.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/left_sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/right_sidebar.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="conversation-sidebar">
+            <h2>Conversations</h2>
+            <button id="new-conversation-btn">New Conversation</button>
+            <div id="conversation-list"></div>
+        </div>
+        <div class="chat-column">
+            <h1>Chat</h1>
+            <div id="chat-container"></div>
+            <div class="input-container">
+                <textarea id="user-input" placeholder="Type a message..." rows="3"></textarea>
+                <button id="send-button">Send</button>
+            </div>
+            <div class="info-container">
+                <div class="token-info-wrapper">
+                    <label for="max-tokens">Max History Tokens:</label>
+                    <input type="number" id="max-tokens" placeholder="Default: 10000" value="10000">
+                </div>
+                <div id="token-info"></div>
+                <div id="cost-info"></div>
+            </div>
+        </div>
+        <div class="prompt-column">
+            <h2>System Prompt</h2>
+            <textarea id="system-prompt" rows="4" placeholder="Enter system prompt"></textarea>
+            <button id="update-system-prompt">Update System Prompt</button>
+            <div id="update-status"></div>
+            
+            <h3>Saved Prompts</h3>
+            <input type="text" id="prompt-name" placeholder="Prompt name">
+            <div class="prompt-buttons">
+                <button id="save-prompt">Save</button>
+                <button id="load-prompt">Load</button>
+                <button id="delete-prompt">Delete</button>
+            </div>
+            <select id="saved-prompts"></select>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{
+  "conversation": {
+    "messages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Test"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "\n\nSkill roll: 20. Fate roll: 98.\n\nI see your test message. I'm here and ready to help. What would you like to discuss?"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "When Prime Minister Shinzo Abe...",
+            "cache_control": {
+              "type": "ephemeral"
+            }
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "\n\nSkill roll: 69. Fate roll: 81.\n\nThis article appears to contain several inconsistencies..."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "YouTube TV is becoming more expensive..."
+          }
+        ]
+      }
+    ]
+  }
+}
