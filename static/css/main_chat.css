@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: black;
@@ -19,7 +21,7 @@ body {
     background-color: rgba(0, 0, 0, 1);
     border: 2px solid #45a845;
     border-radius: 8px;
-    color: #ffffff;
+    color: #f3f3f3;
 }
 
 #chat-container {

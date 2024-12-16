@@ -1,0 +1,26 @@
+[
+    {
+        "name": "roll_skill_and_world_reveal",
+        "description": "A function that obtains the results of a skill roll and a world reveal roll. This function should be called AFTER the difficulty target and world reveal level has been established. It should be called BEFORE the resulting scene is described. Each die can have a result of 1-100. The result will be in the form of '* Skill roll: 42. * World reveal roll: 78.' This tool should be used when the player is attempting an action that is not trivial, and the world reveal level is light or above.",
+        "input_schema": {
+            "type": "object",
+            "properties": {}
+        }
+    },
+    {
+        "name": "roll_skill_only",
+        "description": "A function that obtains the results of a skill roll. This function should be called AFTER the difficulty target and world reveal level has been established. It should be called BEFORE the resulting scene is described. The die can have a result of 1-100. The result will be in the form of '* Skill roll: 42.' This tool should be used when the player is attempting an action that is not trivial, and the world reveal level is N/A.",
+        "input_schema": {
+            "type": "object",
+            "properties": {}
+        }
+    },
+     {
+        "name": "roll_world_reveal_only",
+        "description": "A function that obtains the results of a world reveal roll. This function should be called AFTER the difficulty target and world reveal level has been established. It should be called BEFORE the resulting scene is described. The die can have a result of 1-100. The result will be in the form of '* World reveal roll: 42.' This tool should be used when the player is attempting an action that is trivial, and the world reveal level is light or above.",
+        "input_schema": {
+            "type": "object",
+            "properties": {}
+        }
+    }
+]
