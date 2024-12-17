@@ -7,18 +7,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main_chat.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/left_sidebar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/right_sidebar.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="conversation-sidebar">
-            <h2>Conversations</h2>
-            <button id="new-conversation-btn">New Conversation</button>
+            <h2>Campaigns</h2>
+            <button id="new-conversation-btn">New Campaign</button>
             <div id="conversation-list"></div>
         </div>
         <div class="chat-column">
-            <h1>Chat</h1>
+            <h1 id="chat-title">Chat</h1>
             <div id="chat-container"></div>
             <div class="input-container">
                 <textarea id="user-input" placeholder="Type a message..." rows="3"></textarea>

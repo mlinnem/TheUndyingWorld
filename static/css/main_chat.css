@@ -1,16 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap');
 
 body {
-    font-family: 'Montserrat', Arial, sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: black;
+    color: #fff7da;
 }
 
 
 .container {
     display: flex;
     height: 100vh;
+    background-color: #161d27;
 }
 
 .chat-column {
@@ -18,36 +20,38 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 1);
-    border: 2px solid #45a845;
+    background-color:#161d27;
     border-radius: 8px;
-    color: #f3f3f3;
+    color: rgba(238, 232, 207, 0.98);
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 #chat-container {
     flex-grow: 1;
     overflow-y: auto;
-    border: 1px solid #45a845;
     padding: 10px;
     margin-bottom: 20px;
-    background-color: rgba(20, 20, 20, 0.9);
     border-radius: 4px;
-    box-shadow: 0 0 10px rgba(69, 168, 69, 0.3);
 }
 
 .message {
-    margin-bottom: 10px;
-    padding: 8px 12px;
+    font-size: 18px;
+    line-height: 1.5;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     border-radius: 18px;
     max-width: 70%;
     word-wrap: break-word;
+    color:rgb(255, 247, 218)
 }
 
 
 
 .user-message {
-    background-color: #2b5329;
-    color: #ffffff;
+    background-color: rgb(51, 55, 60);
+    color: rgb(255, 247, 218);
     align-self: flex-end;
     margin-left: auto;
 }
@@ -55,17 +59,14 @@ body {
 
 
 .assistant-message {
-    background-color: black;
-    color: #ffffff;
+    color: rgba(238, 232, 207, 0.98);
     align-self: flex-start;
-    border: 1px solid #45a845;
 }
 
 input[type="text"], input[type="number"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
 }
@@ -73,10 +74,10 @@ input[type="text"], input[type="number"] {
 button {
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #45a845;
-    color: white;
-    border: 1px solid #2b5329;
+    background-color: rgb(90, 96, 104);
+    color: rgba(238, 232, 207, 0.98);
     border-radius: 4px;
+    border: 0px;
     cursor: pointer;
     transition: background-color 0.3s;
     text-transform: uppercase;
@@ -84,8 +85,11 @@ button {
     letter-spacing: 1px;
 }
 
-button:hover {
-    background-color: #2b5329;
+
+
+#send-button:hover {
+    background-color: #d8a600;
+    color: rgba(20, 20, 20, 0.98);
 }
 
 #token-info, #cost-info {
@@ -117,7 +121,6 @@ button:hover {
 
 .assistant-message pre {
     background-color: #f8f9fa;
-    border: 1px solid #e9ecef;
     border-radius: 4px;
     padding: 10px;
     overflow-x: auto;
@@ -141,6 +144,11 @@ button:hover {
     margin-bottom: 10px;
 }
 
+.input-container textarea {
+    background-color: rgb(51, 55, 60);
+    color: rgb(255, 247, 218);
+}
+
 #user-input {
     flex-grow: 1;
     min-height: 50px;
@@ -148,14 +156,15 @@ button:hover {
     resize: vertical;
     padding: 10px;
     font-size: 14px;
-    border: 1px solid #ccc;
     border-radius: 4px;
     margin-right: 10px;
+    border: 0px;
 }
 
 #send-button {
     align-self: flex-end;
-    height: 50px;
+    height: 100px;
+    width: 100px;
 }
 
 
@@ -169,14 +178,13 @@ button:hover {
 }
 
 .info-container {
-    display: flex;
+    display: none; /* kill this to turn right bar back on. Should be flex.*/
     flex-wrap: wrap;
     align-items: center;
     margin-top: 10px;
     padding: 10px;
     background-color: rgba(20, 20, 20, 0.9);
     border-radius: 4px;
-    border: 1px solid #45a845;
     color: #ffffff;
 }
 

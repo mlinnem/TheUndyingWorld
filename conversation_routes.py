@@ -9,7 +9,7 @@ def new_conversation():
     conversation_id = generate_conversation_id()
     new_conversation = {
         'id': conversation_id,
-        'name': 'New Conversation',
+        'name': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'messages': [],
         'last_updated': datetime.now().isoformat()
     }

@@ -3,8 +3,7 @@
     background-color: rgba(20, 20, 20, 0.9);
     padding: 20px;
     overflow-y: auto;
-    border-right: 1px solid #45a845;
-    color: #c8c8c8;
+    color: rgba(238, 232, 207, 0.83);
 }
 
 #conversation-list {
@@ -15,33 +14,51 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px;
     margin-bottom: 5px;
-    background-color: #2b5329;
+    background-color: rgba(22, 29, 39, 0.5);
     border-radius: 4px;
-    border: 1px solid #45a845;
-    color: #e0e0e0;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 6px;
+}
+
+
+
+.conversation-item:hover {
+    background-color: rgb(109, 0, 91);
+}
+
+.conversation-item > button:hover {
+    background-color: #ff0000;
+}
+
+.conversation-item.active {
+    background-color:  rgb(51, 55, 60);
+    color: rgba(238, 232, 207, 0.83);
 }
 
 .conversation-item button {
     padding: 2px 5px;
     margin: 0 2px;
     font-size: 0.8em;
+    border: 0px;
 }
 
 .conversation-item .delete-btn {
-    background-color: #8b0000;
+    background-color: #dc3545;
 }
 
 .conversation-item .delete-btn:hover {
-    background-color: #660000;
+    background-color: #c82333;
 }
 
 #new-conversation-btn {
     width: 100%;
     margin-bottom: 10px;
-    background-color: #45a845;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 1px;
+    color:rgba(238, 232, 207, 0.8);
+}
+
+#new-conversation-btn:hover {
+    background-color: rgb(109, 0, 91, 1);
 }

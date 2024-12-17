@@ -15,6 +15,7 @@ const savedPromptsSelect = document.getElementById('saved-prompts');
 const updateStatus = document.getElementById('update-status');
 const newConversationBtn = document.getElementById('new-conversation-btn');
 const conversationList = document.getElementById('conversation-list');
+const chatTitle = document.getElementById('chat-title');
 
 // Event Listeners
 sendButton.addEventListener('click', sendMessage);
@@ -68,13 +69,16 @@ function addMessage(sender, text) {
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message', `${sender}-message`);
     
+    // Convert array to string if necessary
+    const content = Array.isArray(text) ? text.join('\n') : text;
+    
     if (sender === 'assistant') {
-        messageDiv.innerHTML = marked.parse(text);
+        messageDiv.innerHTML = marked.parse(content);
     } else {
         // For user messages, preserve whitespace
         const preElement = document.createElement('pre');
         preElement.classList.add('user-message-content');
-        preElement.textContent = text;
+        preElement.textContent = content;
         messageDiv.appendChild(preElement);
     }
     
@@ -236,6 +240,7 @@ function updateConversationList() {
                 convDiv.classList.add('conversation-item');
                 convDiv.textContent = conv.name;
                 convDiv.onclick = () => loadConversation(conv.id);
+                convDiv.id = conv.id;
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = 'X';
                 deleteBtn.onclick = (e) => {
@@ -264,6 +269,16 @@ function loadConversation(conversationId) {
     .then(data => {
         if (data.status === 'success') {
             chatContainer.innerHTML = '';
+            //remove active class from all conversation items
+            conversationList.querySelectorAll('.conversation-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            //add active class to the selected conversation
+            const conversationElement = conversationList.querySelector(`#${CSS.escape(conversationId)}`);
+            if (conversationElement) {
+                conversationElement.classList.add('active');
+            }
+            chatTitle.textContent = data.conversation.name;
             data.conversation.messages.forEach(msg => {
                 addMessage(msg.role, msg.content);
             });

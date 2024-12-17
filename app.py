@@ -244,11 +244,13 @@ def chat():
     max_tokens = min(int(data.get('max_tokens', MAX_CONTEXT_TOKENS)), MAX_CONTEXT_TOKENS)
 
     if current_conversation_id is None:
+
+
         current_conversation_id = generate_conversation_id()
         conversation = {
-            'name': 'New Conversation',
             'messages': [],
-            'last_updated': datetime.now().isoformat()
+            'last_updated': datetime.now().isoformat(),
+            'name': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
         total_input_tokens = 0
         total_output_tokens = 0
@@ -261,9 +263,9 @@ def chat():
             # If the loaded conversation is None, create a new one
             current_conversation_id = generate_conversation_id()
             conversation = {
-                'name': 'New Conversation',
                 'messages': [],
-                'last_updated': datetime.now().isoformat()
+                'last_updated': datetime.now().isoformat(),
+                'name': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
             total_input_tokens = 0
             total_output_tokens = 0
@@ -405,19 +407,6 @@ def chat():
     conversation = handle_caching_and_summarization(conversation, response, message_index_for_message_with_cache_point)
     
     # Generate conversation name if it's a new conversation
-
-    if conversation['name'] == 'New Conversation':
-        print("generating conversation name...")
-        name_prompt = f"""Suggest a unique name for a game session for the game Undying World."""
-
-        conversation_name = anth.generate_response(
-            system="You are an expert at creating concise, relevant titles for conversations. Your task is to generate extremely short (1-5 words) but descriptive names based on the conversation content. Focus on the main topic or theme.",
-            user_message=name_prompt,
-            max_tokens=10,
-            temperature=0.5
-        ).strip()
-        print(f"conversation_name: {conversation_name}")
-        conversation['name'] = conversation_name
 
     conversation['last_updated'] = datetime.now().isoformat()
     log_conversation_messages(conversation['messages'])
