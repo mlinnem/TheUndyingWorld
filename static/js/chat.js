@@ -17,6 +17,8 @@ const newConversationBtn = document.getElementById('new-conversation-btn');
 const conversationList = document.getElementById('conversation-list');
 const chatTitle = document.getElementById('chat-title');
 
+let activeConversationId = null;
+
 // Event Listeners
 sendButton.addEventListener('click', sendMessage);
 updateSystemPromptButton.addEventListener('click', updateSystemPrompt);
@@ -53,7 +55,13 @@ function sendMessage() {
         })
         .then(response => response.json())
         .then(data => {
-            addMessage('assistant', data.response);
+            for (const item of data.response) {
+                if (item.role === 'assistant') {
+                    addMessage('assistant', item.content);
+                } else {
+                    addMessage('user', item.content);
+                }
+            }
             updateTokenInfo(data);
             updateCostInfo(data);
             updateConversationList();
@@ -70,8 +78,31 @@ function addMessage(sender, text) {
     messageDiv.classList.add('message', `${sender}-message`);
     
     // Convert array to string if necessary
-    const content = Array.isArray(text) ? text.join('\n') : text;
+    console.log("text: ", text);
+    // For now we're going to ignore tool use and tool result content
     
+    let content = ""
+
+    if (Array.isArray(text)) { 
+        for (const item of text) {
+            if (item.type === 'text') {
+                content += item.text;
+            } else if (item.type === 'tool_use') {
+                content += "" //Don't note tool use for now
+            } else if (item.type === 'tool_result') {
+                content += item.content;
+                messageDiv.classList.add('tool-result');
+            } else {
+                console.log("unknown item type: ", item);
+            }
+        }
+    } else {
+        content = text;
+    }
+    
+    console.log("sender: ", sender, "content: ", content);
+    
+    console.log("sender: ", sender, "content: ", content);
     if (sender === 'assistant') {
         messageDiv.innerHTML = marked.parse(content);
     } else {
@@ -220,7 +251,7 @@ function startNewConversation() {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                chatContainer.innerHTML = '';
+                loadConversation(data.conversation_id);
                 updateConversationList();
             }
         })
@@ -238,6 +269,9 @@ function updateConversationList() {
             data.conversations.forEach(conv => {
                 const convDiv = document.createElement('div');
                 convDiv.classList.add('conversation-item');
+                if (conv.id === activeConversationId) {
+                    convDiv.classList.add('active');
+                }
                 convDiv.textContent = conv.name;
                 convDiv.onclick = () => loadConversation(conv.id);
                 convDiv.id = conv.id;
@@ -268,6 +302,7 @@ function loadConversation(conversationId) {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
+            activeConversationId = conversationId;
             chatContainer.innerHTML = '';
             //remove active class from all conversation items
             conversationList.querySelectorAll('.conversation-item').forEach(item => {
@@ -280,6 +315,7 @@ function loadConversation(conversationId) {
             }
             chatTitle.textContent = data.conversation.name;
             data.conversation.messages.forEach(msg => {
+                console.log("msg: ", msg);
                 addMessage(msg.role, msg.content);
             });
             updateTokenInfo(data);

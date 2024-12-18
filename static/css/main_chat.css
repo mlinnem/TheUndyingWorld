@@ -56,6 +56,11 @@ body {
     margin-left: auto;
 }
 
+.tool-result {
+    background-color: rgb(0, 0, 0, 0);
+    margin-left: 0;
+}
+
 
 
 .assistant-message {

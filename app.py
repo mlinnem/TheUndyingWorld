@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session
 import anth
 import os
 from prompt_routes import prompt_routes
@@ -13,6 +13,7 @@ from random import randint
 import logging
 import http.client as http_client
 import json
+import secrets
 
 load_dotenv()
 api_key = os.getenv('ANTHROPIC_API_KEY')
@@ -32,10 +33,9 @@ client = Anthropic(
 #requests_log.propagate = True
 
 app = Flask(__name__, template_folder='templates')
+app.secret_key = secrets.token_hex(16)
 app.register_blueprint(prompt_routes)
 app.register_blueprint(conversation_routes)
-
-current_conversation_id = None
 
 manual_instructions =  ""
 with open('instructions.MD', 'r') as file:
@@ -237,16 +237,15 @@ def index():
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    global current_conversation_id, message_index_for_message_with_cache_point, zombie_system_prompt
+    global message_index_for_message_with_cache_point, zombie_system_prompt
     
     data = request.get_json()
     user_message = data['user_message']
     max_tokens = min(int(data.get('max_tokens', MAX_CONTEXT_TOKENS)), MAX_CONTEXT_TOKENS)
 
-    if current_conversation_id is None:
-
-
-        current_conversation_id = generate_conversation_id()
+    if 'current_conversation_id' not in session:
+        conversation_id = generate_conversation_id()
+        session['current_conversation_id'] = conversation_id
         conversation = {
             'messages': [],
             'last_updated': datetime.now().isoformat(),
@@ -254,14 +253,12 @@ def chat():
         }
         total_input_tokens = 0
         total_output_tokens = 0
- 
     else:
-        conversation, total_input_tokens, total_output_tokens = load_conversation(current_conversation_id)
+        conversation, total_input_tokens, total_output_tokens = load_conversation(session['current_conversation_id'])
         
-
         if conversation is None:
-            # If the loaded conversation is None, create a new one
-            current_conversation_id = generate_conversation_id()
+            conversation_id = generate_conversation_id()
+            session['current_conversation_id'] = conversation_id
             conversation = {
                 'messages': [],
                 'last_updated': datetime.now().isoformat(),
@@ -282,7 +279,7 @@ def chat():
     
     # handle sending message to GM and handling GM response
 
-    displayed_response_message = ""
+    additional_conversation_elements = []
 
     try:
         # Send user message to the GM
@@ -307,11 +304,6 @@ def chat():
             #response is a tool use request
             print("response is a tool use request")
 
-            # handle initial response
-            displayed_response_message = displayed_response_message + response.content[0].text
-            
-            print(f"displayed_response_message: {displayed_response_message}")
-
             response_json = {
                 "role": "assistant",
                 "content": [
@@ -321,6 +313,7 @@ def chat():
             }
             print(f"response_json: {response_json}")
             conversation['messages'].append(response_json)
+            additional_conversation_elements.append(response_json)
             
 
             # execute tool
@@ -356,8 +349,7 @@ def chat():
             }
             print(f"tool_result: {tool_result}")
             conversation['messages'].append(tool_result)
-
-            displayed_response_message = displayed_response_message + "\n\n" + roll_string
+            additional_conversation_elements.append(tool_result)
 
             # send tool result to GM
 
@@ -381,8 +373,7 @@ def chat():
             }
             print(f"response_json: {response_json}")
             conversation['messages'].append(response_json)
-
-            displayed_response_message = displayed_response_message + response.content[0].text
+            additional_conversation_elements.append(response_json)
 
         else:
             # response wasn't a tool use request
@@ -393,9 +384,7 @@ def chat():
             }
             print(f"response_json: {response_json}")
             conversation['messages'].append(response_json)
-
-            displayed_response_message = displayed_response_message + response.content[0].text
-            
+            additional_conversation_elements.append(response_json)
         
     
     except Exception as e:
@@ -410,12 +399,12 @@ def chat():
 
     conversation['last_updated'] = datetime.now().isoformat()
     log_conversation_messages(conversation['messages'])
-    save_conversation(current_conversation_id, conversation, total_input_tokens, total_output_tokens)
+    save_conversation(session['current_conversation_id'], conversation, total_input_tokens, total_output_tokens)
 
     return jsonify({
-        'conversation_id': current_conversation_id,
+        'conversation_id': session['current_conversation_id'],
         'conversation_name': conversation['name'],
-        'response': displayed_response_message,
+        'response': additional_conversation_elements,
         'input_tokens': 0,
         'output_tokens': 0,
         'total_cost': 0
@@ -423,13 +412,13 @@ def chat():
 
 @app.route('/set_current_conversation', methods=['POST'])
 def set_current_conversation():
-    global current_conversation_id
     data = request.get_json()
     conversation_id = data['conversation_id']
     conversation, input_tokens, output_tokens = load_conversation(conversation_id)
     if conversation:
-        current_conversation_id = conversation_id
+        session['current_conversation_id'] = conversation_id
         total_cost = calculate_cost(input_tokens, output_tokens)
+        print(f"conversation: {conversation}")
         return jsonify({
             'status': 'success', 
             'conversation': conversation, 
