@@ -35,13 +35,24 @@ userInput.addEventListener('keydown', function(e) {
 });
 
 // Functions
+function scrollChatNearBottom() {
+    chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight - 1;
+}
+
 function sendMessage() {
     const message = userInput.value.trim();
     const maxTokens = maxTokensInput.value;
     if (message) {
         addMessage('user', message);
         userInput.value = '';
-        userInput.style.height = 'auto'; // Reset height
+        userInput.style.height = 'auto';
+
+        // Add loading message
+        const loadingDiv = document.createElement('div');
+        loadingDiv.classList.add('message', 'loading-message');
+        loadingDiv.textContent = 'Thinking...';
+        chatContainer.appendChild(loadingDiv);
+        scrollChatNearBottom(); // Keep this scroll as it's after user input
 
         fetch('/chat', {
             method: 'POST',
@@ -54,6 +65,9 @@ function sendMessage() {
             }),
         })
         .then(response => {
+            // Remove loading message
+            loadingDiv.remove();
+            
             if (!response.ok) {
                 return response.json().then(errorData => {
                     throw errorData;
@@ -75,6 +89,9 @@ function sendMessage() {
             updateConversationList();
         })
         .catch(error => {
+            // Remove loading message if still present
+            loadingDiv.remove();
+            
             console.error('Error:', error);
             let errorMessage = 'An unhandled error occurred. You may have better luck if you refresh this page and try again.';
             

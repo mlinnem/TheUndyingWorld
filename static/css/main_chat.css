@@ -33,6 +33,7 @@ body {
     padding: 10px;
     margin-bottom: 20px;
     border-radius: 4px;
+    scroll-behavior: smooth;
 }
 
 .message {
@@ -225,3 +226,47 @@ button {
     color: #ffffff;
 }
 
+.loading-message {
+    background-color: #262a30;
+    background: linear-gradient(to top, #161d27 20%, transparent 100%);
+    color: rgb(255, 247, 218);
+    align-self: flex-start;
+    animation: breathe 13s ease-out infinite;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    height: 160px;
+}
+
+@keyframes breathe {
+    0% { 
+        background-color: #262a30;
+    }
+
+    10% { 
+        background-color: #262a30;
+    }
+
+    30% { 
+        background-color: #d8a600;
+    }
+
+    50% { 
+        background-color: #161d27;
+    }
+
+    55% { 
+        background-color: #161d27;
+    }
+
+    60% { 
+        background-color: #161d27;
+    }
+
+    80% { 
+        background-color: rgba(109, 0, 91, 1);
+    }
+
+    100% { 
+        background-color: #262a30;
+    }
+}
