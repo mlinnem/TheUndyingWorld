@@ -6,7 +6,6 @@
     <title>The Undying World</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main_chat.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/left_sidebar.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/right_sidebar.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
@@ -32,21 +31,6 @@
                 <div id="token-info"></div>
                 <div id="cost-info"></div>
             </div>
-        </div>
-        <div class="prompt-column">
-            <h2>System Prompt</h2>
-            <textarea id="system-prompt" rows="4" placeholder="Enter system prompt"></textarea>
-            <button id="update-system-prompt">Update System Prompt</button>
-            <div id="update-status"></div>
-            
-            <h3>Saved Prompts</h3>
-            <input type="text" id="prompt-name" placeholder="Prompt name">
-            <div class="prompt-buttons">
-                <button id="save-prompt">Save</button>
-                <button id="load-prompt">Load</button>
-                <button id="delete-prompt">Delete</button>
-            </div>
-            <select id="saved-prompts"></select>
         </div>
     </div>
 

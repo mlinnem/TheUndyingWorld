@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, jsonify, session
-import anth
 import os
-from prompt_routes import prompt_routes
 from conversation_routes import conversation_routes
 from conversation_utils import save_conversation, load_conversation, generate_conversation_id
 from config import MAX_CONTEXT_TOKENS, MAX_OUTPUT_TOKENS, CACHE_POINT_TRIGGER_TOKEN_COUNT
@@ -24,7 +22,6 @@ client = Anthropic(
 
 app = Flask(__name__, template_folder='templates')
 app.secret_key = secrets.token_hex(16)
-app.register_blueprint(prompt_routes)
 app.register_blueprint(conversation_routes)
 
 # SET UP INITIAL PROMPTS
