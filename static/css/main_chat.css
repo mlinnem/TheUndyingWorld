@@ -227,8 +227,8 @@ button {
 }
 
 .loading-message {
-    background-color: #262a30;
-    background: linear-gradient(to top, #161d27 20%, transparent 100%);
+    background-color: #212935;
+    background: linear-gradient(to top, #161d27 0%, transparent 100%);
     color: rgb(255, 247, 218);
     align-self: flex-start;
     animation: breathe 13s ease-out infinite;
@@ -239,11 +239,11 @@ button {
 
 @keyframes breathe {
     0% { 
-        background-color: #262a30;
+        background-color: #212935;
     }
 
     10% { 
-        background-color: #262a30;
+        background-color: #212935;
     }
 
     30% { 
@@ -267,6 +267,6 @@ button {
     }
 
     100% { 
-        background-color: #262a30;
+        background-color: #212935;
     }
 }
