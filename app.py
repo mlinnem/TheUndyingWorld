@@ -22,20 +22,12 @@ client = Anthropic(
     api_key=api_key
 )
 
-#Set up HTTP request logging
-#http_client.HTTPConnection.debuglevel = 1
-
-#Configure logging
-#logging.basicConfig()
-#logging.getLogger().setLevel(logging.DEBUG)
-#requests_log = logging.getLogger("requests.packages.urllib3")
-#requests_log.setLevel(logging.DEBUG)
-#requests_log.propagate = True
-
 app = Flask(__name__, template_folder='templates')
 app.secret_key = secrets.token_hex(16)
 app.register_blueprint(prompt_routes)
 app.register_blueprint(conversation_routes)
+
+# SET UP INITIAL PROMPTS
 
 manual_instructions =  ""
 with open('instructions.MD', 'r') as file:
@@ -45,13 +37,16 @@ tools = []
 with open('tools.json', 'r') as file:
     tools = json.load(file)
 
-message_index_for_message_with_cache_point = 0    
 
 zombie_system_prompt = [{
         "type": "text",
         "text": manual_instructions,
         "cache_control": {"type": "ephemeral"}
 }]
+
+
+message_index_for_message_with_cache_point = 0    
+
 
 MAX_HISTORY_TOKENS = 150000
 
@@ -210,11 +205,12 @@ def generate_summary(messages):
         summarizer_instructions = file.read()
     
     # Prepare the messages for summarization
+
     formatted_messages = "\n\n".join([
         f"{msg['role'].upper()}: {msg['content'][0]['text'] if isinstance(msg['content'], list) else msg['content']}"
         for msg in messages
     ])
-    
+
     system_prompt = [{
         "type": "text",
         "text": summarizer_instructions
@@ -226,7 +222,7 @@ def generate_summary(messages):
             tools = tools,
             messages=[{
                 "role": "user",
-                "content": [{"type": "text", "text": f"Please summarize the following conversation segment. Maintain all important details and context:\n\n{formatted_messages}"}]
+                "content": [{"type": "text", "text": f":{formatted_messages}"}]
             }],
             system=system_prompt,
             max_tokens=MAX_OUTPUT_TOKENS,
