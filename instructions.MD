@@ -309,6 +309,7 @@ Format the analysis like so:
 
 "
 ---Scene Analysis---
+
 At this distance, in these conditions, we expect the character will fail to land a headshot around 90% of the time.
 
 Difficulty target: 90
@@ -318,8 +319,10 @@ This scene doesn't entail revealing new information about the world.
 World reveal level: N/A.
 
 ---End scene analysis---
+
 "
 
+Make sure the sections breaks are on their own dedicated lines.
 
 ---
 

@@ -4,7 +4,7 @@ import os
 from prompt_routes import prompt_routes
 from conversation_routes import conversation_routes
 from conversation_utils import save_conversation, load_conversation, generate_conversation_id
-from config import MAX_CONTEXT_TOKENS, MAX_OUTPUT_TOKENS
+from config import MAX_CONTEXT_TOKENS, MAX_OUTPUT_TOKENS, CACHE_POINT_TRIGGER_TOKEN_COUNT
 from utils import calculate_cost
 from datetime import datetime
 from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
@@ -60,36 +60,41 @@ def roll_die():
 
 
 def clean_cache_point(conversation, message_index_for_message_with_cache_point):
+    for i, message in enumerate(conversation['messages']):
+        # Skip first 20 messages
+        if i < 20:
+            continue
+            
+        content_block_to_clean = message['content'][0]
+        print(f"content_block_to_clean (before): {content_block_to_clean}")
 
-    content_block_to_clean = conversation['messages'][message_index_for_message_with_cache_point]['content'][0]
-    print(f"content_block_to_clean (before): {content_block_to_clean}")
-
-    if content_block_to_clean['type'] == "text":
-        content_block_to_clean = {
-            "type": "text",
-            "text": content_block_to_clean['text'],
-            #no cache control
-                }
-    elif content_block_to_clean['type'] == "tool_use":
-        content_block_to_clean = {
-            "type": "tool_use",
-            "id": content_block_to_clean['id'],
-            "name": content_block_to_clean['name'],
-            "input": content_block_to_clean['input'],
-            #no cache control
-        }
-    elif content_block_to_clean['type'] == "tool_result":
-        content_block_to_clean = {
-            "type": "tool_result",
-            "tool_use_id": content_block_to_clean['tool_use_id'],
-            "content": content_block_to_clean['content'],
-            #no cache control
-        }
-    else:
-        raise Exception(f"Unknown message type: {content_block_to_clean['type']}")
+        if content_block_to_clean['type'] == "text":
+            content_block_to_clean = {
+                "type": "text",
+                "text": content_block_to_clean['text']
+                #no cache control
+            }
+        elif content_block_to_clean['type'] == "tool_use":
+            content_block_to_clean = {
+                "type": "tool_use",
+                "id": content_block_to_clean['id'],
+                "name": content_block_to_clean['name'],
+                "input": content_block_to_clean['input']
+                #no cache control
+            }
+        elif content_block_to_clean['type'] == "tool_result":
+            content_block_to_clean = {
+                "type": "tool_result",
+                "tool_use_id": content_block_to_clean['tool_use_id'],
+                "content": content_block_to_clean['content']
+                #no cache control
+            }
+        else:
+            raise Exception(f"Unknown message type: {content_block_to_clean['type']}")
     
-    conversation['messages'][message_index_for_message_with_cache_point]['content'][0] = content_block_to_clean
-    print(f"content_block_to_clean (after): {content_block_to_clean}")
+        conversation['messages'][i]['content'][0] = content_block_to_clean
+        print(f"content_block_to_clean (after): {content_block_to_clean}")
+
     return conversation
 
 def inject_cache_point(conversation, message_index_for_message_with_cache_point):
@@ -142,7 +147,7 @@ def handle_caching_and_summarization(conversation, response, message_index_for_m
 
         # Handle updating cache point
         
-        if (uncached_input_tokens > 5000):
+        if (uncached_input_tokens > CACHE_POINT_TRIGGER_TOKEN_COUNT):
             print("Triggered cache point adding and removing")
 
             # clean existing cache point if it exists
@@ -164,36 +169,38 @@ def handle_caching_and_summarization(conversation, response, message_index_for_m
 
             
 
-            halfway_point = len(conversation['messages']) // 2
+            quarter_point = len(conversation['messages']) // 4
             
-            # Skip first 12 messages and take the rest up to halfway point
-            messages_to_summarize = conversation['messages'][20:halfway_point]
-            second_half_of_messages = conversation['messages'][halfway_point:]
+            # Skip first 20 messages and take the rest up to halfway point
+            messages_to_summarize = conversation['messages'][20:quarter_point] # will return empty list if quarter_point is less than 20
+            last_three_quarters_of_messages = conversation['messages'][quarter_point:]
             
-            # clean existing cache point if it exists
-            conversation = clean_cache_point(conversation, message_index_for_message_with_cache_point)
-           
-           
+            if len(messages_to_summarize) > 0:
+                # clean existing cache point if it exists
+                conversation = clean_cache_point(conversation, message_index_for_message_with_cache_point)
+                message_index_for_message_with_cache_point = 0
 
-            # Generate summary of first half of messages
-            print(f"first_half_of_messages: {messages_to_summarize}")
-            summary = generate_summary(messages_to_summarize)
-            print(f"summary: {summary}")
-            
-            if summary:
-                # Replace summarized messages with the summary
-                conversation['messages'] = [{
-                    "role": "assistant",
+                # Generate summary of first half of messages
+                print(f"first_half_of_messages: {messages_to_summarize}")
+                summary = generate_summary(messages_to_summarize)
+                print(f"summary: {summary}")
+                
+                if summary:
+                    # Replace summarized messages with the summary
+                    conversation['messages'] = [{
+                        "role": "assistant",
                     "content": [{
                         "type": "text",
                         "text": f"[SUMMARY OF PREVIOUS CONVERSATION]\n\n{summary}\n\n[END SUMMARY]"
                     }]
-                }] + second_half_of_messages
+                }] + last_three_quarters_of_messages
+            else:
+                print("No messages to summarize")
             
             # Reset the cache point index since we've modified the message history
-            message_index_for_message_with_cache_point = 0
+            
 
-        return conversation
+        return conversation, message_index_for_message_with_cache_point
 
 def generate_summary(messages):
     """Generate a summary of a sequence of messages using Claude."""
@@ -267,8 +274,6 @@ def chat():
             total_input_tokens = 0
             total_output_tokens = 0
 
-    # obtain user message from conversation
-    
     # add user message to conversation
     user_message_json = {
         "role": "user",
@@ -393,7 +398,7 @@ def chat():
     
     
      
-    conversation = handle_caching_and_summarization(conversation, response, message_index_for_message_with_cache_point)
+    conversation, message_index_for_message_with_cache_point = handle_caching_and_summarization(conversation, response, message_index_for_message_with_cache_point)
     
     # Generate conversation name if it's a new conversation
 

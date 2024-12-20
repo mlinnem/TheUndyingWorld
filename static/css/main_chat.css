@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@300;400;500;600;700&display=swap');
 
 body {
     font-family: 'Roboto', Arial, sans-serif;
@@ -58,7 +58,13 @@ body {
 
 .tool-result {
     background-color: rgb(0, 0, 0, 0);
+    font-family: 'Roboto Mono', monospace;
     margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    font-size: 16px;
+    padding-bottom: 0;
 }
 
 

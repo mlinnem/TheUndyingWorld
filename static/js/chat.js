@@ -53,8 +53,16 @@ function sendMessage() {
                 max_tokens: maxTokens
             }),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errorData => {
+                    throw errorData;
+                });
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log("data: ", data);
             for (const item of data.response) {
                 if (item.role === 'assistant') {
                     addMessage('assistant', item.content);
@@ -68,7 +76,16 @@ function sendMessage() {
         })
         .catch(error => {
             console.error('Error:', error);
-            addMessage('assistant', 'An error occurred. Please try again.');
+            let errorMessage = 'An unhandled error occurred. You may have better luck if you refresh this page and try again.';
+            
+            if (error?.error) {
+                const errorString = error.error;
+                if (errorString.includes('rate_limit_error')) {
+                    errorMessage = 'Rate limit exceeded. Please wait a few minutes and try again. You can refresh this page and enter your prior message when ready.';
+                }
+            }
+            
+            addMessage('assistant', errorMessage);
         });
     }
 }
@@ -114,7 +131,6 @@ function addMessage(sender, text) {
     }
     
     chatContainer.appendChild(messageDiv);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
 function updateTokenInfo(data) {
