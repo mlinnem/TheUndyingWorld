@@ -38,7 +38,7 @@ Simple Claude Chat is a lightweight, single-user, local chat application for int
 
 1. Run the Flask application:
    ```
-   python app.py
+   python server.py
    ```
 
 2. Open your web browser and navigate to `http://localhost:5000`
