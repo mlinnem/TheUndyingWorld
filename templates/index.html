@@ -12,25 +12,18 @@
 <body>
     <div class="container">
         <div class="conversation-sidebar">
-            <h2>Campaigns</h2>
+            <h1>The Undying World</h1>
             <button id="new-conversation-btn">New Campaign</button>
             <div id="conversation-list"></div>
             <div id="update-status"></div>
         </div>
         <div class="chat-column">
-            <h1 id="chat-title">Chat</h1>
+            <h2 id="chat-title">Current Campaign</h2>
             <div id="chat-container"></div>
             <div class="input-container">
-                <textarea id="user-input" placeholder="Type a message..." rows="3"></textarea>
+                <button class="hidden" id="try-again-btn">Try Again</button>
+                <textarea id="user-input" placeholder="Type a message..."></textarea>
                 <button id="send-button">Send</button>
-            </div>
-            <div class="info-container">
-                <div class="token-info-wrapper">
-                    <label for="max-tokens">Max History Tokens:</label>
-                    <input type="number" id="max-tokens" placeholder="Default: 10000" value="10000">
-                </div>
-                <div id="token-info"></div>
-                <div id="cost-info"></div>
             </div>
         </div>
     </div>

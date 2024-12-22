@@ -23,7 +23,6 @@ body {
     background-color:#161d27;
     border-radius: 8px;
     color: rgba(238, 232, 207, 0.98);
-    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -33,6 +32,9 @@ body {
     padding: 10px;
     margin-bottom: 20px;
     border-radius: 4px;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
     scroll-behavior: smooth;
 }
 
@@ -75,6 +77,28 @@ body {
     align-self: flex-start;
 }
 
+.assistant-message.error-message {
+    background-color: rgba(105, 0, 0, 0.9);
+    color: #ffffff;
+}
+
+.hidden {
+    display: none;
+}
+
+.try-again-btn {
+    background-color: rgba(105, 0, 0, 0.9);
+    color: #ffffff;
+    border: 0px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+    
+
+
 input[type="text"], input[type="number"] {
     width: 100%;
     padding: 10px;
@@ -113,6 +137,19 @@ button {
 /* Markdown styles */
 .assistant-message p {
     margin: 0 0 10px 0;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+    margin-top: 14px;
 }
 
 .assistant-message h1, 
@@ -154,6 +191,9 @@ button {
 .input-container {
     display: flex;
     margin-bottom: 10px;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .input-container textarea {
@@ -163,14 +203,14 @@ button {
 
 #user-input {
     flex-grow: 1;
-    min-height: 50px;
-    max-height: 150px;
+    height: 60px;
     resize: vertical;
-    padding: 10px;
+    padding: 20px;
     font-size: 14px;
     border-radius: 4px;
     margin-right: 10px;
     border: 0px;
+    resize: none;
 }
 
 #send-button {

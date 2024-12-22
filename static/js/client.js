@@ -2,7 +2,6 @@
 const chatContainer = document.getElementById('chat-container');
 const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
-const maxTokensInput = document.getElementById('max-tokens');
 const tokenInfo = document.getElementById('token-info');
 const costInfo = document.getElementById('cost-info');
 const systemPromptInput = document.getElementById('system-prompt');
@@ -31,9 +30,34 @@ function scrollChatNearBottom() {
     chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight - 1;
 }
 
+function turnOnErrorState(errorMessage) {
+
+    //TODO: Work on these more.
+    // Hide the send button and user input
+    const sendButton = document.getElementById('send-button');
+    sendButton.classList.add('hidden');
+    const userInput = document.getElementById('user-input');
+    userInput.classList.add('hidden');
+    const tryAgainBtn = document.getElementById('try-again-btn');
+    tryAgainBtn.classList.remove('hidden');
+    
+    const errorDiv = document.createElement('div');
+    errorDiv.classList.add('message', `${sender}-message`);
+    chatContainer.appendChild(errorDiv);
+}
+
+function turnOffErrorState() {
+    const sendButton = document.getElementById('send-button');
+    sendButton.classList.remove('hidden');
+    const userInput = document.getElementById('user-input');
+    userInput.classList.remove('hidden');
+    const tryAgainBtn = document.getElementById('try-again-btn');
+    tryAgainBtn.classList.add('hidden');
+}
+
 function sendMessage() {
+
     const message = userInput.value.trim();
-    const maxTokens = maxTokensInput.value;
     if (message) {
         addMessage('user', message);
         userInput.value = '';
@@ -44,7 +68,7 @@ function sendMessage() {
         loadingDiv.classList.add('message', 'loading-message');
         loadingDiv.textContent = 'Thinking...';
         chatContainer.appendChild(loadingDiv);
-        scrollChatNearBottom(); // Keep this scroll as it's after user input
+        scrollChatNearBottom();
 
         fetch('/chat', {
             method: 'POST',
@@ -53,36 +77,45 @@ function sendMessage() {
             },
             body: JSON.stringify({ 
                 user_message: message,
-                max_tokens: maxTokens
             }),
         })
         .then(response => {
-            // Remove loading message
             loadingDiv.remove();
-            
-            if (!response.ok) {
-                return response.json().then(errorData => {
-                    throw errorData;
-                });
-            }
             return response.json();
         })
         .then(data => {
             addMessages(data.new_messages);
+            
             if (data.success_type === 'partial_success') {
-                if (data.error_type === 'unknown_error') {
-                    addMessage('assistant', data.error_message);
+                let errorMessage;
+                switch(data.error_type) {
+                    case 'authentication_error':
+                        errorMessage = 'Authentication error. Please check your API key and try again.';
+                        break;
+                    case 'permission_denied_error':
+                        errorMessage = 'Permission denied. Please check your API key permissions.';
+                        break;
+                    case 'rate_limit_error':
+                        errorMessage = 'Rate limit exceeded. Please wait a minute before trying again.';
+                        break;
+                    case 'internal_error':
+                        errorMessage = 'An internal error occurred. Please try again later.';
+                        break;
+                    case 'unknown_error':
+                        errorMessage = data.error_message || 'An unknown error occurred.';
+                        break;
+                    default:
+                        errorMessage = 'An unexpected error occurred. Try again later.';
+                        
                 }
-            } 
+                //turnOnErrorState(errorMessage);
+                addMessage('assistant', errorMessage);
+            }
         })
         .catch(error => {
-            // Remove loading message if still present
             loadingDiv.remove();
-            
             console.error('Error:', error);
-            let errorMessage = 'An unhandled error occurred. You may have better luck if you refresh this page and try again.';
-            
-            addMessage('assistant', errorMessage);
+            addMessage('assistant', 'An unhandled error occurred. You may have better luck if you refresh this page and try again.');
         });
     }
 }
@@ -165,15 +198,17 @@ function updateConversationList() {
         .then(response => response.json())
         .then(data => {
             conversationList.innerHTML = '';
+            console.log("data: ", data);
             data.conversations.forEach(conv => {
                 const convDiv = document.createElement('div');
                 convDiv.classList.add('conversation-item');
+                console.log("conv_id: ", conv.conversation_id, "activeConversationId: ", activeConversationId);
                 if (conv.conversation_id === activeConversationId) {
                     convDiv.classList.add('active');
                 }
                 convDiv.textContent = conv.name;
                 convDiv.onclick = () => loadConversation(conv.conversation_id);
-                convDiv.conversation_id = conv.conversation_id;
+                convDiv.id = conv.conversation_id;
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = 'X';
                 deleteBtn.onclick = (e) => {
@@ -201,6 +236,8 @@ function loadConversation(conversationId) {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
+            console.log("data on loadConversation: ", data);
+            console.log("conversationId: ", conversationId);
             activeConversationId = conversationId;
             chatContainer.innerHTML = '';
             //remove active class from all conversation items
@@ -209,6 +246,7 @@ function loadConversation(conversationId) {
             });
             //add active class to the selected conversation
             const conversationElement = conversationList.querySelector(`#${CSS.escape(conversationId)}`);
+            console.log("conversationElement: ", conversationElement);
             if (conversationElement) {
                 conversationElement.classList.add('active');
             }
@@ -250,8 +288,8 @@ document.addEventListener('DOMContentLoaded', () => {
     updateConversationList();
     
     // Add auto-resize functionality to the textarea
-    userInput.addEventListener('input', function() {
-        this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
-    });
+    //userInput.addEventListener('input', function() {
+    //    this.style.height = 'auto';
+    //    this.style.height = (this.scrollHeight) + 'px';
+    //});
 });

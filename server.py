@@ -5,6 +5,7 @@ from conversation_utils import *
 from config import *
 from utils import calculate_cost
 from datetime import datetime
+import anthropic
 from anthropic import Anthropic
 from dotenv import load_dotenv
 from random import randint
@@ -41,7 +42,6 @@ with open('instructions.MD', 'r') as file:
 tools = []
 with open('tools.json', 'r') as file:
     tools = json.load(file)
-
 
 zombie_system_prompt = [{
         "type": "text",
@@ -160,12 +160,20 @@ def index():
 def chat():
     new_messages = []
     
+    try:
     # get current conversation
-    if 'current_conversation_id' in session:
-        conversation = load_conversation(session['current_conversation_id'])
-    else:
-        conversation = create_new_conversation()
-        session['current_conversation_id'] = conversation['conversation_id']
+        if 'current_conversation_id' in session:
+            conversation = load_conversation(session['current_conversation_id'])
+        else:
+            conversation = create_new_conversation()
+            session['current_conversation_id'] = conversation['conversation_id']
+    except Exception as e:
+        logger.error(f"Error loading or creating conversation: {e}")
+        return jsonify({
+            'success_type': 'error',
+            'error_type': 'internal_error',
+            'error_message': "Internal error, please try again later.",
+        })
 
     try:
         # get and save user message
@@ -205,8 +213,50 @@ def chat():
             'new_messages': new_messages,
         })
 
+    except anthropic.AnthropicError as e:
+        response = {
+            'success_type': 'partial_success',
+            'conversation_id': session['current_conversation_id'],
+            'conversation_name': conversation['name'],
+            'new_messages': new_messages,
+        }
+        if isinstance(e, anthropic.BadRequestError):
+            logger.error(f"Bad request error: {e}")
+            response['error_type'] = 'internal_error'
+            response['error_message'] = "Internal error, please try again later."
+        elif isinstance(e, anthropic.AuthenticationError):
+            logger.error(f"Authentication error: {e}")
+            response['error_type'] = 'authentication_error'
+            response['error_message'] = "Authentication error, please check your API key and try again."
+        elif isinstance(e, anthropic.PermissionDeniedError):
+            logger.error(f"Permission denied error: {e}")
+            response['error_type'] = 'permission_denied_error'
+            response['error_message'] = "Permission denied, please check your API key and try again."
+        elif isinstance(e, anthropic.NotFoundError):
+            logger.error(f"Not found error: {e}")
+            response['error_type'] = 'internal_error'
+            response['error_message'] = "Internal error, please try again later."
+        elif isinstance(e, anthropic.UnprocessableEntityError):
+            logger.error(f"Unprocessable entity error: {e}")
+            response['error_type'] = 'internal_error'
+            response['error_message'] = "Internal error, please try again later."
+        elif isinstance(e, anthropic.RateLimitError):
+            logger.error(f"Rate limit error: {e}")
+            response['error_type'] = 'rate_limit_error'
+            response['error_message'] = "Anthropic rate limit exceeded, please try again in at least one minute."
+        elif isinstance(e, anthropic.APIConnectionError):
+            logger.error(f"API connection error: {e}")
+            response['error_type'] = 'internal_error'
+            response['error_message'] = "Internal error, please try again later."
+        else:
+            logger.error(f"Unknown error: {e}")
+            response['error_type'] = 'internal_error'
+            response['error_message'] = "Internal error, please try again later."
+
+        return jsonify(response)
+
     except Exception as e:
-        logger.error(f"Server error of some kind: {e}")
+        logger.error(f"Non-Anthropic error: {e}")
         logger.error(f"Stack at time of error: {''.join(traceback.format_tb(e.__traceback__))}")
         return jsonify({
             'success_type': 'partial_success',
