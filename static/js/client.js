@@ -59,7 +59,7 @@ function sendMessage() {
 
     const message = userInput.value.trim();
     if (message) {
-        addMessage('user', message);
+        addMessage('user', [{type: 'text', text: message}]);
         userInput.value = '';
         userInput.style.height = 'auto';
 
@@ -84,6 +84,7 @@ function sendMessage() {
             return response.json();
         })
         .then(data => {
+            console.log("data: ", data);
             addMessages(data.new_messages);
             
             if (data.success_type === 'partial_success') {
@@ -108,8 +109,10 @@ function sendMessage() {
                         errorMessage = 'An unexpected error occurred. Try again later.';
                         
                 }
-                //turnOnErrorState(errorMessage);
+
+                console.log("errorMessage: ", errorMessage);
                 addMessage('assistant', errorMessage);
+            
             }
         })
         .catch(error => {
@@ -126,44 +129,54 @@ function addMessages(messages) {
     }
 }
 
-function addMessage(sender, text) {
+function addMessage(sender, content) {
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message', `${sender}-message`);
     
     // Convert array to string if necessary
-    console.log("text: ", text);
+    console.log("content: ", content);
     // For now we're going to ignore tool use and tool result content
     
-    let content = ""
+    let output = ""
 
-    if (Array.isArray(text)) { 
-        for (const item of text) {
+    if (Array.isArray(content)) { 
+        for (const item of content) {
             if (item.type === 'text') {
-                content += item.text;
+                output += item.text;
             } else if (item.type === 'tool_use') {
-                content += "" //Don't note tool use for now
+                output += ""
+                messageDiv.classList.add('tool-use');
             } else if (item.type === 'tool_result') {
-                content += item.content;
+                output += item.content; //TODO: Yes indeed, content is the name of the value bearing field in a tool result
                 messageDiv.classList.add('tool-result');
-            } else {
-                console.log("unknown item type: ", item);
+            } else if (item.type === 'difficulty_object') {
+                output += item.difficulty_object.difficulty_analysis + " (Target: " + item.difficulty_object.difficulty_target + ")\n\n";
+            } else if (item.type === 'world_reveal_object') {
+                output += item.world_reveal_object.world_reveal_analysis + " (Level: " + item.world_reveal_object.world_reveal_level + ")\n\n";
+            } else if (item.type === 'difficulty_and_world_reveal_object') {
+                output += item.difficulty_and_world_reveal_object.difficulty.difficulty_analysis + " (Target: " + item.difficulty_and_world_reveal_object.difficulty.difficulty_target + ")\n\n";
+                output += item.difficulty_and_world_reveal_object["world reveal"].world_reveal_analysis + " (Level: " + item.difficulty_and_world_reveal_object["world reveal"].world_reveal_level + ")\n\n";
             }
         }
     } else {
-        content = text;
+        console.error("content is not an array (should always be): ", content);
+        output = content;
     }
-    
-    console.log("sender: ", sender, "content: ", content);
-    
-    console.log("sender: ", sender, "content: ", content);
+
     if (sender === 'assistant') {
-        messageDiv.innerHTML = marked.parse(content);
-    } else {
+        messageDiv.classList.add('assistant-message');
+        messageDiv.innerHTML = marked.parse(output);
+    } else if (sender === 'user') {
+        messageDiv.classList.add('user-message');
         // For user messages, preserve whitespace
         const preElement = document.createElement('pre');
         preElement.classList.add('user-message-content');
-        preElement.textContent = content;
+        preElement.textContent = output;
         messageDiv.appendChild(preElement);
+    } else {
+        console.error("unknown sender: ", sender);
+        messageDiv.classList.add(`${sender}-message`);
+        messageDiv.innerHTML = marked.parse(output);
     }
     
     chatContainer.appendChild(messageDiv);

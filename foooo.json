@@ -1,0 +1,15 @@
+{
+    "role": "assistant",
+    "content": [
+        {
+            "type": "text",
+            "text": "# Difficulty analysis\nRunning a mile in the current conditions presents moderate challenges:\n* You are hungry and slightly thirsty, which will impact stamina\n* The temperature is cool but good for running\n* The terrain between here and there includes both open areas and forest edges\n* You are lightly encumbered\n* You have some experience with the terrain\n\nGiven these factors, there's a 30% chance of having to stop or significantly slow down before reaching your destination.\n\n# Difficulty target\n30\n\n# World reveal analysis\nMoving through a significant portion of territory, even if previously explored, could reveal changes or new situations.\n\n# World reveal level\nModerate"
+        },
+        {
+            "type": "tool_use",
+            "id": "toolu_01U8L4rKBajM6GTVpRWrf6C2",
+            "name": "roll_skill_and_world_reveal",
+            "input": {}
+        }
+    ]
+}

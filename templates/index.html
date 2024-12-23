@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main_chat.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/left_sidebar.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
@@ -22,7 +23,7 @@
             <div id="chat-container"></div>
             <div class="input-container">
                 <button class="hidden" id="try-again-btn">Try Again</button>
-                <textarea id="user-input" placeholder="Type a message..."></textarea>
+                <textarea id="user-input" placeholder="Propose an action..."></textarea>
                 <button id="send-button">Send</button>
             </div>
         </div>

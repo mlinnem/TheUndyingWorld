@@ -31,7 +31,23 @@ app.secret_key = secrets.token_hex(16)
 app.register_blueprint(conversation_routes)
 
 # Get a logger instance for this module
+class ColorCodes:
+    RED = '\033[91m'
+    RESET = '\033[0m'
+
+# Create a custom formatter class
+class ColoredFormatter(logging.Formatter):
+    def format(self, record):
+        if record.levelno == logging.ERROR:
+            record.msg = f"{ColorCodes.RED}{record.msg}{ColorCodes.RESET}"
+        return super().format(record)
+
+# Update the logger configuration
 logger = logging.getLogger(__name__)
+handler = logging.StreamHandler()
+formatter = ColoredFormatter('%(message)s')  # You can adjust the format as needed
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 # SET UP INITIAL PROMPTS
 
@@ -206,19 +222,21 @@ def chat():
         elif usage_data['uncached_input_tokens'] >= MAX_UNCACHED_INPUT_TOKENS:
             conversation = update_conversation_cache_points(conversation)
 
-        return jsonify({
-            'success_type': 'complete_success',
+        jsonified_result = jsonify({
+            'success_type': 'full_success',
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
-            'new_messages': new_messages,
+            'new_messages': format_messages_for_client(new_messages),
         })
+        logger.debug(f"JSONified result: {jsonified_result}")
+        return jsonified_result
 
     except anthropic.AnthropicError as e:
         response = {
             'success_type': 'partial_success',
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
-            'new_messages': new_messages,
+            'new_messages': format_messages_for_client(new_messages),
         }
         if isinstance(e, anthropic.BadRequestError):
             logger.error(f"Bad request error: {e}")
@@ -258,14 +276,16 @@ def chat():
     except Exception as e:
         logger.error(f"Non-Anthropic error: {e}")
         logger.error(f"Stack at time of error: {''.join(traceback.format_tb(e.__traceback__))}")
-        return jsonify({
+        jsonified_result = jsonify({
             'success_type': 'partial_success',
             'error_type': 'unknown_error',
             'error_message': str(e),
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
-            'new_messages': new_messages,
+            'new_messages': format_messages_for_client(new_messages),
         })
+        logger.debug(f"JSONified result: {jsonified_result}")
+        return jsonified_result
     finally:
         save_conversation(conversation)
 
