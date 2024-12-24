@@ -9,6 +9,7 @@ def isToolUseRequest(response_json):
     return (len(response_json['content']) > 1 and 
             'type' in response_json['content'][1] and 
             response_json['content'][1]['type'] == "tool_use")
+
 def generate_tool_result(gm_response_json):
     logger.info(f"Generating tool result for {gm_response_json}")
 

@@ -123,6 +123,12 @@ function sendMessage() {
     }
 }
 
+function render_difficulty_and_world_reveal_object(difficulty_and_world_reveal_object) {   
+    rendered_world_reveal_object = difficulty_and_world_reveal_object.difficulty.difficulty_analysis + " (Target: " + difficulty_and_world_reveal_object.difficulty.difficulty_target + ")\n\n";
+    rendered_world_reveal_object += difficulty_and_world_reveal_object["world reveal"].world_reveal_analysis + " (Level: " + difficulty_and_world_reveal_object["world reveal"].world_reveal_level + ")\n\n";
+    return rendered_world_reveal_object;
+}
+
 function addMessages(messages) {
     for (const message of messages) {
         addMessage(message.role, message.content);
@@ -154,8 +160,7 @@ function addMessage(sender, content) {
             } else if (item.type === 'world_reveal_object') {
                 output += item.world_reveal_object.world_reveal_analysis + " (Level: " + item.world_reveal_object.world_reveal_level + ")\n\n";
             } else if (item.type === 'difficulty_and_world_reveal_object') {
-                output += item.difficulty_and_world_reveal_object.difficulty.difficulty_analysis + " (Target: " + item.difficulty_and_world_reveal_object.difficulty.difficulty_target + ")\n\n";
-                output += item.difficulty_and_world_reveal_object["world reveal"].world_reveal_analysis + " (Level: " + item.difficulty_and_world_reveal_object["world reveal"].world_reveal_level + ")\n\n";
+                output += render_difficulty_and_world_reveal_object(item.difficulty_and_world_reveal_object);
             }
         }
     } else {

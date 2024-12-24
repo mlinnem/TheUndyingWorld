@@ -33,18 +33,23 @@ def _parse_scene_analysis(scene_text):
     # Process components in pairs
     for i in range(0, len(components), 2):
         analysis_type = components[i].strip().lower()
-        value = components[i + 1].strip()
+        
+        all_but_title = components[i].split('\n')[1:]
+        analysis = "\n".join(all_but_title).strip()
         
         if "difficulty" in analysis_type:
+            value = components[i + 1].split('\n')[1].strip()
             analysis_data["difficulty"] = {
-                "difficulty_analysis": components[i].strip(),
+                "difficulty_analysis": analysis,
                 "difficulty_target": int(value) if value.isdigit() else value
             }
             object_type.append("difficulty")
             
         elif "world reveal" in analysis_type:
+            value = components[i + 1].strip()
+        
             analysis_data["world reveal"] = {
-                "world_reveal_analysis": components[i].strip(),
+                "world_reveal_analysis": analysis,
                 "world_reveal_level": value
             }
             object_type.append("world_reveal")
@@ -69,17 +74,22 @@ def format_messages_for_client(messages):
             # Handle assistant messages
             logger.debug(f"here comes message: {message}")
             if len(message['content']) >= 1 and message['content'][1]['type'] == 'tool_use':
-                logger.debug(f"message is a tool use: {message}")
-                scene_analysis_object, object_type = _parse_scene_analysis(message['content'][0]['text'])
-                if scene_analysis_object:
-                    new_message = message.copy()
-                    new_message['content'][0] = {
-                        "type": object_type,
-                        object_type: scene_analysis_object
-                    }
-                    formatted_messages.append(new_message)
-                else:
+                try:
+                    logger.debug(f"message is a tool use: {message}")
+                    scene_analysis_object, object_type = _parse_scene_analysis(message['content'][0]['text'])
+                    if scene_analysis_object:
+                        new_message = message.copy()
+                        new_message['content'][0] = {
+                            "type": object_type,
+                            object_type: scene_analysis_object
+                        }
+                        formatted_messages.append(new_message)
+                    else:
+                        formatted_messages.append(message)
+                except Exception as e:
+                    logger.error(f"Error parsing scene analysis: {e}", exc_info=True)
                     formatted_messages.append(message)
+                
             else:
                 formatted_messages.append(message)
                 
