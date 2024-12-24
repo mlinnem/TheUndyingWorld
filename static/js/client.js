@@ -111,7 +111,7 @@ function sendMessage() {
                 }
 
                 console.log("errorMessage: ", errorMessage);
-                addMessage('assistant', errorMessage);
+                addMessage('assistant', [{type: 'text', text: errorMessage}]);
             
             }
         })
@@ -124,8 +124,11 @@ function sendMessage() {
 }
 
 function render_difficulty_and_world_reveal_object(difficulty_and_world_reveal_object) {   
-    rendered_world_reveal_object = difficulty_and_world_reveal_object.difficulty.difficulty_analysis + " (Target: " + difficulty_and_world_reveal_object.difficulty.difficulty_target + ")\n\n";
-    rendered_world_reveal_object += difficulty_and_world_reveal_object["world reveal"].world_reveal_analysis + " (Level: " + difficulty_and_world_reveal_object["world reveal"].world_reveal_level + ")\n\n";
+
+    rendered_world_reveal_object = difficulty_and_world_reveal_object.difficulty.difficulty_analysis + "\n\n" + difficulty_and_world_reveal_object["world reveal"].world_reveal_analysis + "\n\n";
+    rendered_world_reveal_object += "Difficulty Target: " + difficulty_and_world_reveal_object.difficulty.difficulty_target + "\n\n" + "World Reveal Level: " + difficulty_and_world_reveal_object["world reveal"].world_reveal_level + "\n\n";
+    //rendered_world_reveal_object = difficulty_and_world_reveal_object.difficulty.difficulty_analysis + " (Target: " + difficulty_and_world_reveal_object.difficulty.difficulty_target + ")\n\n";
+    //rendered_world_reveal_object += difficulty_and_world_reveal_object["world reveal"].world_reveal_analysis + " (Level: " + difficulty_and_world_reveal_object["world reveal"].world_reveal_level + ")\n\n";
     return rendered_world_reveal_object;
 }
 

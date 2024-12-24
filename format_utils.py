@@ -46,7 +46,7 @@ def _parse_scene_analysis(scene_text):
             object_type.append("difficulty")
             
         elif "world reveal" in analysis_type:
-            value = components[i + 1].strip()
+            value = components[i + 1].split('\n')[1].strip()
         
             analysis_data["world reveal"] = {
                 "world_reveal_analysis": analysis,
@@ -73,7 +73,7 @@ def format_messages_for_client(messages):
                 
             # Handle assistant messages
             logger.debug(f"here comes message: {message}")
-            if len(message['content']) >= 1 and message['content'][1]['type'] == 'tool_use':
+            if len(message['content']) >= 2 and message['content'][1]['type'] == 'tool_use':
                 try:
                     logger.debug(f"message is a tool use: {message}")
                     scene_analysis_object, object_type = _parse_scene_analysis(message['content'][0]['text'])
