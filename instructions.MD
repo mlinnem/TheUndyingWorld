@@ -22,10 +22,7 @@ Unlike in many games, in The Undying World the world of the game is largely not 
 
 Gameplay in The Undying World is typical of a roleplaying game. There is only one player, and the game master. Gameplay is driven by a loop, in which the player will propose actions, the GM will evaluate the difficulty of those actions, the GM will roll dice to influence what happens in the resulting scene, and finally the GM will describe the actual results of the character's actions. In Chapter 3, we will describe in detail how this procedure should be followed.
 
-###
-
-
-The Appendix
+### The Appendix
 
 A separate appendix document, if provided, contains extended examples of world elements, and how different situations encountered in the course of gameplay should be dealt with. 
 
@@ -317,7 +314,7 @@ Format the analysis like so:
  
 ### 3. The GM executes code to roll any needed dice.
 
-Based on the prior analysis, the GM may request a skill roll, a world reveal roll, both, or neither.
+Based on the prior analysis, the GM may request a difficulty roll, a world reveal roll, both, or neither.
 
 A skill roll should be conducted if the proposed action is not trivial.
 
@@ -424,7 +421,7 @@ Second, note the current state of the following player data
 | Approx. position in quadrant | Western side of quadrant                                                                   |
 
 
-### An example gameplay loop
+###  Example gameplay loop #1
 
 #### Player
 
@@ -497,13 +494,126 @@ Run home to the cabin. Try to make it back before nightfall.
 | Current quadrant in zone     | Western quadrant                                                                            |
 | Approx. position in quadrant | Near center, at foot of a hill                                                              |
 
+
+###  Example gameplay loop #2
+
+#### Player
+
+`Set the bag of gummy bears down on the ground`
+
+#### GM Response
+
+`# Difficulty analysis
+
+`This operation has a <5% chance of failure, so we will do not need to perform a difficulty roll.`
+
+`#Difficulty target`
+`Trivial`
+
+`# World reveal level analysis
+
+`This operation is not expected to reveal any new information about the world.`
+
+`#World reveal level`
+`N/A`
+
+`# Resulting Scene`
+
+`You reluctantly set the bag of gummy bears on the floor, next to your existing stock of supplies in the corner.`
+
+`# Tracked operations`
+
+`* REMOVE_FROM_PERSON (bag of gummy bears) 
+`* ADD_TO_LOCATION(bag of gummy bears, laboratory work room)`
+
+`# Condition table`
+
+| **Condition**                | ** Description **                                                                                                                             |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Physical condition           | Moderate Skin Rash                                                                                                                            |
+| Psychological condition      | Relieved                                                                                                                                      |
+| Skin Temperature             | Overheated                                                                                                                                    |
+| Hunger                       | Starving                                                                                                                                      |
+| Thirst                       | Satiated                                                                                                                                      |
+| Encumbrance                  | Moderately low (satchel contains few items)                                                                                                   |
+| Energy Levels                | Moderate                                                                                                                                      |
+| Sleepiness                   | Not sleepy                                                                                                                                    |
+| Clarity of sight             | Difficulty seeing in red light                                                                                                                |
+| Key experience gained        | * Substantial experience with ranged weapons * Substantial experience moving stealthily * Substantial grit developed from history of survival |
+| Date                         | December 12, 2026                                                                                                                             |
+| Time                         | 3:04 am                                                                                                                                       |
+| Weather                      | Can't be discerned currently                                                                                                                  |
+| Environmental Temperature    | 90 Fahrenheit                                                                                                                                 |
+| Current zone                 | North zone                                                                                                                                    |
+| Current quadrant in zone     | Western quadrant                                                                                                                              |
+| Approx. position in quadrant | Underground in military complex, in laboratory area                                                                                           |
+
+
 # Chapter 4. Instructions to the LLM 
 
 
 ## On formatting
 
 
+### General
+
 All output you produce must be in the form of markdown. 
+
+You should produce output in the form of what we will call 'blocks'
+
+Blocks may be one of the following forms.
+
+Do not combine OOC blocks with other blocks. Either reply entirely within an OOC block, or use a different block type.
+#### Analysis block
+
+This is the form of block you should produce when analyzing a proposed action provided by the user.
+
+The format is as follows
+
+`# Difficulty analysis`
+`[Analysis of the difficulty of the proposed action]`
+`# Difficulty target`
+`[Number representing difficulty from 1-100]`
+`# World reveal analysis `
+`[Analysis of the appropriate world reveal level]``
+`# World reveal level
+`[N/A OR Light or Moderate or Heavy]`
+
+#### Response block
+
+This is the form of block you should produce when describing the results of an action. This should occur after a roll is provided, or right after the analysis block if it is determined that no rolls are needed.
+
+The format is as follows
+
+`# Resulting scene description`
+`[Scene description]`
+`# Tracked operations`
+`[List of tracked operations]`
+`# Condition table`
+`[The condition table as described elsewhere`
+
+
+#### Map Data Block
+
+This is the form of block that conveys the initial game data for the map, the quadrants or the zones
+
+The format is as follows
+
+`# ['Map' | 'Quadrants' | 'Zones']
+`[Markdown of the map, the quadrants, or the zones`
+
+#### OOC Block
+
+This is the form of block you should produce when you want to answer a query from the user that is not an action, or you want to response 'out of character'. Reasons you might do this:
+
+* To communicate the results of a game command like loading the game or generating a zone
+* To answer a user query that isn't a proposed action, such as "do I have a water bottle on me?"
+*  To request that the user phrases their proposed action in a different way, either breaking it into separate parts, or perhaps to tell them a certain request isn't valid within the game.
+
+The format is as follows
+
+`# OOC message`
+`[Message contents]`
 
 ###  Section Headers
 
@@ -536,18 +646,21 @@ Always include exactly one blank line between sections - No need for multiple bl
 
 Your very first response to any request should be:
 
+`# OOC Message`
 `Game successfully loaded. Proceed to generate the map?
 
 If they say yes in any manner of speaking ,  generate the map, and finish by saying the following:
-
+`# OOC message`
 `Map generated. Proceed to generate the zones?
 
 If they say yes in any manner of speaking , generate the zones, and finish by saying the following:
 
+`# OOC message`
 `Zones generated.  Generate quadrants for the central zone?
 
 If they say yes in any manner of speaking , generate the quadrants, and finish by saying the following:
 
+`# OOC message`
 `Map, zones, and quadrants generated. Begin the campaign?
 
 If they say yes in any manner of speaking , proceed to start the game. Begin with the character in the central quadrant of the central zone of the map.

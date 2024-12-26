@@ -85,7 +85,7 @@ function sendMessage() {
         })
         .then(data => {
             console.log("data: ", data);
-            addMessages(data.new_messages);
+            addConversationObjects(data.new_conversation_objects);
             
             if (data.success_type === 'partial_success') {
                 let errorMessage;
@@ -132,6 +132,56 @@ function render_difficulty_and_world_reveal_object(difficulty_and_world_reveal_o
     return rendered_world_reveal_object;
 }
 
+function addConversationObjects(conversation_objects) {
+    for (const conversation_object of conversation_objects) {
+        addConversationObject(conversation_object);
+    }
+}
+
+function addConversationObject(conversation_object) {
+    const coDiv = document.createElement('div');
+    coDiv.classList.add('conversation-object');
+    
+    if (conversation_object.type === 'user_message') {
+        coDiv.classList.add('user-message');
+        coDiv.innerHTML = marked.parse(conversation_object.user_message);
+    } else if (conversation_object.type === 'difficulty_analysis') {
+        coDiv.classList.add('difficulty-analysis');
+        coDiv.innerHTML = marked.parse(conversation_object.difficulty_analysis);
+    } else if (conversation_object.type === 'difficulty_analysis') {
+        coDiv.classList.add('difficulty-analysis');
+        coDiv.innerHTML = marked.parse(conversation_object.difficulty_analysis);
+    } else if (conversation_object.type === 'world_analysis') {
+        coDiv.classList.add('world-analysis');
+        coDiv.innerHTML = marked.parse(conversation_object.world_analysis);
+    } else if (conversation_object.type === 'world_roll') {
+        coDiv.classList.add('world-roll');
+        coDiv.innerHTML = marked.parse(conversation_object.world_roll);
+    } else if (conversation_object.type === 'difficulty_roll') {
+        coDiv.classList.add('difficulty-roll');
+        coDiv.innerHTML = marked.parse(conversation_object.difficulty_roll);
+    } else if (conversation_object.type === 'resulting_scene_description') {
+        coDiv.classList.add('resulting-scene-description');
+        coDiv.innerHTML = marked.parse(conversation_object.resulting_scene_description);
+    } else if (conversation_object.type === 'tracked_operations') {
+        coDiv.classList.add('tracked-operations');
+        coDiv.innerHTML = marked.parse(conversation_object.tracked_operations);
+    } else if (conversation_object.type === 'condition_table') {
+        coDiv.classList.add('condition-table');
+        coDiv.innerHTML = marked.parse(conversation_object.condition_table);
+    } else if (conversation_object.type === 'map_data') {
+        coDiv.classList.add('map-data');
+        coDiv.innerHTML = marked.parse(conversation_object.map_data);
+    } else if (conversation_object.type === 'ooc_message') {
+        coDiv.classList.add('ooc-message');
+        coDiv.innerHTML = marked.parse(conversation_object.ooc_message);
+    } else {
+        console.error("unknown conversation object type: ", conversation_object.type);
+    }
+
+    chatContainer.appendChild(coDiv);
+}
+
 function addMessages(messages) {
     for (const message of messages) {
         addMessage(message.role, message.content);
@@ -148,12 +198,26 @@ function addMessage(sender, content) {
     
     let output = ""
 
+    //Two primary situations: response involves tool use, or not.
+    //In case it involves tool use, can be difficulty, world reveal, or both.
+    //In case it doesn't involve tool use, it's just a text response.
+
     if (Array.isArray(content)) { 
+
+        //tool use block
+
+        //tool result block
+
+        //resulting scene block
+
+        //tracked operations block
+
+        //condition table block
+
         for (const item of content) {
             if (item.type === 'text') {
                 output += item.text;
             } else if (item.type === 'tool_use') {
-                output += ""
                 messageDiv.classList.add('tool-use');
             } else if (item.type === 'tool_result') {
                 output += item.content; //TODO: Yes indeed, content is the name of the value bearing field in a tool result

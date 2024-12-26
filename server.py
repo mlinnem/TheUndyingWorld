@@ -193,9 +193,9 @@ def chat():
 
     try:
         # get and save user message
-        user_message = request.get_json()['user_message']
-        user_message_formatted = format_user_message(user_message)
-        conversation['messages'].append(user_message_formatted)
+        raw_user_message = request.get_json()['user_message']
+        user_message_for_server = produce_user_message_for_server(raw_user_message)
+        conversation['messages'].append(user_message_for_server)
         
         # get and save gm response
         gm_response_json, usage_data = send_message_to_gm(conversation, temperature=0.5)
@@ -222,21 +222,28 @@ def chat():
         elif usage_data['uncached_input_tokens'] >= MAX_UNCACHED_INPUT_TOKENS:
             conversation = update_conversation_cache_points(conversation)
 
+
+        conversation_objects, parsing_errors = produce_conversation_objects_for_client(new_messages)
+        logger.debug(f"conversation_objects: {conversation_objects}")
         jsonified_result = jsonify({
             'success_type': 'full_success',
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
-            'new_messages': format_messages_for_client(new_messages),
+            'new_conversation_objects': conversation_objects,
+            'parsing_errors': parsing_errors,
         })
         logger.debug(f"JSONified result: {jsonified_result}")
         return jsonified_result
 
     except anthropic.AnthropicError as e:
+
+        conversation_objects, parsing_errors = produce_conversation_objects_for_client(new_messages)
         response = {
             'success_type': 'partial_success',
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
-            'new_messages': format_messages_for_client(new_messages),
+            'new_conversation_objects': conversation_objects,
+            'parsing_errors': parsing_errors,
         }
         if isinstance(e, anthropic.BadRequestError):
             logger.error(f"Bad request error: {e}")
@@ -276,13 +283,15 @@ def chat():
     except Exception as e:
         logger.error(f"Non-Anthropic error: {e}")
         logger.error(f"Stack at time of error: {''.join(traceback.format_tb(e.__traceback__))}")
+        conversation_objects, parsing_errors = produce_conversation_objects_for_client(new_messages)
         jsonified_result = jsonify({
             'success_type': 'partial_success',
             'error_type': 'unknown_error',
             'error_message': str(e),
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
-            'new_messages': format_messages_for_client(new_messages),
+            'conversation_objects': conversation_objects,
+            'parsing_errors': parsing_errors,
         })
         logger.debug(f"JSONified result: {jsonified_result}")
         return jsonified_result
