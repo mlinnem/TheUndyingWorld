@@ -45,7 +45,7 @@ function sendMessage() {
 
         // Add loading message
         const loadingDiv = document.createElement('div');
-        loadingDiv.classList.add('co', 'loading_message', 'module', 'left');
+        loadingDiv.classList.add('co', 'loading_message', 'module', 'left', 'primary-text-style');
         loadingDiv.innerHTML = body_text('Thinking...');
         chatContainer.appendChild(loadingDiv);
         scrollChatNearBottom();
@@ -60,11 +60,9 @@ function sendMessage() {
             }),
         })
         .then(response => {
-            loadingDiv.remove();
             return response.json();
         })
         .then(data => {
-            console.log("data:", JSON.stringify(data, null, 2));
             addConversationObjects(data.new_conversation_objects);
             
             if (data.success_type === 'partial_success') {
@@ -97,6 +95,7 @@ function sendMessage() {
                 });
             
             }
+            loadingDiv.remove();
         })
         .catch(error => {
             loadingDiv.remove();
@@ -147,6 +146,7 @@ function addConversationObject(co) {
     if (co.type === 'user_message') {
         coDiv.innerHTML = body_text(marked.parse(co.text));
         coDiv.classList.add('freestanding');
+        coDiv.classList.add('primary-text-style');
     } else if (co.type === 'map_data') {
         coDiv.innerHTML = module_header("Map Data") + body_text(marked.parse(co.text));
         coDiv.classList.add('freestanding');
@@ -188,6 +188,7 @@ function addConversationObject(co) {
         } else {
             coDiv.classList.add('middle');
         }
+        coDiv.classList.add('primary-text-style');
     } else if (co.type === 'tracked_operations') {
         coDiv.innerHTML = module_header("Tracked Operations") + body_text(marked.parse(co.text));
         coDiv.classList.add('middle');
@@ -202,6 +203,7 @@ function addConversationObject(co) {
     } else if (co.type === 'unrecognized_section') {
         coDiv.innerHTML = module_header(co.header_text) + body_text(marked.parse(co.body_text));
         coDiv.classList.add('freestanding');
+        coDiv.classList.add('primary-text-style');
     } else if (co.type === 'server_error') {
         coDiv.innerHTML = body_text(marked.parse(co.text));
         coDiv.classList.add('freestanding');
@@ -227,7 +229,6 @@ function startNewConversation() {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                console.log("data: ", data);
                 loadConversation(data.conversation_id);
                 updateConversationList();
             }
@@ -243,11 +244,9 @@ function updateConversationList() {
         .then(response => response.json())
         .then(data => {
             conversationList.innerHTML = '';
-            console.log("data: ", data);
             data.conversations.forEach(conv => {
                 const convDiv = document.createElement('div');
                 convDiv.classList.add('conversation-item');
-                console.log("conv_id: ", conv.conversation_id, "activeConversationId: ", activeConversationId);
                 if (conv.conversation_id === activeConversationId) {
                     convDiv.classList.add('active');
                 }
@@ -281,8 +280,6 @@ function loadConversation(conversationId) {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
-            console.log("data on loadConversation: ", data);
-            console.log("conversationId: ", conversationId);
             activeConversationId = conversationId;
             chatContainer.innerHTML = '';
             //remove active class from all conversation items
@@ -291,7 +288,6 @@ function loadConversation(conversationId) {
             });
             //add active class to the selected conversation
             const conversationElement = conversationList.querySelector(`#${CSS.escape(conversationId)}`);
-            console.log("conversationElement: ", conversationElement);
             if (conversationElement) {
                 conversationElement.classList.add('active');
             }
@@ -328,6 +324,7 @@ function deleteConversation(conversationId) {
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     updateConversationList();
+    userInput.focus();
     
     // Add auto-resize functionality to the textarea
     //userInput.addEventListener('input', function() {
