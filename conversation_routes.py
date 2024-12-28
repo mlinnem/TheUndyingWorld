@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from conversation_utils import *
 from datetime import datetime
-from format_utils import *
+from convert_utils import *
 
 conversation_routes = Blueprint('conversation_routes', __name__)
 
@@ -25,14 +25,14 @@ def load_conversation_route():
 
 
     if conversation:
-        conversation_objects, parsing_errors = produce_conversation_objects_for_client(conversation['messages'])
+        conversation_objects = convert_messages_to_cos(conversation['messages'])
         logger.debug(f"conversation_objects: {conversation_objects}")
         jsonified_result = jsonify({
             'success_type': 'full_success',
             'conversation_id': conversation_id,
             'conversation_name': conversation['name'],
             'new_conversation_objects': conversation_objects,
-            'parsing_errors': parsing_errors,
+            'parsing_errors': []
         })
         return jsonified_result
     else:

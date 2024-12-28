@@ -10,7 +10,7 @@ from anthropic import Anthropic
 from dotenv import load_dotenv
 from random import randint
 from tool_utils import *
-from format_utils import *
+from convert_utils import *
 import logging
 from logging.handlers import RotatingFileHandler
 import http.client as http_client
@@ -189,12 +189,13 @@ def chat():
             'success_type': 'error',
             'error_type': 'internal_error',
             'error_message': "Internal error, please try again later.",
+            'parsing_errors': [],
         })
 
     try:
         # get and save user message
         raw_user_message = request.get_json()['user_message']
-        user_message_for_server = produce_user_message_for_server(raw_user_message)
+        user_message_for_server = convert_user_text_to_message(raw_user_message)
         conversation['messages'].append(user_message_for_server)
         
         # get and save gm response
@@ -204,7 +205,7 @@ def chat():
 
         # if gm requested tool use
         if (isToolUseRequest(gm_response_json)):
-
+            logger.info("tool use request detected")
             # generate and save tool result
             tool_result_json = generate_tool_result(gm_response_json)
             conversation['messages'].append(tool_result_json)
@@ -214,6 +215,8 @@ def chat():
             tool_use_response_json, usage_data = send_message_to_gm(conversation, 0.8)
             conversation['messages'].append(tool_use_response_json)
             new_messages.append(tool_use_response_json)
+        else:
+            logger.info("no tool use request detected")
         
         # update caching or perform summarization if necessary
         if usage_data['total_input_tokens'] >= MAX_TOTAL_INPUT_TOKENS:
@@ -223,27 +226,27 @@ def chat():
             conversation = update_conversation_cache_points(conversation)
 
 
-        conversation_objects, parsing_errors = produce_conversation_objects_for_client(new_messages)
+        conversation_objects = convert_messages_to_cos(new_messages)
         logger.debug(f"conversation_objects: {conversation_objects}")
+
         jsonified_result = jsonify({
             'success_type': 'full_success',
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
             'new_conversation_objects': conversation_objects,
-            'parsing_errors': parsing_errors,
+            'parsing_errors': [],
         })
-        logger.debug(f"JSONified result: {jsonified_result}")
         return jsonified_result
 
     except anthropic.AnthropicError as e:
 
-        conversation_objects, parsing_errors = produce_conversation_objects_for_client(new_messages)
+        conversation_objects = convert_messages_to_cos(new_messages)
         response = {
             'success_type': 'partial_success',
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
             'new_conversation_objects': conversation_objects,
-            'parsing_errors': parsing_errors,
+            'parsing_errors': [],
         }
         if isinstance(e, anthropic.BadRequestError):
             logger.error(f"Bad request error: {e}")
@@ -283,7 +286,7 @@ def chat():
     except Exception as e:
         logger.error(f"Non-Anthropic error: {e}")
         logger.error(f"Stack at time of error: {''.join(traceback.format_tb(e.__traceback__))}")
-        conversation_objects, parsing_errors = produce_conversation_objects_for_client(new_messages)
+        conversation_objects = convert_messages_to_cos(new_messages)
         jsonified_result = jsonify({
             'success_type': 'partial_success',
             'error_type': 'unknown_error',
@@ -291,9 +294,8 @@ def chat():
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
             'conversation_objects': conversation_objects,
-            'parsing_errors': parsing_errors,
+            'parsing_errors': [],
         })
-        logger.debug(f"JSONified result: {jsonified_result}")
         return jsonified_result
     finally:
         save_conversation(conversation)
@@ -306,17 +308,15 @@ def set_current_conversation():
     if conversation:
         session['current_conversation_id'] = conversation_id
 
-        conversation_objects, parsing_errors = produce_conversation_objects_for_client(conversation['messages'])
-        logger.debug(f"conversation_objects: {conversation_objects}")
+        conversation_objects = convert_messages_to_cos(conversation['messages'])
         jsonified_result = jsonify({
             'status' : 'success',
             'success_type': 'full_success',
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
             'new_conversation_objects': conversation_objects,
-            'parsing_errors': parsing_errors,
+            'parsing_errors': [],
         })
-        logger.debug(f"JSONified result: {jsonified_result}")
         return jsonified_result
     else:
         return jsonify({'status': 'error', 'message': 'Conversation not found'}), 404

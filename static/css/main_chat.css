@@ -39,18 +39,6 @@ body {
     scroll-behavior: smooth;
 }
 
-.message {
-    font-size: 18px;
-    line-height: 1.5;
-    padding: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 18px;
-    max-width: 70%;
-    word-wrap: break-word;
-    color:rgb(255, 247, 218)
-}
-
 
 .left {
     align-self: flex-start;
@@ -279,9 +267,6 @@ h2 {
 }
 
 .module {
-    border-radius: 20px;
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
     overflow: hidden;
 }
 
@@ -289,6 +274,67 @@ h2 {
     background-color: rgba(105, 0, 0, 0.9);
 }
 
+.top {
+    margin-top: 2.5rem;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.bottom {
+    margin-bottom: 2.5rem;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.middle {
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    border-radius: 0px;
+}
+
+.freestanding {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.module.difficulty_analysis {
+    background-color: rgba(33, 41, 53, 0.4);
+}
+
+.module.difficulty_target {
+    background-color: rgba(33, 41, 53, 0.4);
+}
+
+.module.world_reveal_analysis {
+    background-color: rgba(33, 41, 53, 0.4);
+}
+
+.module.world_reveal_level {
+    background-color: rgba(33, 41, 53, 0.4);
+}
+
+.module.difficulty_roll {
+    background-color: rgba(33, 41, 53, 0.4);
+}
+
+.module.world_reveal_roll {
+    background-color: rgba(33, 41, 53, 0.4);
+}
+
+.module.tracked_operations {
+    background-color: rgba(33, 41, 53, 0.4);
+}
+
+.info-text-style {
+    font-family: 'Roboto Mono', monospace;
+    font-size: .75rem;
+    line-height: 1.125rem;
+    font-weight: 300;
+}
 
 
 .module_header {
@@ -300,6 +346,13 @@ h2 {
     margin-bottom: 1.25rem;
     display: block;
     padding-left: 1.875rem;
+}
+
+.module.unrecognized_section {
+    background-color: #212935;
+    font-family: 'Roboto Serif', serif;
+    font-size: 1.125rem;
+    line-height: 1.6875rem;
 }
 
 .conversation-body-text {
@@ -314,8 +367,7 @@ h2 {
 
     font-size: .75rem;
     line-height: 1.125rem;
-    font-family: 'Roboto Mono', monospace;
-    background-color: #212935;
+    background-color: rgba(33, 41, 53, 0.4);
 }
 
 .module.error-message {
@@ -335,7 +387,11 @@ h2 {
     background-color: #212935;
 }
 
-.loading-message {
+.module.condition_table {
+    background-color: rgba(33, 41, 53, 0.4);
+}
+
+.loading_message {
     background-color: #212935;
     background: linear-gradient(to top, #161d27 0%, transparent 100%);
     color: rgb(255, 247, 218);
@@ -344,7 +400,15 @@ h2 {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     height: 160px;
+    font-family: 'Roboto Serif', serif;
+    max-width: 80%;
+    font-size: 1.125rem;
+    line-height: 1.6875rem;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;  
 }
+
+
 
 @keyframes breathe {
     0% { 
@@ -360,15 +424,15 @@ h2 {
     }
 
     50% { 
-        background-color: #161d27;
+        background-color: #212935;
     }
 
     55% { 
-        background-color: #161d27;
+        background-color: #212935;
     }
 
     60% { 
-        background-color: #161d27;
+        background-color: #212935;
     }
 
     80% { 

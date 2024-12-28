@@ -12,9 +12,8 @@ if not os.path.exists(CONVERSATIONS_DIR):
     os.makedirs(CONVERSATIONS_DIR)
 
 def save_conversation(conversation):
-    logger.info(f"Saving conversation {conversation}")
+    logger.info(f"Saving conversation {conversation['conversation_id']}")
     conversation_id = conversation['conversation_id']
-    logger.info(f"Saving conversation {conversation_id}")
 
     conversation['last_updated'] = datetime.now().isoformat()
     file_path = os.path.join(CONVERSATIONS_DIR, f"{conversation_id}.json")
