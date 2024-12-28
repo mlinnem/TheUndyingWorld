@@ -664,3 +664,5 @@ If they say yes in any manner of speaking , generate the quadrants, and finish b
 `Map, zones, and quadrants generated. Begin the campaign?
 
 If they say yes in any manner of speaking , proceed to start the game. Begin with the character in the central quadrant of the central zone of the map.
+
+The game should start with a 'resulting scene description' block, a 'tracked operations' block (empty), and a 'condition table' block.

@@ -59,13 +59,17 @@ function sendMessage() {
 
     const message = userInput.value.trim();
     if (message) {
-        addMessage('user', [{type: 'text', text: message}]);
+        addConversationObject({
+            "source": "client",
+            "type": "user_message",
+            "user_message": message
+        });
         userInput.value = '';
         userInput.style.height = 'auto';
 
         // Add loading message
         const loadingDiv = document.createElement('div');
-        loadingDiv.classList.add('message', 'loading-message');
+        loadingDiv.classList.add('message', 'loading-message', 'module', 'left');
         loadingDiv.textContent = 'Thinking...';
         chatContainer.appendChild(loadingDiv);
         scrollChatNearBottom();
@@ -84,7 +88,7 @@ function sendMessage() {
             return response.json();
         })
         .then(data => {
-            console.log("data: ", data);
+            console.log("data:", JSON.stringify(data, null, 2));
             addConversationObjects(data.new_conversation_objects);
             
             if (data.success_type === 'partial_success') {
@@ -111,14 +115,23 @@ function sendMessage() {
                 }
 
                 console.log("errorMessage: ", errorMessage);
-                addMessage('assistant', [{type: 'text', text: errorMessage}]);
+                addConversationObject({
+                    "source": "client",
+                    "type": "error",
+                    "error_message": errorMessage,
+                    "original_message": data.original_message
+                });
             
             }
         })
         .catch(error => {
             loadingDiv.remove();
             console.error('Error:', error);
-            addMessage('assistant', 'An unhandled error occurred. You may have better luck if you refresh this page and try again.');
+            addConversationObject({
+                "source": "client",
+                "type": "error",
+                "error_message": "An unhandled error occurred. You may have better luck if you refresh this page and try again.",
+            });
         });
     }
 }
@@ -138,120 +151,60 @@ function addConversationObjects(conversation_objects) {
     }
 }
 
+function module_header(label) {
+    return "<span class='module_header'>" + label + "</span>";
+}
+
+function conversation_body_text(contents) {
+    return "<span class='conversation-body-text'>" + contents + "</span>";
+}
+
 function addConversationObject(conversation_object) {
     const coDiv = document.createElement('div');
     coDiv.classList.add('conversation-object');
+    coDiv.classList.add(conversation_object.type);
+    coDiv.classList.add('module');
     
-    if (conversation_object.type === 'user_message') {
-        coDiv.classList.add('user-message');
-        coDiv.innerHTML = marked.parse(conversation_object.user_message);
+    // Add handling for error messages
+    if (conversation_object.type === 'error') {
+        coDiv.innerHTML = conversation_body_text(marked.parse(conversation_object.error_message) + "\n\n<pre>" + JSON.stringify(conversation_object.original_message, null, 2) + "</pre>");
+        coDiv.classList.add('error-message');
+        coDiv.classList.add('left');
+    } else if (conversation_object.type === 'user_message') {
+        coDiv.innerHTML = conversation_body_text(marked.parse(conversation_object.user_message));
+        coDiv.classList.add('right');
     } else if (conversation_object.type === 'difficulty_analysis') {
-        coDiv.classList.add('difficulty-analysis');
-        coDiv.innerHTML = marked.parse(conversation_object.difficulty_analysis);
-    } else if (conversation_object.type === 'difficulty_analysis') {
-        coDiv.classList.add('difficulty-analysis');
-        coDiv.innerHTML = marked.parse(conversation_object.difficulty_analysis);
+        coDiv.innerHTML = conversation_body_text(marked.parse(conversation_object.difficulty_analysis));
+        coDiv.classList.add('left');
     } else if (conversation_object.type === 'world_analysis') {
-        coDiv.classList.add('world-analysis');
-        coDiv.innerHTML = marked.parse(conversation_object.world_analysis);
+        coDiv.innerHTML = conversation_body_text(marked.parse(conversation_object.world_analysis));
+        coDiv.classList.add('left');
     } else if (conversation_object.type === 'world_roll') {
-        coDiv.classList.add('world-roll');
-        coDiv.innerHTML = marked.parse(conversation_object.world_roll);
+        coDiv.innerHTML = conversation_body_text(marked.parse(conversation_object.world_roll));
+        coDiv.classList.add('left');
     } else if (conversation_object.type === 'difficulty_roll') {
-        coDiv.classList.add('difficulty-roll');
-        coDiv.innerHTML = marked.parse(conversation_object.difficulty_roll);
+        coDiv.innerHTML = conversation_body_text(marked.parse(conversation_object.difficulty_roll));
+        coDiv.classList.add('left');
     } else if (conversation_object.type === 'resulting_scene_description') {
-        coDiv.classList.add('resulting-scene-description');
-        coDiv.innerHTML = marked.parse(conversation_object.resulting_scene_description);
+        coDiv.innerHTML = conversation_body_text(marked.parse(conversation_object.resulting_scene_description));
+        coDiv.classList.add('left');
     } else if (conversation_object.type === 'tracked_operations') {
-        coDiv.classList.add('tracked-operations');
-        coDiv.innerHTML = marked.parse(conversation_object.tracked_operations);
+        coDiv.innerHTML = conversation_body_text(marked.parse(conversation_object.tracked_operations));
+        coDiv.classList.add('left');
     } else if (conversation_object.type === 'condition_table') {
-        coDiv.classList.add('condition-table');
-        coDiv.innerHTML = marked.parse(conversation_object.condition_table);
+        coDiv.innerHTML = conversation_body_text(marked.parse(conversation_object.condition_table));
+        coDiv.classList.add('left');
     } else if (conversation_object.type === 'map_data') {
-        coDiv.classList.add('map-data');
-        coDiv.innerHTML = marked.parse(conversation_object.map_data);
+        coDiv.innerHTML = module_header("Map Data") + conversation_body_text(marked.parse(conversation_object.map_data));
+        coDiv.classList.add('left');
     } else if (conversation_object.type === 'ooc_message') {
-        coDiv.classList.add('ooc-message');
-        coDiv.innerHTML = marked.parse(conversation_object.ooc_message);
+        coDiv.innerHTML = conversation_body_text(marked.parse(conversation_object.ooc_message));
+        coDiv.classList.add('left');
     } else {
         console.error("unknown conversation object type: ", conversation_object.type);
     }
 
     chatContainer.appendChild(coDiv);
-}
-
-function addMessages(messages) {
-    for (const message of messages) {
-        addMessage(message.role, message.content);
-    }
-}
-
-function addMessage(sender, content) {
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('message', `${sender}-message`);
-    
-    // Convert array to string if necessary
-    console.log("content: ", content);
-    // For now we're going to ignore tool use and tool result content
-    
-    let output = ""
-
-    //Two primary situations: response involves tool use, or not.
-    //In case it involves tool use, can be difficulty, world reveal, or both.
-    //In case it doesn't involve tool use, it's just a text response.
-
-    if (Array.isArray(content)) { 
-
-        //tool use block
-
-        //tool result block
-
-        //resulting scene block
-
-        //tracked operations block
-
-        //condition table block
-
-        for (const item of content) {
-            if (item.type === 'text') {
-                output += item.text;
-            } else if (item.type === 'tool_use') {
-                messageDiv.classList.add('tool-use');
-            } else if (item.type === 'tool_result') {
-                output += item.content; //TODO: Yes indeed, content is the name of the value bearing field in a tool result
-                messageDiv.classList.add('tool-result');
-            } else if (item.type === 'difficulty_object') {
-                output += item.difficulty_object.difficulty_analysis + " (Target: " + item.difficulty_object.difficulty_target + ")\n\n";
-            } else if (item.type === 'world_reveal_object') {
-                output += item.world_reveal_object.world_reveal_analysis + " (Level: " + item.world_reveal_object.world_reveal_level + ")\n\n";
-            } else if (item.type === 'difficulty_and_world_reveal_object') {
-                output += render_difficulty_and_world_reveal_object(item.difficulty_and_world_reveal_object);
-            }
-        }
-    } else {
-        console.error("content is not an array (should always be): ", content);
-        output = content;
-    }
-
-    if (sender === 'assistant') {
-        messageDiv.classList.add('assistant-message');
-        messageDiv.innerHTML = marked.parse(output);
-    } else if (sender === 'user') {
-        messageDiv.classList.add('user-message');
-        // For user messages, preserve whitespace
-        const preElement = document.createElement('pre');
-        preElement.classList.add('user-message-content');
-        preElement.textContent = output;
-        messageDiv.appendChild(preElement);
-    } else {
-        console.error("unknown sender: ", sender);
-        messageDiv.classList.add(`${sender}-message`);
-        messageDiv.innerHTML = marked.parse(output);
-    }
-    
-    chatContainer.appendChild(messageDiv);
 }
 
 function updateTokenInfo(data) {
@@ -335,10 +288,10 @@ function loadConversation(conversationId) {
             if (conversationElement) {
                 conversationElement.classList.add('active');
             }
-            chatTitle.textContent = data.conversation.name;
-            data.conversation.messages.forEach(msg => {
+            chatTitle.textContent = data.conversation_name;
+            data.new_conversation_objects.forEach(msg => {
                 console.log("msg: ", msg);
-                addMessage(msg.role, msg.content);
+                addConversationObject(msg);
             });
         }
     })

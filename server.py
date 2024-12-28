@@ -305,12 +305,19 @@ def set_current_conversation():
     conversation = load_conversation(conversation_id)
     if conversation:
         session['current_conversation_id'] = conversation_id
-        
-        logger.info(f"conversation: {conversation}")
-        return jsonify({
-            'status': 'success', 
-            'conversation': conversation
+
+        conversation_objects, parsing_errors = produce_conversation_objects_for_client(conversation['messages'])
+        logger.debug(f"conversation_objects: {conversation_objects}")
+        jsonified_result = jsonify({
+            'status' : 'success',
+            'success_type': 'full_success',
+            'conversation_id': session['current_conversation_id'],
+            'conversation_name': conversation['name'],
+            'new_conversation_objects': conversation_objects,
+            'parsing_errors': parsing_errors,
         })
+        logger.debug(f"JSONified result: {jsonified_result}")
+        return jsonified_result
     else:
         return jsonify({'status': 'error', 'message': 'Conversation not found'}), 404
 

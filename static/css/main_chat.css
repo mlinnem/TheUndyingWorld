@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto+Serif:wght@400;500&family=Roboto+Slab:wght@400;500&family=Roboto:wght@300;400;500;600;700&display=swap');
+
 
 body {
     font-family: 'Roboto', Arial, sans-serif;
@@ -51,12 +52,30 @@ body {
 }
 
 
+.left {
+    align-self: flex-start;
+    max-width: 80%;
+}
 
-.user-message {
+.right {
+    align-self: flex-end;
+    max-width: 80%;
+    margin-left: auto;
+}
+
+.module.ooc_message {
+    background-color: #212935;
+    font-family: 'Roboto Serif', serif;
+    font-size: 1.125rem;
+    line-height: 1.6875rem;
+}
+
+
+.module.user_message {
     background-color: rgb(51, 55, 60);
     color: rgb(255, 247, 218);
-    align-self: flex-end;
-    margin-left: auto;
+    font-family: 'Roboto Serif', serif;
+    font-size: 1.125rem;
 }
 
 .tool-result {
@@ -260,16 +279,60 @@ h2 {
 }
 
 .module {
-    padding-bottom: 2.5rem;
-    padding-left: 1.875rem;
-    padding-right: 1.875rem;
     border-radius: 20px;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
 }
 
-.resulting-scene-text {
+.module.error-message {
+    background-color: rgba(105, 0, 0, 0.9);
+}
+
+
+
+.module_header {
+    font-family: 'Roboto Slab', sans-serif;
+    font-size: .75rem;
+    font-weight: 500;
+    color: #EEE8CF;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    display: block;
+    padding-left: 1.875rem;
+}
+
+.conversation-body-text {
+    display: block;
+    margin-top: 1.875rem;
+    margin-bottom: 2.5rem;
+    margin-left: 1.875rem;
+    margin-right: 1.875rem;
+}
+
+.module.map_data {
+
+    font-size: .75rem;
+    line-height: 1.125rem;
+    font-family: 'Roboto Mono', monospace;
+    background-color: #212935;
+}
+
+.module.error-message {
+    background-color: rgba(105, 0, 0, 0.9);
+    font-family: 'Roboto', sans-serif;
+    font-size: .75rem;
+    line-height: 1.125rem;
+    overflow-x: auto;
+    color: #ffffff;
+}
+
+.module.resulting_scene_description {
+
     font-size: 1.125rem;
     line-height: 1.6875rem;
-    font-weight: Roboto-Serif-Regular;
+    font-family: 'Roboto Serif', serif;
+    background-color: #212935;
 }
 
 .loading-message {

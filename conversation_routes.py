@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from conversation_utils import *
 from datetime import datetime
+from format_utils import *
 
 conversation_routes = Blueprint('conversation_routes', __name__)
 
@@ -21,13 +22,19 @@ def load_conversation_route():
     data = request.get_json()
     conversation_id = data['conversation_id']
     conversation  = load_conversation(conversation_id)
+
+
     if conversation:
-        return jsonify({    
-            'status': 'success', 
-            'conversation': conversation,
-            'input_tokens': 0,
-            'output_tokens': 0
+        conversation_objects, parsing_errors = produce_conversation_objects_for_client(conversation['messages'])
+        logger.debug(f"conversation_objects: {conversation_objects}")
+        jsonified_result = jsonify({
+            'success_type': 'full_success',
+            'conversation_id': conversation_id,
+            'conversation_name': conversation['name'],
+            'new_conversation_objects': conversation_objects,
+            'parsing_errors': parsing_errors,
         })
+        return jsonified_result
     else:
         return jsonify({'status': 'error', 'message': 'Conversation not found'}), 404
 
