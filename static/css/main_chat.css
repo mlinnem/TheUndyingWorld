@@ -300,10 +300,33 @@ h2 {
 }
 
 .prescene_contents {
-    margin-left: 1.875rem;
-    margin-right: 1.875rem;
+    padding-left: 1.875rem;
+    padding-right: 1.875rem;
     flex: 1;
 }
+
+.prescene_footer {
+    display: flex;
+}
+
+
+.difficulty_target {
+    flex: 1;
+}
+
+.difficulty_roll {
+    flex: 1;
+}
+
+.world_reveal_level {
+    flex: 1;
+}
+
+.world_reveal_roll {
+    flex: 1;
+}
+
+
 
 .header {
     font-family: 'Roboto Slab', serif;

@@ -47,7 +47,7 @@ function sendMessage() {
         // Add loading message
         const loadingDiv = document.createElement('div');
         loadingDiv.classList.add('co', 'loading_message', 'module', 'left', 'primary-text-style');
-        loadingDiv.innerHTML = body_text('Thinking...');
+        loadingDiv.innerHTML = "<div class='module_contents has_contents'>" + body_text('Thinking...') + "</div>";
         chatContainer.appendChild(loadingDiv);
         scrollChatNearBottom();
 
@@ -185,6 +185,61 @@ function get_or_create_world_reveal_element(analysisDiv) {
     }
 }
 
+function determine_difficulty_color(difficultyElement,rolledValue) {
+    const targetElement = difficultyElement.querySelector('.difficulty_target');
+        const targetText = targetElement ? targetElement.textContent.replace('Target', '').trim() : null;
+        if (!isNaN(parseInt(targetText))) {
+            console.debug("targetText is a number");
+            targetValue = parseInt(targetText);
+            if (rolledValue >= targetValue) {
+                degreeOfSuccess = (rolledValue - targetValue) / (100 - targetValue);
+                hue = 60 +degreeOfSuccess * 60;
+                return 'hsl(' + hue + ', 23%, 17%, .3)';
+            } else {
+                degreeOfFailure = (targetValue - rolledValue) / targetValue;
+                hue = 60 - (degreeOfFailure * 60);
+                return 'hsl(' + hue + ', 23%, 17%, .3)';
+            }
+        } else {
+            console.debug("targetText is not a number");
+            return 'hsl(90, 23%, 17%, .3)';
+        }
+}
+
+function determine_world_reveal_color(worldRevealElement, rolledValue) {
+    console.debug("determining world reveal color");
+    console.debug("rolledValue: ", rolledValue);
+    console.debug("worldRevealElement: ", worldRevealElement);
+    const targetElement = worldRevealElement.querySelector('.world_reveal_level');
+    const targetText = targetElement ? targetElement.textContent.replace('Level', '').trim() : null;
+    targetValue = targetText;
+    console.debug("targetValue: ", targetValue);
+        if (targetValue.toLowerCase().trim() === "n/a") {
+            return 'hsl(216, 23%, 17%, .3)';
+        } else if (targetValue.toLowerCase().trim() === "light") {
+            if (rolledValue >= 95) {
+                return 'hsl(80, 23%, 17%, .3)';
+            } else if (rolledValue <= 5) {
+                return 'hsl(40, 23%, 17%, .3)';
+            } else {
+                return 'hsl(216, 23%, 17%, .3)';
+            }
+        } else if (targetValue.toLowerCase().trim() === "moderate") {
+            if (rolledValue >= 66) {
+                h = 120 * (rolledValue / 100);
+                return 'hsl(' + h + ', 23%, 17%, .3)';
+            } else if (rolledValue <= 33) {
+                h = 120 * (rolledValue / 100);
+                return 'hsl(' + h + ', 23%, 17%, .3)';
+            } else {
+                return 'hsl(216, 23%, 17%, .3)';
+            }
+        } else if (targetValue.toLowerCase().trim() === "strong") {
+            h = 120 * (rolledValue / 100);
+            return 'hsl(' + h + ', 23%, 17%, .3)';
+        }
+}
+
 function addConversationObject(co) {
 
     if (co.type === 'user_message') {
@@ -231,12 +286,16 @@ function addConversationObject(co) {
         console.debug("adding difficulty roll");
         const presceneDiv = get_or_create_prescene();
         const difficultyElement = get_or_create_difficulty_element(presceneDiv);
-        inject_content_into_element(difficultyElement, '.difficulty_roll', header("Roll") + data_text(str(co.integer)));
+        color = determine_difficulty_color(difficultyElement,co.integer);
+        difficultyElement.style.backgroundColor = color;
+        inject_content_into_element(difficultyElement, '.difficulty_roll', header("Roll") + data_text(co.integer.toString()));
     } else if (co.type === 'world_reveal_roll') {
         console.debug("adding world reveal roll");
         const presceneDiv = get_or_create_prescene();
         const worldRevealElement = get_or_create_world_reveal_element(presceneDiv);
-        inject_content_into_element(worldRevealElement, '.world_reveal_roll', header("Roll") + data_text(str(co.integer)));
+        color = determine_world_reveal_color(worldRevealElement,co.integer);
+        worldRevealElement.style.backgroundColor = color;
+        inject_content_into_element(worldRevealElement, '.world_reveal_roll', header("Roll") + data_text(co.integer.toString()));
     } else if (co.type === 'resulting_scene_description') {
         console.debug("adding resulting scene description");
         coDiv = make_module(co);
@@ -244,7 +303,8 @@ function addConversationObject(co) {
         const previousElement = chatContainer.lastElementChild;
         if (previousElement && 
             (previousElement.classList.contains('bottom') || 
-             previousElement.classList.contains('freestanding'))) {
+             previousElement.classList.contains('freestanding') ||
+             previousElement.classList.contains('right'))) {
             coDiv.classList.add('top');
         } else {
             coDiv.classList.add('middle');
