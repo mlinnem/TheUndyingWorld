@@ -17,8 +17,6 @@ def convert_user_text_to_message(user_text):
 
 def convert_messages_to_cos(messages):
 
-    logger.debug(f"messages to be converted: {messages}")
-
     if not isinstance(messages, (list, tuple)):
         logger.error(f"Invalid messages format: expected list or tuple, got {type(messages)}")
         return []
@@ -130,10 +128,10 @@ def convert_messages_to_cos(messages):
                                                 if integer < 1 or integer > 100:
                                                     logger.warning(f"Invalid negative difficulty target: {integer}")
                                                     continue
-                                                cos.append({'type': 'difficulty_target', 'integer': integer})
+                                                cos.append({'type': 'difficulty_target', 'text': integer})
                                             except ValueError:
-                                                logger.error(f"Invalid difficulty target value: {body}")
-                                                continue
+                                                # This is to handle the case when it is 'Trivial' but we might want to validate more here.
+                                                cos.append({'type': 'difficulty_target', 'text': body})
                                         elif 'world reveal analysis' in c_header:
                                             cos.append({'type': 'world_reveal_analysis', 'text': body})
                                         elif 'world reveal level' in c_header:
@@ -150,7 +148,6 @@ def convert_messages_to_cos(messages):
                                     logger.error(f"Error processing section '{header[:50]}...': {str(e)}\n{traceback.format_exc()}")
                                     continue
                         elif item_type == 'tool_use':
-                            logger.debug(f"tool_use: {item}")
                             name = item['name']
                             cos.append({'type': 'tool_use', 'function_name': name})
                         else:

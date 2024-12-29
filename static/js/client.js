@@ -33,6 +33,7 @@ function scrollChatNearBottom() {
 
 
 function sendMessage() {
+    console.info("sending message");
 
     const text = userInput.value.trim();
     if (text) {
@@ -63,6 +64,8 @@ function sendMessage() {
             return response.json();
         })
         .then(data => {
+            console.info("received data");
+            console.info("adding " + (data.new_conversation_objects.length) + " conversation objects");
             addConversationObjects(data.new_conversation_objects);
             
             if (data.success_type === 'partial_success') {
@@ -123,63 +126,121 @@ function addConversationObjects(conversation_objects) {
     });
 }
 
-function module_header(label) {
-    return "<span class='module_header'>" + label + "</span>";
+function header(label) {
+    return "<span class='header'>" + label + "</span>";
 }
 
 function body_text(contents) {
-    return "<span class='conversation-body-text'>" + contents + "</span>";
+    return "<div class='conversation-body-text'>" + contents + "</div>";
 }
 
-function addConversationObject(co) {
+function data_text(contents) {
+    return "<div class='conversation-data-text info-text-style'>" + contents + "</div>";
+}
+
+function make_module(co) {
     const coDiv = document.createElement('div');
     coDiv.classList.add('co');
     coDiv.classList.add('module');
     coDiv.classList.add(co.type);
-    
-    if (co.type === 'user_message') {
-        coDiv.classList.add('right')
+    coDiv.innerHTML = "<div class='module_contents no_contents'></div>";
+    return coDiv;
+}
+
+function get_or_create_prescene() {
+    const previousElement = chatContainer.lastElementChild;
+    if (previousElement && previousElement.classList.contains('pre_scene')) {
+        return previousElement;
     } else {
-        coDiv.classList.add('left');
+        const analysisDiv = document.createElement('div');
+        analysisDiv.classList.add('co','module','pre_scene', 'left', 'top');
+        chatContainer.appendChild(analysisDiv);
+        return analysisDiv;
     }
+}
+
+function get_or_create_difficulty_element(analysisDiv) {
+    const difficultyElement = analysisDiv.querySelector('.difficulty_element');
+    if (difficultyElement) {
+        return difficultyElement;
+    } else {
+        const difficultyElement = document.createElement('div');
+        difficultyElement.classList.add('difficulty_element', 'prescene_contents');
+        difficultyElement.innerHTML = header("Difficulty") + "<div class='difficulty_analysis info-text-style no_contents'></div><div class='prescene_footer'><span class='difficulty_target info-text-style no_contents'></span><span class='difficulty_roll info-text-style no_contents'></span></div>";
+        analysisDiv.appendChild(difficultyElement); //TODO: Should probable be injecting so order doesn't matter
+        return difficultyElement;
+    }
+}
+
+function get_or_create_world_reveal_element(analysisDiv) {
+    const difficultyElement = analysisDiv.querySelector('.world_reveal_element');
+    if (difficultyElement) {
+        return difficultyElement;
+    } else {
+        const difficultyElement = document.createElement('div');
+        difficultyElement.classList.add('world_reveal_element', 'prescene_contents');
+        difficultyElement.innerHTML = header("World Reveal") + "<div class='world_reveal_analysis info-text-style no_contents'></div><div class='prescene_footer'><span class='world_reveal_level info-text-style no_contents'></span><span class='world_reveal_roll info-text-style no_contents'></span></div>";
+        analysisDiv.appendChild(difficultyElement);
+        return difficultyElement;
+    }
+}
+
+function addConversationObject(co) {
 
     if (co.type === 'user_message') {
-        coDiv.innerHTML = body_text(marked.parse(co.text));
+        console.debug("adding user message");
+        coDiv = make_module(co);
+        inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding');
         coDiv.classList.add('primary-text-style');
+        coDiv.classList.add('right')
+        chatContainer.appendChild(coDiv);
     } else if (co.type === 'map_data') {
-        coDiv.innerHTML = module_header("Map Data") + body_text(marked.parse(co.text));
-        coDiv.classList.add('freestanding');
-        coDiv.classList.add('info-text-style');
+        console.debug("adding map data");
+        coDiv = make_module(co);
+        inject_content_into_element(coDiv, '.module_contents', header("Map Data") + body_text(marked.parse(co.text)));
+        coDiv.classList.add('freestanding', 'info-text-style', 'left');
+        chatContainer.appendChild(coDiv);
     } else if (co.type === 'ooc_message') {
-        coDiv.innerHTML = body_text(marked.parse(co.text));
-        coDiv.classList.add('freestanding');
+        console.debug("adding ooc message");
+        coDiv = make_module(co);
+        inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
+        coDiv.classList.add('freestanding' , 'primary-text-style', 'left');
+        chatContainer.appendChild(coDiv);
     } else if (co.type === 'difficulty_analysis') {
-        coDiv.innerHTML = module_header("Difficulty Analysis") + body_text(marked.parse(co.text));
-        coDiv.classList.add('top');
-        coDiv.classList.add('info-text-style');
+        console.debug("adding difficulty analysis");
+        const presceneDiv = get_or_create_prescene();
+        const difficultyElement = get_or_create_difficulty_element(presceneDiv);
+        inject_content_into_element(difficultyElement, '.difficulty_analysis', body_text(marked.parse(co.text)));
     } else if (co.type === 'difficulty_target') {
-        coDiv.innerHTML = module_header("Difficulty Target") +  body_text(co.integer);
-        coDiv.classList.add('middle');
-        coDiv.classList.add('info-text-style');
+        console.debug("adding difficulty target");
+        const presceneDiv = get_or_create_prescene();
+        const difficultyElement = get_or_create_difficulty_element(presceneDiv);
+        inject_content_into_element(difficultyElement, '.difficulty_target', header("Target") + data_text(co.text));
     } else if (co.type === 'world_reveal_analysis') {
-        coDiv.innerHTML = module_header("World Reveal Analysis") + body_text(marked.parse(co.text));
-        coDiv.classList.add('middle');
-        coDiv.classList.add('info-text-style');
+        console.debug("adding world reveal analysis");
+        const presceneDiv = get_or_create_prescene();
+        const worldRevealElement = get_or_create_world_reveal_element(presceneDiv);
+        inject_content_into_element(worldRevealElement, '.world_reveal_analysis', body_text(marked.parse(co.text)));
     } else if (co.type === 'world_reveal_level') {
-        coDiv.innerHTML = module_header("World Reveal Level") + body_text(marked.parse(co.text));
-        coDiv.classList.add('middle');
-        coDiv.classList.add('info-text-style');
+        console.debug("adding world reveal level");
+        const presceneDiv = get_or_create_prescene();
+        const worldRevealElement = get_or_create_world_reveal_element(presceneDiv);
+        inject_content_into_element(worldRevealElement, '.world_reveal_level', header("Level") + data_text(co.text));
     } else if (co.type === 'difficulty_roll') {
-        coDiv.innerHTML = module_header("Difficulty Roll") + body_text(co.integer);
-        coDiv.classList.add('middle');
-        coDiv.classList.add('info-text-style');
+        console.debug("adding difficulty roll");
+        const presceneDiv = get_or_create_prescene();
+        const difficultyElement = get_or_create_difficulty_element(presceneDiv);
+        inject_content_into_element(difficultyElement, '.difficulty_roll', header("Roll") + data_text(str(co.integer)));
     } else if (co.type === 'world_reveal_roll') {
-        coDiv.innerHTML = module_header("World Reveal Roll") + body_text(co.integer);
-        coDiv.classList.add('middle');
-        coDiv.classList.add('info-text-style');
+        console.debug("adding world reveal roll");
+        const presceneDiv = get_or_create_prescene();
+        const worldRevealElement = get_or_create_world_reveal_element(presceneDiv);
+        inject_content_into_element(worldRevealElement, '.world_reveal_roll', header("Roll") + data_text(str(co.integer)));
     } else if (co.type === 'resulting_scene_description') {
-        coDiv.innerHTML = body_text(marked.parse(co.text));
+        console.debug("adding resulting scene description");
+        coDiv = make_module(co);
+        inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
         const previousElement = chatContainer.lastElementChild;
         if (previousElement && 
             (previousElement.classList.contains('bottom') || 
@@ -188,32 +249,42 @@ function addConversationObject(co) {
         } else {
             coDiv.classList.add('middle');
         }
-        coDiv.classList.add('primary-text-style');
+        coDiv.classList.add('primary-text-style', 'left');
+        chatContainer.appendChild(coDiv);
     } else if (co.type === 'tracked_operations') {
-        coDiv.innerHTML = module_header("Tracked Operations") + body_text(marked.parse(co.text));
-        coDiv.classList.add('middle');
-        coDiv.classList.add('info-text-style');
+        console.debug("adding tracked operations");
+        coDiv = make_module(co);
+        inject_content_into_element(coDiv, '.module_contents', header("Tracked Operations") + body_text(marked.parse(co.text)));
+        coDiv.classList.add('middle', 'info-text-style', 'left');
+        chatContainer.appendChild(coDiv);
     } else if (co.type === 'condition_table') {
-        coDiv.innerHTML = module_header("Character Condition") + body_text(marked.parse(co.text));
-        coDiv.classList.add('bottom');
-        coDiv.classList.add('info-text-style');
+        console.debug("adding condition table");
+        coDiv = make_module(co);
+        inject_content_into_element(coDiv, '.module_contents', header("Character Condition") + body_text(marked.parse(co.text)));
+        coDiv.classList.add('bottom', 'info-text-style', 'left');
+        chatContainer.appendChild(coDiv);
     } else if (co.type === 'out_of_section_text') {
-        coDiv.innerHTML = body_text(marked.parse(co.text));
-        coDiv.classList.add('freestanding');
+        console.debug("adding out of section text");
+        coDiv = make_module(co);
+        inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
+        coDiv.classList.add('freestanding', "left");
+        chatContainer.appendChild(coDiv);
     } else if (co.type === 'unrecognized_section') {
-        coDiv.innerHTML = module_header(co.header_text) + body_text(marked.parse(co.body_text));
-        coDiv.classList.add('freestanding');
-        coDiv.classList.add('primary-text-style');
+        console.debug("adding unrecognized section");
+        coDiv = make_module(co);
+        inject_content_into_element(coDiv, '.module_contents', header(co.header_text) + body_text(marked.parse(co.body_text)));
+        coDiv.classList.add('freestanding', 'primary-text-style', 'left');
+        chatContainer.appendChild(coDiv);
     } else if (co.type === 'server_error') {
-        coDiv.innerHTML = body_text(marked.parse(co.text));
-        coDiv.classList.add('freestanding');
-        coDiv.classList.add('info-text-style');
+        console.debug("adding server error");
+        coDiv = make_module(co);
+        inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
+        coDiv.classList.add('freestanding', 'info-text-style', 'left');
+        chatContainer.appendChild(coDiv);
         console.error("server error: ", co.text);
     } else {
         console.error("unknown conversation object type: ", co.type);
     }
-
-    chatContainer.appendChild(coDiv);
 }
 
 function updateTokenInfo(data) {
@@ -319,6 +390,13 @@ function deleteConversation(conversationId) {
         console.error('Error:', error);
         updateStatus.textContent = 'Error deleting conversation';
     });
+}
+
+function inject_content_into_element(element, content_container_class, content) {
+    let contentContainer = element.querySelector(content_container_class);
+    contentContainer.innerHTML = content;
+    contentContainer.classList.add('has_contents');
+    contentContainer.classList.remove('no_contents');
 }
 
 // Initialize

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto+Serif:wght@400;500&family=Roboto+Slab:wght@400;500&family=Roboto:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto+Serif:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&family=Roboto:wght@300;400;500;&display=swap');
 
 
 body {
@@ -210,10 +210,16 @@ h2 {
     background-color: rgba(105, 0, 0, 0.9);
 }
 
+
 .top {
     margin-top: 2.5rem;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+}
+
+.top-left {
+    margin-top: 2.5rem;
+    border-top-left-radius: 20px;
 }
 
 .bottom {
@@ -235,6 +241,10 @@ h2 {
     border-top-right-radius: 20px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+}
+
+.module.pre_scene {
+    background-color: rgba(33, 41, 53, 0.4);
 }
 
 .module.difficulty_analysis {
@@ -279,16 +289,30 @@ h2 {
     font-weight: 400;
 }
 
+.module_contents.has_contents {
+    margin-left: 1.875rem;
+    margin-right: 1.875rem;
+}
 
-.module_header {
-    font-family: 'Roboto Slab', sans-serif;
+.pre_scene.module{
+    display: flex;
+    justify-content: space-between;
+}
+
+.prescene_contents {
+    margin-left: 1.875rem;
+    margin-right: 1.875rem;
+    flex: 1;
+}
+
+.header {
+    font-family: 'Roboto Slab', serif;
     font-size: .75rem;
     font-weight: 500;
     color: #EEE8CF;
     margin-top: 1.25rem;
     margin-bottom: 1.25rem;
     display: block;
-    padding-left: 1.875rem;
 }
 
 .module.unrecognized_section {
@@ -302,8 +326,11 @@ h2 {
     display: block;
     margin-top: 1.875rem;
     margin-bottom: 2.5rem;
-    margin-left: 1.875rem;
-    margin-right: 1.875rem;
+}
+
+.conversation-data-text {
+    margin-top: 1.875rem;
+    padding-bottom: 2.5rem;
 }
 
 .module.map_data {
