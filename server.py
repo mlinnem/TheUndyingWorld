@@ -65,7 +65,7 @@ zombie_system_prompt = [{
         "cache_control": {"type": "ephemeral"}
 }]
 
-def send_message_to_gm(conversation, temperature=0.7, system_prompt=zombie_system_prompt):
+def send_message_to_gm(conversation, temperature=0.7):
     logger.info(f"Sending message to GM {conversation['messages']}")
 
     global zombie_system_prompt
@@ -73,7 +73,7 @@ def send_message_to_gm(conversation, temperature=0.7, system_prompt=zombie_syste
     response = client.messages.create(
         model="claude-3-5-sonnet-20241022",
         messages=conversation['messages'],
-        system=system_prompt,  
+        system=conversation['system_prompt'],  
         max_tokens=MAX_OUTPUT_TOKENS,
         temperature=temperature,
         tools = tools,
@@ -143,7 +143,7 @@ def summarize_with_gm(conversation):
                 }],
                 system=system_prompt,
                 max_tokens=MAX_OUTPUT_TOKENS,
-                temperature=0.35,
+                temperature=0.6,
             )
         
             summary = response.content[0].text
@@ -179,9 +179,9 @@ def chat():
     try:
     # get current conversation
         if 'current_conversation_id' in session:
-            conversation = load_conversation(session['current_conversation_id'])
+            conversation = load_conversation(session['current_conversation_id'], zombie_system_prompt)
         else:
-            conversation = create_new_conversation()
+            conversation = create_new_conversation(zombie_system_prompt)
             session['current_conversation_id'] = conversation['conversation_id']
     except Exception as e:
         logger.error(f"Error loading or creating conversation: {e}")
@@ -271,7 +271,7 @@ def chat():
         elif isinstance(e, anthropic.RateLimitError):
             logger.error(f"Rate limit error: {e}")
             response['error_type'] = 'rate_limit_error'
-            response['error_message'] = "Anthropic rate limit exceeded, please try again in at least one minute."
+            response['error_message'] = "Anthropic rate limit exceeded. Either you've sent too many requests in a short period of time, or you've exceeded your monthly request limit. Either wait a few minutes, or raise your monthly spending limit to proceed."
         elif isinstance(e, anthropic.APIConnectionError):
             logger.error(f"API connection error: {e}")
             response['error_type'] = 'internal_error'

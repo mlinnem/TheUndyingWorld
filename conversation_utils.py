@@ -6,6 +6,18 @@ from config import *
 
 logger = logging.getLogger(__name__)
 
+manual_instructions =  ""
+with open('instructions.MD', 'r') as file:
+    manual_instructions = file.read()
+
+
+zombie_system_prompt = [{
+        "type": "text",
+        "text": manual_instructions,
+        "cache_control": {"type": "ephemeral"}
+}]
+
+
 CONVERSATIONS_DIR = "conversations"
 
 if not os.path.exists(CONVERSATIONS_DIR):
@@ -27,6 +39,13 @@ def load_conversation(conversation_id):
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
             conversation_data = json.load(f)
+            if conversation_data.get('system_prompt'):
+                print(f"Continuing with old system prompt for conversation {conversation_id}, {conversation_data['prompt_version']}")
+                return conversation_data
+            else:
+                print(f"System prompt not found in conversation {conversation_id}. Using current system prompt.")
+                conversation_data['system_prompt'] = zombie_system_prompt
+                conversation_data['prompt_version'] = datetime.now().isoformat()
             return conversation_data
     return None
 
@@ -52,12 +71,13 @@ def list_conversations():
                     'name': conversation_data['name'],
                     'last_updated': conversation_data['last_updated']
                 })
+                save_conversation(conversation_data)
     return sorted(conversations, key=lambda x: x['last_updated'], reverse=True)
 
 def generate_conversation_id():
     return datetime.now().strftime("%Y%m%d%H%M%S")
 
-def create_new_conversation():
+def create_new_conversation(current_system_prompt):
     logger.info("Creating new conversation")
 
     conversation = {
@@ -65,7 +85,9 @@ def create_new_conversation():
         'name': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'messages': [],
         'last_updated': datetime.now().isoformat(),
-        'cache_points': []
+        'cache_points': [],
+        'system_prompt': current_system_prompt,
+        'prompt_version': datetime.now().isoformat()
     }
     return conversation
 

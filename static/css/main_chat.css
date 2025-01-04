@@ -131,6 +131,10 @@ h1 {
     margin-bottom: 20px;
 }
 
+.server-error {
+    background-color: rgba(105, 0, 0, 0.9);
+}
+
 h2 {
     font-size: 20px;
     font-weight: bold;
