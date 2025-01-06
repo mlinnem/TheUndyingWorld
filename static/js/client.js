@@ -1,5 +1,6 @@
 // DOM Elements
 const chatContainer = document.getElementById('chat-container');
+const chatMessagesWrapper = document.getElementById('chat-messages-wrapper');
 const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
 const tokenInfo = document.getElementById('token-info');
@@ -48,7 +49,7 @@ function sendMessage() {
         const loadingDiv = document.createElement('div');
         loadingDiv.classList.add('co', 'loading_message', 'module', 'left', 'primary-text-style');
         loadingDiv.innerHTML = "<div class='module_contents has_contents'>" + body_text('Thinking...') + "</div>";
-        chatContainer.appendChild(loadingDiv);
+        chatMessagesWrapper.appendChild(loadingDiv);
         scrollChatNearBottom();
 
         fetch('/chat', {
@@ -148,13 +149,13 @@ function make_module(co) {
 }
 
 function get_or_create_prescene() {
-    const previousElement = chatContainer.lastElementChild;
+    const previousElement = chatMessagesWrapper.lastElementChild;
     if (previousElement && previousElement.classList.contains('pre_scene')) {
         return previousElement;
     } else {
         const analysisDiv = document.createElement('div');
         analysisDiv.classList.add('co','module','pre_scene', 'left', 'top');
-        chatContainer.appendChild(analysisDiv);
+        chatMessagesWrapper.appendChild(analysisDiv);
         return analysisDiv;
     }
 }
@@ -266,19 +267,19 @@ function addConversationObject(co) {
         coDiv.classList.add('freestanding');
         coDiv.classList.add('primary-text-style');
         coDiv.classList.add('right')
-        chatContainer.appendChild(coDiv);
+        chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'map_data') {
         console.debug("adding map data");
         coDiv = make_module(co);
         inject_content_into_element(coDiv, '.module_contents', header("Map Data") + body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding', 'info-text-style', 'left');
-        chatContainer.appendChild(coDiv);
+        chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'ooc_message') {
         console.debug("adding ooc message");
         coDiv = make_module(co);
         inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding' , 'primary-text-style', 'left');
-        chatContainer.appendChild(coDiv);
+        chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'difficulty_analysis') {
         console.debug("adding difficulty analysis");
         const presceneDiv = get_or_create_prescene();
@@ -317,7 +318,7 @@ function addConversationObject(co) {
         console.debug("adding resulting scene description");
         coDiv = make_module(co);
         inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
-        const previousElement = chatContainer.lastElementChild;
+        const previousElement = chatMessagesWrapper.lastElementChild;
         if (previousElement && 
             (previousElement.classList.contains('bottom') || 
              previousElement.classList.contains('freestanding') ||
@@ -327,37 +328,37 @@ function addConversationObject(co) {
             coDiv.classList.add('middle');
         }
         coDiv.classList.add('primary-text-style', 'left');
-        chatContainer.appendChild(coDiv);
+        chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'tracked_operations') {
         console.debug("adding tracked operations");
         coDiv = make_module(co);
         inject_content_into_element(coDiv, '.module_contents', header("Tracked Operations") + body_text(marked.parse(co.text)));
         coDiv.classList.add('middle', 'info-text-style', 'left');
-        chatContainer.appendChild(coDiv);
+        chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'condition_table') {
         console.debug("adding condition table");
         coDiv = make_module(co);
         inject_content_into_element(coDiv, '.module_contents', header("Character Condition") + body_text(marked.parse(co.text)));
         coDiv.classList.add('bottom', 'info-text-style', 'left');
-        chatContainer.appendChild(coDiv);
+        chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'out_of_section_text') {
         console.debug("adding out of section text");
         coDiv = make_module(co);
         inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding', "left");
-        chatContainer.appendChild(coDiv);
+        chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'unrecognized_section') {
         console.debug("adding unrecognized section");
         coDiv = make_module(co);
         inject_content_into_element(coDiv, '.module_contents', header(co.header_text) + body_text(marked.parse(co.body_text)));
         coDiv.classList.add('freestanding', 'primary-text-style', 'left');
-        chatContainer.appendChild(coDiv);
+        chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'server_error') {
         console.debug("adding server error");
         coDiv = make_module(co);
         inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding', 'info-text-style', 'left');
-        chatContainer.appendChild(coDiv);
+        chatMessagesWrapper.appendChild(coDiv);
         console.error("server error: ", co.text);
     } else {
         console.error("unknown conversation object type: ", co.type);
@@ -398,7 +399,10 @@ function updateConversationList() {
                 if (conv.conversation_id === activeConversationId) {
                     convDiv.classList.add('active');
                 }
-                convDiv.textContent = conv.name;
+                const span = document.createElement('span');
+                span.classList.add('conversation-item-text');
+                span.innerHTML = conv.name;
+                convDiv.appendChild(span);
                 convDiv.onclick = () => loadConversation(conv.conversation_id);
                 convDiv.id = conv.conversation_id;
                 const deleteBtn = document.createElement('button');
@@ -429,7 +433,7 @@ function loadConversation(conversationId) {
     .then(data => {
         if (data.status === 'success') {
             activeConversationId = conversationId;
-            chatContainer.innerHTML = '';
+            chatMessagesWrapper.innerHTML = '';
             //remove active class from all conversation items
             conversationList.querySelectorAll('.conversation-item').forEach(item => {
                 item.classList.remove('active');

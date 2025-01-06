@@ -1,32 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto+Serif:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&family=Roboto:wght@300;400;500&display=swap');
+
+
 .conversation-sidebar {
     flex: 0 0 250px;
-    background-color: rgba(20, 20, 20, 0.9);
+    background-color: #112020;
     padding: 20px;
     overflow-y: auto;
-    color: rgba(238, 232, 207, 0.83);
-}
-
-#conversation-list {
-    margin-top: 10px;
+    color: #FFE7D2;
 }
 
 .conversation-item {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    height: 80px;
     align-items: center;
-    margin-bottom: 5px;
-    background-color: rgba(22, 29, 39, 0.5);
-    border-radius: 4px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    padding-left: 12px;
-    padding-right: 6px;
+    background-color: #182525;
+    border-radius: 20px;
+    text-align: center;
+    color: hsla(28, 100%, 91%, 0.66);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    font-family: 'Roboto Slab', serif;
+}
+
+.conversation-item-text {
+    text-align: left;
+    margin-left: 20px;
 }
 
 
-
 .conversation-item:hover {
-    background-color: rgb(109, 0, 91);
+    background-color: #323734;
+    color: #FFE7D2;
+
 }
 
 .conversation-item > button:hover {
@@ -34,15 +41,18 @@
 }
 
 .conversation-item.active {
-    background-color:  rgb(51, 55, 60);
-    color: rgba(238, 232, 207, 0.83);
+    background-color:  #4B4842;
+    color: #FFE7D2;
 }
 
 .conversation-item button {
-    padding: 2px 5px;
-    margin: 0 2px;
+    margin-left: 20px;
     font-size: 0.8em;
     border: 0px;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    background-color: rgba(0,0,0,0.1);
 }
 
 .conversation-item .delete-btn {
@@ -54,11 +64,12 @@
 }
 
 #new-conversation-btn {
+    background-color: #243838;
     width: 100%;
-    margin-bottom: 10px;
-    color:rgba(238, 232, 207, 0.8);
+    height: 80px;
+    margin-top: 20px;
 }
 
 #new-conversation-btn:hover {
-    background-color: rgb(109, 0, 91, 1);
+    background-color: #996300;
 }
