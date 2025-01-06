@@ -21,10 +21,7 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    background-image: url('/static/images/Background.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: #081313;
     border-radius: 8px;
     color: rgba(238, 232, 207, 0.98);
     margin: 0 auto;
@@ -54,7 +51,7 @@ body {
 }
 
 .module.ooc_message {
-    background-color: #191C1C;
+    background-color: hsla(180, 42%, 13%, 0.4);
     font-family: 'Roboto Serif', serif;
     font-size: 1.125rem;
     line-height: 1.6875rem;
@@ -250,12 +247,35 @@ h2 {
 }
 
 .module.pre_scene {
-    background-color:  #191C1C;
+    background-color: #0C1E1E;
 }
 
+.module.difficulty_analysis {
+    background-color: hsla(180, 42%, 13%, 0.4);
+}
+
+.module.difficulty_target {
+    background-color: hsla(180, 42%, 13%, 0.4);
+}
+
+.module.world_reveal_analysis {
+    background-color: hsla(180, 42%, 13%, 0.4);
+}
+
+.module.world_reveal_level {
+    background-color: hsla(180, 42%, 13%, 0.4);
+}
+
+.module.difficulty_roll {
+    background-color: hsla(180, 42%, 13%, 0.4);
+}
+
+.module.world_reveal_roll {
+    background-color: hsla(180, 42%, 13%, 0.4);
+}
 
 .module.tracked_operations {
-    background-color:  #191C1C;
+    background-color: hsla(180, 42%, 13%, 0.4);
 }
 
 .info-text-style {
@@ -322,7 +342,7 @@ h2 {
 }
 
 .module.unrecognized_section {
-    background-color: rgba(45, 45, 45, 0.8);
+    background-color: #0C1E1E;
     font-family: 'Roboto Serif', serif;
     font-size: 1.125rem;
     line-height: 1.6875rem;
@@ -343,7 +363,7 @@ h2 {
 
     font-size: .75rem;
     line-height: 1.125rem;
-    background-color: rgba(45, 45, 45, 0.8);
+    background-color: rgba(33, 41, 53, 0.4);
 }
 
 .module.error-message {
@@ -360,17 +380,17 @@ h2 {
     font-size: 1.125rem;
     line-height: 1.6875rem;
     font-family: 'Roboto Serif', serif;
-    background-color: #132E2E;
+    background-color: #003333;
 }
 
 .module.condition_table {
     
-    background-color: #191C1C;
+    background-color: hsla(180, 42%, 13%, 0.4);
 }
 
 .loading_message {
     background-color: #212935;
-    background: linear-gradient(to top, F9854B 0%, 3F624A 56%, 002929 75%,transparent 100%);
+    background: linear-gradient(to top, #161d27 0%, transparent 100%);
     color: rgb(255, 247, 218);
     align-self: flex-start;
     animation: breathe 13s ease-out infinite;

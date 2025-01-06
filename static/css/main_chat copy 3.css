@@ -21,10 +21,7 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    background-image: url('/static/images/Background.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: linear-gradient(to bottom, #F9854B 0%, #3F624A 56%, #002929 75%, #041019 100%);
     border-radius: 8px;
     color: rgba(238, 232, 207, 0.98);
     margin: 0 auto;
@@ -54,7 +51,7 @@ body {
 }
 
 .module.ooc_message {
-    background-color: #191C1C;
+    background-color: hsla(180, 42%, 13%, 0.4);
     font-family: 'Roboto Serif', serif;
     font-size: 1.125rem;
     line-height: 1.6875rem;
@@ -250,12 +247,35 @@ h2 {
 }
 
 .module.pre_scene {
-    background-color:  #191C1C;
+    background-color: rgba(45, 45, 45, 0.8);
 }
 
+.module.difficulty_analysis {
+    background-color: hsla(180, 42%, 13%, 0.4);
+}
+
+.module.difficulty_target {
+    background-color: hsla(180, 42%, 13%, 0.4);
+}
+
+.module.world_reveal_analysis {
+    background-color: rgba(45, 45, 45, 0.8);
+}
+
+.module.world_reveal_level {
+    background-color: rgba(45, 45, 45, 0.8);
+}
+
+.module.difficulty_roll {
+    background-color: rgba(45, 45, 45, 0.8);
+}
+
+.module.world_reveal_roll {
+    background-color: rgba(45, 45, 45, 0.8);
+}
 
 .module.tracked_operations {
-    background-color:  #191C1C;
+    background-color: rgba(45, 45, 45, 0.8);
 }
 
 .info-text-style {
@@ -360,12 +380,12 @@ h2 {
     font-size: 1.125rem;
     line-height: 1.6875rem;
     font-family: 'Roboto Serif', serif;
-    background-color: #132E2E;
+    background-color: #2D2D2D;
 }
 
 .module.condition_table {
     
-    background-color: #191C1C;
+    background-color: rgba(45, 45, 45, 0.8);
 }
 
 .loading_message {

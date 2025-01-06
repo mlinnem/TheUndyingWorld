@@ -51,13 +51,15 @@ logger.addHandler(handler)
 
 # SET UP INITIAL PROMPTS
 
-manual_instructions =  ""
-with open('instructions.MD', 'r') as file:
-    manual_instructions = file.read()
 
 tools = []
 with open('tools.json', 'r') as file:
     tools = json.load(file)
+
+manual_instructions =  ""
+with open('instructions.MD', 'r') as file:
+    manual_instructions = file.read()
+
 
 zombie_system_prompt = [{
         "type": "text",
@@ -179,7 +181,7 @@ def chat():
     try:
     # get current conversation
         if 'current_conversation_id' in session:
-            conversation = load_conversation(session['current_conversation_id'], zombie_system_prompt)
+            conversation = load_conversation(session['current_conversation_id'])
         else:
             conversation = create_new_conversation(zombie_system_prompt)
             session['current_conversation_id'] = conversation['conversation_id']

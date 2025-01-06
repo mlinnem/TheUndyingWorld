@@ -1,5 +1,11 @@
 # One off notes
 
+! May need to introduce 'stakes' mechanism to not make every interaction a big deal.
+! Gotta work on input text box. Bigger, or can grow, and some better borders.
+! Need to really get better on summarization bit. Will eff up long sessions.
+! Reform condition table
+! Clean up weird markdown artifacts
+! Maybe make plot point of center of zone granting a wish or some power to a faction?
 ! Still experiencing bug where the first description doesn't have rounded corners on top.
 ! Other corner anomalies
 ! Maybe still too open to suggestion. Encourage saying 'no' to suggestions.
@@ -11,6 +17,7 @@
 ! When there is a rate limit, literally limit user ability to send messages.
 ! Maybe make it several years since the outbreak. Time for new culture to emerge.
 ! Gotta gotta gotta handle rate limiting better.
+
 
 # Notes with context
 This conversation block reveals too much:

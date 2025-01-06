@@ -193,16 +193,16 @@ function determine_difficulty_color(difficultyElement,rolledValue) {
             targetValue = parseInt(targetText);
             if (rolledValue >= targetValue) {
                 degreeOfSuccess = (rolledValue - targetValue) / (100 - targetValue);
-                hue = 60 +degreeOfSuccess * 60;
-                return 'hsl(' + hue + ', 23%, 17%, .3)';
+                l = degreeOfSuccess * 43;
+                return 'hsl(140,' + l + '%, 10%)';
             } else {
                 degreeOfFailure = (targetValue - rolledValue) / targetValue;
-                hue = 60 - (degreeOfFailure * 60);
-                return 'hsl(' + hue + ', 23%, 17%, .3)';
+                l = degreeOfFailure * 43;
+                return 'hsl(359,' + l + '%, 10%)';
             }
         } else {
             console.debug("targetText is not a number");
-            return 'hsl(90, 23%, 17%, .3)';
+            return 'hsl(180, 43%, 10%)';
         }
 }
 
@@ -215,28 +215,45 @@ function determine_world_reveal_color(worldRevealElement, rolledValue) {
     targetValue = targetText;
     console.debug("targetValue: ", targetValue);
         if (targetValue.toLowerCase().trim() === "n/a") {
-            return 'hsl(216, 23%, 17%, .3)';
+            return 'hsl(0, 0%, 10%)';
         } else if (targetValue.toLowerCase().trim() === "light") {
             if (rolledValue >= 95) {
-                return 'hsl(80, 23%, 17%, .3)';
+                console.debug("light success");
+                return 'hsl(140, 21%, 10%)';
             } else if (rolledValue <= 5) {
-                return 'hsl(40, 23%, 17%, .3)';
+                console.debug("light failure");
+                return 'hsl(359, 21%, 10%)';
             } else {
-                return 'hsl(216, 23%, 17%, .3)';
+                console.debug("light neutral");
+                return 'hsl(0, 0%, 10%)';  
             }
         } else if (targetValue.toLowerCase().trim() === "moderate") {
             if (rolledValue >= 66) {
-                h = 120 * (rolledValue / 100);
-                return 'hsl(' + h + ', 23%, 17%, .3)';
+                degreeOfSuccess = (rolledValue - 66) / (100 - 66);
+                l = degreeOfSuccess * 43;
+                console.debug("l in moderate success: ", l);
+                return 'hsl(140,' + l + '%, 10%)';
             } else if (rolledValue <= 33) {
-                h = 120 * (rolledValue / 100);
-                return 'hsl(' + h + ', 23%, 17%, .3)';
+                degreeOfFailure = (66 - rolledValue) / 66;
+                console.debug("degreeOfFailure: ", degreeOfFailure);
+                l = degreeOfFailure * 43;
+                console.debug("l in moderate failure: ", l);
+                return 'hsl(359,' + l + '%, 10%)';
             } else {
-                return 'hsl(216, 23%, 17%, .3)';
+                return 'hsl(0, 0%, 10%)';
             }
         } else if (targetValue.toLowerCase().trim() === "strong") {
-            h = 120 * (rolledValue / 100);
-            return 'hsl(' + h + ', 23%, 17%, .3)';
+            if (rolledValue > 50) {
+                degreeOfSuccess = (rolledValue - 50) / (100 - 50);
+                l = degreeOfSuccess * 43;
+                console.debug("l in strong success: ", l);
+                return 'hsl(140,' + l + '%, 10%)';
+            } else if (rolledValue < 50) {
+                degreeOfFailure = (50 - rolledValue) / 50;
+                l = degreeOfFailure * 43;
+                console.debug("l in strong failure: ", l);
+                return 'hsl(359,' + l + '%, 10%)';
+            }
         }
 }
 
