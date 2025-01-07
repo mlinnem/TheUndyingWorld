@@ -104,6 +104,9 @@ function sendMessage() {
         .catch(error => {
             loadingDiv.remove();
             console.error('Error:', error);
+            if (error.stack) {
+                console.error('Stack trace:', error.stack);
+            }
             addConversationObject({
                 "type": "server_error",
                 "text": "An unhandled error occurred. Refresh this page and try again."
@@ -384,6 +387,10 @@ function startNewConversation() {
         })
         .catch(error => {
             console.error('Error:', error);
+            console.error('Error starting new conversation:', error);
+            if (error.stack) {
+                console.error('Stack trace:', error.stack);
+            }
             updateStatus.textContent = 'Error starting new conversation';
         });
 }
@@ -417,6 +424,9 @@ function updateConversationList() {
         })
         .catch(error => {
             console.error('Error:', error);
+            if (error.stack) {
+                console.error('Stack trace:', error.stack);
+            }
             updateStatus.textContent = 'Error loading conversations';
         });
 }
@@ -449,6 +459,9 @@ function loadConversation(conversationId) {
     })
     .catch(error => {
         console.error('Error:', error);
+        if (error.stack) {
+            console.error('Stack trace:', error.stack);
+        }
         updateStatus.textContent = 'Error loading conversation';
     });
 }
@@ -469,6 +482,9 @@ function deleteConversation(conversationId) {
     })
     .catch(error => {
         console.error('Error:', error);
+        if (error.stack) {
+            console.error('Stack trace:', error.stack);
+        }
         updateStatus.textContent = 'Error deleting conversation';
     });
 }
