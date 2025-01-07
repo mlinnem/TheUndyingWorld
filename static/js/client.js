@@ -28,7 +28,7 @@ userInput.addEventListener('keydown', function(e) {
 
 // Functions
 function scrollChatNearBottom() {
-    chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight - 1;
+    chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight - 250;
 }
 
 
@@ -45,11 +45,25 @@ function sendMessage() {
         userInput.value = '';
         userInput.style.height = 'auto';
 
-        // Add loading message
+        // Add loading message with animated dots
         const loadingDiv = document.createElement('div');
         loadingDiv.classList.add('co', 'loading_message', 'module', 'left', 'primary-text-style');
-        loadingDiv.innerHTML = "<div class='module_contents has_contents'>" + body_text('Thinking...') + "</div>";
+        const loadingText = document.createElement('div');
+        loadingText.classList.add('module_contents', 'has_contents');
+        loadingText.innerHTML = body_text('Thinking');
+        const dots = document.createElement('span');
+        dots.textContent = '...';
+        loadingText.querySelector('.conversation-body-text').appendChild(dots);
+        loadingDiv.appendChild(loadingText);
         chatMessagesWrapper.appendChild(loadingDiv);
+        
+        // Animate the dots
+        let dotCount = 3;
+        const dotAnimation = setInterval(() => {
+            dots.textContent = '.'.repeat(dotCount);
+            dotCount = (dotCount % 3) + 1;
+        }, 500);
+
         scrollChatNearBottom();
 
         fetch('/chat', {
@@ -65,6 +79,7 @@ function sendMessage() {
             return response.json();
         })
         .then(data => {
+            clearInterval(dotAnimation); // Stop the animation
             console.info("received data");
             console.info("adding " + (data.new_conversation_objects.length) + " conversation objects");
             addConversationObjects(data.new_conversation_objects);
@@ -102,6 +117,7 @@ function sendMessage() {
             loadingDiv.remove();
         })
         .catch(error => {
+            clearInterval(dotAnimation); // Add this line
             loadingDiv.remove();
             console.error('Error:', error);
             if (error.stack) {
