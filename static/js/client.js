@@ -14,6 +14,7 @@ const conversationList = document.getElementById('conversation-list');
 const chatTitle = document.getElementById('chat-title');
 
 let activeConversationId = localStorage.getItem('activeConversationId') || null;
+let conversationObjectCounts = {};
 
 // Event Listeners
 sendButton.addEventListener('click', sendMessage);
@@ -38,6 +39,10 @@ function sendMessage() {
 
     const text = userInput.value.trim();
     if (text) {
+        // Increment the count for the active conversation
+        conversationObjectCounts[activeConversationId] = (conversationObjectCounts[activeConversationId] || 0) + 1;
+        updateConversationList();
+        
         addConversationObject({
             "type": "user_message",
             "text": text
@@ -434,7 +439,10 @@ function updateConversationList() {
                     minute: '2-digit',
                 });
                 
-                span.innerHTML = formattedDate;
+                // Add object count on a new line
+                const objectCount = conversationObjectCounts[conv.conversation_id] || 0;
+                span.innerHTML = `${formattedDate}<br>${objectCount} messages`;
+                
                 convDiv.appendChild(span);
                 convDiv.onclick = () => loadConversation(conv.conversation_id);
                 convDiv.id = conv.conversation_id;
@@ -471,6 +479,11 @@ function loadConversation(conversationId) {
             activeConversationId = conversationId;
             localStorage.setItem('activeConversationId', conversationId);
             chatMessagesWrapper.innerHTML = '';
+            
+            // Store the count of conversation objects
+            conversationObjectCounts[conversationId] = data.new_conversation_objects.length;
+            updateConversationList(); // Update the list to show new count
+            
             //remove active class from all conversation items
             conversationList.querySelectorAll('.conversation-item').forEach(item => {
                 item.classList.remove('active');
