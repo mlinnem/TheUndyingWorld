@@ -13,7 +13,7 @@ const newConversationBtn = document.getElementById('new-conversation-btn');
 const conversationList = document.getElementById('conversation-list');
 const chatTitle = document.getElementById('chat-title');
 
-let activeConversationId = null;
+let activeConversationId = localStorage.getItem('activeConversationId') || null;
 
 // Event Listeners
 sendButton.addEventListener('click', sendMessage);
@@ -469,6 +469,7 @@ function loadConversation(conversationId) {
     .then(data => {
         if (data.status === 'success') {
             activeConversationId = conversationId;
+            localStorage.setItem('activeConversationId', conversationId);
             chatMessagesWrapper.innerHTML = '';
             //remove active class from all conversation items
             conversationList.querySelectorAll('.conversation-item').forEach(item => {
@@ -493,9 +494,8 @@ function loadConversation(conversationId) {
 }
 
 function deleteConversation(conversationId) {
-    // Add confirmation dialog
     if (!confirm('Are you sure you want to delete this conversation? This cannot be undone.')) {
-        return; // Exit if user cancels
+        return;
     }
 
     fetch('/delete_conversation', {
@@ -508,6 +508,12 @@ function deleteConversation(conversationId) {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
+            if (conversationId === activeConversationId) {
+                localStorage.removeItem('activeConversationId');
+                activeConversationId = null;
+                chatMessagesWrapper.innerHTML = '';
+                chatTitle.textContent = 'Current Campaign';
+            }
             updateConversationList();
         }
     })
@@ -532,9 +538,8 @@ document.addEventListener('DOMContentLoaded', () => {
     updateConversationList();
     userInput.focus();
     
-    // Add auto-resize functionality to the textarea
-    //userInput.addEventListener('input', function() {
-    //    this.style.height = 'auto';
-    //    this.style.height = (this.scrollHeight) + 'px';
-    //});
+    // Load the active conversation if one exists
+    if (activeConversationId) {
+        loadConversation(activeConversationId);
+    }
 });
