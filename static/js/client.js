@@ -424,7 +424,17 @@ function updateConversationList() {
                 }
                 const span = document.createElement('span');
                 span.classList.add('conversation-item-text');
-                span.innerHTML = conv.name;
+                
+                // Format the date to show only month, day, hour, and minutes
+                const date = new Date(conv.name);
+                const formattedDate = date.toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                });
+                
+                span.innerHTML = formattedDate;
                 convDiv.appendChild(span);
                 convDiv.onclick = () => loadConversation(conv.conversation_id);
                 convDiv.id = conv.conversation_id;
@@ -483,6 +493,11 @@ function loadConversation(conversationId) {
 }
 
 function deleteConversation(conversationId) {
+    // Add confirmation dialog
+    if (!confirm('Are you sure you want to delete this conversation? This cannot be undone.')) {
+        return; // Exit if user cancels
+    }
+
     fetch('/delete_conversation', {
         method: 'POST',
         headers: {
