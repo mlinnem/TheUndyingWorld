@@ -27,6 +27,14 @@ userInput.addEventListener('keydown', function(e) {
     }
 });
 
+userInput.addEventListener('input', function() {
+    if (this.scrollHeight > this.clientHeight) {
+        // Only adjust height if content exceeds current height
+        this.style.height = 'auto';
+        this.style.height = Math.min(this.scrollHeight, 200) + 'px';
+    }
+});
+
 // Functions
 function scrollChatNearBottom() {
     chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight - 250;
@@ -48,7 +56,7 @@ function sendMessage() {
             "text": text
         });
         userInput.value = '';
-        userInput.style.height = 'auto';
+        userInput.style.height = '60px'; // Reset to initial height
 
         // Add loading message with animated dots
         const loadingDiv = document.createElement('div');
@@ -441,7 +449,11 @@ function updateConversationList() {
                 
                 // Add object count on a new line
                 const objectCount = conversationObjectCounts[conv.conversation_id] || 0;
-                span.innerHTML = `${formattedDate}<br>${objectCount} messages`;
+                if (objectCount > 0) {
+                    span.innerHTML = `${formattedDate}<br>${objectCount} messages`;
+                } else {
+                    span.innerHTML = `${formattedDate}`;
+                }
                 
                 convDiv.appendChild(span);
                 convDiv.onclick = () => loadConversation(conv.conversation_id);
@@ -493,7 +505,17 @@ function loadConversation(conversationId) {
             if (conversationElement) {
                 conversationElement.classList.add('active');
             }
-            chatTitle.textContent = data.conversation_name;
+            
+            // Format the chat title using the same date formatting
+            const date = new Date(data.conversation_name);
+            const formattedDate = date.toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+            });
+            chatTitle.textContent = "World made on " + formattedDate;
+            
             addConversationObjects(data.new_conversation_objects);
         }
     })
@@ -525,7 +547,7 @@ function deleteConversation(conversationId) {
                 localStorage.removeItem('activeConversationId');
                 activeConversationId = null;
                 chatMessagesWrapper.innerHTML = '';
-                chatTitle.textContent = 'Current Campaign';
+                chatTitle.textContent = 'Current World';
             }
             updateConversationList();
         }
