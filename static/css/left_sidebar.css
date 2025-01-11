@@ -4,7 +4,8 @@
 .conversation-sidebar {
     flex: 0 0 250px;
     background-color: #112020;
-    padding: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
     overflow-y: auto;
     color: #FFE7D2;
 }

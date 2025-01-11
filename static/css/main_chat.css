@@ -23,15 +23,12 @@ body {
 
 .chat-column {
     flex: 2;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     background-image: url('/static/images/Background.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: 8px;
-    color: rgba(238, 232, 207, 0.98);
     margin: 0 auto;
 }
 
@@ -125,6 +122,7 @@ button {
 h1 {
     font-size: 24px;
 
+    margin-top: 20px;
     margin-bottom: 20px;
     font-family: 'Roboto Slab', serif;
 }
@@ -135,8 +133,9 @@ h1 {
 
 h2 {
     font-size: 20px;
-    margin: 10px;
-    margin-top: 14px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
     font-family: 'Roboto Slab', serif;
 }
 
@@ -193,12 +192,6 @@ h2 {
     padding: 0;
 }
 
-
-.token-info-wrapper {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-}
 
 .token-info-wrapper label {
     margin-right: 10px;
@@ -367,24 +360,6 @@ h2 {
     background-color: #191C1C;
 }
 
-.loading_message_notinuse {
-    background-color: #191C1C;
-    color: rgb(255, 247, 218);
-    align-self: flex-start;
-    animation: breathe 20s ease-out infinite;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    height: 200px;
-    font-family: 'Roboto Serif', serif;
-    max-width: 80%;
-    font-size: 1.125rem;
-    line-height: 1.6875rem;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;  
-    -webkit-mask-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 1) 30%, hsla(0, 0%, 0%, 0) 100%);
-    mask-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 1) 30%, hsla(0, 0%, 0%, 0) 100%);
-}
-
 .loading_message {
     color:#EEE8CF;
     background-color: hsla(0, 0%, 8%, .2);
@@ -403,9 +378,6 @@ h2 {
     -webkit-mask-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 1) 50%, hsla(0, 0%, 0%, 0) 100%);
     mask-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 1) 50%, hsla(0, 0%, 0%, 0) 100%);
 }
-}
-
-
 
 @keyframes breathe {
     0% { 
@@ -457,63 +429,5 @@ h2 {
     100% { 
         background-color: hsla(0, 0%, 8%, .2);
         backdrop-filter: blur(10px);
-    }
-}
-
-
-
-@keyframes breathe_old {
-    0% { 
-        background-color: hsla(0, 0%, 8%, .2);
-    }
-
-    10% { 
-        background-color: hsla(0, 0%, 8%, .2);
-    }
-
-    20% { 
-        background-color: hsla(0, 0%, 8%, .2);
-    }
-
-    30% { 
-        background-color: hsla(0, 0%, 8%, .2);
-    }
-
-
-    40% { 
-            background-color: hsla(0, 0%, 8%, .2);
-     }
-
-     45% { 
-        background-color: hsla(0, 0%, 8%, .175);
- }
-
-    50% { 
-        background-color: hsla(0, 0%, 8%, .4);
-    }
-
-    55% { 
-        background-color: hsla(0, 0%, 8%, .05);
-    }
-
-    65% { 
-        background-color: hsla(0, 0%, 8%, .25);
-    }
-
-    70% { 
-        background-color: hsla(0, 0%, 8%, .20);
-    }
-
-    80% { 
-        background-color: hsla(0, 0%, 8%, .2);
-    }
-
-    90% { 
-        background-color: hsla(0, 0%, 8%, .2);
-    }
-
-
-    100% { 
-        background-color: hsla(0, 0%, 8%, .2);
     }
 }

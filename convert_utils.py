@@ -66,7 +66,7 @@ def convert_messages_to_cos(messages):
                                         except ValueError:
                                             logger.error(f"Invalid difficulty roll value: {body}")
                                             continue
-                                    elif 'world roll' in c_header:
+                                    elif 'world roll' in c_header or 'reveal' in c_header:
                                         try:
                                             integer = int(body)
                                             if integer < 1 or integer > 100:

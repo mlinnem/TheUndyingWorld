@@ -47,7 +47,39 @@ function sendMessage() {
 
     const text = userInput.value.trim();
     if (text) {
-        // Increment the count for the active conversation
+        // Check for boot sequence command
+        if (text === "run_boot_sequence") {
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    user_message: text,
+                    run_boot_sequence: true
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.info("received boot sequence data");
+                addConversationObjects(data.new_conversation_objects);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                if (error.stack) {
+                    console.error('Stack trace:', error.stack);
+                }
+                addConversationObject({
+                    "type": "server_error",
+                    "text": "An error occurred during boot sequence. Please try again."
+                });
+            });
+            userInput.value = '';
+            userInput.style.height = '60px';
+            return;
+        }
+
+        // Regular message handling continues here...
         conversationObjectCounts[activeConversationId] = (conversationObjectCounts[activeConversationId] || 0) + 1;
         updateConversationList();
         
@@ -514,7 +546,7 @@ function loadConversation(conversationId) {
                 hour: '2-digit',
                 minute: '2-digit',
             });
-            chatTitle.textContent = "World made on " + formattedDate;
+            chatTitle.textContent = "Game created on " + formattedDate;
             
             addConversationObjects(data.new_conversation_objects);
         }

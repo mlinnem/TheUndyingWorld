@@ -24,7 +24,7 @@ def generate_tool_result(gm_response_json):
         roll_string = f"# difficulty roll \n\n{skill_roll}\n\n"
     elif function == "roll_world_reveal_only":
         fate_roll = roll_die()
-        roll_string = "# World roll\n\n{fate_roll}\n\n"
+        roll_string = f"# World roll\n\n{fate_roll}\n\n"
     else:
         roll_string = "No valid tool use found."
 

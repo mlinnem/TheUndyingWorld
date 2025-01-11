@@ -18,6 +18,7 @@ import json
 import secrets
 from logger_config import setup_logging
 import traceback
+from typing import List, Dict
 
 load_dotenv()
 api_key = os.getenv('ANTHROPIC_API_KEY')
@@ -170,6 +171,57 @@ def summarize_with_gm(conversation):
     
     return conversation  # Add return statement
 
+def run_boot_sequence(conversation: Dict) -> Dict:
+    """
+    Runs a sequence of predetermined messages from boot_sequence_messages.MD to initialize a new game conversation.
+    Returns the updated conversation with all boot sequence messages included.
+    """
+    try:
+        # Read boot sequence messages from file
+        with open('boot_sequence_messages.MD', 'r') as file:
+            boot_sequence_messages = [
+                line.strip() for line in file.readlines() 
+                if line.strip()  # Skip empty lines
+            ]
+
+        logger.info("Starting boot sequence...")
+        
+        for message in boot_sequence_messages:
+            print(f"running boot sequence message: {message}")
+            try:
+                # Convert and add user message
+                user_message = convert_user_text_to_message(message)
+                conversation['messages'].append(user_message)
+                
+                # Get GM response
+                gm_response, usage_data = send_message_to_gm(conversation, temperature=0.3)
+                conversation['messages'].append(gm_response)
+                
+                # Handle tool use if requested
+                if isToolUseRequest(gm_response):
+                    tool_result = generate_tool_result(gm_response)
+                    conversation['messages'].append(tool_result)
+                    
+                    tool_response, _ = send_message_to_gm(conversation, temperature=0.3)
+                    conversation['messages'].append(tool_response)
+                
+                # Save after each message exchange
+                save_conversation(conversation)
+                
+            except Exception as e:
+                logger.error(f"Error in boot sequence at message '{message}': {e}")
+                raise
+        
+        logger.info("Boot sequence completed successfully")
+        return conversation
+        
+    except FileNotFoundError:
+        logger.error("boot_sequence_messages.MD file not found")
+        raise
+    except Exception as e:
+        logger.error(f"Error reading boot sequence messages: {e}")
+        raise
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -179,22 +231,26 @@ def chat():
     new_messages = []
     
     try:
-    # get current conversation
+        data = request.get_json()
+        
+        # get current conversation
         if 'current_conversation_id' in session:
             conversation = load_conversation(session['current_conversation_id'])
         else:
             conversation = create_new_conversation(zombie_system_prompt)
             session['current_conversation_id'] = conversation['conversation_id']
-    except Exception as e:
-        logger.error(f"Error loading or creating conversation: {e}")
-        return jsonify({
-            'success_type': 'error',
-            'error_type': 'internal_error',
-            'error_message': "Internal error, please try again later.",
-            'parsing_errors': [],
-        })
+            
+        # Check if this request should trigger boot sequence
+        if data.get('run_boot_sequence') == True:
+            conversation = run_boot_sequence(conversation)
+            return jsonify({
+                'success_type': 'full_success',
+                'conversation_id': session['current_conversation_id'],
+                'conversation_name': conversation['name'],
+                'new_conversation_objects': convert_messages_to_cos(conversation['messages']),
+                'parsing_errors': [],
+            })
 
-    try:
         # get and save user message
         raw_user_message = request.get_json()['user_message']
         user_message_for_server = convert_user_text_to_message(raw_user_message)
