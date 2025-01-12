@@ -45,10 +45,16 @@ class ColoredFormatter(logging.Formatter):
 
 # Update the logger configuration
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)  # Keep your app's logger at INFO
 handler = logging.StreamHandler()
 formatter = ColoredFormatter('%(message)s')  # You can adjust the format as needed
 handler.setFormatter(formatter)
 logger.addHandler(handler)
+
+# Set HTTP-related loggers to WARNING to suppress detailed dumps
+logging.getLogger("httpcore").setLevel(logging.WARNING)
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("anthropic").setLevel(logging.WARNING)
 
 # SET UP INITIAL PROMPTS
 
@@ -58,7 +64,7 @@ with open('tools.json', 'r') as file:
     tools = json.load(file)
 
 manual_instructions =  ""
-with open('instructions.MD', 'r') as file:
+with open('LLM_instructions/game_manual.MD', 'r') as file:
     manual_instructions = file.read()
 
 
@@ -69,17 +75,57 @@ zombie_system_prompt = [{
 }]
 
 def send_message_to_gm(conversation, temperature=0.7):
-    logger.info(f"Sending message to GM {conversation['messages']}")
+    logger.info(f"Sending message to GM (omitted for brevity)")
 
-    global zombie_system_prompt
-    
+    # Clean messages for API consumption
+    cleaned_messages = []
+    for msg in conversation['messages']:
+        cleaned_content = []
+        for content in msg['content']:
+            if content['type'] == "text":
+                clean_content = {
+                    "type": "text",
+                    "text": content['text']
+                }
+                # Only add cache_control if it exists
+                if 'cache_control' in content:
+                    clean_content['cache_control'] = content['cache_control']
+                    
+            elif content['type'] == "tool_use":
+                clean_content = {
+                    "type": "tool_use",
+                    "id": content['id'],
+                    "name": content['name'],
+                    "input": content['input']
+                }
+                
+            elif content['type'] == "tool_result":
+                clean_content = {
+                    "type": "tool_result",
+                    "tool_use_id": content['tool_use_id'],
+                    "content": content['content']
+                }
+            else:
+                logger.warning(f"Unknown content type: {content['type']}")
+                continue
+                
+            cleaned_content.append(clean_content)
+            
+        cleaned_messages.append({
+            "role": msg['role'],
+            "content": cleaned_content
+        })
+
+    # Log the first few cleaned messages for verification
+    logger.debug(f"First cleaned message: {cleaned_messages[0] if cleaned_messages else 'No messages'}")
+
     response = client.messages.create(
         model="claude-3-5-sonnet-20241022",
-        messages=conversation['messages'],
+        messages=cleaned_messages,
         system=conversation['system_prompt'],  
         max_tokens=MAX_OUTPUT_TOKENS,
         temperature=temperature,
-        tools = tools,
+        tools=tools,
     )
 
     print(f"response.usage: {response.usage}")
@@ -110,33 +156,50 @@ def send_message_to_gm(conversation, temperature=0.7):
     return response_json, usage_data
 
 def summarize_with_gm(conversation):
-    logger.info(f"Summarizing conversation {conversation['conversation_id']}")
-    # Initialize summary variable
-    summary = None
-        
-    # Figure out which portion to summarize
-    quarter_point = len(conversation['messages']) // 4
-    messages_to_summarize = conversation['messages'][MAGIC_FIRST_MESSAGES_TO_PRESERVE_COUNT:quarter_point] # will return empty list if quarter_point is less than 20
-    last_three_quarters_of_messages = conversation['messages'][quarter_point:]
+    logger.info(f"Starting summarization for conversation {conversation['conversation_id']}")
+    
+    # Find the last permanent cache point
+    permanent_cache_index = -1
+    for i, msg in enumerate(conversation['messages']):
+        if (isinstance(msg['content'][0], dict) and 
+            msg['content'][0].get('cache_control', {}).get('type') == 'ephemeral'):
+            permanent_cache_index = i
+    
+    if permanent_cache_index == -1:
+        logger.info("No permanent cache point found, skipping summarization")
+        return conversation
+
+    logger.info(f"Found permanent cache point at message index {permanent_cache_index}")
+
+    # Calculate the range to summarize
+    start_index = permanent_cache_index + 1
+    end_index = min(start_index + SUMMARIZATION_BLOCK_SIZE, len(conversation['messages']))
+    
+    messages_to_summarize = conversation['messages'][start_index:end_index]
+    remaining_messages = conversation['messages'][end_index:]
+
+    logger.info(f"Preparing to summarize messages from index {start_index} to {end_index}")
+    logger.info(f"Number of messages to summarize: {len(messages_to_summarize)}")
+    logger.info(f"Number of remaining messages: {len(remaining_messages)}")
 
     if len(messages_to_summarize) > 0:
-        # Load summarizer instructions from file
-        with open('summarizer_instructions.MD', 'r') as file:
+        logger.info("Loading summarizer instructions...")
+        with open('LLM_instructions/summarizer.MD', 'r') as file:
             summarizer_instructions = file.read()
-    
-        # Prepare the messages for summarization
 
         formatted_messages = "\n\n".join([
             f"{msg['role'].upper()}: {msg['content'][0]['text'] if isinstance(msg['content'], list) else msg['content']}"
             for msg in messages_to_summarize
         ])
 
+        logger.info("Preparing to call Claude for summarization...")
         system_prompt = [{
             "type": "text",
             "text": summarizer_instructions
         }]
-    
+
         try:
+            logger.info("Calling Claude API for summarization...")
             response = client.messages.create(
                 model="claude-3-5-sonnet-20241022",
                 tools=tools,
@@ -148,28 +211,41 @@ def summarize_with_gm(conversation):
                 max_tokens=MAX_OUTPUT_TOKENS,
                 temperature=0.6,
             )
-        
-            summary = response.content[0].text
-        except Exception as e:
-            print(f"Error generating summary: {e}")
-            return None
 
-        print(f"summary: {summary}")
+            summary = response.content[0].text
+            logger.info("Successfully generated summary")
             
-        if summary:
-            # Replace summarized messages with the summary
-            conversation['messages'] = [{
-                "role": "assistant",
-                "content": [{
-                    "type": "text",
-                    "text": f"[SUMMARY OF PREVIOUS CONVERSATION]\n\n{summary}\n\n[END SUMMARY]"
-                }]
-            }] + last_three_quarters_of_messages
+            # Reconstruct conversation
+            logger.info("Reconstructing conversation with summary...")
+            original_length = len(conversation['messages'])
+            conversation['messages'] = (
+                conversation['messages'][:permanent_cache_index + 1] +
+                [{
+                    "role": "assistant",
+                    "content": [{
+                        "type": "text",
+                        "text": f"[SUMMARY OF PREVIOUS CONVERSATION]\n\n{summary}\n\n[END SUMMARY]",
+                        "cache_control": {"type": "ephemeral"}
+                    }]
+                }] +
+                remaining_messages
+            )
+            new_length = len(conversation['messages'])
+            
+            logger.info(f"Conversation length changed from {original_length} to {new_length} messages")
+            logger.info(f"Successfully replaced {len(messages_to_summarize)} messages with summary")
+            
             save_conversation(conversation)
+            logger.info("Saved updated conversation with summary")
+            
+        except Exception as e:
+            logger.error(f"Error during summarization process: {str(e)}", exc_info=True)
+            return conversation
+
     else:
-        print("No messages to summarize")
-    
-    return conversation  # Add return statement
+        logger.info("No messages to summarize after permanent cache point")
+
+    return conversation
 
 def run_boot_sequence(conversation: Dict) -> Dict:
     """
@@ -178,16 +254,16 @@ def run_boot_sequence(conversation: Dict) -> Dict:
     """
     try:
         # Read boot sequence messages from file
-        with open('boot_sequence_messages.MD', 'r') as file:
+        with open('LLM_instructions/boot_sequence.MD', 'r') as file:
             boot_sequence_messages = [
                 line.strip() for line in file.readlines() 
                 if line.strip()  # Skip empty lines
             ]
 
-        logger.info("Starting boot sequence...")
+        logger.info(f"Starting boot sequence with {len(boot_sequence_messages)} messages")
         
-        for message in boot_sequence_messages:
-            print(f"running boot sequence message: {message}")
+        for i, message in enumerate(boot_sequence_messages):
+            logger.info(f"Processing boot sequence message {i+1}/{len(boot_sequence_messages)}")
             try:
                 # Convert and add user message
                 user_message = convert_user_text_to_message(message)
@@ -195,14 +271,26 @@ def run_boot_sequence(conversation: Dict) -> Dict:
                 
                 # Get GM response
                 gm_response, usage_data = send_message_to_gm(conversation, temperature=0.3)
+                
+                # Mark the last GM response of the boot sequence
+                if i == len(boot_sequence_messages) - 1:
+                    logger.info("Marking last GM response as boot sequence end")
+                    gm_response['is_boot_sequence_end'] = True
+                
                 conversation['messages'].append(gm_response)
                 
                 # Handle tool use if requested
                 if isToolUseRequest(gm_response):
+                    logger.info("Tool use requested during boot sequence")
                     tool_result = generate_tool_result(gm_response)
                     conversation['messages'].append(tool_result)
                     
                     tool_response, _ = send_message_to_gm(conversation, temperature=0.3)
+                    # If this is the last message, mark it instead of the previous response
+                    if i == len(boot_sequence_messages) - 1:
+                        logger.info("Moving boot sequence end marker to tool response")
+                        gm_response.pop('is_boot_sequence_end', None)
+                        tool_response['is_boot_sequence_end'] = True
                     conversation['messages'].append(tool_response)
                 
                 # Save after each message exchange
@@ -212,7 +300,12 @@ def run_boot_sequence(conversation: Dict) -> Dict:
                 logger.error(f"Error in boot sequence at message '{message}': {e}")
                 raise
         
-        logger.info("Boot sequence completed successfully")
+        # Update cache points after boot sequence is complete
+        logger.info("Boot sequence completed, updating cache points")
+        conversation = update_conversation_cache_points(conversation)
+        save_conversation(conversation)
+        
+        logger.info("Boot sequence and cache point setup completed successfully")
         return conversation
         
     except FileNotFoundError:

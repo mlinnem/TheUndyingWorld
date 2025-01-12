@@ -370,7 +370,7 @@ Describe those artifacts, and their locations within the egg. Pick locations tha
 
 Then reply as follows
 
-`Describe 12 additional artifacts?`
+`Describe 12 additional artifacts, and their locations?`
 
 Describe those artifacts, and their locations within the egg. Although artifacts in the game are in fact found with higher frequency in proportion to how close one is to the epicenter, these should be distributed evenly across all zones. Artifact power is roughly proportionate to proximity to the epicenter.
 
@@ -536,6 +536,9 @@ Then reply as follows
 
 `World creation complete. Make adjustments, or begin gameplay?`
 
+
+Begin gameplay. Note that all prior information will not be available to the player. Interaction up to this point has been facilitated by a server, but from now on you will be interfacing with the human player.
+
 # Chapter 3. Game mechanics
 
 ## Gameplay loop
@@ -612,7 +615,7 @@ The GM determines a world reveal level, based on the degree to which new circums
 | ---------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **N/A**          | The upcoming scene relates only to world elements that have been previously described                      | - The player attempts to hit a dart board with a dart<br>- The player moves an object from his backpack to the ground.                                                                                            |
 | **Light**        | The upcoming scene has some low but non-zero chance of something new being revealed.                       | - The player travels 10 minutes to a nearby location already determined to be safe.<br>- The player looks out a window in a calm & mundane situation, after having looked out that same window 30 minutes before. |
-| **Moderate**     | The upcoming scene will combine world elements that are already known with new elements not yet described. | - The player goes on a four hour journey over already explored terrain.<br>- The player looks into a new quadrant, defined already in broad strokes but not in detail.                                            |
+| **Moderate**     | The upcoming scene will combine world elements that are already known with new elements not yet described. | - The player goes on a four hour journey over already explored terrain.<br>- The player looks into a new zone, defined already in broad strokes but not in detail.                                                |
 | **Strong**       | The upcoming scene will reveal elements of the world that are entirely unknown until now                   | - The player opens a box they found in a suburban basement.<br>- The player enters a building they have never explored, in a dangerous area.                                                                      |
 #### Describing the analysis
 
@@ -714,13 +717,13 @@ Provide your description of the resulting scene in the following format
 
 First, note any of the following operations that occurred:
 
-| **Operation**                                                                      | Description                                                                                                                                      | Example                                                                                                                               |
-| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| ADD_TO_PERSON (Object)                                                             | Beginning to wield, wear, or hold an item on your person, that was previously not on your person                                                 | Picking up a hat into your hand, or picking up a hat and putting it on your head, or picking up a hat and putting it in your backpack |
-| REMOVE_FROM_PERSON (Object)                                                        | Taking an item from your person and making it no longer associated with your person, including setting it down or causing it to no longer exist. | Dropping a candy bar, or eating a candy bar from your backpack.                                                                       |
-| ADD_TO_LOCATION (Object, Location)                                                 | A player putting an item into a location that wasn't previously there, or the game master revealing the presence of an item in a location.       | The player dropping off firewood in a cabin                                                                                           |
-| REMOVE_FROM_LOCATION (Object, Location)                                            | Taking or destroying an item that exists in the environment of a location.                                                                       | Picking up a bag of rice from a store, or burning through a candle set on a table.                                                    |
-| MOVE_PLAYER(approx direction and distance) => zone, quadrant, location in quadrant | Changing the location of a player substantially within the current quadrant                                                                      | Walking north-east along a trail for 5 minutes.                                                                                       |
+| **Operation**                                                        | Description                                                                                                                                      | Example                                                                                                                               |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| ADD_TO_PERSON (Object)                                               | Beginning to wield, wear, or hold an item on your person, that was previously not on your person                                                 | Picking up a hat into your hand, or picking up a hat and putting it on your head, or picking up a hat and putting it in your backpack |
+| REMOVE_FROM_PERSON (Object)                                          | Taking an item from your person and making it no longer associated with your person, including setting it down or causing it to no longer exist. | Dropping a candy bar, or eating a candy bar from your backpack.                                                                       |
+| ADD_TO_LOCATION (Object, Location)                                   | A player putting an item into a location that wasn't previously there, or the game master revealing the presence of an item in a location.       | The player dropping off firewood in a cabin                                                                                           |
+| REMOVE_FROM_LOCATION (Object, Location)                              | Taking or destroying an item that exists in the environment of a location.                                                                       | Picking up a bag of rice from a store, or burning through a candle set on a table.                                                    |
+| MOVE_PLAYER(approx direction and distance) => zone, location in zone | Changing the location of a player substantially within the current zone                                                                          | Walking north-east along a trail for 5 minutes.                                                                                       |
 Provide it in the following format
 
 `# resulting operations
@@ -748,7 +751,7 @@ Second, note the current state of the following player data
 | Weather                  | Rainy, windy                                      |
 | Air Temp.                | 50 Fahrenheit                                     |
 | Current zone             | Northwest zone, inner ring                        |
-| Approx. position in zone | Western side of quadrant                          |
+| Approx. position in zone | Western side of zone                              |
 
 Additionally, if pertinent, populate following optional conditions
 
@@ -808,27 +811,27 @@ Additionally, if pertinent, populate following optional conditions
 
 `# Tracked operations`
 
-`* MOVE_PLAYER(west 1km) => now near the center of the western quadrant of southwest zone
+`* MOVE_PLAYER(west 1km) => now near the center of the western side of southwest outer ring zone
 
 `# Condition table`
 
-| **Condition**                | ** Description **                                    |
-| ---------------------------- | ---------------------------------------------------- |
-| Physical condition           | Winded                                               |
-| Psychological condition      | Afraid                                               |
-| Skin Temp.                   | Mildly overheated from run                           |
-| Hunger                       | Mildly hungry                                        |
-| Thirst                       | Mildly thirsty                                       |
-| Encumbrance                  | Moderately high encumbrance from backpack + contents |
-| Energy Levels                | Moderate                                             |
-| Sleepiness                   | Not sleepy                                           |
-| Clarity of sight             | Low light, near nightfall                            |
-| Date                         | October 2, 2026                                      |
-| Time                         | 5:47 pm                                              |
-| Weather                      | Clear                                                |
-| Air Temp.                    | 51 Fahrenheit                                        |
-| Current zone                 | Southwest zone of outer ring                         |
-| Approx. position in quadrant | Near center, at foot of a hill                       |
+| **Condition**            | ** Description **                                    |
+| ------------------------ | ---------------------------------------------------- |
+| Physical condition       | Winded                                               |
+| Psychological condition  | Afraid                                               |
+| Skin Temp.               | Mildly overheated from run                           |
+| Hunger                   | Mildly hungry                                        |
+| Thirst                   | Mildly thirsty                                       |
+| Encumbrance              | Moderately high encumbrance from backpack + contents |
+| Energy Levels            | Moderate                                             |
+| Sleepiness               | Not sleepy                                           |
+| Clarity of sight         | Low light, near nightfall                            |
+| Date                     | October 2, 2026                                      |
+| Time                     | 5:47 pm                                              |
+| Weather                  | Clear                                                |
+| Air Temp.                | 51 Fahrenheit                                        |
+| Current zone             | Southwest zone of outer ring                         |
+| Approx. position in zone | Near center, at foot of a hill                       |
 
 
 ###  Example gameplay loop #2
@@ -975,6 +978,7 @@ Sections are delineated with the single hash character, followed by text (e.g. "
 ## Final reminders
 
 * Remember to keep in mind what information the player should and should not know. The U.S. government has not been privy to any information on the happenings inside the egg, beyond what little they have discerned from holy texts. They are also not aware that anyone else has yet penetrated the egg.
+* All information generated up to this point is for you, the GM, to know, but is not information the player will have seen or is privy to. Assume no knowledge of the game environment from the player from this point on.
 ## On starting gameplay
 
 

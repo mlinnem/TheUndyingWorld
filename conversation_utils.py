@@ -7,7 +7,7 @@ from config import *
 logger = logging.getLogger(__name__)
 
 manual_instructions =  ""
-with open('instructions.MD', 'r') as file:
+with open('LLM_instructions/game_manual.MD', 'r') as file:
     manual_instructions = file.read()
 
 
@@ -92,78 +92,88 @@ def create_new_conversation(current_system_prompt):
     return conversation
 
 def update_conversation_cache_points(conversation):
-    # remove all existing cache points
+    logger.info(f"Updating cache points for conversation {conversation['conversation_id']}")
+    
+    # Add a metadata field to track cache point types
+    def add_cache_control(content_block, cache_purpose):
+        # Create a deep copy of the original block to preserve all fields
+        modified_block = content_block.copy()
+        
+        # Add/update cache control and metadata while preserving existing data
+        modified_block["cache_control"] = {"type": "ephemeral"}  # Required by API
+        modified_block["cache_metadata"] = {
+            "purpose": cache_purpose,  # 'permanent' or 'conversation'
+            "timestamp": datetime.now().isoformat()
+        }
 
-    for i, message in enumerate(conversation['messages']):
-        # Skip first 20 messages
-        if i < 20:
-            continue
-                
-        content_block_to_clean = message['content'][0]
-        print(f"content_block_to_clean (before): {content_block_to_clean}")
+        if content_block['type'] == "text":
+            return modified_block
+        elif content_block['type'] == "tool_use":
+            return modified_block
+        elif content_block['type'] == "tool_result":
+            return modified_block
+        else:
+            raise Exception(f"Unknown message type: {content_block['type']}")
 
-        if content_block_to_clean['type'] == "text":
-            content_block_to_clean = {
-                "type": "text",
-                "text": content_block_to_clean['text']
-                #no cache control
-            }
-        elif content_block_to_clean['type'] == "tool_use":
-            content_block_to_clean = {
+    # Helper function to remove cache control from a content block
+    def remove_cache_control(content_block):
+        if content_block['type'] == "text":
+            return {"type": "text", "text": content_block['text']}
+        elif content_block['type'] == "tool_use":
+            return {
                 "type": "tool_use",
-                "id": content_block_to_clean['id'],
-                "name": content_block_to_clean['name'],
-                "input": content_block_to_clean['input']
-                #no cache control
+                "id": content_block['id'],
+                "name": content_block['name'],
+                "input": content_block['input']
             }
-        elif content_block_to_clean['type'] == "tool_result":
-            content_block_to_clean = {
+        elif content_block['type'] == "tool_result":
+            return {
                 "type": "tool_result",
-                "tool_use_id": content_block_to_clean['tool_use_id'],
-                "content": content_block_to_clean['content']
-                #no cache control
+                "tool_use_id": content_block['tool_use_id'],
+                "content": content_block['content']
             }
         else:
-            raise Exception(f"Unknown message type: {content_block_to_clean['type']}")
-        
-        conversation['messages'][i]['content'][0] = content_block_to_clean
-        print(f"content_block_to_clean (after): {content_block_to_clean}")
+            raise Exception(f"Unknown message type: {content_block['type']}")
 
+    # First, remove all cache points
+    logger.info("Removing all existing cache points")
+    for message in conversation['messages']:
+        message['content'][0] = remove_cache_control(message['content'][0])
 
-    conversation_id = conversation['conversation_id']
-    print("Triggered cache point adding and removing")
+    # Determine the boot sequence length
+    boot_sequence_length = next(
+        (i for i, msg in enumerate(conversation['messages']) 
+         if msg.get('is_boot_sequence_end', False)),
+        0
+    )
+    logger.info(f"Boot sequence length detected: {boot_sequence_length}")
 
-    # add new cache point
-    cache_point_to_be = len(conversation['messages']) - 1
-
-    content_block_to_add_cache_point = conversation['messages'][cache_point_to_be]['content'][0]
-    print(f"content_block_to_add_cache_point (before): {content_block_to_add_cache_point}")
-
-    if content_block_to_add_cache_point['type'] == "text":
-        content_block_to_add_cache_point = {
-            "type": "text",
-            "text": content_block_to_add_cache_point['text'],
-            "cache_control": {"type": "ephemeral"}
-                }
-    elif content_block_to_add_cache_point['type'] == "tool_use":
-        content_block_to_add_cache_point = {
-            "type": "tool_use",
-            "id": content_block_to_add_cache_point['id'],
-            "name": content_block_to_add_cache_point['name'],
-            "input": content_block_to_add_cache_point['input'],
-            "cache_control": {"type": "ephemeral"}
-        }
-    elif content_block_to_add_cache_point['type'] == "tool_result":
-        content_block_to_add_cache_point = {
-            "type": "tool_result",
-            "tool_use_id": content_block_to_add_cache_point['tool_use_id'],
-            "content": content_block_to_add_cache_point['content'],
-            "cache_control": {"type": "ephemeral"}
-        }
+    total_messages = len(conversation['messages'])
+    logger.info(f"Total messages in conversation: {total_messages}")
+    
+    # Handle permanent cache point
+    if total_messages <= boot_sequence_length + 50:
+        # Set permanent cache at end of boot sequence
+        if boot_sequence_length > 0:
+            logger.info(f"Setting permanent cache point at boot sequence end (message {boot_sequence_length - 1})")
+            conversation['messages'][boot_sequence_length - 1]['content'][0] = \
+                add_cache_control(conversation['messages'][boot_sequence_length - 1]['content'][0], "ephemeral")
     else:
-        raise Exception(f"Unknown message type: {content_block_to_add_cache_point['type']}")
-        
-    conversation['messages'][cache_point_to_be]['content'][0] = content_block_to_add_cache_point
-    print(f"content_block_to_add_cache_point (after): {content_block_to_add_cache_point}")
+        # Set permanent cache at message 50 after boot sequence
+        permanent_cache_index = boot_sequence_length + 49
+        logger.info(f"Setting permanent cache point at message 50 after boot (message {permanent_cache_index})")
+        conversation['messages'][permanent_cache_index]['content'][0] = \
+            add_cache_control(conversation['messages'][permanent_cache_index]['content'][0], "ephemeral")
+
+    # Handle conversation cache point
+    messages_after_initial = total_messages - (boot_sequence_length + 50)
+    if messages_after_initial > 0:
+        conversation_cache_index = total_messages - (messages_after_initial % 20) - 1
+        if conversation_cache_index > boot_sequence_length + 49:
+            logger.info(f"Setting conversation cache point at message {conversation_cache_index}")
+            conversation['messages'][conversation_cache_index]['content'][0] = \
+                add_cache_control(conversation['messages'][conversation_cache_index]['content'][0], "ephemeral")
+    else:
+        logger.info("No conversation cache point needed yet (fewer than 50 messages after boot)")
 
     return conversation
