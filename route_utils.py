@@ -162,4 +162,5 @@ def convert_messages_to_cos(messages):
     except Exception as e:
         logger.error(f"Error in convert_messages_to_cos: {str(e)}\n{traceback.format_exc()}")
     
+    logger.debug(f"First cleaned message: {cos[0] if cos else 'No messages'}")
     return cos

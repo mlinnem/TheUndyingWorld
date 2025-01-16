@@ -45,13 +45,14 @@ def load_conversation(conversation_id):
             if conversation_data.get('system_prompt'):
                 # Check if prompt_version exists, if not add it
                 if not conversation_data.get('prompt_version'):
-                    print(f"Prompt version not found in conversation {conversation_id}. Adding timestamp.")
+                    logger.warning(f"Prompt version not found in conversation {conversation_id}. Adding timestamp.")
                     conversation_data['prompt_version'] = datetime.now().isoformat()
                 else:
-                    print(f"Continuing with old system prompt for conversation {conversation_id}, {conversation_data['prompt_version']}")
+                    #print(f"Continuing with old system prompt for conversation {conversation_id}, {conversation_data['prompt_version']}")
+                    pass
                 return conversation_data
             else:
-                print(f"System prompt not found in conversation {conversation_id}. Using current system prompt.")
+                #print(f"System prompt not found in conversation {conversation_id}. Using current system prompt.")
                 conversation_data['system_prompt'] = zombie_system_prompt
                 conversation_data['prompt_version'] = datetime.now().isoformat()
             return conversation_data
@@ -79,7 +80,7 @@ def list_conversations():
                     'name': conversation_data['name'],
                     'last_updated': conversation_data['last_updated']
                 })
-                save_conversation(conversation_data)
+                # save_conversation(conversation_data)
     return sorted(conversations, key=lambda x: x['last_updated'], reverse=True)
 
 def generate_conversation_id():
@@ -88,8 +89,10 @@ def generate_conversation_id():
 def create_new_conversation():
     logger.info("Creating new conversation")
 
+
+    conversation_id = generate_conversation_id()
     conversation = {
-        'conversation_id': generate_conversation_id(),
+        'conversation_id': conversation_id,
         'name': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'messages': [],
         'last_updated': datetime.now().isoformat(),
@@ -97,6 +100,33 @@ def create_new_conversation():
         'system_prompt': zombie_system_prompt,
         'prompt_version': datetime.now().isoformat()
     }
+
+
+    logger.info(f"Created conversation with ID: {conversation['conversation_id']}")
+        
+    # Read and add the intro blurb with proper message format
+    with open('LLM_instructions/intro_blurb.MD', 'r') as file:
+         intro_blurb = file.read()
+         logger.info(f"Read intro blurb, length: {len(intro_blurb)}")
+            
+    # Format the intro message properly
+    intro_message = {
+        'role': 'assistant',
+        'content': [{
+            'type': 'text',
+            'text': intro_blurb
+        }],
+        'timestamp': datetime.utcnow().isoformat()
+    }
+    conversation['messages'].append(intro_message)
+    logger.info("Added intro message to conversation")
+        
+    # Save the updated conversation
+    save_conversation(conversation)
+    logger.info("Saved conversation")
+
+    logger.info(f"Conversation created:" + conversation_id)
+    
     return conversation
 
 def update_conversation_cache_points(conversation):

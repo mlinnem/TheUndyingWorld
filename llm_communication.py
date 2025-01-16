@@ -8,15 +8,15 @@ from anthropic import Anthropic
 from dotenv import load_dotenv
 from random import randint
 from tool_utils import *
-import logging
-from logging.handlers import RotatingFileHandler
 import http.client as http_client
 import json
 import secrets
-from logger_config import setup_logging
 import traceback
 from typing import List, Dict
 from route_utils import * 
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 load_dotenv()
@@ -110,7 +110,7 @@ def send_message_to_gm(conversation, temperature=0.7):
         tools=tools,
     )
 
-    print(f"response.usage: {response.usage}")
+    logger.info(f"response.usage: {response.usage}")
 
     usage_data = {
         "uncached_input_tokens" : response.usage.input_tokens,
@@ -133,7 +133,7 @@ def send_message_to_gm(conversation, temperature=0.7):
                 "content": [{"type": "text", "text": response.content[0].text}]
         }
 
-    print(f"response.usage: {response.usage}")
+    logger.info(f"response.usage: {response.usage}")
         
     return response_json, usage_data
 

@@ -1,10 +1,12 @@
 from flask import jsonify, session
 
-import logging
+
 import json
 import traceback
 
+import logging
 logger = logging.getLogger(__name__)
+
 
 
 def produce_user_message_for_server(user_message):
