@@ -6,8 +6,8 @@ import traceback
 
 conversation_routes = Blueprint('conversation_routes', __name__)
 
-@conversation_routes.route('/new_conversation', methods=['POST'])
-def new_conversation():
+@conversation_routes.route('/create_conversation', methods=['POST'])
+def create_conversation_route():
     try:
         from server import zombie_system_prompt, logger  # Import logger too
         
@@ -52,6 +52,8 @@ def new_conversation():
             'success_type': 'full_success',
             'conversation_id': conversation['conversation_id'],
             'conversation_name': conversation['name'],
+            'message_count': conversation['message_count'],
+            'last_updated': conversation['last_updated'],
             'new_conversation_objects': conversation_objects,
             'parsing_errors': []
         }
@@ -62,36 +64,6 @@ def new_conversation():
     except Exception as e:
         logger.error(f"Error creating new conversation: {e}")
         logger.error(f"Stack trace: {traceback.format_exc()}")
-        return jsonify({
-            'status': 'error',
-            'message': str(e)
-        }), 500
-
-@conversation_routes.route('/load_conversation', methods=['POST'])
-def load_conversation_route():
-    try:
-        data = request.get_json()
-        conversation_id = data['conversation_id']
-        conversation = load_conversation(conversation_id)
-
-        if conversation:
-            # Add this line to set the current conversation in session
-            session['current_conversation_id'] = conversation_id
-            
-            conversation_objects = convert_messages_to_cos(conversation['messages'])
-            jsonified_result = jsonify({
-                'status': 'success',
-                'success_type': 'full_success',
-                'conversation_id': conversation_id,
-                'conversation_name': conversation['name'],
-                'new_conversation_objects': conversation_objects,
-                'parsing_errors': []
-            })
-            return jsonified_result
-        else:
-            return jsonify({'status': 'error', 'message': 'Conversation not found'}), 404
-    except Exception as e:
-        logger.error(f"Error loading conversation: {e}")
         return jsonify({
             'status': 'error',
             'message': str(e)
@@ -111,21 +83,10 @@ def list_conversations_route():
     conversations = list_conversations()
     return jsonify({'conversations': conversations})
 
-@conversation_routes.route('/rename_conversation', methods=['POST'])
-def rename_conversation():
-    data = request.get_json()
-    conversation_id = data['conversation_id']
-    new_name = data['new_name']
-    conversation = load_conversation(conversation_id)  # Unpack the tuple, ignoring token counts
-    if conversation:
-        conversation['name'] = new_name
-        save_conversation(conversation)
-        return jsonify({'status': 'success', 'success_type': 'full_success'})
-    else:
-        return jsonify({'status': 'error', 'message': 'Conversation not found'}), 404
-
 @conversation_routes.route('/set_current_conversation', methods=['POST'])
 def set_current_conversation():
+
+
     try:
         data = request.get_json()
         conversation_id = data['conversation_id']
@@ -141,6 +102,8 @@ def set_current_conversation():
                 'success_type': 'full_success',
                 'conversation_id': conversation_id,
                 'conversation_name': conversation['name'],
+                'message_count': conversation['message_count'],
+                'last_updated': conversation['last_updated'],
                 'new_conversation_objects': conversation_objects,
                 'parsing_errors': [],
             })

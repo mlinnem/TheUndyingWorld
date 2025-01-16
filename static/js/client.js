@@ -309,7 +309,7 @@ function addConversationObject(co) {
 
 function startNewConversation() {
     console.log("starting new conversation");
-    fetch('/new_conversation', { method: 'POST' })
+    fetch('/create_conversation', { method: 'POST' })
         .then(response => response.json())
         .then(data => {
             console.log("New conversation response:", data);  // Debug log
@@ -435,6 +435,7 @@ function loadConversation(conversationId) {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
+            console.log("data received from loading conversation: ", data);
             activeConversationId = conversationId;
             localStorage.setItem('activeConversationId', conversationId);
             chatMessagesWrapper.innerHTML = '';

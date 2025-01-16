@@ -28,6 +28,7 @@ def save_conversation(conversation):
     conversation_id = conversation['conversation_id']
 
     conversation['last_updated'] = datetime.now().isoformat()
+    conversation['message_count'] = len(conversation['messages'])
     file_path = os.path.join(CONVERSATIONS_DIR, f"{conversation_id}.json")
     with open(file_path, 'w') as f:
         json.dump(conversation, f, indent=2)
@@ -182,17 +183,3 @@ def update_conversation_cache_points(conversation):
         logger.info("No conversation cache point needed yet (fewer than 50 messages after boot)")
 
     return conversation
-
-def get_all_conversations():
-    """Return a list of all conversations with their metadata."""
-    # Implementation depends on your storage method
-    # Should return a list of dicts with at least:
-    # - conversation_id
-    # - name
-    # - last_updated
-    pass
-
-def delete_conversation_by_id(conversation_id):
-    """Delete a conversation by its ID."""
-    # Implementation depends on your storage method
-    pass

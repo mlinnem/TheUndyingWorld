@@ -351,6 +351,8 @@ def chat():
                 'success_type': 'full_success',
                 'conversation_id': session['current_conversation_id'],
                 'conversation_name': conversation['name'],
+                'message_count': conversation['message_count'],
+                'last_updated': conversation['last_updated'],
                 'new_conversation_objects': convert_messages_to_cos(conversation['messages']),
                 'parsing_errors': [],
             })
@@ -396,6 +398,7 @@ def chat():
             'success_type': 'full_success',
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
+            'message_count': conversation['message_count'],
             'last_updated': conversation['last_updated'],
             'new_conversation_objects': conversation_objects,
             'parsing_errors': [],
@@ -409,6 +412,7 @@ def chat():
             'success_type': 'partial_success',
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
+            'message_count': conversation['message_count'],
             'last_updated': conversation['last_updated'],
             'new_conversation_objects': conversation_objects,
             'parsing_errors': [],
@@ -459,6 +463,7 @@ def chat():
             'error_message': str(e),
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
+            'message_count': conversation['message_count'],
             'last_updated': conversation['last_updated'],
             'conversation_objects': conversation_objects,
             'parsing_errors': [],
@@ -466,38 +471,6 @@ def chat():
         return jsonified_result
     finally:
         save_conversation(conversation)
-
-@app.route('/set_current_conversation', methods=['POST'])
-def set_current_conversation():
-    data = request.get_json()
-    conversation_id = data['conversation_id']
-    conversation = load_conversation(conversation_id)
-    if conversation:
-        session['current_conversation_id'] = conversation_id
-
-        conversation_objects = convert_messages_to_cos(conversation['messages'])
-        jsonified_result = jsonify({
-            'status' : 'success',
-            'success_type': 'full_success',
-            'conversation_id': session['current_conversation_id'],
-            'conversation_name': conversation['name'],
-            'last_updated': conversation['last_updated'],
-            'new_conversation_objects': conversation_objects,
-            'parsing_errors': [],
-        })
-        return jsonified_result
-    else:
-        return jsonify({'status': 'error', 'message': 'Conversation not found'}), 404
-
-@app.route('/system_prompt', methods=['GET', 'POST'])
-def system_prompt():
-    if request.method == 'POST':
-        data = request.get_json()
-        app.config['current_system_prompt'] = data['system_prompt']
-        logger.info(f"System prompt updated to: {app.config['current_system_prompt']}")  # Debug print
-        return jsonify({'status': 'system prompt updated'})
-    else:
-        return jsonify({'system_prompt': app.config['current_system_prompt']})
 
 def log_conversation_messages(messages):
     """Log conversation messages to a file with timestamp."""
@@ -530,37 +503,6 @@ def log_conversation_messages(messages):
                 f.write(f"\n{role.upper()}: {msg['content']}\n")
                 
         f.write("\n" + "="*50)
-
-@app.route('/list_conversations', methods=['GET'])
-def list_conversations():
-    try:
-        conversations = get_all_conversations()  # You'll need to implement this function
-        return jsonify({
-            'status': 'success',
-            'conversations': conversations
-        })
-    except Exception as e:
-        logger.error(f"Error listing conversations: {e}")
-        return jsonify({
-            'status': 'error',
-            'message': str(e)
-        }), 500
-
-@app.route('/delete_conversation', methods=['POST'])
-def delete_conversation():
-    try:
-        data = request.get_json()
-        conversation_id = data['conversation_id']
-        delete_conversation_by_id(conversation_id)  # You'll need to implement this function
-        return jsonify({
-            'status': 'success'
-        })
-    except Exception as e:
-        logger.error(f"Error deleting conversation: {e}")
-        return jsonify({
-            'status': 'error',
-            'message': str(e)
-        }), 500
 
 if __name__ == '__main__':
     logger.info("Starting Flask application...")
