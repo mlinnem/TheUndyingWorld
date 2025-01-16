@@ -1,20 +1,23 @@
 from flask import Blueprint, request, jsonify
-from conversation_utils import *
+from flask import Flask, render_template, request, jsonify, session
+from business_logic import *
 from datetime import datetime
-from convert_utils import *
+from route_utils import *
 import traceback
 
-conversation_routes = Blueprint('conversation_routes', __name__)
+routes = Blueprint('routes', __name__)
 
-@conversation_routes.route('/create_conversation', methods=['POST'])
+@routes.route('/')
+def index_route():
+    return render_template('index.html')
+
+@routes.route('/create_conversation', methods=['POST'])
 def create_conversation_route():
     try:
-        from server import zombie_system_prompt, logger  # Import logger too
-        
         logger.info("Starting new conversation creation")
         
         # Create the conversation
-        conversation = create_new_conversation(zombie_system_prompt)
+        conversation = create_new_conversation()
         logger.info(f"Created conversation with ID: {conversation['conversation_id']}")
         
         # Read and add the intro blurb with proper message format
@@ -69,7 +72,7 @@ def create_conversation_route():
             'message': str(e)
         }), 500
 
-@conversation_routes.route('/delete_conversation', methods=['POST'])
+@routes.route('/delete_conversation', methods=['POST'])
 def delete_conversation_route():
     data = request.get_json()
     conversation_id = data['conversation_id']
@@ -78,15 +81,13 @@ def delete_conversation_route():
     else:
         return jsonify({'status': 'error', 'message': 'Conversation not found'}), 404
 
-@conversation_routes.route('/list_conversations', methods=['GET'])
+@routes.route('/list_conversations', methods=['GET'])
 def list_conversations_route():
     conversations = list_conversations()
     return jsonify({'conversations': conversations})
 
-@conversation_routes.route('/set_current_conversation', methods=['POST'])
-def set_current_conversation():
-
-
+@routes.route('/set_current_conversation', methods=['POST'])
+def set_current_conversation_route():
     try:
         data = request.get_json()
         conversation_id = data['conversation_id']
@@ -116,3 +117,38 @@ def set_current_conversation():
             'status': 'error',
             'message': str(e)
         }), 500
+    
+
+@routes.route('/chat', methods=['POST'])
+def chat_in_current_conversation_route():
+    # Check for valid current_conversation_id first
+        if 'current_conversation_id' not in session:
+            return jsonify({
+                'status': 'error',
+                'success_type': 'error',
+                'error_type': 'no_conversation',
+                'error_message': 'No active conversation. Please start or select a conversation first.',
+                'new_conversation_objects': [],
+                'parsing_errors': [],
+            }), 400
+            
+        data = request.get_json()
+        conversation = load_conversation(session['current_conversation_id'])
+        
+        # Check if this request should trigger boot sequence
+        if data.get('run_boot_sequence') == True:
+            conversation = run_boot_sequence(conversation)
+            return jsonify({
+                'success_type': 'full_success',
+                'conversation_id': session['current_conversation_id'],
+                'conversation_name': conversation['name'],
+                'message_count': conversation['message_count'],
+                'last_updated': conversation['last_updated'],
+                'new_conversation_objects': convert_messages_to_cos(conversation['messages']),
+                'parsing_errors': [],
+            })
+
+        # get and save user message
+        raw_user_message = request.get_json()['user_message']
+
+        return chat(raw_user_message, conversation)

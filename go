@@ -12,7 +12,7 @@ def main():
     
     try:
         # Run server.py
-        subprocess.run(['python', 'server.py'], check=True)
+        subprocess.run(['python', 'app.py'], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error running server.py: {e}")
         exit(1)
