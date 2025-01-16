@@ -1,13 +1,11 @@
+// Import all exports from client_util.js with a wildcard
+import * as util from './client_util.js';
+
 // DOM Elements
 const chatContainer = document.getElementById('chat-container');
 const chatMessagesWrapper = document.getElementById('chat-messages-wrapper');
 const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
-const tokenInfo = document.getElementById('token-info');
-const costInfo = document.getElementById('cost-info');
-const systemPromptInput = document.getElementById('system-prompt');
-const promptNameInput = document.getElementById('prompt-name');
-const savedPromptsSelect = document.getElementById('saved-prompts');
 const updateStatus = document.getElementById('update-status');
 const newConversationBtn = document.getElementById('new-conversation-btn');
 const conversationList = document.getElementById('conversation-list');
@@ -36,14 +34,18 @@ userInput.addEventListener('input', function() {
 });
 
 // Functions
-function scrollChatNearBottom() {
-    chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight - 250;
-}
-
 
 
 function sendMessage() {
-    console.info("sending message");
+    console.info("sending message for conversation: ", activeConversationId);
+
+    if (!activeConversationId) {
+        addConversationObject({
+            "type": "server_error",
+            "text": "No active conversation. Please start a new conversation first."
+        });
+        return;
+    }
 
     const text = userInput.value.trim();
     if (text) {
@@ -79,7 +81,7 @@ function sendMessage() {
             return;
         }
 
-        // Regular message handling continues here...
+        // Regular message handling
         conversationObjectCounts[activeConversationId] = (conversationObjectCounts[activeConversationId] || 0) + 1;
         updateConversationList();
         
@@ -88,14 +90,14 @@ function sendMessage() {
             "text": text
         });
         userInput.value = '';
-        userInput.style.height = '60px'; // Reset to initial height
+        userInput.style.height = '60px';
 
         // Add loading message with animated dots
         const loadingDiv = document.createElement('div');
         loadingDiv.classList.add('co', 'loading_message', 'module', 'left', 'primary-text-style');
         const loadingText = document.createElement('div');
         loadingText.classList.add('module_contents', 'has_contents');
-        loadingText.innerHTML = body_text('Thinking');
+        loadingText.innerHTML = util.body_text('Thinking');
         const dots = document.createElement('span');
         dots.textContent = '...';
         loadingText.querySelector('.conversation-body-text').appendChild(dots);
@@ -118,13 +120,13 @@ function sendMessage() {
             },
             body: JSON.stringify({ 
                 user_message: text,
+                conversation_id: activeConversationId
             }),
         })
-        .then(response => {
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-            clearInterval(dotAnimation); // Stop the animation
+            clearInterval(dotAnimation);
+            loadingDiv.remove();
             console.info("received data");
             console.info("adding " + (data.new_conversation_objects.length) + " conversation objects");
             addConversationObjects(data.new_conversation_objects);
@@ -149,20 +151,16 @@ function sendMessage() {
                         break;
                     default:
                         errorMessage = 'An unexpected error occurred. Try again later.';
-                        
                 }
-
                 console.log("errorMessage: ", errorMessage);
                 addConversationObject({
                     "type": "server_error",
                     "text": errorMessage
                 });
-            
             }
-            loadingDiv.remove();
         })
         .catch(error => {
-            clearInterval(dotAnimation); // Add this line
+            clearInterval(dotAnimation);
             loadingDiv.remove();
             console.error('Error:', error);
             if (error.stack) {
@@ -174,42 +172,6 @@ function sendMessage() {
             });
         });
     }
-}
-
-function render_difficulty_and_world_reveal_object(difficulty_and_world_reveal_object) {   
-
-    rendered_world_reveal_object = difficulty_and_world_reveal_object.difficulty.difficulty_analysis + "\n\n" + difficulty_and_world_reveal_object["world reveal"].world_reveal_analysis + "\n\n";
-    rendered_world_reveal_object += "Difficulty Target: " + difficulty_and_world_reveal_object.difficulty.difficulty_target + "\n\n" + "World Reveal Level: " + difficulty_and_world_reveal_object["world reveal"].world_reveal_level + "\n\n";
-    //rendered_world_reveal_object = difficulty_and_world_reveal_object.difficulty.difficulty_analysis + " (Target: " + difficulty_and_world_reveal_object.difficulty.difficulty_target + ")\n\n";
-    //rendered_world_reveal_object += difficulty_and_world_reveal_object["world reveal"].world_reveal_analysis + " (Level: " + difficulty_and_world_reveal_object["world reveal"].world_reveal_level + ")\n\n";
-    return rendered_world_reveal_object;
-}
-
-function addConversationObjects(conversation_objects) {
-    conversation_objects.forEach(conversation_object => {
-        addConversationObject(conversation_object);
-    });
-}
-
-function header(label) {
-    return "<span class='header'>" + label + "</span>";
-}
-
-function body_text(contents) {
-    return "<div class='conversation-body-text'>" + contents + "</div>";
-}
-
-function data_text(contents) {
-    return "<div class='conversation-data-text info-text-style'>" + contents + "</div>";
-}
-
-function make_module(co) {
-    const coDiv = document.createElement('div');
-    coDiv.classList.add('co');
-    coDiv.classList.add('module');
-    coDiv.classList.add(co.type);
-    coDiv.innerHTML = "<div class='module_contents no_contents'></div>";
-    return coDiv;
 }
 
 function get_or_create_prescene() {
@@ -224,164 +186,77 @@ function get_or_create_prescene() {
     }
 }
 
-function get_or_create_difficulty_element(analysisDiv) {
-    const difficultyElement = analysisDiv.querySelector('.difficulty_element');
-    if (difficultyElement) {
-        return difficultyElement;
-    } else {
-        const difficultyElement = document.createElement('div');
-        difficultyElement.classList.add('difficulty_element', 'prescene_contents');
-        difficultyElement.innerHTML = header("Difficulty") + "<div class='difficulty_analysis info-text-style no_contents'></div><div class='prescene_footer'><span class='difficulty_target info-text-style no_contents'></span><span class='difficulty_roll info-text-style no_contents'></span></div>";
-        analysisDiv.appendChild(difficultyElement); //TODO: Should probable be injecting so order doesn't matter
-        return difficultyElement;
-    }
-}
 
-function get_or_create_world_reveal_element(analysisDiv) {
-    const difficultyElement = analysisDiv.querySelector('.world_reveal_element');
-    if (difficultyElement) {
-        return difficultyElement;
-    } else {
-        const difficultyElement = document.createElement('div');
-        difficultyElement.classList.add('world_reveal_element', 'prescene_contents');
-        difficultyElement.innerHTML = header("World Reveal") + "<div class='world_reveal_analysis info-text-style no_contents'></div><div class='prescene_footer'><span class='world_reveal_level info-text-style no_contents'></span><span class='world_reveal_roll info-text-style no_contents'></span></div>";
-        analysisDiv.appendChild(difficultyElement);
-        return difficultyElement;
-    }
-}
 
-function determine_difficulty_color(difficultyElement,rolledValue) {
-    const targetElement = difficultyElement.querySelector('.difficulty_target');
-        const targetText = targetElement ? targetElement.textContent.replace('Target', '').trim() : null;
-        if (!isNaN(parseInt(targetText))) {
-            console.debug("targetText is a number");
-            targetValue = parseInt(targetText);
-            if (rolledValue >= targetValue) {
-                degreeOfSuccess = (rolledValue - targetValue) / (100 - targetValue);
-                l = degreeOfSuccess * 43;
-                return 'hsl(140,' + l + '%, 10%)';
-            } else {
-                degreeOfFailure = (targetValue - rolledValue) / targetValue;
-                l = degreeOfFailure * 43;
-                return 'hsl(359,' + l + '%, 10%)';
-            }
-        } else {
-            console.debug("targetText is not a number");
-            return 'hsl(180, 43%, 10%)';
-        }
-}
 
-function determine_world_reveal_color(worldRevealElement, rolledValue) {
-    console.debug("determining world reveal color");
-    console.debug("rolledValue: ", rolledValue);
-    console.debug("worldRevealElement: ", worldRevealElement);
-    const targetElement = worldRevealElement.querySelector('.world_reveal_level');
-    const targetText = targetElement ? targetElement.textContent.replace('Level', '').trim() : null;
-    targetValue = targetText;
-    console.debug("targetValue: ", targetValue);
-        if (targetValue.toLowerCase().trim() === "n/a") {
-            return 'hsl(0, 0%, 10%)';
-        } else if (targetValue.toLowerCase().trim() === "light") {
-            if (rolledValue >= 95) {
-                console.debug("light success");
-                return 'hsl(140, 21%, 10%)';
-            } else if (rolledValue <= 5) {
-                console.debug("light failure");
-                return 'hsl(359, 21%, 10%)';
-            } else {
-                console.debug("light neutral");
-                return 'hsl(0, 0%, 10%)';  
-            }
-        } else if (targetValue.toLowerCase().trim() === "moderate") {
-            if (rolledValue >= 66) {
-                degreeOfSuccess = (rolledValue - 66) / (100 - 66);
-                l = degreeOfSuccess * 43;
-                console.debug("l in moderate success: ", l);
-                return 'hsl(140,' + l + '%, 10%)';
-            } else if (rolledValue <= 33) {
-                degreeOfFailure = (66 - rolledValue) / 66;
-                console.debug("degreeOfFailure: ", degreeOfFailure);
-                l = degreeOfFailure * 43;
-                console.debug("l in moderate failure: ", l);
-                return 'hsl(359,' + l + '%, 10%)';
-            } else {
-                return 'hsl(0, 0%, 10%)';
-            }
-        } else if (targetValue.toLowerCase().trim() === "strong") {
-            if (rolledValue > 50) {
-                degreeOfSuccess = (rolledValue - 50) / (100 - 50);
-                l = degreeOfSuccess * 43;
-                console.debug("l in strong success: ", l);
-                return 'hsl(140,' + l + '%, 10%)';
-            } else if (rolledValue < 50) {
-                degreeOfFailure = (50 - rolledValue) / 50;
-                l = degreeOfFailure * 43;
-                console.debug("l in strong failure: ", l);
-                return 'hsl(359,' + l + '%, 10%)';
-            }
-        }
+function addConversationObjects(conversation_objects) {
+    conversation_objects.forEach(conversation_object => {
+        addConversationObject(conversation_object);
+    });
 }
 
 function addConversationObject(co) {
+    let coDiv;
+    let color;  // Used in difficulty_roll and world_reveal_roll cases
 
     if (co.type === 'user_message') {
         console.debug("adding user message");
-        coDiv = make_module(co);
-        inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
+        coDiv = util.make_module(co);
+        util.inject_content_into_element(coDiv, '.module_contents', util.body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding');
         coDiv.classList.add('primary-text-style');
         coDiv.classList.add('right')
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'map_data') {
         console.debug("adding map data");
-        coDiv = make_module(co);
-        inject_content_into_element(coDiv, '.module_contents', header("Map Data") + body_text(marked.parse(co.text)));
+        coDiv = util.make_module(co);
+        util.inject_content_into_element(coDiv, '.module_contents', util.header("Map Data") + util.body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding', 'info-text-style', 'left');
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'ooc_message') {
         console.debug("adding ooc message");
-        coDiv = make_module(co);
-        inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
+        coDiv = util.make_module(co);
+        util.inject_content_into_element(coDiv, '.module_contents', util.body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding' , 'primary-text-style', 'left');
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'difficulty_analysis') {
         console.debug("adding difficulty analysis");
         const presceneDiv = get_or_create_prescene();
-        const difficultyElement = get_or_create_difficulty_element(presceneDiv);
-        inject_content_into_element(difficultyElement, '.difficulty_analysis', body_text(marked.parse(co.text)));
+        const difficultyElement = util.get_or_create_difficulty_element(presceneDiv);
+        util.inject_content_into_element(difficultyElement, '.difficulty_analysis', util.body_text(marked.parse(co.text)));
     } else if (co.type === 'difficulty_target') {
         console.debug("adding difficulty target");
         const presceneDiv = get_or_create_prescene();
-        const difficultyElement = get_or_create_difficulty_element(presceneDiv);
-        inject_content_into_element(difficultyElement, '.difficulty_target', header("Target") + data_text(co.text));
+        const difficultyElement = util.get_or_create_difficulty_element(presceneDiv);
+        util.inject_content_into_element(difficultyElement, '.difficulty_target', util.header("Target") + util.data_text(co.text));
     } else if (co.type === 'world_reveal_analysis') {
         console.debug("adding world reveal analysis");
         const presceneDiv = get_or_create_prescene();
-        const worldRevealElement = get_or_create_world_reveal_element(presceneDiv);
-        inject_content_into_element(worldRevealElement, '.world_reveal_analysis', body_text(marked.parse(co.text)));
+        const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
+        util.inject_content_into_element(worldRevealElement, '.world_reveal_analysis', util.body_text(marked.parse(co.text)));
     } else if (co.type === 'world_reveal_level') {
         console.debug("adding world reveal level");
         const presceneDiv = get_or_create_prescene();
-        const worldRevealElement = get_or_create_world_reveal_element(presceneDiv);
-        inject_content_into_element(worldRevealElement, '.world_reveal_level', header("Level") + data_text(co.text));
+        const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
+        util.inject_content_into_element(worldRevealElement, '.world_reveal_level', util.header("Level") + util.data_text(co.text));
     } else if (co.type === 'difficulty_roll') {
         console.debug("adding difficulty roll");
         const presceneDiv = get_or_create_prescene();
-        const difficultyElement = get_or_create_difficulty_element(presceneDiv);
-        color = determine_difficulty_color(difficultyElement,co.integer);
+        const difficultyElement = util.get_or_create_difficulty_element(presceneDiv);
+        color = util.determine_difficulty_color(difficultyElement, co.integer);
         difficultyElement.style.backgroundColor = color;
-        inject_content_into_element(difficultyElement, '.difficulty_roll', header("Roll") + data_text(co.integer.toString()));
+        util.inject_content_into_element(difficultyElement, '.difficulty_roll', util.header("Roll") + util.data_text(co.integer.toString()));
     } else if (co.type === 'world_reveal_roll') {
         console.debug("adding world reveal roll");
         const presceneDiv = get_or_create_prescene();
-        const worldRevealElement = get_or_create_world_reveal_element(presceneDiv);
-        color = determine_world_reveal_color(worldRevealElement,co.integer);
+        const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
+        color = util.determine_world_reveal_color(worldRevealElement, co.integer);
         worldRevealElement.style.backgroundColor = color;
-        inject_content_into_element(worldRevealElement, '.world_reveal_roll', header("Roll") + data_text(co.integer.toString()));
+        util.inject_content_into_element(worldRevealElement, '.world_reveal_roll', util.header("Roll") + util.data_text(co.integer.toString()));
     } else if (co.type === 'resulting_scene_description') {
         console.debug("adding resulting scene description");
-        coDiv = make_module(co);
-        inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
+        coDiv = util.make_module(co);
+        util.inject_content_into_element(coDiv, '.module_contents', util.body_text(marked.parse(co.text)));
         const previousElement = chatMessagesWrapper.lastElementChild;
         if (previousElement && 
             (previousElement.classList.contains('bottom') || 
@@ -395,32 +270,35 @@ function addConversationObject(co) {
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'tracked_operations') {
         console.debug("adding tracked operations");
-        coDiv = make_module(co);
-        inject_content_into_element(coDiv, '.module_contents', header("Tracked Operations") + body_text(marked.parse(co.text)));
+        coDiv = util.make_module(co);
+        util.inject_content_into_element(coDiv, '.module_contents', util.header("Tracked Operations") + util.body_text(marked.parse(co.text)));
         coDiv.classList.add('middle', 'info-text-style', 'left');
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'condition_table') {
         console.debug("adding condition table");
-        coDiv = make_module(co);
-        inject_content_into_element(coDiv, '.module_contents', header("Character Condition") + body_text(marked.parse(co.text)));
+        coDiv = util.make_module(co);
+        util.inject_content_into_element(coDiv, '.module_contents', util.header("Character Condition") + util.body_text(marked.parse(co.text)));
         coDiv.classList.add('bottom', 'info-text-style', 'left');
         chatMessagesWrapper.appendChild(coDiv);
+    } else if (co.type === 'tool_use') {
+        console.debug("ignoring tool use"); 
+        return;
     } else if (co.type === 'out_of_section_text') {
         console.debug("adding out of section text");
-        coDiv = make_module(co);
-        inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
+        coDiv = util.make_module(co);
+        util.inject_content_into_element(coDiv, '.module_contents', util.body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding', "left");
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'unrecognized_section') {
         console.debug("adding unrecognized section");
-        coDiv = make_module(co);
-        inject_content_into_element(coDiv, '.module_contents', header(co.header_text) + body_text(marked.parse(co.body_text)));
+        coDiv = util.make_module(co);
+        util.inject_content_into_element(coDiv, '.module_contents', util.header(co.header_text) + util.body_text(marked.parse(co.body_text)));
         coDiv.classList.add('freestanding', 'primary-text-style', 'left');
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'server_error') {
         console.debug("adding server error");
-        coDiv = make_module(co);
-        inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
+        coDiv = util.make_module(co);
+        util.inject_content_into_element(coDiv, '.module_contents', util.body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding', 'info-text-style', 'left');
         chatMessagesWrapper.appendChild(coDiv);
         console.error("server error: ", co.text);
@@ -429,26 +307,40 @@ function addConversationObject(co) {
     }
 }
 
-function updateTokenInfo(data) {
-    tokenInfo.textContent = `Total Input tokens: ${data.input_tokens} | Total Output tokens: ${data.output_tokens}`;
-}
-
-function updateCostInfo(data) {
-    costInfo.textContent = `Total cost: $${data.total_cost.toFixed(6)}`;
-}
-
 function startNewConversation() {
+    console.log("starting new conversation");
     fetch('/new_conversation', { method: 'POST' })
         .then(response => response.json())
         .then(data => {
+            console.log("New conversation response:", data);  // Debug log
             if (data.status === 'success') {
-                loadConversation(data.conversation_id);
+                console.log("New conversation data:", data);  // Debug log
+                activeConversationId = data.conversation_id;
+                localStorage.setItem('activeConversationId', data.conversation_id);
+                chatMessagesWrapper.innerHTML = '';
+                
+                // Store the count of conversation objects
+                conversationObjectCounts[data.conversation_id] = data.new_conversation_objects.length;
+                console.log("New conversation objects:", data.new_conversation_objects);  // Debug log
+                
+                // Format the chat title
+                const date = new Date(data.conversation_name);
+                const formattedDate = date.toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                });
+                chatTitle.textContent = "Game created on " + formattedDate;
+                
+                // Display the intro message
+                console.log("new_conversation_objects: ", data.new_conversation_objects);
+                addConversationObjects(data.new_conversation_objects);
                 updateConversationList();
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            console.error('Error starting new conversation:', error);
             if (error.stack) {
                 console.error('Stack trace:', error.stack);
             }
@@ -457,11 +349,34 @@ function startNewConversation() {
 }
 
 function updateConversationList() {
+    console.log("updating conversation list");
     fetch('/list_conversations')
         .then(response => response.json())
         .then(data => {
             conversationList.innerHTML = '';
-            data.conversations.forEach(conv => {
+            
+            // Sort conversations by last_updated timestamp, message count, and creation date
+            const sortedConversations = data.conversations.sort((a, b) => {
+                // If neither has last_updated, compare message counts
+                if (!a.last_updated && !b.last_updated) {
+                    const countA = conversationObjectCounts[a.conversation_id] || 0;
+                    const countB = conversationObjectCounts[b.conversation_id] || 0;
+                    if (countA !== countB) {
+                        return countB - countA; // Higher message count first
+                    }
+                    // If message counts are equal, sort by creation date
+                    return new Date(b.name) - new Date(a.name);
+                }
+                
+                // If only one has last_updated, put the updated one first
+                if (!a.last_updated) return 1;
+                if (!b.last_updated) return -1;
+                
+                // If both have last_updated, normal date comparison
+                return new Date(b.last_updated) - new Date(a.last_updated);
+            });
+
+            sortedConversations.forEach(conv => {
                 const convDiv = document.createElement('div');
                 convDiv.classList.add('conversation-item');
                 if (conv.conversation_id === activeConversationId) {
@@ -470,7 +385,6 @@ function updateConversationList() {
                 const span = document.createElement('span');
                 span.classList.add('conversation-item-text');
                 
-                // Format the date to show only month, day, hour, and minutes
                 const date = new Date(conv.name);
                 const formattedDate = date.toLocaleString('en-US', {
                     month: 'short',
@@ -510,6 +424,7 @@ function updateConversationList() {
 }
 
 function loadConversation(conversationId) {
+    console.log("loading conversation: ", conversationId);
     fetch('/set_current_conversation', {
         method: 'POST',
         headers: {
@@ -539,14 +454,27 @@ function loadConversation(conversationId) {
             }
             
             // Format the chat title using the same date formatting
-            const date = new Date(data.conversation_name);
-            const formattedDate = date.toLocaleString('en-US', {
+            const date_created = new Date(data.conversation_name);
+            const formattedDate_created = date_created.toLocaleString('en-US', {
                 month: 'short',
                 day: 'numeric',
                 hour: '2-digit',
                 minute: '2-digit',
             });
-            chatTitle.textContent = "Game created on " + formattedDate;
+            
+            const date_updated = new Date(data.last_updated);
+            const formattedDate_updated = date_updated.toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+            });
+            
+            console.log("formattedDate_created: ", data.conversation_name);
+            console.log("formattedDate_updated: ", data.last_updated);
+
+
+            chatTitle.textContent = "Game created on " + formattedDate_created + " (last updated " + formattedDate_updated + ")";
             
             addConversationObjects(data.new_conversation_objects);
         }
@@ -593,20 +521,39 @@ function deleteConversation(conversationId) {
     });
 }
 
-function inject_content_into_element(element, content_container_class, content) {
-    let contentContainer = element.querySelector(content_container_class);
-    contentContainer.innerHTML = content;
-    contentContainer.classList.add('has_contents');
-    contentContainer.classList.remove('no_contents');
+function scrollChatNearBottom() {
+    chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight - 250;
 }
 
 // Initialize
+
 document.addEventListener('DOMContentLoaded', () => {
     updateConversationList();
     userInput.focus();
     
     // Load the active conversation if one exists
-    if (activeConversationId) {
-        loadConversation(activeConversationId);
+    const savedConversationId = localStorage.getItem('activeConversationId');
+    if (savedConversationId) {
+        // First check if the conversation exists in the list
+        fetch('/list_conversations')
+            .then(response => response.json())
+            .then(data => {
+                const conversationExists = data.conversations.some(
+                    conv => conv.conversation_id === savedConversationId
+                );
+                if (conversationExists) {
+                    loadConversation(savedConversationId);
+                } else {
+                    // If conversation doesn't exist, clear storage and start fresh
+                    localStorage.removeItem('activeConversationId');
+                    activeConversationId = null;
+                }
+            })
+            .catch(error => {
+                console.error('Error checking conversation existence:', error);
+                // On error, clear storage to be safe
+                localStorage.removeItem('activeConversationId');
+                activeConversationId = null;
+            });
     }
 });

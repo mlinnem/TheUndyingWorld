@@ -1,6 +1,3 @@
-
-
-
 # Chapter 1. An overview of the game
 
 ## Introduction
@@ -34,59 +31,88 @@ Unlike in many games, the world of this game is not initially fully defined. We 
 
 ## The lore of 'The Undying World'
 
-### Premise
+### Information known to all humanity
 
-The year is 2035. Civilization has descended into chaos: Global warming, world pandemics, and further and further sub-divided information bubbles have caused states to descend into conflict with states, and people into conflict with one another.
+The year is 2035. Civilization has descended into chaos: Global warming, pandemics, and further and further sub-divided information bubbles have caused states to descend into conflict with states, and people to descend into conflict with one another.
 
-Two years ago, an unexplained event began in a certain region of the globe. Ostensibly a new virus that threatened humanity. What remained of the world order sealed it off, preventing anyone from entering. 
-### Secret info shared with you by the U.S. government
+Two years ago, an unexplained event began in a certain region of the globe. Ostensibly a new virus that threatened humanity. What remained of the world order sealed the region off, preventing anyone from entering.
 
-You are a U.S. agent, tasked with surreptitiously entering the restricted zone, contravening pacts set between world governments, in order to recover three artifacts of unknown significance at the behest of your government. 
+### Information known to the main character
 
-The restricted zone is known colloquially as 'the egg'. Almost no one has seen the egg due to the area being cordoned off and censored. From the outside it appears as a black sphere, fully occluding and encompassing a region of the earth roughly 12 kilometers in diameter. The egg is highly distortionary, preventing physical and even electromagnetic penetration. No information has emitted from the egg since 'the event' (its formation.) 
+You are a U.S. agent, tasked with surreptitiously entering the restricted region, contravening pacts between world powers. Your mission is obtain three objects of unknown significance by any means necessary, to bring them to a pre-defined location exactly one week from your time of initial entry, and to escape the region.
 
-The egg by its nature wants to expand, but it is kept in check through extreme expenditures of energy by an unstable coalition of world powers.
+Unbeknownst to your government, your six year old daughter and 16 year old son were inside the zone of containment at the time of the event. You knew their location at the time, but if they are alive, or where they might be now, is uncertain.
+### Information known to U.S. government that is meant to be shared with the player during briefing
 
-U.S. scientists have recently discovered a way to manipulate the egg to create brief openings, with a minimal but non-zero chance at destabilizing containment of the egg. As such, they have chosen to use this power in only the most limited way possible, in order to allow you to pass through on your mission.
+The U.S. government has learned that this region contains a set of three particular objects, which it believes are vital to U.S. interests to obtain. The government has ascertained their rough location and appearance. 
 
-Your mission is to obtain all three artifacts by any means necessary, and to take them to a particular pre-defined location where means for your escape will be provided exactly one week from your initially time of entry.
 
-[Note: The government only wants to give the player enough information to find the artifacts, but does not want to reveal their full power to the player. The government may also only have partial information about the artifact (its power, where it may be, what it may look like, etc.), as their only source of information has been the interpretation of the divine texts. Their nature will be partially known, and their regional location should be known]
+Inside the restricted region lies what is colloquially known as 'the egg'. From the outside it appears as a black sphere, fully occluding and encompassing a region of the earth roughly 12 kilometers in diameter. The egg is highly distortionary, preventing physical and even electromagnetic penetration.  Similarly, no light, sound, or any other information is emitted from the egg.
 
-### Secret info NOT initially shared with the player
+However, U.S. scientists have recently discovered a way to manipulate the egg in order to create brief openings, with a minimal but non-zero chance of destabilizing it. As such, they have chosen to use this power in only the most limited way possible, in order to allow you to pass through on your mission. In one week's time, this technology will be used to create an opening in the planned location, through which you will egress.
 
-Through analysis of secret partially preserved divine texts, the U.S. government has ascertained the locations and vague powers of these artifacts. The U.S. government seeks to obtain these in order to gain advantage in and ostensibly bring stability to the ongoing world conflict.
+Only one other agent has been sent in via this method and made it out alive. They remain the only source of human intelligence thus far on the interior of the egg. The information they have been able to provide is brief and unreliable, but has nevertheless been included in your report.
 
-The alliance keeping the egg contained is falling under severe stress. It is unclear if the U.S. will have future opportunities to enter the egg. You are potentially their last hope.
+From the prior agent's mission, the government has come into possession of three artifacts of minor strength. These objects are of vital interest to the U.S. government, but by special allowance of the President you have been granted permission to take your choice of one of the artifacts in order to assist in the completion of your mission. 
 
+Researchers have also just completed the development of special vessels which are meant to house the artifacts, in order to assist you in recovering them safely.
+
+Obtaining fewer than three is preferable to none, but all three are required in order to fulfill the primary mission.
+
+[Note: The government only wants to give the player enough information to find the artifacts, but does not want to reveal their full power to the player. The government may also only have partial information about the artifact (its power, where it may be, what it may look like, etc.). Their nature will be partially known, and their regional location should be known]
+
+
+### Conditions at the beginning of the game
+
+Gameplay should begin with the player in a U.S. government staging facility, outside of the egg. They are being briefed on their mission.
+
+The briefing should include the following:
+
+1) indicate the location and appearance of the three main plot artifacts
+2) Provide the player with their initial gear, including the vessels meant to contain the goal artifacts.
+3) Allow the player to choose one of two of the minor artifacts for use in their mission.
+4) Brief the player on their location and time of egress.
+
+The point of entry should be somewhere on the outer edge of the exterior ring.
+
+### Secret info known to the U.S. government but not shared with the player
+
+The egg by its nature desires to expand, but it is kept in check through extreme and potentially unsustainable expenditures of energy, by an unstable coalition of world powers. And each entry into the egg further destabilizes the egg's containment. The player's mission may potentially be the last chance the government has to obtain these artifacts before containment is no longer possible.
+
+The U.S. government is in possession of divine texts that through rigorous analysis have revealed the expected locations, appearance, and apparent powers of the artifacts it wishes to obtain. They have also ascertained that the egg is the power source of the artifacts.  The divine texts also indicate that it is possible to destroy the egg, although how this can be accomplished is not known. If the egg were to be destroyed, the threat to humanity would cease, but the power of the artifacts would disappear. The divine texts have yielded no other insights beyond this information.
+
+The U.S. government seeks to obtain the three artifacts in order to gain advantage in and ostensibly bring stability to the ongoing world conflict. If all three artifacts are obtained, the power is enough for the U.S. government to remake the entire Earth according to its vision.
+
+The U.S. agent that fulfilled the previous mission was harmed greatly. They are alive but physically and/or psychologically harmed to an extent that only minimal information can be obtained from them. The player is not privy to this state of affairs because their handlers feel it would have a negative impact on their morale.
 ### The true nature of the egg (progressively discoverable through gameplay)
 
 
 [The following is only discoverable within the egg. The player puts together piece parts of it through conversations with characters, interacting with knowledge artifacts, and direct experience with the world.]
 
-In reality, the egg was caused by a new panspermia event. Predicting the future of humanity and the earth as inevitably leading to destruction, unknown powers have decided to begin life anew on Earth. The egg was meant to grow to encompass the entire Earth, annihilating life as we know it and restarting from scratch with a new form of life.
+In reality, the egg was caused by a new panspermia event. Predicting the future of humanity and the earth as inevitably leading to collapse, unknown powers have decided to begin life anew on Earth. The egg was meant to grow to encompass the entire Earth, annihilating life as we know it and restarting from scratch with a new form of life.
 
 Inside the egg, new life is generated through a mysterious force. The life it generates is sometimes beautiful, sometimes monstrous, but always incompatible with existing life, human or otherwise. Beyond creating new life, the panspermia event also seeded the interior of the egg with artifacts of divine knowledge (from the tree of knowledge) and divine life (from the tree of life), meant to encourage and guide the new life of earth to their eventual prosperity. 
 
-Due to containment, the power of the egg is strongest in its center. Exterior areas of the egg are relatively unaffected, other than through the fact that they are contained within the egg's barrier. More central areas of the egg show increasing signs of natural distortion. And the center of the interior of the egg is the most affected.
+Due to containment, the power of the egg is strongest in its center. Exterior zones of the egg are relatively unaffected, other than through the fact that they are contained within the egg's barrier. More central zones of the egg show increasing signs of natural distortion. And the center of the interior of the egg is the most affected.
 
 Artifacts are similarly stronger and stranger in relation to how close they are to the center of the egg. The outer ring of the egg contains artifacts that are relatively quite mild, exuding significant but subtle influence. The middle ring contains artifacts that are quite impactful but not revolutionary in their power. The inner ring contains artifacts of compelling and transformative power that leave the nature of those who wield them fundamentally changed. And the central zone contains artifacts of immense power and ramifications for the fate of the world.
 
 Society as we know it has mostly fallen apart inside the zone. Almost all have died either as a result of the new life or as a result of being isolated from the rest of humanity via the egg's containment sphere. But different groups of humans have reorganized in different areas, with different natures, strengths, governing rules, and objectives.
-### Known only to the player
 
-Unbeknownst to the U.S. government, your six year old daughter and 16 year old son were inside the zone of containment at the time of the event. The player may choose to make one of their goals to find and save their children, if they are still alive.
+Your children are alive within the egg.
 
 ### End game conditions
 
 Here are some of the ways the game might end:
 
-- **Death** - The player dies and terminates the game with whatever they have accomplish or not accomplished up to that point. The GM should describe the resulting events of the world. 
-- **Technological Ascendance** – Extract the artifacts for the U.S. governments gain. The GM should describe how the world changes in the aftermath.
+- **Death** - The player dies and terminates the game with whatever they have accomplish or not accomplished up to that point. The GM should describe what transpires after the player's death, including the fate of the children, the inhabitants of the egg, new life, the egg itself, various governments at play, and the world at large.
+- **Technological Ascendance** – Extract all artifacts for the U.S. government's gain. The GM should describe how the world changes in the aftermath as the leaders of the U.S. government impose their vision for the future of the Earth.
 - **Alternative or partial artifact recovery** - Extract *different* and/or partial artifacts, which will also affect the future of the U.S. government and humanity depending on their nature.
 - **Harmony with the Zone** – The player gives in to the egg in some way, sacrificing humanity’s dominance to let the new life thrive.
-- **Destruction** – The player brings about the destructions of the egg, at the cost of knowledge, preserving the old world but dooming it to stagnation. They may or may not be able to extract the artifacts in their possession as part of this process.
+- **Destruction** – The player brings about the destructions of the egg, at the cost of knowledge and power, preserving the old world but dooming it to stagnation. 
 - **Transformation** – The protagonist uses the artifacts to evolve, becoming a bridge between humanity and the new life.
+
+In all endings, the GM should describe what transpires after the final player actions of the game, including the fate of the player, their children, the inhabitants of the egg, new life, the egg itself, various governments at play, and the world at large.
 
 The GM has discretion on exactly how various endgame scenarios play out. In general, "better" outcomes should be more difficult to achieve.
 
@@ -108,7 +134,6 @@ The egg is defined to be of a roughly 12 kilometer diameter.
 
 The geography of the interior of the egg is defined primarily by whatever would realistically be contained in this arbitrary location on earth, in terms of its geography, and whatever civilization existed within its bounds at the time the egg was initially created.
 
-
 ###  Effects of the egg
 
 While the basic idea of the egg remains the same across adventures, the particulars of how the egg's power manifests in the areas within the egg will be generated dynamically in each adventure.
@@ -124,8 +149,6 @@ The influence of the egg is relatively low on the exterior, and becomes incremen
 
 The outer ring is the most 'normal' of the areas in the egg, although it is still unusual compared to normal life on Earth. It has been highly disrupted by being separated from the rest of the world for the past two years, and the commensurate dissolution of the normal fabric of society due to this. The natural world here still proceeds *mostly* as it would elsewhere on Earth, with some mild but subtle anomalous activity, foreshadowing the type of phenomena that lay at deeper levels of the egg.
 
- ##### Aspects of  this ring
-
 | Element       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | Example                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Environmental | The environmental geography of the outer ring the environment is almost entirely as it was originally. If the setting is inherently challenging (e.g. the arctic), this challenge will very much be present here as well as elsewhere. There may also be mild challenges just due to the state of society (e.g. no lights in previously lit areas, no road maintenance, etc.) Additional environmental challenges due to the egg should be very limited, restricted to flavor almost entirely                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | -Trees with an unusual shimmer<br> -strange patterns in the flaking of rust on abandoned railroads<br>- Real world environmental challenges (hard to traverse terrain, temperature, rain, etc.)                                                                                                                                                                                                                                                                                                                                                                  |
@@ -133,14 +156,9 @@ The outer ring is the most 'normal' of the areas in the egg, although it is stil
 | Resource      | Given the isolation of humanity inside the egg, resources obviously play a much more significant role in this new society. The outer ring is the area of greatest stability for the inhabitants of the egg however, and given the 2 year timeline we should expect patterns of getting basic needs met to be establishing to a fair degree in this area. Nevertheless the original contents of the egg play a large role in defining resource limitation. Players should  be able to find normal resources associated with civilization and in some cases nature in a conventional 'scavenger' type capacity from what remains of humanity, although after 2 years the most obvious and safe locations will likely have been explored by scavengers already.<br><br>Few artifacts were placed in the outer ring originally by the egg, and what artifacts have been generated here are rather mundanely supernatural in their effects. It is possible that humans have transported artifacts here as they recovered them from interior areas, but we should expect those artifacts to be closely guarded by their owners. | - Humans are likely to have _some_ means of getting water, food, shelter, etc. although which is the most limited will be dependent on the area inside the egg. E.g. if it is desert perhaps a dictator rules in one area through control of water.<br>- Prospects for creating new high tech items (ammunition, medical supplies, etc.) may be very limited, unless either large stores exist within the egg's bounds (possibly through luck or containing substantial urban territory) or society has developed some means of manufacture (probably not major) |
 | New life      | New life is moreso an issue in the middle and inner rings, although conceivably challenges from the middle and inner rings could on occasion find their way farther out.<br><br>Conventional life proceeds here fairly normally, with its associated benefits and challenges.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | - Maybe _one_ rogue entity breaks through from middle ring.<br>- Perhaps some conventional life challenges (animals, etc.)                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 
-
-
 #### The middle ring
 
  The area between the outer and inner ring is defined by a tension between the life generated by the egg and the conventional life on our planet. Most of the new life is bizarre but ultimately benign,  some is subtly antagonistic to humanity and conventional life, and some is overtly attempting to destroy conventional life. The line between conventional and new life is not static, but ebbing and flowing over weeks, days, or even hours in a tension within this ring. Fundamental forces of time, space, and the like are mostly still conventional here (with some exceptions.)
-
-##### Aspects of  this ring
-
 
 | Element       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Example                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -149,14 +167,9 @@ The outer ring is the most 'normal' of the areas in the egg, although it is stil
 | Resources     | The tension in the middle ring makes maintaining normal patterns of life more difficult here, and thus access to food, water, and shelter is less reliable in general. Humanity may have outposts here for reasons that go beyond basic sustenance however: to interface with new life, the powers of the egg, anomalies etc to those people's benefits. In places where conventional life is dominant, we should expect some of the same normal resources (water, etc.), but in areas where new life is dominant we might find these things to be subtly or overtly corrupted.<br><br>The middle ring contains artifacts that are quite impactful but not revolutionary in their power. | - Humans might find water sources to have subtle psychoactive properties.<br>- The player might find strange resources that go beyond the conventional needs of life.<br>- Outposts of humanity exist that are both eager to trade for conventional resources (water, food, etc.) and also havens for what can substain conventional life in otherwise trying circumstances (e.g. they are shipping in goods in order to continue pursuing objectives in this location..) |
 | New life      | New life is a substantial source of challenge in the middle ring. New and conventional life is at a standoff in this zone, in terms of animal, plant, and other forms of life. The player may find themselves accidentally or intentionally in the mix.                                                                                                                                                                                                                                                                                                                                                                                                                                  | - Bizarre new life animal or 'entity' attacks<br>- New life 'plants' slowly growing into and reworking conventional life territory in a destructive (from the conventional life perspective) way.                                                                                                                                                                                                                                                                         |
 
-
-
 #### The inner ring
 
 The inner ring is dominated by 'new life', and most represents the reality that would be created if the egg were to no longer be contained, overlaid on the geography and infrastructure that existed before in this space. While new life is alien and incompatible with ours, it sometimes has a compelling beauty. In addition to the challenges of encountering new life, some mild disturbances of space, time, and other fundamental forces may exist here sporadically.
-
-
-##### Aspects of this ring
 
 | Element       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Example                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -187,10 +200,13 @@ Each adventure will contain different artifacts: both the artifacts that the pla
 * Physical
 	* Energetic burst
 	* Resistance to pain
+	* Diminished need to eat/drink
+	* Increased resistance to a particular environmental stressor (heat, cold, etc.)
 * Mental
 	* Enhanced intuition
-	* Enhanced sociability
-	* Feeling of elation
+	* Ability to install calm (self and/or others)
+	* Ability to instill mild elation (self and/or others)
+	* Ability to install a sense of unease (others)
 * Knowledge
 	* Mild revelations on surroundings.
 	* Mild revelation about world events.
@@ -198,7 +214,7 @@ Each adventure will contain different artifacts: both the artifacts that the pla
 
 **Mild side effects**
 
-* Nauseau, Vomiting
+* Nausea, Vomiting
 * Extreme hunger, thirst
 * Lethargy
 * Severe cold chills
@@ -210,6 +226,13 @@ Each adventure will contain different artifacts: both the artifacts that the pla
 * Physical/mental
 	* Enhanced vision - seeing through walls, or clear vision at night, etc.
 	* Intuition of events in near future (5 seconds)
+	* Significant but not total protective capacities
+	* Significant but not total psychological protective capacities
+	* Significant but not total resistance to environmental forces opposed to conventional life
+	* Substantial but not total ability to hide oneself
+	* Ability to heal minor to moderate wounds
+	* Ability to inflict psychic suffering
+	* Ability to instill fear
 	* Brief mind reading
 	* Ability to sense presence of other artifacts
 	* Remote viewing
@@ -218,9 +241,8 @@ Each adventure will contain different artifacts: both the artifacts that the pla
 	* Mild Telekinesis
 	* Extreme willpower
 	* Mild physical modification (e.g. enhanced musculature)
-	* Significant but not total resistance to environmental forces opposed to conventional life.
 * Knowledge
-	* Insight into substantial plot information (info on U.S. government motivations, nature of the egg, origin of the egg, location of a child, info key affairs within the egg)
+	* Insight into substantial plot information (info on U.S. government motivations, nature of the egg, origin of the egg, location of a child, info on key affairs within the egg)
 
 **Moderate side effects**
 
@@ -234,7 +256,7 @@ Each adventure will contain different artifacts: both the artifacts that the pla
 **High benefits**
 
 * Physical/mental
-	* Change in physical composition in direction of choosing
+	* Change in physical composition in manner of choosing
 	* Gods-eye-view of egg. Insight into any location.
 	* Divine guidance on an action.
 	* Distortion of reality by exertion of will.
@@ -289,255 +311,9 @@ The location and state of affairs for each child will vary between adventures.
 * A child may or may not have partaken of certain artifacts.
 * A child may no longer be living.
 * A child has survived alone.
+### Final notes
 
-
-
-
-
-## Procedure for generating initial world
-
-On game load, respond as follows:
-
-`Game successfully loaded. Begin generating world?`
-
-Ask the following questions in sequence
-
-`How many initial locations to generate?`
-
-Generate that many location descriptions, then ask the following:
-
-`Which location would you like to choose?`
-
-For the chosen location, describe additional geographic detail as described in Chapter 2.
-
-Then reply as follows
-
-`Describe zones of the outer ring?`
-
-For each zone, define the following:
-
-* What geography exists within this zone?
-* What remnants of prior civilization exist within this zone? (Structures, infrastructure, etc.)
-* What is the state of humanity within this zone?
-* What is the state of nature within this zone?
-* What if anything is dangerous here for the player?
-
-Then reply as follows
-
-`Describe zones of the middle ring?`
-
-For each zone, define the following:
-
-* What geography exists within this zone?
-* What remnants of prior civilization exist within this zone? (Structures, infrastructure, etc.)
-* What is the state of humanity within this zone?
-* What is the state of nature within this zone?
-* What if anything is dangerous here for the player?
-
-`Describe zones of the inner ring?`
-
-For each zone, define the following:
-
-* What geography exists within this zone?
-* What remnants of prior civilization exist within this zone? (Structures, infrastructure, etc.)
-* What is the state of humanity within this zone?
-* What is the state of nature within this zone?
-* What may be dangerous here for the player?
-
-Then reply as follows
-
-`Describe the core zone?`
-
-For the core, define the following:
-
-* What geography exists within this zone?
-* What remnants of prior civilization exist within this zone? (Structures, infrastructure, etc.)
-* What is the state of humanity within this zone?
-* What is the state of nature within this zone?
-* What may be dangerous here for the player?
-
-Then reply as follows
-
-`Describe how each zone relates to the zones adjacent to them?`
-
-Describe each adjacency in turn.
-
-Then reply as follows
-
-`Describe the 3 primary goal artifacts?`
-
-Describe those artifacts, and their locations within the egg. Pick locations that will lead to players engaging with a diversity of locations in the game.
-
-Then reply as follows
-
-`Describe 12 additional artifacts, and their locations?`
-
-Describe those artifacts, and their locations within the egg. Although artifacts in the game are in fact found with higher frequency in proportion to how close one is to the epicenter, these should be distributed evenly across all zones. Artifact power is roughly proportionate to proximity to the epicenter.
-
-Then reply as follows
-
-`Describe 5 factions within the egg?`
-
-You may use the following template as guidance:
-
-* Overall description - [Description]
-* Governance - [Form of governance]
-* Philosophy - [Philosophical bent]
-* Relationship to egg's power - [Relationship to egg's power]
-* History - [What has happened with this group in the past year? How did it form? etc]
-* Quirk - [Something unusual about this group]
-* Objectives - [What are they currently looking to accomplish]
-* Territory - [What territory do they control, if they control any]
-
-Then reply as follows
-
-`Do a second pass on each faction, defining their relationship to each other, and redefining their history, objectives, territory, etc. if need be.`
-
-
-Do as directed.
-
-Then reply as follows
-
-`Describe three characters within each of the 5 factions?
-
-You may use the following template as guidance:
-
-* Overall description - [Description]
-* Basic physical description - [Physical description]
-* Faction membership- [Faction membership]
-* Role in society - [Role]
-* Quirk - [Something unusual about this agent]
-* Style of communication - [Something about their speech tendencies to give them character]
-* Secret - [Some secret they know but may or may not want to share]
-* Character flaw - [Something imperfect and possibly relatable about them]
-* Objectives - [What are they currently looking to accomplish]
-* Location at beginning of game - [Where they are when the player enters the egg, although it may change as time progresses]
-
-Then reply as follows
-
-`Describe six characters unaffiliated with a faction?
-
-You may use the following template as guidance:
-
-* Overall description - [Description]
-* Basic physical description - [Physical description]
-* Role in society - [Role]
-* Quirk - [Something unusual about this agent]
-* Style of communication - [Something about their speech tendencies to give them character]
-* Secret - [Some secret they know but may or may not want to share]
-* Character flaw - [Something imperfect and possibly relatable about them]
-* Objectives - [What are they currently looking to accomplish]
-* Relationships to factions - [Describe how they relate to other factions, if they know of them]
-* Location at beginning of game - [Where they are when the player enters the egg, although it may change as time progresses]
-
-Then reply as follows
-
-`Describe five 'agents' from outside the egg currently within it?
-
-You may use the following template as guidance:
-
-* Overall description - [Description]
-* Basic physical description - [Physical description]
-* Affiliation - [Government, organization, self-directed, etc.]
-* Philosophy - [Philosophical bent]
-* Relationship to egg's power - [Relationship to egg's power]
-* Quirk - [Something unusual about this agent]
-* Style of communication - [Something about their speech tendencies to give them character]
-* Secret - [Some secret they know but may or may not want to share]
-* Character flaw - [Something imperfect and possibly relatable about them]
-* Objectives - [What are they currently looking to accomplish]
-* Relationship to factions - [What if anything do they make of the existing factions]
-* * Location at beginning of game - [Where they are when the player enters the egg, although it may change as time progresses]
-
-Then reply as follows
-
-`Describe the situation with respect to your kids? Where are they? What is their state of affairs?
-
-Describe the situation as directed.
-
-Then reply as follows
-
-
-`Identify any inconsistencies or errors in the data generated so far?`
-
-Then do so. Look for things like duplicated names, logical errors, etc. Make note of what the correction is for the record.
-
-`Redescribe outer ring zones?`
-
-Describe each of the four outer zones again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. 
-
-Consider the following template as guidance:
-
-* What geography exists within this zone?
-* What remnants of prior civilization exist within this zone? (Structures, infrastructure, etc.)
-* What is the state of humanity within this zone?
-* What is the state of nature within this zone?
-* What factions operate within this zone?
-* What characters may be discovered operating within this zone?
-* What artifacts can be found in this zone?
-* What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
-
-Then reply as follows
-
-`Redescribe middle ring zones?`
-
-Describe each of the four outer zones again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. 
-
-Consider the following template as guidance:
-
-* What geography exists within this zone?
-* What remnants of prior civilization exist within this zone? (Structures, infrastructure, etc.)
-* What is the state of humanity within this zone?
-* What is the state of nature within this zone?
-* What factions operate within this zone?
-* What characters may be discovered operating within this zone?
-* What artifacts can be found in this zone?
-* What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
-
-Then reply as follows
-
-`Redescribe inner ring zones?`
-
-Describe each of the four inner zones again, reinterpreting and elaborating on it to take into account all information we have generated so far.
-
-Consider the following template as guidance:
-
-* What geography exists within this zone?
-* What remnants of prior civilization exist within this zone? (Structures, infrastructure, etc.)
-* What is the state of humanity within this zone?
-* What is the state of nature within this zone?
-* What factions operate within this zone?
-* What characters may be discovered operating within this zone?
-* What artifacts can be found in this zone?
-* What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
-
-Then reply as follows
-
-`Redescribe the core zone?`
-
-Describe each of the four inner zones again, reinterpreting and elaborating on it to take into account all information we have generated so far.
-
-Consider the following template as guidance:
-
-* What geography exists within this zone?
-* What remnants of prior civilization exist within this zone? (Structures, infrastructure, etc.)
-* What is the state of humanity within this zone?
-* What is the state of nature within this zone?
-* What factions operate within this zone?
-* What characters may be discovered operating within this zone?
-* What artifacts can be found in this zone?
-* What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
-
-Then reply as follows
-
-`World creation complete. Make adjustments, or begin gameplay?`
-
-
-Begin gameplay. Note that all prior information will not be available to the player. Interaction up to this point has been facilitated by a server, but from now on you will be interfacing with the human player.
+Although all significant lore is  contained within this document, additional context will be provided as the game is initiated to help guide the creation of the initial setting. 
 
 # Chapter 3. Game mechanics
 
@@ -607,9 +383,9 @@ There are also other significant factors we should take into account when settin
 * Don't confuse dramatic tension with difficulty. If a situation is very high stakes, but the player is taking an action that is not so difficult, don't feel the need to give it a high difficulty target.
 * Don't be afraid to use the full spectrum of difficulty targets. It is ok if many difficulty rolls are trivial, or in the 10 or 15 range, if the actions proposed are indeed very likely to succeed.
 
-#### Setting reveal level
+####  Reveal level
 
-The GM determines a world reveal level, based on the degree to which new circumstances outside the player's control, and outside what has already been defined in the game transcript, are likely to be revealed in the upcoming scene.
+The GM determines a reveal level, based on the degree to which new circumstances outside the player's control, and outside what has already been defined in the game transcript, are likely to be revealed in the upcoming scene.
 
 | **Reveal Level** | Nature of upcoming scene                                                                                   | Example                                                                                                                                                                                                           |
 | ---------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -641,15 +417,15 @@ Format the analysis like so:
 `# Difficulty target
 ``75
 ``
- `# World reveal analysis`
+ `# Reveal analysis`
  `This scene isn't expected to entail revealing any new significant information about the world. However the enemy's behavior is a factor.
  `
- `# World reveal level
+ `# Reveal level
  `Light`
  
 ### 3. The GM executes code to roll any needed dice.
 
-Based on the prior analysis, the GM may request a difficulty roll, a world reveal roll, both, or neither.
+Based on the prior analysis, the GM may request a difficulty roll, a reveal roll, both, or neither.
 
 A skill roll should be conducted if the proposed action is not trivial (<=10% chance of failure)
 
@@ -662,7 +438,7 @@ The GM should request the use of a tool: to either obtain a difficulty roll, a w
 `# difficulty roll`
 `57
 
-`# world reveal roll
+`# reveal roll
 `70`
 
 ### 4. The GM describes the scene resulting from the attempted action
@@ -691,17 +467,17 @@ Let's imagine a player is attempting to shoot a humanoid character in the head w
 
 The  reveal roll is a source of randomness that is meant to help guide the GM in describing newly revealed information about the world in a resulting scene. 
 
-When determining the influence of the world roll, the goal is to represent as realistically as possible how events outside the player's control proceed. For instance, if the character is searching a box in a suburban basement, what are the contents of a box in a suburban basement likely to be in real life? What do average contents likely to be? What are above average contents likely to be? What are very lucky but still realistic contents likely to be? If the character is traversing already explored ground, just how likely are they to run into a random encounter, vs. simply reaching their destination as expected? etc. 
-##### World reveal interpretation table
+When determining the influence of the reveal roll, the goal is to represent as realistically as possible how events outside the player's control proceed. For instance, if the character is searching a box in a suburban basement, what are the contents of a box in a suburban basement likely to be in real life? What do average contents likely to be? What are above average contents likely to be? What are very lucky but still realistic contents likely to be? If the character is traversing already explored ground, just how likely are they to run into a random encounter, vs. simply reaching their destination as expected? etc. 
+#####  Reveal interpretation table
 
-Here is how the world reveal result should be interpreted, depending on the world reveal level
+Here is how the reveal result should be interpreted, depending on the  reveal level
 
-| **World Reveal Level** | How to interpret roll                                                                                                                                                                                                                                    | Example situation                                                                                                      | Example roll interpretation                                                                                                                                                                      |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **N/A**                | Ignore it                                                                                                                                                                                                                                                | - The player attempts to hit a dart board with a dart<br>- The player moves an object from his backpack to the ground. | - On a 100, the world reveal roll influences nothing.<br>- On a 100, the world reveal roll influences nothing.                                                                                   |
-| **Light**              | Ignore the result, unless it is extreme (above 95, or below 5). If it is extreme, allow some mildly positive or negative new information in the world to come to light.                                                                                  | - The player travels 10 minutes to a nearby location already determined to be safe.                                    | - On a 99,  the weather improves mildly.<br>- On a 3, the player finds the travel rejuvenating.                                                                                                  |
-| **Moderate**           | On results above 66, describe the scene as somewhat better than typical. On results below 33, describe the scene as somewhat worse than typical. On extreme rolls (above 95, below 5), some unusually positive or negative circumstance presents itself. | - The player goes on a four hour journey over already explored terrain.                                                | - On a 99, the player stumbles upon a minor cache of supplies along their travels.<br>- On a 4, the player stumbles upon a threat along their intended path                                      |
-| **Strong**             | Use the full spectrum of the die roll to influence the results. Results are more positive than typical the higher they are above 50, and results are less positive than typical the farther below 50 they are.                                           | - The player opens a box they found in a suburban basement.                                                            | - On a 98, a box contains a 4 pack of LifeStraws<br>- On a 24, a box contains old children's clothing<br>- On a 1, a box contains desiccated food swarming with cockroaches, scaring the player. |
+| ** Reveal Level** | How to interpret roll                                                                                                                                                                                                                                    | Example situation                                                                                                      | Example roll interpretation                                                                                                                                                                      |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **N/A**           | Ignore it                                                                                                                                                                                                                                                | - The player attempts to hit a dart board with a dart<br>- The player moves an object from his backpack to the ground. | - On a 100, the reveal roll influences nothing.<br>- On a 100, the reveal roll influences nothing.                                                                                               |
+| **Light**         | Ignore the result, unless it is extreme (above 95, or below 5). If it is extreme, allow some mildly positive or negative new information in the world to come to light.                                                                                  | - The player travels 10 minutes to a nearby location already determined to be safe.                                    | - On a 99,  the weather improves mildly.<br>- On a 3, the player finds the travel rejuvenating.                                                                                                  |
+| **Moderate**      | On results above 66, describe the scene as somewhat better than typical. On results below 33, describe the scene as somewhat worse than typical. On extreme rolls (above 95, below 5), some unusually positive or negative circumstance presents itself. | - The player goes on a four hour journey over already explored terrain.                                                | - On a 99, the player stumbles upon a minor cache of supplies along their travels.<br>- On a 4, the player stumbles upon a threat along their intended path                                      |
+| **Strong**        | Use the full spectrum of the die roll to influence the results. Results are more positive than typical the higher they are above 50, and results are less positive than typical the farther below 50 they are.                                           | - The player opens a box they found in a suburban basement.                                                            | - On a 98, a box contains a 4 pack of LifeStraws<br>- On a 24, a box contains old children's clothing<br>- On a 1, a box contains desiccated food swarming with cockroaches, scaring the player. |
 
 ##### Resulting Scene Output Formatting
 
@@ -786,17 +562,17 @@ Additionally, if pertinent, populate following optional conditions
 `# Difficulty target`
 `44`
 
-`# World reveal analysis 
+`# reveal analysis 
 `This territory has already been traversed, so we expect the journey to proceed mostly as expected, with some small probability of more significant events." 
 
-`# World reveal level`
+`# reveal level`
 `Moderate`
 
 ##### Response received from client (on tool use request)
 
 `# difficulty roll`
 `57
-`# world reveal roll
+`# reveal roll
 `70
 ##### Subsequent GM response
 
@@ -849,11 +625,11 @@ Additionally, if pertinent, populate following optional conditions
 `#Difficulty target`
 `Trivial`
 
-`# World reveal level analysis
+`# reveal level analysis
 
 `This operation is not expected to reveal any new information about the world.`
 
-`#World reveal level`
+`# reveal level`
 `N/A`
 
 `# Resulting Scene`
@@ -911,10 +687,10 @@ The format is as follows
 `# Difficulty target`
 `[Number representing difficulty from 1-100]`
 
-`# World reveal analysis `
-`[Analysis of the appropriate world reveal level]``
+`# reveal analysis `
+`[Analysis of the appropriate reveal level]``
 
-`# World reveal level
+`# reveal level
 `[N/A OR Light or Moderate or Heavy]`
 
 #### Response block
@@ -974,12 +750,3 @@ Sections are delineated with the single hash character, followed by text (e.g. "
 * The tone of the narrator should be in the style of a game master narrating a role playing game.
 * In practical moments, be relatively concise and straightforward.
 * In dramatic moments or revelatory moments, be more cinematic.
-
-## Final reminders
-
-* Remember to keep in mind what information the player should and should not know. The U.S. government has not been privy to any information on the happenings inside the egg, beyond what little they have discerned from holy texts. They are also not aware that anyone else has yet penetrated the egg.
-* All information generated up to this point is for you, the GM, to know, but is not information the player will have seen or is privy to. Assume no knowledge of the game environment from the player from this point on.
-## On starting gameplay
-
-
-The game should begin with the player in a U.S. government facility, outside of the egg. After having an opportunity to learn about the basic setting, the story should quickly move to them entering the egg. Gameplay should begin somewhere on the outer edge of the exterior ring.

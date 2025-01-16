@@ -40,7 +40,12 @@ def load_conversation(conversation_id):
         with open(file_path, 'r') as f:
             conversation_data = json.load(f)
             if conversation_data.get('system_prompt'):
-                print(f"Continuing with old system prompt for conversation {conversation_id}, {conversation_data['prompt_version']}")
+                # Check if prompt_version exists, if not add it
+                if not conversation_data.get('prompt_version'):
+                    print(f"Prompt version not found in conversation {conversation_id}. Adding timestamp.")
+                    conversation_data['prompt_version'] = datetime.now().isoformat()
+                else:
+                    print(f"Continuing with old system prompt for conversation {conversation_id}, {conversation_data['prompt_version']}")
                 return conversation_data
             else:
                 print(f"System prompt not found in conversation {conversation_id}. Using current system prompt.")
@@ -177,3 +182,17 @@ def update_conversation_cache_points(conversation):
         logger.info("No conversation cache point needed yet (fewer than 50 messages after boot)")
 
     return conversation
+
+def get_all_conversations():
+    """Return a list of all conversations with their metadata."""
+    # Implementation depends on your storage method
+    # Should return a list of dicts with at least:
+    # - conversation_id
+    # - name
+    # - last_updated
+    pass
+
+def delete_conversation_by_id(conversation_id):
+    """Delete a conversation by its ID."""
+    # Implementation depends on your storage method
+    pass

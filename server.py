@@ -255,9 +255,14 @@ def run_boot_sequence(conversation: Dict) -> Dict:
     try:
         # Read boot sequence messages from file
         with open('LLM_instructions/boot_sequence.MD', 'r') as file:
+            content = file.read()
+            # Split by "# Instruction" and skip the first empty section
+            sections = content.split("# Instruction")[1:]  # Skip first split which is empty
+            # Clean each instruction and filter out empty ones
             boot_sequence_messages = [
-                line.strip() for line in file.readlines() 
-                if line.strip()  # Skip empty lines
+                section.strip() 
+                for section in sections 
+                if section.strip()  # Skip empty messages
             ]
 
         logger.info(f"Starting boot sequence with {len(boot_sequence_messages)} messages")
@@ -315,6 +320,7 @@ def run_boot_sequence(conversation: Dict) -> Dict:
         logger.error(f"Error reading boot sequence messages: {e}")
         raise
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -324,15 +330,20 @@ def chat():
     new_messages = []
     
     try:
-        data = request.get_json()
-        
-        # get current conversation
-        if 'current_conversation_id' in session:
-            conversation = load_conversation(session['current_conversation_id'])
-        else:
-            conversation = create_new_conversation(zombie_system_prompt)
-            session['current_conversation_id'] = conversation['conversation_id']
+        # Check for valid current_conversation_id first
+        if 'current_conversation_id' not in session:
+            return jsonify({
+                'status': 'error',
+                'success_type': 'error',
+                'error_type': 'no_conversation',
+                'error_message': 'No active conversation. Please start or select a conversation first.',
+                'new_conversation_objects': [],
+                'parsing_errors': [],
+            }), 400
             
+        data = request.get_json()
+        conversation = load_conversation(session['current_conversation_id'])
+        
         # Check if this request should trigger boot sequence
         if data.get('run_boot_sequence') == True:
             conversation = run_boot_sequence(conversation)
@@ -381,9 +392,11 @@ def chat():
         logger.debug(f"conversation_objects: {conversation_objects}")
 
         jsonified_result = jsonify({
+            'status': 'success',
             'success_type': 'full_success',
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
+            'last_updated': conversation['last_updated'],
             'new_conversation_objects': conversation_objects,
             'parsing_errors': [],
         })
@@ -396,6 +409,7 @@ def chat():
             'success_type': 'partial_success',
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
+            'last_updated': conversation['last_updated'],
             'new_conversation_objects': conversation_objects,
             'parsing_errors': [],
         }
@@ -439,11 +453,13 @@ def chat():
         logger.error(f"Stack at time of error: {''.join(traceback.format_tb(e.__traceback__))}")
         conversation_objects = convert_messages_to_cos(new_messages)
         jsonified_result = jsonify({
+            'status': 'success',
             'success_type': 'partial_success',
             'error_type': 'unknown_error',
             'error_message': str(e),
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
+            'last_updated': conversation['last_updated'],
             'conversation_objects': conversation_objects,
             'parsing_errors': [],
         })
@@ -465,6 +481,7 @@ def set_current_conversation():
             'success_type': 'full_success',
             'conversation_id': session['current_conversation_id'],
             'conversation_name': conversation['name'],
+            'last_updated': conversation['last_updated'],
             'new_conversation_objects': conversation_objects,
             'parsing_errors': [],
         })
@@ -513,6 +530,37 @@ def log_conversation_messages(messages):
                 f.write(f"\n{role.upper()}: {msg['content']}\n")
                 
         f.write("\n" + "="*50)
+
+@app.route('/list_conversations', methods=['GET'])
+def list_conversations():
+    try:
+        conversations = get_all_conversations()  # You'll need to implement this function
+        return jsonify({
+            'status': 'success',
+            'conversations': conversations
+        })
+    except Exception as e:
+        logger.error(f"Error listing conversations: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+@app.route('/delete_conversation', methods=['POST'])
+def delete_conversation():
+    try:
+        data = request.get_json()
+        conversation_id = data['conversation_id']
+        delete_conversation_by_id(conversation_id)  # You'll need to implement this function
+        return jsonify({
+            'status': 'success'
+        })
+    except Exception as e:
+        logger.error(f"Error deleting conversation: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
 
 if __name__ == '__main__':
     logger.info("Starting Flask application...")

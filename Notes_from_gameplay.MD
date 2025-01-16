@@ -1,11 +1,8 @@
 # One off notes
 
-! May need to introduce 'stakes' mechanism to not make every interaction a big deal.
-! Gotta work on input text box. Bigger, or can grow, and some better borders.
-! Need to really get better on summarization bit. Will eff up long sessions.
-! Reform condition table
-! Clean up weird markdown artifacts
-! Maybe make plot point of center of zone granting a wish or some power to a faction?
+
+! Clean up weird markdown artifacts, esp around initial generation.
+
 ! Still experiencing bug where the first description doesn't have rounded corners on top.
 ! Other corner anomalies
 ! Maybe still too open to suggestion. Encourage saying 'no' to suggestions.
@@ -13,10 +10,25 @@
 ! Might want to beef up experience system. Key to progression.
 ! Need to be able to initiate map data generation when I travel to right place.
 ! Key experience gained seems to be sometimes reporting on the latest versus historical.
-! Maybe add note that character always has a watch.
 ! When there is a rate limit, literally limit user ability to send messages.
-! Maybe make it several years since the outbreak. Time for new culture to emerge.
 ! Gotta gotta gotta handle rate limiting better.
+
+
+# Archive
+
+! May need to give them some advantage. Give them artifact finder. Maybe others dont have it.
+! Maybe introduce a 'secrets' thing of stuff for players to find in each zone?
+! May need to introduce 'stakes' mechanism to not make every interaction a big deal.
+! Maybe make plot point of center of zone granting a wish or some power to a faction?
+! Maybe add note that character always has a watch.
+
+# Complete
+
+! Maybe make it several years since the outbreak. Time for new culture to emerge.
+! Gotta work on input text box. Bigger, or can grow, and some better borders.
+! Need to really get better on summarization bit. Will eff up long sessions.
+! Reform condition table
+
 
 
 # Notes with context
