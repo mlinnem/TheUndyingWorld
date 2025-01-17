@@ -1,13 +1,18 @@
 import os
 import json
 from datetime import datetime
-import logging
 from config import *
 import anthropic
 from flask import request, jsonify, session
-logger = logging.getLogger(__name__)
 from route_utils import *
 from llm_communication import *
+
+import logging
+logger = logging.getLogger(__name__)
+
+
+
+
 manual_instructions =  ""
 with open('LLM_instructions/game_manual.MD', 'r') as file:
     manual_instructions = file.read()

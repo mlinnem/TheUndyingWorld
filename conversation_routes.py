@@ -4,59 +4,61 @@ from business_logic import *
 from datetime import datetime
 from route_utils import *
 import traceback
+from llm_communication import *
+conversation_routes = Blueprint('conversation_routes', __name__)
 
-import logging
-logger = logging.getLogger(__name__)
 
-routes = Blueprint('routes', __name__)
+@conversation_routes.route('/chat', methods=['POST'])
+def chat_route():
 
-@routes.route('/chat', methods=['POST'])
-def chat_in_current_conversation_route():
     # Check for valid current_conversation_id first
-        if 'current_conversation_id' not in session:
-            return jsonify({
-                'status': 'error',
-                'success_type': 'error',
-                'error_type': 'no_conversation',
-                'error_message': 'No active conversation. Please start or select a conversation first.',
-                'new_conversation_objects': [],
-                'parsing_errors': [],
-            }), 400
-            
-        data = request.get_json()
-        conversation = load_conversation(session['current_conversation_id'])
+    if 'current_conversation_id' not in session:
+        return jsonify({
+            'status': 'error',
+            'success_type': 'error',
+            'error_type': 'no_conversation',
+             'error_message': 'No active conversation. Please start or select a conversation first.',
+            'new_conversation_objects': [],
+             'parsing_errors': [],
+        }), 400
+    
+    data = request.get_json()
+    raw_user_message = request.get_json()['user_message']
+    conversation = load_conversation(session['current_conversation_id'])
         
         # Check if this request should trigger boot sequence
-        if data.get('run_boot_sequence') == True:
-            conversation = run_boot_sequence(conversation)
-            return jsonify({
-                'success_type': 'full_success',
-                'conversation_id': session['current_conversation_id'],
-                'conversation_name': conversation['name'],
-                'message_count': conversation['message_count'],
-                'last_updated': conversation['last_updated'],
-                'new_conversation_objects': convert_messages_to_cos(conversation['messages']),
-                'parsing_errors': [],
-            })
+    if data.get('run_boot_sequence') == True:
+        conversation = run_boot_sequence(conversation)
+        return jsonify({
+             'success_type': 'full_success',
+            'conversation_id': session['current_conversation_id'],
+            'conversation_name': conversation['name'],
+            'message_count': conversation['message_count'],
+            'last_updated': conversation['last_updated'],
+            'new_conversation_objects': convert_messages_to_cos(conversation['messages']),
+            'parsing_errors': [],
+        })
+    
+        
 
-        # get and save user message
-        raw_user_message = request.get_json()['user_message']
+        
+    return chat(raw_user_message, conversation)
 
-        return chat(raw_user_message, conversation)
-
-@routes.route('/')
-def index_route():
+@conversation_routes.route('/')
+def index():
     return render_template('index.html')
 
-@routes.route('/create_conversation', methods=['POST'])
+@conversation_routes.route('/create_conversation', methods=['POST'])
 def create_conversation_route():
     try:
+        from llm_communication import manual_instructions  # Import here to avoid circular dependency
+        
         logger.info("Starting new conversation creation")
         
         # Create the conversation
-        conversation = create_new_conversation()
+        conversation = create_new_conversation(manual_instructions)
+        logger.info(f"Created conversation with ID: {conversation['conversation_id']}")
         
-        logger.info("Added intro message to conversation")
         # Set the current conversation ID in the session
         from flask import session  # Add this import at the top
         session['current_conversation_id'] = conversation['conversation_id']
@@ -88,7 +90,7 @@ def create_conversation_route():
             'message': str(e)
         }), 500
 
-@routes.route('/delete_conversation', methods=['POST'])
+@conversation_routes.route('/delete_conversation', methods=['POST'])
 def delete_conversation_route():
     data = request.get_json()
     conversation_id = data['conversation_id']
@@ -97,13 +99,15 @@ def delete_conversation_route():
     else:
         return jsonify({'status': 'error', 'message': 'Conversation not found'}), 404
 
-@routes.route('/list_conversations', methods=['GET'])
+@conversation_routes.route('/list_conversations', methods=['GET'])
 def list_conversations_route():
     conversations = list_conversations()
     return jsonify({'conversations': conversations})
 
-@routes.route('/set_current_conversation', methods=['POST'])
-def set_current_conversation_route():
+@conversation_routes.route('/set_current_conversation', methods=['POST'])
+def set_current_conversation():
+
+
     try:
         data = request.get_json()
         conversation_id = data['conversation_id']
@@ -133,5 +137,3 @@ def set_current_conversation_route():
             'status': 'error',
             'message': str(e)
         }), 500
-    
-

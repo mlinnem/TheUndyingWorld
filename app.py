@@ -1,14 +1,13 @@
 from flask import Flask
 import secrets
 from routes import routes
-import logging
-from logging.handlers import RotatingFileHandler
 import http.client as http_client
 from anthropic import Anthropic
 import os
 from dotenv import load_dotenv
 
-# Add logger import
+
+import logging
 logger = logging.getLogger(__name__)
 
 # Load environment variables and set up Anthropic client
