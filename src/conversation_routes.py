@@ -1,10 +1,10 @@
 from flask import Blueprint, request, jsonify
 from flask import Flask, render_template, request, jsonify, session
-from business_logic import *
+from .business_logic import *
 from datetime import datetime
-from route_utils import *
+from .route_utils import *
 import traceback
-from llm_communication import *
+from .llm_communication import *
 conversation_routes = Blueprint('conversation_routes', __name__)
 
 

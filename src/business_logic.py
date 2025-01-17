@@ -1,11 +1,11 @@
 import os
 import json
 from datetime import datetime
-from config import *
+from .config import *
 import anthropic
 from flask import request, jsonify, session
-from route_utils import *
-from llm_communication import *
+from .route_utils import *
+from .llm_communication import *
 
 import logging
 logger = logging.getLogger(__name__)
@@ -13,8 +13,13 @@ logger = logging.getLogger(__name__)
 
 
 
-manual_instructions =  ""
-with open('LLM_instructions/game_manual.MD', 'r') as file:
+# Get the absolute path to the project root directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
+
+manual_instructions = ""
+manual_path = os.path.join(project_root, 'LLM_instructions', 'game_manual.MD')
+with open(manual_path, 'r') as file:
     manual_instructions = file.read()
 
 
@@ -93,8 +98,7 @@ def generate_conversation_id():
 
 def create_new_conversation():
     logger.info("Creating new conversation")
-
-
+    
     conversation_id = generate_conversation_id()
     conversation = {
         'conversation_id': conversation_id,
@@ -106,14 +110,14 @@ def create_new_conversation():
         'prompt_version': datetime.now().isoformat()
     }
 
-
     logger.info(f"Created conversation with ID: {conversation['conversation_id']}")
-        
-    # Read and add the intro blurb with proper message format
-    with open('LLM_instructions/intro_blurb.MD', 'r') as file:
-         intro_blurb = file.read()
-         logger.info(f"Read intro blurb, length: {len(intro_blurb)}")
-            
+    
+    # Use absolute path for intro blurb
+    intro_path = os.path.join(project_root, 'LLM_instructions', 'intro_blurb.MD')
+    with open(intro_path, 'r') as file:
+        intro_blurb = file.read()
+        logger.info(f"Read intro blurb, length: {len(intro_blurb)}")
+
     # Format the intro message properly
     intro_message = {
         'role': 'assistant',
