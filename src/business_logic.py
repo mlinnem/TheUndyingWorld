@@ -2,7 +2,6 @@ import os
 import json
 from datetime import datetime
 from .config import *
-import anthropic
 from flask import request, jsonify, session
 from .route_utils import *
 from .llm_communication import *
@@ -22,6 +21,8 @@ manual_path = os.path.join(project_root, 'LLM_instructions', 'game_manual.MD')
 with open(manual_path, 'r') as file:
     manual_instructions = file.read()
 
+# Add intro path constant here
+intro_path = os.path.join(project_root, 'LLM_instructions', 'intro_blurb.MD')
 
 zombie_system_prompt = [{
         "type": "text",
@@ -112,8 +113,7 @@ def create_new_conversation():
 
     logger.info(f"Created conversation with ID: {conversation['conversation_id']}")
     
-    # Use absolute path for intro blurb
-    intro_path = os.path.join(project_root, 'LLM_instructions', 'intro_blurb.MD')
+    # Use the constant intro_path instead of defining it here
     with open(intro_path, 'r') as file:
         intro_blurb = file.read()
         logger.info(f"Read intro blurb, length: {len(intro_blurb)}")
@@ -231,6 +231,11 @@ def chat(user_message, conversation, should_run_boot_sequence):
 
     if should_run_boot_sequence:
         conversation = run_boot_sequence(conversation)
+                # Update cache points after boot sequence is complete
+        logger.info("Boot sequence completed, updating cache points")
+        conversation = update_conversation_cache_points(conversation)
+        
+        logger.info("Boot sequence and cache point setup completed successfully")
         return conversation
         
     user_message_for_server = convert_user_text_to_message(user_message)

@@ -205,7 +205,6 @@ def summarize_with_gm(conversation):
             logger.info(f"Conversation length changed from {original_length} to {new_length} messages")
             logger.info(f"Successfully replaced {len(messages_to_summarize)} messages with summary")
             
-            save_conversation(conversation)
             logger.info("Saved updated conversation with summary")
             
         except Exception as e:
@@ -269,19 +268,11 @@ def run_boot_sequence(conversation: Dict) -> Dict:
                         tool_response['is_boot_sequence_end'] = True
                     conversation['messages'].append(tool_response)
                 
-                # Save after each message exchange
-                save_conversation(conversation)
-                
             except Exception as e:
                 logger.error(f"Error in boot sequence at message '{message}': {e}")
                 raise
         
-        # Update cache points after boot sequence is complete
-        logger.info("Boot sequence completed, updating cache points")
-        conversation = update_conversation_cache_points(conversation)
-        save_conversation(conversation)
-        
-        logger.info("Boot sequence and cache point setup completed successfully")
+
         return conversation
         
     except FileNotFoundError:
