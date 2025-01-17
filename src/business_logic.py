@@ -226,121 +226,43 @@ def update_conversation_cache_points(conversation):
     return conversation
 
 
-def chat(user_message, conversation):
+def chat(user_message, conversation, should_run_boot_sequence):
     new_messages = []
-    
-    try:
-        user_message_for_server = convert_user_text_to_message(user_message)
-        conversation['messages'].append(user_message_for_server)
+
+    if should_run_boot_sequence:
+        conversation = run_boot_sequence(conversation)
+        return conversation
         
-        # get and save gm response
-        gm_response_json, usage_data = send_message_to_gm(conversation, temperature=0.5)
-        conversation['messages'].append(gm_response_json)
-        new_messages = [gm_response_json]
-
-        # if gm requested tool use
-        if (isToolUseRequest(gm_response_json)):
-            logger.info("tool use request detected")
-            # generate and save tool result
-            tool_result_json = generate_tool_result(gm_response_json)
-            conversation['messages'].append(tool_result_json)
-            new_messages.append(tool_result_json)
-
-            # get and save gm response to tool result
-            tool_use_response_json, usage_data = send_message_to_gm(conversation, 0.8)
-            conversation['messages'].append(tool_use_response_json)
-            new_messages.append(tool_use_response_json)
-        else:
-            logger.info("no tool use request detected")
+    user_message_for_server = convert_user_text_to_message(user_message)
+    conversation['messages'].append(user_message_for_server)
         
-        # update caching or perform summarization if necessary
-        if usage_data['total_input_tokens'] >= MAX_TOTAL_INPUT_TOKENS:
-            conversation = summarize_with_gm(conversation)
-            update_conversation_cache_points(conversation)
-        elif usage_data['uncached_input_tokens'] >= MAX_UNCACHED_INPUT_TOKENS:
-            conversation = update_conversation_cache_points(conversation)
+    # get and save gm response
+    gm_response_json, usage_data = send_message_to_gm(conversation, temperature=0.5)
+    conversation['messages'].append(gm_response_json)
+    new_messages = [gm_response_json]
 
+    # if gm requested tool use
+    if (isToolUseRequest(gm_response_json)):
+        logger.info("tool use request detected")
+        # generate and save tool result
+        tool_result_json = generate_tool_result(gm_response_json)
+        conversation['messages'].append(tool_result_json)
+        new_messages.append(tool_result_json)
 
-        conversation_objects = convert_messages_to_cos(new_messages)
-        logger.debug(f"conversation_objects: {conversation_objects}")
+        # get and save gm response to tool result
+        tool_use_response_json, usage_data = send_message_to_gm(conversation, 0.8)
+        conversation['messages'].append(tool_use_response_json)
+        new_messages.append(tool_use_response_json)
+    else:
+        logger.info("no tool use request detected")
+        
+    # update caching or perform summarization if necessary
+    if usage_data['total_input_tokens'] >= MAX_TOTAL_INPUT_TOKENS:
+        conversation = summarize_with_gm(conversation)
+        update_conversation_cache_points(conversation)
+    elif usage_data['uncached_input_tokens'] >= MAX_UNCACHED_INPUT_TOKENS:
+        conversation = update_conversation_cache_points(conversation)
 
-        jsonified_result = jsonify({
-            'status': 'success',
-            'success_type': 'full_success',
-            'conversation_id': session['current_conversation_id'],
-            'conversation_name': conversation['name'],
-            'message_count': conversation['message_count'],
-            'last_updated': conversation['last_updated'],
-            'new_conversation_objects': conversation_objects,
-            'parsing_errors': [],
-        })
-        return jsonified_result
-
-    except anthropic.AnthropicError as e:
-
-        conversation_objects = convert_messages_to_cos(new_messages)
-        response = {
-            'success_type': 'partial_success',
-            'conversation_id': session['current_conversation_id'],
-            'conversation_name': conversation['name'],
-            'message_count': conversation['message_count'],
-            'last_updated': conversation['last_updated'],
-            'new_conversation_objects': conversation_objects,
-            'parsing_errors': [],
-        }
-        if isinstance(e, anthropic.BadRequestError):
-            logger.error(f"Bad request error: {e}")
-            response['error_type'] = 'internal_error'
-            response['error_message'] = "Internal error, please try again later."
-        elif isinstance(e, anthropic.AuthenticationError):
-            logger.error(f"Authentication error: {e}")
-            response['error_type'] = 'authentication_error'
-            response['error_message'] = "Authentication error, please check your API key and try again."
-        elif isinstance(e, anthropic.PermissionDeniedError):
-            logger.error(f"Permission denied error: {e}")
-            response['error_type'] = 'permission_denied_error'
-            response['error_message'] = "Permission denied, please check your API key and try again."
-        elif isinstance(e, anthropic.NotFoundError):
-            logger.error(f"Not found error: {e}")
-            response['error_type'] = 'internal_error'
-            response['error_message'] = "Internal error, please try again later."
-        elif isinstance(e, anthropic.UnprocessableEntityError):
-            logger.error(f"Unprocessable entity error: {e}")
-            response['error_type'] = 'internal_error'
-            response['error_message'] = "Internal error, please try again later."
-        elif isinstance(e, anthropic.RateLimitError):
-            logger.error(f"Rate limit error: {e}")
-            response['error_type'] = 'rate_limit_error'
-            response['error_message'] = "Anthropic rate limit exceeded. Either you've sent too many requests in a short period of time, or you've exceeded your monthly request limit. Either wait a few minutes, or raise your monthly spending limit to proceed."
-        elif isinstance(e, anthropic.APIConnectionError):
-            logger.error(f"API connection error: {e}")
-            response['error_type'] = 'internal_error'
-            response['error_message'] = "Internal error, please try again later."
-        else:
-            logger.error(f"Unknown error: {e}")
-            response['error_type'] = 'internal_error'
-            response['error_message'] = "Internal error, please try again later."
-
-        return jsonify(response)
-
-    except Exception as e:
-        logger.error(f"Non-Anthropic error: {e}")
-        logger.error(f"Stack at time of error: {''.join(traceback.format_tb(e.__traceback__))}")
-        conversation_objects = convert_messages_to_cos(new_messages)
-        jsonified_result = jsonify({
-            'status': 'success',
-            'success_type': 'partial_success',
-            'error_type': 'unknown_error',
-            'error_message': str(e),
-            'conversation_id': session['current_conversation_id'],
-            'conversation_name': conversation['name'],
-            'message_count': conversation['message_count'],
-            'last_updated': conversation['last_updated'],
-            'conversation_objects': conversation_objects,
-            'parsing_errors': [],
-        })
-        return jsonified_result
-    finally:
-        save_conversation(conversation)
+    return conversation, new_messages
 
 

@@ -12,7 +12,8 @@ routes = Blueprint('routes', __name__)
 
 @routes.route('/chat', methods=['POST'])
 def chat_in_current_conversation_route():
-    # Check for valid current_conversation_id first
+    try:
+        # Check for valid current_conversation_id first
         if 'current_conversation_id' not in session:
             return jsonify({
                 'status': 'error',
@@ -27,22 +28,41 @@ def chat_in_current_conversation_route():
         conversation = load_conversation(session['current_conversation_id'])
         
         # Check if this request should trigger boot sequence
-        if data.get('run_boot_sequence') == True:
-            conversation = run_boot_sequence(conversation)
-            return jsonify({
-                'success_type': 'full_success',
-                'conversation_id': session['current_conversation_id'],
-                'conversation_name': conversation['name'],
-                'message_count': conversation['message_count'],
-                'last_updated': conversation['last_updated'],
-                'new_conversation_objects': convert_messages_to_cos(conversation['messages']),
-                'parsing_errors': [],
-            })
+        should_run_boot_sequence = data.get('run_boot_sequence')
 
         # get and save user message
         raw_user_message = request.get_json()['user_message']
 
-        return chat(raw_user_message, conversation)
+        conversation, new_messages = chat(raw_user_message, conversation, should_run_boot_sequence)
+        
+        save_conversation(conversation)
+
+        new_conversation_objects = convert_messages_to_cos(new_messages)
+
+        
+
+        return jsonify({
+            'status': 'success',
+            'success_type': 'full_success',
+            'conversation_id': session['current_conversation_id'],
+            'conversation_name': conversation['name'],
+            'message_count': conversation['message_count'],
+            'last_updated': conversation['last_updated'],
+            'new_conversation_objects': new_conversation_objects,
+            'parsing_errors': [],
+        })
+    
+    except Exception as e:
+        logger.error(f"Error in chat route: {e}")
+        logger.error(f"Stack trace: {traceback.format_exc()}")
+        return jsonify({
+            'status': 'error',
+            'success_type': 'error',
+            'error_type': 'internal_error',
+            'error_message': 'An error occurred while processing your request. Please try again.',
+            'new_conversation_objects': [],
+            'parsing_errors': [],
+        }), 500
 
 @routes.route('/')
 def index_route():
