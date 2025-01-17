@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, jsonify, session
 import os
 from .config import *
 from datetime import datetime
-import anthropic
 from anthropic import Anthropic
 from dotenv import load_dotenv
 from random import randint

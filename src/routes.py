@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify
-from flask import Flask, render_template, request, jsonify, session
+from flask import render_template, request, jsonify, session
 from .business_logic import *
-from datetime import datetime
 from .route_utils import *
 import traceback
 
@@ -38,8 +37,6 @@ def chat_in_current_conversation_route():
         save_conversation(conversation)
 
         new_conversation_objects = convert_messages_to_cos(new_messages)
-
-        
 
         return jsonify({
             'status': 'success',
