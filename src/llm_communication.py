@@ -3,7 +3,6 @@ from .config import *
 from datetime import datetime
 from anthropic import Anthropic
 from dotenv import load_dotenv
-from random import randint
 from .tool_utils import *
 import json
 from typing import List, Dict
