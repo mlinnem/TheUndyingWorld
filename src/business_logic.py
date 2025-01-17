@@ -236,13 +236,12 @@ def chat(user_message, conversation, should_run_boot_sequence):
         conversation = update_conversation_cache_points(conversation)
         
         logger.info("Boot sequence and cache point setup completed successfully")
-        return conversation
-        
-    user_message_for_server = convert_user_text_to_message(user_message)
-    conversation['messages'].append(user_message_for_server)
+        return conversation, new_messages
+    
+    conversation['messages'].append(user_message)
         
     # get and save gm response
-    gm_response_json, usage_data = send_message_to_gm(conversation, temperature=0.5)
+    gm_response_json, usage_data = get_next_gm_response(conversation, temperature=0.5)
     conversation['messages'].append(gm_response_json)
     new_messages = [gm_response_json]
 
@@ -255,7 +254,7 @@ def chat(user_message, conversation, should_run_boot_sequence):
         new_messages.append(tool_result_json)
 
         # get and save gm response to tool result
-        tool_use_response_json, usage_data = send_message_to_gm(conversation, 0.8)
+        tool_use_response_json, usage_data = get_next_gm_response(conversation, 0.8)
         conversation['messages'].append(tool_use_response_json)
         new_messages.append(tool_use_response_json)
     else:

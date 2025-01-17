@@ -43,7 +43,7 @@ with open(tools_path, 'r') as file:
     tools = json.load(file)
 
 
-def send_message_to_gm(conversation, temperature=0.7):
+def get_next_gm_response(conversation, temperature=0.7):
     logger.info(f"Sending message to GM (omitted for brevity)")
 
     # Clean messages for API consumption
@@ -245,7 +245,7 @@ def run_boot_sequence(conversation: Dict) -> Dict:
                 conversation['messages'].append(user_message)
                 
                 # Get GM response
-                gm_response, usage_data = send_message_to_gm(conversation, temperature=0.3)
+                gm_response, usage_data = get_next_gm_response(conversation, temperature=0.8)
                 
                 # Mark the last GM response of the boot sequence
                 if i == len(boot_sequence_messages) - 1:
@@ -260,7 +260,7 @@ def run_boot_sequence(conversation: Dict) -> Dict:
                     tool_result = generate_tool_result(gm_response)
                     conversation['messages'].append(tool_result)
                     
-                    tool_response, _ = send_message_to_gm(conversation, temperature=0.3)
+                    tool_response, _ = get_next_gm_response(conversation, temperature=0.8)
                     # If this is the last message, mark it instead of the previous response
                     if i == len(boot_sequence_messages) - 1:
                         logger.info("Moving boot sequence end marker to tool response")
@@ -271,8 +271,7 @@ def run_boot_sequence(conversation: Dict) -> Dict:
             except Exception as e:
                 logger.error(f"Error in boot sequence at message '{message}': {e}")
                 raise
-        
-
+    
         return conversation
         
     except FileNotFoundError:
@@ -315,7 +314,3 @@ def log_conversation_messages(messages):
                 f.write(f"\n{role.upper()}: {msg['content']}\n")
                 
         f.write("\n" + "="*50)
-
-if __name__ == '__main__':
-    logger.info("Starting Flask application...")
-    app.run(debug=True)

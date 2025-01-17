@@ -24,16 +24,13 @@ def chat_in_current_conversation_route():
             }), 400
             
         data = request.get_json()
-        conversation = load_conversation(session['current_conversation_id'])
-        
-        # Check if this request should trigger boot sequence
         should_run_boot_sequence = data.get('run_boot_sequence')
+        raw_user_message = data.get('user_message')
+        user_message_for_server = convert_user_text_to_message(raw_user_message)
 
-        # get and save user message
-        raw_user_message = request.get_json()['user_message']
-
-        conversation, new_messages = chat(raw_user_message, conversation, should_run_boot_sequence)
-        
+        conversation = load_conversation(session['current_conversation_id'])
+        conversation, new_messages = chat(user_message_for_server, conversation, should_run_boot_sequence)
+     
         save_conversation(conversation)
 
         new_conversation_objects = convert_messages_to_cos(new_messages)
@@ -75,7 +72,6 @@ def create_conversation_route():
         
         logger.info("Added intro message to conversation")
         # Set the current conversation ID in the session
-        from flask import session  # Add this import at the top
         session['current_conversation_id'] = conversation['conversation_id']
         logger.info(f"Set current conversation ID in session: {conversation['conversation_id']}")
         
