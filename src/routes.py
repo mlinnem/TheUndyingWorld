@@ -28,9 +28,9 @@ def chat_in_current_conversation_route():
         raw_user_message = data.get('user_message')
         user_message_for_server = convert_user_text_to_message(raw_user_message)
 
-        conversation = load_conversation(session['current_conversation_id'])
+        conversation = get_conversation(session['current_conversation_id'])
         conversation, new_messages = chat(user_message_for_server, conversation, should_run_boot_sequence)
-     
+        
         save_conversation(conversation)
 
         new_conversation_objects = convert_messages_to_cos(new_messages)
@@ -70,8 +70,6 @@ def create_conversation_route():
         # Create the conversation
         conversation = create_new_conversation()
         
-        logger.info("Added intro message to conversation")
-        # Set the current conversation ID in the session
         session['current_conversation_id'] = conversation['conversation_id']
         logger.info(f"Set current conversation ID in session: {conversation['conversation_id']}")
         
@@ -120,7 +118,7 @@ def set_current_conversation_route():
     try:
         data = request.get_json()
         conversation_id = data['conversation_id']
-        conversation = load_conversation(conversation_id)
+        conversation = get_conversation(conversation_id)
         
         if conversation:
             # Add this line to set the current conversation in session
