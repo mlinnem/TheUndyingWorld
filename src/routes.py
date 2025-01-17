@@ -9,26 +9,38 @@ logger = logging.getLogger(__name__)
 
 routes = Blueprint('routes', __name__)
 
-@routes.route('/chat', methods=['POST'])
-def chat_in_current_conversation_route():
+@routes.route('/advance_conversation', methods=['POST'])
+def advance_conversation_route():
     try:
-        # Check for valid current_conversation_id first
-        if 'current_conversation_id' not in session:
+        data = request.get_json()
+        conversation_id = data.get('conversation_id')
+        
+        # Check for valid conversation_id
+        if not conversation_id:
             return jsonify({
                 'status': 'error',
                 'success_type': 'error',
                 'error_type': 'no_conversation',
-                'error_message': 'No active conversation. Please start or select a conversation first.',
+                'error_message': 'No conversation ID provided.',
                 'new_conversation_objects': [],
                 'parsing_errors': [],
             }), 400
             
-        data = request.get_json()
         should_run_boot_sequence = data.get('run_boot_sequence')
         raw_user_message = data.get('user_message')
         user_message_for_server = convert_user_text_to_message(raw_user_message)
 
-        conversation = get_conversation(session['current_conversation_id'])
+        conversation = get_conversation(conversation_id)
+        if not conversation:
+            return jsonify({
+                'status': 'error',
+                'success_type': 'error',
+                'error_type': 'invalid_conversation',
+                'error_message': 'Conversation not found.',
+                'new_conversation_objects': [],
+                'parsing_errors': [],
+            }), 404
+            
         conversation, new_messages = chat(user_message_for_server, conversation, should_run_boot_sequence)
         
         save_conversation(conversation)
@@ -38,7 +50,7 @@ def chat_in_current_conversation_route():
         return jsonify({
             'status': 'success',
             'success_type': 'full_success',
-            'conversation_id': session['current_conversation_id'],
+            'conversation_id': conversation_id,
             'conversation_name': conversation['name'],
             'message_count': conversation['message_count'],
             'last_updated': conversation['last_updated'],
@@ -108,13 +120,13 @@ def delete_conversation_route():
     else:
         return jsonify({'status': 'error', 'message': 'Conversation not found'}), 404
 
-@routes.route('/list_conversations', methods=['GET'])
-def list_conversations_route():
-    conversations = list_conversations()
+@routes.route('/get_conversation_listings', methods=['GET'])
+def get_conversation_listings():
+    conversations = get_conversation_listings()
     return jsonify({'conversations': conversations})
 
-@routes.route('/set_current_conversation', methods=['POST'])
-def set_current_conversation_route():
+@routes.route('/get_conversation', methods=['POST'])
+def get_conversation_route():
     try:
         data = request.get_json()
         conversation_id = data['conversation_id']

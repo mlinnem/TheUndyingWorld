@@ -3,7 +3,6 @@ import os
 from datetime import datetime
 from .config import *
 from .persistence import *
-from flask import request, jsonify, session
 from .route_utils import *
 from .llm_communication import *
 
@@ -43,7 +42,7 @@ def save_conversation(conversation):
 def get_conversation(conversation_id):
     return read_conversation(conversation_id)
 
-def list_conversations():
+def get_conversation_listings():
     conversation_ids = read_all_conversation_ids()
     conversation_listings = []
     for conversation_id in conversation_ids:

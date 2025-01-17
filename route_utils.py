@@ -1,6 +1,3 @@
-from flask import jsonify, session
-
-import json
 import traceback
 
 import logging

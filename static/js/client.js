@@ -51,14 +51,15 @@ function sendMessage() {
     if (text) {
         // Check for boot sequence command
         if (text === "run_boot_sequence") {
-            fetch('/chat', {
+            fetch('/advance_conversation', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ 
                     user_message: text,
-                    run_boot_sequence: true
+                    run_boot_sequence: true,
+                    conversation_id: activeConversationId
                 }),
             })
             .then(response => response.json())
@@ -425,7 +426,7 @@ function updateConversationList() {
 
 function loadConversation(conversationId) {
     console.log("loading conversation: ", conversationId);
-    fetch('/set_current_conversation', {
+    fetch('/get_conversation', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -536,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedConversationId = localStorage.getItem('activeConversationId');
     if (savedConversationId) {
         // First check if the conversation exists in the list
-        fetch('/list_conversations')
+        fetch('/get_conversation_listings')
             .then(response => response.json())
             .then(data => {
                 const conversationExists = data.conversations.some(
