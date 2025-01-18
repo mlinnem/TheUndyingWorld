@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Undying World</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_chat.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Roboto+Serif:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <a href="/" class="back-button">← Back to Index</a>
+        </div>
+        <div class="chat-column">
+            <h2 id="chat-title">Current Game</h2>
+            <div id="chat-container">
+                <div id="chat-messages-wrapper"></div>
+            </div>
+            <div class="input-container">
+                <textarea id="user-input" class="primary-text-style" placeholder="Propose an action..."></textarea>
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="{{ url_for('static', filename='js/game_client_util.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/game_client.js') }}"></script>
+    <script>
+        // Pass the conversation ID from Flask to JavaScript
+        window.conversationId = "{{ conversation_id }}";
+    </script>
+</body>
+</html>

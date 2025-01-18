@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Undying World</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_chat.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/left_sidebar.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Roboto+Serif:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -18,19 +16,7 @@
             <div id="conversation-list"></div>
             <div id="update-status"></div>
         </div>
-        <div class="chat-column">
-            <h2 id="chat-title">Current Game</h2>
-            <div id="chat-container">
-                <div id="chat-messages-wrapper"></div>
-            </div>
-            <div class="input-container">
-                <button class="hidden" id="try-again-btn">Try Again</button>
-                <textarea id="user-input" class="primary-text-style" placeholder="Propose an action..."></textarea>
-                <button id="send-button">Send</button>
-            </div>
-        </div>
     </div>
-    <script type="module" src="{{ url_for('static', filename='js/client_util.js') }}"></script>
-    <script type="module" src="{{ url_for('static', filename='js/client.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/index_client.js') }}"></script>
 </body>
 </html>

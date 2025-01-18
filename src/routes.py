@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, redirect, url_for
 from flask import render_template, request, jsonify, session
 from .business_logic import *
 from .route_utils import *
@@ -7,12 +7,28 @@ import traceback
 import logging
 logger = logging.getLogger(__name__)
 
-routes = Blueprint('routes', __name__)
+routes = Blueprint('routes', __name__, url_prefix='')
 
 
 @routes.route('/')
 def index_route():
     return render_template('index.html')
+
+@routes.route('/game/<conversation_id>')
+def game_route(conversation_id):
+    logger.info(f"Accessing game route with conversation_id: {conversation_id}")
+    # Verify the conversation exists
+    conversation = get_conversation(conversation_id)
+    if not conversation:
+        logger.warning(f"Conversation not found: {conversation_id}")
+        # Redirect to index if conversation doesn't exist
+        return redirect(url_for('routes.index_route'))
+    
+    # Set the conversation in session
+    session['current_conversation_id'] = conversation_id
+    
+    # Render the game template with the conversation ID
+    return render_template('game.html', conversation_id=conversation_id)
 
 @routes.route('/advance_conversation', methods=['POST'])
 def advance_conversation_route():
@@ -82,28 +98,15 @@ def create_conversation_route():
         
         # Create the conversation
         conversation = create_new_conversation()
+        conversation_id = conversation['conversation_id']
         
-        session['current_conversation_id'] = conversation['conversation_id']
-        logger.info(f"Set current conversation ID in session: {conversation['conversation_id']}")
-        
-        conversation_objects = convert_messages_to_cos(conversation['messages'])
-        logger.info(f"Converted messages to objects, count: {len(conversation_objects)}")
-        logger.debug(f"Conversation objects: {conversation_objects}")
-        
-        response = {
+        # Instead of returning JSON, return a redirect URL
+        return jsonify({
             'status': 'success',
-            'success_type': 'full_success',
-            'conversation_id': conversation['conversation_id'],
-            'conversation_name': conversation['name'],
-            'message_count': conversation['message_count'],
-            'last_updated': conversation['last_updated'],
-            'new_conversation_objects': conversation_objects,
-            'parsing_errors': []
-        }
-        logger.info("Preparing response")
-        logger.debug(f"Full response: {response}")
+            'redirect_url': f'/game/{conversation_id}',
+            'conversation_id': conversation_id
+        })
         
-        return jsonify(response)
     except Exception as e:
         logger.error(f"Error creating new conversation: {e}")
         logger.error(f"Stack trace: {traceback.format_exc()}")
@@ -134,9 +137,6 @@ def get_conversation_route():
         conversation = get_conversation(conversation_id)
         
         if conversation:
-            # Add this line to set the current conversation in session
-            session['current_conversation_id'] = conversation_id
-            
             conversation_objects = convert_messages_to_cos(conversation['messages'])
             jsonified_result = jsonify({
                 'status': 'success',
