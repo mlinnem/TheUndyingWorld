@@ -4,18 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Undying World</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/left_sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/all.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Roboto+Serif:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
-    <div class="container">
-        <div class="conversation-sidebar">
+    <div class="main_menu_container">
             <h1>The Undying World</h1>
             <button id="new-conversation-btn">New Game</button>
             <div id="conversation-list"></div>
             <div id="update-status"></div>
-        </div>
     </div>
     <script type="module" src="{{ url_for('static', filename='js/index_client.js') }}"></script>
 </body>

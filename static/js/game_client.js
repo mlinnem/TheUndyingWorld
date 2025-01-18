@@ -185,7 +185,7 @@ function startNewConversation() {
                     hour: '2-digit',
                     minute: '2-digit',
                 });
-                chatTitle.textContent = "Game created on " + formattedDate;
+                chatTitle.textContent = formattedDate;
                 
                 // Display the intro message
                 console.log("new_conversation_objects: ", data.new_conversation_objects);
@@ -220,7 +220,7 @@ fetch('/get_conversation', {
             hour: '2-digit',
             minute: '2-digit',
         });
-        chatTitle.textContent = "Game created on " + formattedDate;
+        chatTitle.textContent = "On " + formattedDate;
     }
 })
 .catch(error => {
@@ -357,3 +357,37 @@ function sendMessage() {
 function scrollChatNearBottom() {
     chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight - 250;
 }
+
+// Add scroll event listener to chat container
+let hasOverlapped = false;  // Track if overlap has occurred
+
+function checkOverlap() {
+    if (hasOverlapped) return;  // Skip checking if overlap has already occurred
+
+    const headerBar = document.querySelector('.header-bar');
+    const chatTitle = document.getElementById('chat-title');
+    const chatMessagesWrapper = document.getElementById('chat-messages-wrapper');
+
+    // Get all message content elements
+    const messageContents = chatMessagesWrapper.querySelectorAll('.module');
+    const titleRect = chatTitle.getBoundingClientRect();
+
+    // Check overlap with any message content
+    for (const messageContent of messageContents) {
+        const messageRect = messageContent.getBoundingClientRect();
+
+        if (
+            titleRect.bottom > messageRect.top &&
+            titleRect.top < messageRect.bottom &&
+            titleRect.right > messageRect.left &&
+            titleRect.left < messageRect.right
+        ) {
+            headerBar.style.backgroundColor = '#002727';
+            hasOverlapped = true;  // Set flag to true once overlap occurs
+            chatContainer.removeEventListener('scroll', checkOverlap);  // Remove scroll listener
+            break;  // Exit loop once overlap is found
+        }
+    }
+}
+
+chatContainer.addEventListener('scroll', checkOverlap);

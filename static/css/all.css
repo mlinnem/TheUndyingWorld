@@ -14,22 +14,33 @@ body {
     display: flex;
     height: 100vh;
     background-color: #161d27;
+    flex-direction: column;
+    background-image: url('/static/images/Background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.main_menu_container {
+    background-image: url('/static/images/Background.png');
 }
 
 #chat-title {
     font-family: 'Roboto Slab', serif;
-    color: #FFE7D2;
+    color: #EEE8CF;
 }
 
 .chat-column {
-    flex: 2;
+    flex: 1;
     display: flex;
     flex-direction: column;
     background-image: url('/static/images/Background.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    margin: 0 auto;
+    height: 100vh;
+    padding-top: 60px;
 }
 
 #chat-container {
@@ -91,7 +102,6 @@ body {
     color: #ffffff;
     border: 0px;
     cursor: pointer;
-    transition: background-color 0.3s;
     letter-spacing: 1px;
 }
     
@@ -103,7 +113,6 @@ button {
     border-radius: 20px;
     border: 0px;
     cursor: pointer;
-    transition: background-color 0.3s;
     letter-spacing: 1px;
     font-family: 'Roboto Slab', serif;
 }
@@ -120,11 +129,12 @@ button {
 }
 
 h1 {
-    font-size: 24px;
-
+    font-size: 80px;
+    text-align:center;
     margin-top: 20px;
     margin-bottom: 20px;
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Roboto Serif', serif;
+    color: #997600;
 }
 
 .server-error {
@@ -132,17 +142,19 @@ h1 {
 }
 
 h2 {
-    font-size: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 20px;
+    font-size: 24px;
+    color: #EEE8CF;
+    margin: 0px;
+    padding: 0px;
+    font-weight: 400;
+    line-height: 35px;
     font-family: 'Roboto Slab', serif;
 }
 
 .input-container {
     display: flex;
     margin-bottom: 10px;
-    width: 800px;
+    width: 850px;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -430,4 +442,128 @@ h2 {
         background-color: hsla(0, 0%, 8%, .2);
         backdrop-filter: blur(10px);
     }
+}
+
+.header-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding-top: 10px;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    justify-content: left;
+    z-index: 10;
+    background-color: transparent;
+}
+
+.back-button {
+    color: #EEE8CF;
+    font-size: 14px;
+    text-decoration: underline;
+    font-weight: 400;
+    font-family: 'Roboto Mono', serif;
+}
+
+
+
+.header-bar-left {
+    margin-right: 20px;
+}
+
+.header-bar-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.back-button-container {
+    position: absolute;
+    left: 10px;
+    bottom: -30px;
+    z-index: 1;
+}
+
+.conversation-sidebar {
+    flex: 0 0 250px;
+    background-color: #112020;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow-y: auto;
+    color: #FFE7D2;
+}
+
+.conversation-item {
+    display: flex;
+    justify-content: space-between;
+    min-height: 80px;
+    padding: 15px;
+    align-items: center;
+    background-color: #182525;
+    border-radius: 20px;
+    color: hsla(28, 100%, 91%, 0.66);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    font-family: 'Roboto Slab', serif;
+}
+
+.conversation-item-text {
+    text-align: left;
+    margin-left: 20px;
+    flex-grow: 1;
+    line-height: 1.4;
+}
+
+
+.conversation-item:hover {
+    background-color: #323734;
+    color: #FFE7D2;
+
+}
+
+.conversation-item > button:hover {
+    background-color: #ff0000;
+}
+
+.conversation-item.active {
+    background-color:  #4B4842;
+    color: #FFE7D2;
+}
+
+.conversation-item button {
+    margin-left: 20px;
+    font-size: 0.8em;
+    border: 0px;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.conversation-item .delete-btn {
+    background-color: #dc3545;
+}
+
+.conversation-item .delete-btn:hover {
+    background-color: #c82333;
+}
+
+#new-conversation-btn {
+    background-color: #243838;
+    width: 100%;
+    height: 80px;
+    margin-top: 20px;
+}
+
+#new-conversation-btn:hover {
+    background-color: #996300;
+}
+
+#user-input {
+    min-height: 60px;
+    max-height: 200px;
+    resize: none;
+    overflow-y: auto;
 }
