@@ -114,7 +114,7 @@ function sendMessage() {
 
         scrollChatNearBottom();
 
-        fetch('/chat', {
+        fetch('/advance_conversation', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -163,14 +163,14 @@ function sendMessage() {
         .catch(error => {
             clearInterval(dotAnimation);
             loadingDiv.remove();
-            console.error('Error:', error);
-            if (error.stack) {
-                console.error('Stack trace:', error.stack);
-            }
+            const wrappedError = new Error(`Fetch error: ${error.message}`);
+            console.error('Error:', error.message || error);
+            console.error('Stack trace:', wrappedError.stack);
             addConversationObject({
                 "type": "server_error",
                 "text": "An unhandled error occurred. Refresh this page and try again."
             });
+            throw error;
         });
     }
 }
@@ -341,17 +341,15 @@ function startNewConversation() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            if (error.stack) {
-                console.error('Stack trace:', error.stack);
-            }
+            console.error('Error:', error.message || error);
+            console.error('Original stack trace:', error.stack || 'No stack trace available');
             updateStatus.textContent = 'Error starting new conversation';
         });
 }
 
 function updateConversationList() {
     console.log("updating conversation list");
-    fetch('/list_conversations')
+    fetch('/get_conversation_listings')
         .then(response => response.json())
         .then(data => {
             conversationList.innerHTML = '';
@@ -416,10 +414,8 @@ function updateConversationList() {
             });
         })
         .catch(error => {
-            console.error('Error:', error);
-            if (error.stack) {
-                console.error('Stack trace:', error.stack);
-            }
+            console.error('Error:', error.message || error);
+            console.error('Original stack trace:', error.stack || 'No stack trace available');
             updateStatus.textContent = 'Error loading conversations';
         });
 }
@@ -482,10 +478,8 @@ function loadConversation(conversationId) {
         }
     })
     .catch(error => {
-        console.error('Error:', error);
-        if (error.stack) {
-            console.error('Stack trace:', error.stack);
-        }
+        console.error('Error:', error.message || error);
+        console.error('Original stack trace:', error.stack || 'No stack trace available');
         updateStatus.textContent = 'Error loading conversation';
     });
 }
@@ -515,10 +509,8 @@ function deleteConversation(conversationId) {
         }
     })
     .catch(error => {
-        console.error('Error:', error);
-        if (error.stack) {
-            console.error('Stack trace:', error.stack);
-        }
+        console.error('Error:', error.message || error);
+        console.error('Original stack trace:', error.stack || 'No stack trace available');
         updateStatus.textContent = 'Error deleting conversation';
     });
 }

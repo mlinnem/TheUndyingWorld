@@ -9,6 +9,11 @@ logger = logging.getLogger(__name__)
 
 routes = Blueprint('routes', __name__)
 
+
+@routes.route('/')
+def index_route():
+    return render_template('index.html')
+
 @routes.route('/advance_conversation', methods=['POST'])
 def advance_conversation_route():
     try:
@@ -70,10 +75,6 @@ def advance_conversation_route():
             'parsing_errors': [],
         }), 500
 
-@routes.route('/')
-def index_route():
-    return render_template('index.html')
-
 @routes.route('/create_conversation', methods=['POST'])
 def create_conversation_route():
     try:
@@ -121,7 +122,7 @@ def delete_conversation_route():
         return jsonify({'status': 'error', 'message': 'Conversation not found'}), 404
 
 @routes.route('/get_conversation_listings', methods=['GET'])
-def get_conversation_listings():
+def get_conversation_listings_route():
     conversations = get_conversation_listings()
     return jsonify({'conversations': conversations})
 
