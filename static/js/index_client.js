@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     const deleteBtn = document.createElement('button');
                     deleteBtn.textContent = 'X';
+                    deleteBtn.classList.add('delete-btn');
                     deleteBtn.onclick = (e) => {
                         e.stopPropagation();
                         deleteConversation(conv.conversation_id);

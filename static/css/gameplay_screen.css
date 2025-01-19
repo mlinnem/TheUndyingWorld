@@ -1,6 +1,12 @@
 #chat-title {
-    font-family: 'Roboto Slab', serif;
+    font-family: var(--header-text-font);
     color: #EEE8CF;
+}
+
+
+
+.gameplay_screen.page_container {
+    height: 100vh;
 }
 
 #chat-container {
@@ -17,6 +23,14 @@
     position: relative;
 }
 
+/* Module styles */
+
+.module {
+    overflow: hidden;
+    width: 100%;
+}
+
+
 .left {
     align-self: flex-start;
     max-width: 80%;
@@ -28,26 +42,160 @@
     margin-left: auto;
 }
 
-/* Module styles */
-.module {
-    overflow: hidden;
-    width: 100%;
-}
-
 .module.ooc_message {
     background-color: #191C1C;
-    font-family: 'Roboto Serif', serif;
+    font-family: var(--in-game-text-font);
     font-size: 1.125rem;
     line-height: 1.6875rem;
 }
 
 .module.user_message {
     background-color: #4B4842;
-    font-family: 'Roboto Serif', serif;
+    font-family: var(--in-game-text-font);
     font-size: 1.125rem;
 }
 
-/* Input container styles */
+.tool-result {
+    background-color: rgb(0, 0, 0, 0);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+}
+
+.user-message-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+.module_contents.has_contents {
+    margin-left: 1.875rem;
+    margin-right: 1.875rem;
+}
+
+.module.prescene {
+    display: flex;
+    justify-content: space-between;
+}
+
+.prescene_contents {
+    padding-left: 1.875rem;
+    padding-right: 1.875rem;
+    flex: 1;
+}
+
+.prescene_footer {
+    display: flex;
+}
+
+.difficulty_target {
+    flex: 1;
+}
+
+.difficulty_roll {
+    flex: 1;
+}
+
+.freestanding {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.module.map_data {
+
+    font-size: .75rem;
+    line-height: 1.125rem;
+    background-color: #191C1C;
+}
+
+.world_reveal_level {
+    flex: 1;
+}
+
+.world_reveal_roll {
+    flex: 1;
+}
+
+.header {
+    font-family: var(--header-text-font);
+    font-size: .75rem;
+    font-weight: 500;
+    color: #EEE8CF;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    display: block;
+}
+
+.module.error-message {
+    background-color: rgba(105, 0, 0, 0.9);
+    font-family: 'Roboto', sans-serif;
+    font-size: .75rem;
+    line-height: 1.125rem;
+    overflow-x: auto;
+    color: #ffffff;
+}
+
+.module.unrecognized_section {
+    background-color: rgba(45, 45, 45, 0.8);
+    font-family: var(--in-game-text-font);
+    font-size: 1.125rem;
+    line-height: 1.6875rem;
+}
+
+.module.resulting_scene_description {
+
+    font-size: 1.125rem;
+    line-height: 1.6875rem;
+    font-family: var(--in-game-text-font);
+    background-color: #132E2E;
+}
+
+.module.condition_table {
+    
+    background-color: #191C1C;
+}
+
+
+
+/* Other components */
+
+.input-container textarea {
+    background-color: #ffffff;
+    
+    color: rgb(255, 247, 218);
+}
+
+
+#user-input:focus {
+    outline: none;
+}
+
+
+.loading_message {
+    color:#EEE8CF;
+    background-color: hsla(0, 0%, 8%, .2);
+    align-self: flex-start;
+    animation: breathe ease-out 5s infinite;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    height: 500px;
+    font-family: var(--in-game-text-font);
+    backdrop-filter: blur(10px);
+    max-width: 80%;
+    font-size: 1.125rem;
+    line-height: 1.6875rem;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;  
+    -webkit-mask-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 1) 50%, hsla(0, 0%, 0%, 0) 100%);
+    mask-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 1) 50%, hsla(0, 0%, 0%, 0) 100%);
+}
+
+
 .input-container {
     display: flex;
     margin-bottom: 10px;
@@ -89,18 +237,3 @@
     background-color: #997600;
 }
 
-/* Header bar styles */
-.header-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding-top: 20px;
-    padding-left: 20px;
-    display: flex;
-    flex-direction: row;
-    height: 40px;
-    justify-content: left;
-    z-index: 10;
-    background-color: transparent;
-}

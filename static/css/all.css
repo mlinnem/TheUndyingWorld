@@ -4,120 +4,31 @@
     --main-text-color: #FFE7D2;
     --highlight-color: #997600;
     --header-text-font: 'Roboto Slab', serif;
+    --in-game-text-font: 'Roboto Serif', serif;
+    --data-text-font: 'Roboto Mono', monospace;
+    --functional-text-font: 'Roboto Slab', monospace;
+    --background-color: #002727;
+    --border-radius: 20px;
 }
 
 body {
     margin: 0;
     padding: 0;
-    background-color: black;
-    color: var(--main-text-color)
-}
-
-.container {
-    display: flex;
-    height: 100vh;
-    flex-direction: column;
-    background-image: url('/static/images/Background.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-#chat-title {
-    font-family: var(--header-text-font);
     color: var(--main-text-color);
+    background-color: var(--background-color);
 }
-
-#chat-container {
-    flex-grow: 1;
-    overflow-y: auto;
-    width: 100%;
-    scroll-behavior: smooth;
-}
-
-#chat-messages-wrapper {
-    width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-}
-
-.left {
-    align-self: flex-start;
-    max-width: 80%;
-}
-
-.right {
-    align-self: flex-end;
-    max-width: 80%;
-    margin-left: auto;
-}
-
-.module.ooc_message {
-    background-color: #191C1C;
-    font-family: 'Roboto Serif', serif;
-    font-size: 1.125rem;
-    line-height: 1.6875rem;
-}
-
-
-.module.user_message {
-    background-color: #4B4842;
-    font-family: 'Roboto Serif', serif;
-    font-size: 1.125rem;
-}
-
-.tool-result {
-    background-color: rgb(0, 0, 0, 0);
-    font-family: 'Roboto Mono', monospace;
-    font-size: 16px;
-}
-
-.hidden {
-    display: none;
-}
-
-.try-again-btn {
-    background-color: rgba(105, 0, 0, 0.9);
-    color: #ffffff;
-}
-    
-
 
 button {
     color: var(--main-text-color);
-    border-radius: 20px;
+    border-radius: var(--border-radius);
     border: 0px;
     cursor: pointer;
     letter-spacing: 1px;
-    font-family: var(--header-text-font);
+    font-family: var(--functional-text-font);
 }
 
-.conversation-item button {
-    border-radius: 2px;
-    background-color: rgba(90, 96, 104, 0.25);
-    transition: background-color 0.5s ease, color 0.5s ease;
-}
 
-h1 {
-    font-size: 80px;
-    text-align:center;
-    margin-top: 130px;
-    margin-bottom: 100px;
-    font-family: 'Roboto Serif', serif;
-    color: #997600;
-}
-
-body {
-    background-color: #002727;
-}
-
-.server-error {
-    background-color: rgba(105, 0, 0, 0.9);
-}
-
-h2 {
+#chat-title {
     font-size: 24px;
     color: #EEE8CF;
     margin: 0px;
@@ -127,169 +38,32 @@ h2 {
     font-family: var(--header-text-font);
 }
 
-.input-container {
+.page_container {
     display: flex;
-    margin-bottom: 10px;
-    width: 850px;
-    margin-left: auto;
-    margin-right: auto;
+    flex-direction: column;
     position: relative;
+    background-image: url('/static/images/Background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat-y;
 }
 
-.input-container textarea {
-    background-color: #ffffff;
+.hidden {
+    display: none;
+}
     
-    color: rgb(255, 247, 218);
-}
-
-#user-input {
-    flex-grow: 1;
-    height: 60px;
-    resize: vertical;
-    padding: 20px;
-    padding-right: 120px;
-    border-radius: 20px;
-    margin-right: 0;
-    background-color: #4B4842;
-    resize: none;
-    outline: none;
-    border: 0px;
-}
-
-#user-input:focus {
-    outline: none;
-}
-
-
-
-.user-message-content {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    font-family: inherit;
-    margin: 0;
-    padding: 0;
-}
-
-
-.module {
-    overflow: hidden;
-    width: 100%;
-}
-
-.module.error-message {
-    background-color: rgba(105, 0, 0, 0.9);
-}
-
-
-.top {
-    margin-top: 2.5rem;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-}
-
-.top-left {
-    margin-top: 2.5rem;
-    border-top-left-radius: 20px;
-}
-
-.bottom {
-    margin-bottom: 2.5rem;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-
-.middle {
-    margin-top: 0rem;
-    margin-bottom: 0rem;
-    border-radius: 0px;
-}
-
-.freestanding {
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-
-.module.pre_scene {
-    background-color:  #191C1C;
-}
-
-
-.module.tracked_operations {
-    background-color:  #191C1C;
-}
-
 .info-text-style {
-    font-family: 'Roboto Mono', monospace;
+    font-family: var(--data-text-font);
     font-size: .75rem;
     line-height: 1.125rem;
     font-weight: 300;
 }
 
 .primary-text-style {
-    font-family: 'Roboto Serif', serif;
+    font-family: var(--in-game-text-font);
     font-size: 1.125rem;
     line-height: 1.6875rem;
     font-weight: 400;
-}
-
-.module_contents.has_contents {
-    margin-left: 1.875rem;
-    margin-right: 1.875rem;
-}
-
-.pre_scene.module{
-    display: flex;
-    justify-content: space-between;
-}
-
-.prescene_contents {
-    padding-left: 1.875rem;
-    padding-right: 1.875rem;
-    flex: 1;
-}
-
-.prescene_footer {
-    display: flex;
-}
-
-
-.difficulty_target {
-    flex: 1;
-}
-
-.difficulty_roll {
-    flex: 1;
-}
-
-.world_reveal_level {
-    flex: 1;
-}
-
-.world_reveal_roll {
-    flex: 1;
-}
-
-
-
-.header {
-    font-family: var(--header-text-font);
-    font-size: .75rem;
-    font-weight: 500;
-    color: #EEE8CF;
-    margin-top: 1.25rem;
-    margin-bottom: 1.25rem;
-    display: block;
-}
-
-.module.unrecognized_section {
-    background-color: rgba(45, 45, 45, 0.8);
-    font-family: 'Roboto Serif', serif;
-    font-size: 1.125rem;
-    line-height: 1.6875rem;
 }
 
 .conversation-body-text {
@@ -303,70 +77,23 @@ h2 {
     padding-bottom: 2.5rem;
 }
 
-.module.map_data {
-
-    font-size: .75rem;
-    line-height: 1.125rem;
-    background-color: #191C1C;
+.back-button {
+    color: #EEE8CF;
+    font-size: 14px;
+    text-decoration: underline;
+    font-weight: 400;
+    font-family: var(--functional-text-font);
+    transition: color 0.5s ease, color 0.5s ease;
 }
 
-.module.error-message {
-    background-color: rgba(105, 0, 0, 0.9);
-    font-family: 'Roboto', sans-serif;
-    font-size: .75rem;
-    line-height: 1.125rem;
-    overflow-x: auto;
-    color: #ffffff;
+.back-button:hover {
+    color: #997600;
+    transition: color 0.5s ease, color 0.5s ease;
 }
 
-.module.resulting_scene_description {
+/* Header bar */
 
-    font-size: 1.125rem;
-    line-height: 1.6875rem;
-    font-family: 'Roboto Serif', serif;
-    background-color: #132E2E;
-}
-
-.module.condition_table {
-    
-    background-color: #191C1C;
-}
-
-.loading_message {
-    color:#EEE8CF;
-    background-color: hsla(0, 0%, 8%, .2);
-    align-self: flex-start;
-    animation: breathe ease-out 5s infinite;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    height: 500px;
-    font-family: 'Roboto Serif', serif;
-    backdrop-filter: blur(10px);
-    max-width: 80%;
-    font-size: 1.125rem;
-    line-height: 1.6875rem;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;  
-    -webkit-mask-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 1) 50%, hsla(0, 0%, 0%, 0) 100%);
-    mask-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 1) 50%, hsla(0, 0%, 0%, 0) 100%);
-}
-
-@keyframes breathe {
-    0%, 10%, 20%, 30%, 40%, 50%, 60% { 
-        background-color: hsla(0, 0%, 8%, .2);
-    }
-
-    70% { 
-        background-color: hsla(0, 0%, 8%, .20);
-    }
-
-    80%, 90%, 100% { 
-        background-color: hsla(0, 0%, 8%, .2);
-        backdrop-filter: blur(10px);
-    }
-}
-
-.header-bar {
+.page-title-bar {
     position: absolute;
     top: 0;
     left: 0;
@@ -379,20 +106,6 @@ h2 {
     justify-content: left;
     z-index: 10;
     background-color: transparent;
-}
-
-.back-button {
-    color: #EEE8CF;
-    font-size: 14px;
-    text-decoration: underline;
-    font-weight: 400;
-    font-family: 'Roboto Mono', serif;
-    transition: color 0.5s ease, color 0.5s ease;
-}
-
-.back-button:hover {
-    color: #997600;
-    transition: color 0.5s ease, color 0.5s ease;
 }
 
 
@@ -412,14 +125,8 @@ h2 {
     z-index: 1;
 }
 
-.conversation-sidebar {
-    flex: 0 0 250px;
-    background-color: #112020;
-    padding-left: 20px;
-    padding-right: 20px;
-    overflow-y: auto;
-    color: var(--main-text-color);
-}
+
+/* Conversation item */
 
 .conversation-item {
     display: flex;
@@ -474,38 +181,3 @@ h2 {
     flex-shrink: 0;
 }
 
-.conversation-item .delete-btn {
-    background-color: #dc3545;
-}
-
-.conversation-item .delete-btn:hover {
-    background-color: #c82333;
-}
-
-#new-conversation-btn {
-    background-color: #4B4842;
-    width: 600px;
-    height: 80px;
-    margin-bottom: 40px;
-    transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-#new-conversation-btn:hover {
-    background-color: #997600;   
-    transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-#user-input {
-    min-height: 60px;
-    max-height: 200px;
-    resize: none;
-    overflow-y: auto;
-}
-
-.main_menu_container {
-    background-image: url('/static/images/Background.png');
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}

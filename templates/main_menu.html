@@ -10,12 +10,19 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
-    <div class="main_menu_container">
-            <h1>The Undying World</h1>
+    <div class="main_menu page_container">
+            <div id="game_title">The Undying World</div>
             <button id="new-conversation-btn">New Game</button>
             <div id="conversation-list"></div>
-            <div id="update-status"></div>
     </div>
     <script type="module" src="{{ url_for('static', filename='js/index_client.js') }}"></script>
+    <script>
+        // Add transition class after a tiny delay to prevent initial animation
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('new-conversation-btn').classList.add('ready-for-transition');
+            }, 100);
+        });
+    </script>
 </body>
 </html>
