@@ -1,18 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto+Serif:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&family=Roboto:wght@300;400;500&display=swap');
 
+:root {
+    --main-text-color: #FFE7D2;
+    --highlight-color: #997600;
+    --header-text-font: 'Roboto Slab', serif;
+}
 
 body {
-    font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: black;
-    color: #FFE7D2
+    color: var(--main-text-color)
 }
 
 .container {
     display: flex;
     height: 100vh;
-    background-color: #161d27;
     flex-direction: column;
     background-image: url('/static/images/Background.png');
     background-size: cover;
@@ -22,8 +25,8 @@ body {
 }
 
 #chat-title {
-    font-family: 'Roboto Slab', serif;
-    color: #EEE8CF;
+    font-family: var(--header-text-font);
+    color: var(--main-text-color);
 }
 
 #chat-container {
@@ -83,23 +86,17 @@ body {
 
 
 button {
-    background-color: rgb(90, 96, 104);
-    color: rgba(238, 232, 207, 0.98);
+    color: var(--main-text-color);
     border-radius: 20px;
     border: 0px;
     cursor: pointer;
     letter-spacing: 1px;
-    font-family: 'Roboto Slab', serif;
+    font-family: var(--header-text-font);
 }
 
 .conversation-item button {
     border-radius: 2px;
     background-color: rgba(90, 96, 104, 0.25);
-    transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-#send-button:hover {
-    background-color: #997600;
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
@@ -127,7 +124,7 @@ h2 {
     padding: 0px;
     font-weight: 400;
     line-height: 35px;
-    font-family: 'Roboto Slab', serif;
+    font-family: var(--header-text-font);
 }
 
 .input-container {
@@ -161,18 +158,6 @@ h2 {
 
 #user-input:focus {
     outline: none;
-}
-
-#send-button {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 80px;
-    width: 80px;
-    border-radius: 20px;
-    background-color: rgba(0,0,0,0.25);
-    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 
@@ -291,7 +276,7 @@ h2 {
 
 
 .header {
-    font-family: 'Roboto Slab', serif;
+    font-family: var(--header-text-font);
     font-size: .75rem;
     font-weight: 500;
     color: #EEE8CF;
@@ -433,15 +418,14 @@ h2 {
     padding-left: 20px;
     padding-right: 20px;
     overflow-y: auto;
-    color: #FFE7D2;
+    color: var(--main-text-color);
 }
 
 .conversation-item {
     display: flex;
     justify-content: space-between;
-
     width: 400px;
-    min-height: 80px;
+    height: 120px;
     padding: 15px;
     align-items: center;
     background-color: #182525;
@@ -451,6 +435,7 @@ h2 {
     margin-bottom: 20px;
     box-sizing: border-box;
     font-family: 'Roboto Slab', serif;
+    color: var(--main-text-color);
 }
 
 .conversation-item-text {
@@ -463,7 +448,7 @@ h2 {
 
 .conversation-item:hover {
     background-color: #997600;
-    color: #FFE7D2;
+    color: var(--main-text-color);
     transition: background-color 0.5s ease, color 0.5s ease;
 
 }
@@ -475,7 +460,7 @@ h2 {
 
 .conversation-item.active {
     background-color:  #4B4842;
-    color: #FFE7D2;
+    color: var(--main-text-color);
 }
 
 .conversation-item button {
@@ -486,6 +471,7 @@ h2 {
     width: 40px;
     border-radius: 20px;
     background-color: rgba(0,0,0,0.1);
+    flex-shrink: 0;
 }
 
 .conversation-item .delete-btn {

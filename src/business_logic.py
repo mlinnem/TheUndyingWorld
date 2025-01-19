@@ -47,11 +47,13 @@ def get_conversation_listings():
     conversation_listings = []
     for conversation_id in conversation_ids:
         conversation = read_conversation(conversation_id)
-        conversation_listings.append({
-                    'conversation_id': conversation_id,
-                    'name': conversation['name'],
-                    'last_updated': conversation['last_updated']
-                })
+        conversation_listing = {
+            'conversation_id': conversation_id,
+            'name': conversation['name'],
+            'last_updated': conversation['last_updated'],
+            'message_count': len(conversation['messages'])
+        };
+        conversation_listings.append(conversation_listing)
     return sorted(conversation_listings, key=lambda x: x['last_updated'], reverse=True)
 
 def generate_conversation_id():
@@ -185,13 +187,12 @@ def update_conversation_cache_points(conversation):
 
     return conversation
 
-
 def chat(user_message, conversation, should_run_boot_sequence):
     new_messages = []
 
     if should_run_boot_sequence:
-        conversation = run_boot_sequence(conversation)
-                # Update cache points after boot sequence is complete
+        conversation, new_messages = run_boot_sequence(conversation)
+        # Update cache points after boot sequence is complete
         logger.info("Boot sequence completed, updating cache points")
         conversation = update_conversation_cache_points(conversation)
         

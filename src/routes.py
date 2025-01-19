@@ -12,7 +12,7 @@ routes = Blueprint('routes', __name__, url_prefix='')
 
 @routes.route('/')
 def index_route():
-    return render_template('index.html')
+    return render_template('main_menu.html')
 
 @routes.route('/game/<conversation_id>')
 def game_route(conversation_id):
@@ -28,7 +28,7 @@ def game_route(conversation_id):
     session['current_conversation_id'] = conversation_id
     
     # Render the game template with the conversation ID
-    return render_template('game.html', conversation_id=conversation_id)
+    return render_template('gameplay_screen.html', conversation_id=conversation_id)
 
 @routes.route('/advance_conversation', methods=['POST'])
 def advance_conversation_route():
@@ -126,8 +126,8 @@ def delete_conversation_route():
 
 @routes.route('/get_conversation_listings', methods=['GET'])
 def get_conversation_listings_route():
-    conversations = get_conversation_listings()
-    return jsonify({'conversations': conversations})
+    conversation_listings = get_conversation_listings()
+    return jsonify({'conversation_listings': conversation_listings})
 
 @routes.route('/get_conversation', methods=['POST'])
 def get_conversation_route():

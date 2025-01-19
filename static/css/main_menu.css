@@ -1,0 +1,37 @@
+.main_menu_container {
+    background-image: url('/static/images/Background.png');
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#new-conversation-btn {
+    background-color: #4B4842;
+    width: 600px;
+    height: 80px;
+    margin-bottom: 40px;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+#new-conversation-btn:hover {
+    background-color: #997600;   
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.conversation-item {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+    min-height: 80px;
+    padding: 15px;
+    align-items: center;
+    background-color: #151919;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    font-family: 'Roboto Slab', serif;
+}
+
+// ... rest of main menu specific styles ...

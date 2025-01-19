@@ -216,12 +216,14 @@ def summarize_with_gm(conversation):
 
     return conversation
 
-def run_boot_sequence(conversation: Dict) -> Dict:
+def run_boot_sequence(conversation: Dict):
     """
     Runs a sequence of predetermined messages from boot_sequence_messages.MD to initialize a new game conversation.
     Returns the updated conversation with all boot sequence messages included.
     """
     try:
+
+        new_messages = []
         # Use project root to find boot sequence file
         boot_sequence_path = os.path.join(project_root, 'LLM_instructions', 'boot_sequence.MD')
         with open(boot_sequence_path, 'r') as file:
@@ -242,6 +244,7 @@ def run_boot_sequence(conversation: Dict) -> Dict:
             try:
                 # Convert and add user message
                 user_message = convert_user_text_to_message(message)
+                new_messages.append(user_message)
                 conversation['messages'].append(user_message)
                 
                 # Get GM response
@@ -252,12 +255,13 @@ def run_boot_sequence(conversation: Dict) -> Dict:
                     logger.info("Marking last GM response as boot sequence end")
                     gm_response['is_boot_sequence_end'] = True
                 
+                new_messages.append(gm_response)
                 conversation['messages'].append(gm_response)
-                
                 # Handle tool use if requested
                 if isToolUseRequest(gm_response):
                     logger.info("Tool use requested during boot sequence")
                     tool_result = generate_tool_result(gm_response)
+                    new_messages.append(tool_result)
                     conversation['messages'].append(tool_result)
                     
                     tool_response, _ = get_next_gm_response(conversation, temperature=0.8)
@@ -266,13 +270,14 @@ def run_boot_sequence(conversation: Dict) -> Dict:
                         logger.info("Moving boot sequence end marker to tool response")
                         gm_response.pop('is_boot_sequence_end', None)
                         tool_response['is_boot_sequence_end'] = True
+                    new_messages.append(tool_response)
                     conversation['messages'].append(tool_response)
-                
             except Exception as e:
                 logger.error(f"Error in boot sequence at message '{message}': {e}")
                 raise
     
-        return conversation
+        conversation['messages'].extend(new_messages)
+        return conversation, new_messages
         
     except FileNotFoundError:
         logger.error("boot_sequence_messages.MD file not found")

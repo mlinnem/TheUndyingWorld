@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 conversationList.innerHTML = '';
                 
-                const sortedConversations = data.conversations.sort((a, b) => {
+                const sortedConversations = data.conversation_listings.sort((a, b) => {
                     if (!a.last_updated && !b.last_updated) {
                         return new Date(b.name) - new Date(a.name);
                     }
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         minute: '2-digit',
                     });
                     
-                    span.textContent = formattedDate;
+                    span.textContent = "Started on " + formattedDate + ", last updated " + formattedDate + " (" + conv.message_count + " messages)";
                     convDiv.appendChild(span);
                     
                     // Change to use href instead of onclick
