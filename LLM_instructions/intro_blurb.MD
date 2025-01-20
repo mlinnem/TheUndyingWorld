@@ -7,5 +7,3 @@ Two years ago, an unexplained event began in a certain region of the globe. Oste
 You are a U.S. agent, tasked with surreptitiously entering the restricted region, contravening pacts between world powers, in order to obtain three objects of unknown significance.
 
 Welcome to the Undying World.
-
-Shall I generate prospective settings for the region in question?

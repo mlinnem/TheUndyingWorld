@@ -237,3 +237,48 @@
     background-color: #997600;
 }
 
+@keyframes breathe {
+    0% { 
+    }
+
+    10% { 
+    }
+
+    20% { 
+    }
+
+    30% { 
+        
+    }
+
+    40% { 
+        backdrop-filter: blur(10px);
+     }
+
+    50% { 
+        backdrop-filter: blur(50px);
+    }
+
+    60% { 
+        backdrop-filter: blur(10px);
+
+       
+    }
+
+
+
+    70% { 
+    }
+
+    80% { 
+        backdrop-filter: blur(10px);
+    }
+
+    90% { 
+        backdrop-filter: blur(50px);
+    }
+
+    100% { 
+        backdrop-filter: blur(10px);
+    }
+}

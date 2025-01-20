@@ -76,20 +76,22 @@ def create_new_conversation():
     logger.info(f"Created conversation with ID: {conversation['conversation_id']}")
     
     # Use the constant intro_path instead of defining it here
-    with open(intro_path, 'r') as file:
-        intro_blurb = file.read()
-        logger.info(f"Read intro blurb, length: {len(intro_blurb)}")
+    #with open(intro_path, 'r') as file:
+    #    intro_blurb = file.read()
+    #    logger.info(f"Read intro blurb, length: {len(intro_blurb)}")
 
     # Format the intro message properly
-    intro_message = {
-        'role': 'assistant',
-        'content': [{
-            'type': 'text',
-            'text': intro_blurb
-        }],
-        'timestamp': datetime.utcnow().isoformat()
-    }
-    conversation['messages'].append(intro_message)
+    #intro_message = {
+    #    'role': 'assistant',
+    #    'content': [{
+    #        'type': 'text',
+    #        'text': intro_blurb
+    #    }],
+    #    'timestamp': datetime.utcnow().isoformat()
+    #}
+    #conversation['messages'].append(intro_message)
+
+
     logger.info("Added intro message to conversation")
         
     # Save the updated conversation

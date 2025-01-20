@@ -222,20 +222,28 @@ def run_boot_sequence(conversation: Dict):
     Returns the updated conversation with all boot sequence messages included.
     """
     try:
+        import random
+        import re
 
         new_messages = []
         # Use project root to find boot sequence file
-        boot_sequence_path = os.path.join(project_root, 'LLM_instructions', 'boot_sequence.MD')
+        boot_sequence_path = os.path.join(project_root, 'LLM_instructions', 'world_gen_sequence.MD')
         with open(boot_sequence_path, 'r') as file:
             content = file.read()
             # Split by "# Instruction" and skip the first empty section
             sections = content.split("# Instruction")[1:]  # Skip first split which is empty
-            # Clean each instruction and filter out empty ones
-            boot_sequence_messages = [
-                section.strip() 
-                for section in sections 
-                if section.strip()  # Skip empty messages
-            ]
+            
+            # Process random number placeholders and clean each instruction
+            boot_sequence_messages = []
+            for section in sections:
+                if section.strip():  # Skip empty messages
+                    # Replace <<<N>>> with random number from 1 to N
+                    processed_section = re.sub(
+                        r'<<<(\d+)>>>', 
+                        lambda m: str(random.randint(1, int(m.group(1)))), 
+                        section.strip()
+                    )
+                    boot_sequence_messages.append(processed_section)
 
         logger.info(f"Starting boot sequence with {len(boot_sequence_messages)} messages")
         
@@ -248,7 +256,7 @@ def run_boot_sequence(conversation: Dict):
                 conversation['messages'].append(user_message)
                 
                 # Get GM response
-                gm_response, usage_data = get_next_gm_response(conversation, temperature=0.8)
+                gm_response, usage_data = get_next_gm_response(conversation, temperature=0.84)
                 
                 # Mark the last GM response of the boot sequence
                 if i == len(boot_sequence_messages) - 1:

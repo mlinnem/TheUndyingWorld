@@ -261,6 +261,7 @@ function sendMessage() {
             })
             .catch(error => {
                 console.error('Error:', error);
+                console.error('Error stack:', error.stack);
                 addConversationObject({
                     "type": "server_error",
                     "text": "An error occurred during boot sequence. Please try again."
