@@ -1,4 +1,4 @@
-# Instruction
+# Instruction (omit result later)
 
 Generate 6 ideas for what is behind the egg, compatible with the previously described lore. What is the origin of the egg? What force drives it? What is at the center of the egg? What is the purpose of the artifacts?
 
@@ -16,13 +16,13 @@ Describe the three main-objective artifacts, including their appearance and func
 
 Define how they are related to each other.
 
-# Instruction
+# Instruction (omit result later)
 
 Generate 6 ideas for locations where the egg appears on Earth.
 
 # Instruction
 
-I pick <<<6>>>. Describe this geographic setting in detail.
+I pick <<<6>>>. Describe this geographic setting in detail (without necessarily breaking it down into zones yet. We will do that in subsequent steps). Describe the geography, nature, and civilization that existed in this location before the event that created the egg.
 
 Note: Do not attempt to include any post-egg details such as factions, artifacts, etc. within these zones yet. This will be done later.
 
@@ -102,7 +102,7 @@ Describe 10 non-main-objective artifacts that can be found in the middle ring, a
 
 Describe 12 non-main-objective artifacts that can be found in the outer ring, and their locations. Review prior material on artifacts and their powers for guidance.
 
-# Instruction
+# Instruction (omit result later)
 
 Generate five potential minor artifacts available for the player to choose from at the beginning of the game. These artifacts should represent an interesting choice for how the player will approach fulfilling their mission (although their minor power implies that they will not strongly determine the player's approach). Review prior material on artifacts and their powers for guidance. Possible thematic approaches include: violence, wayfinding, intuition, diplomacy, survival, etc.
 
@@ -110,9 +110,9 @@ Generate five potential minor artifacts available for the player to choose from 
 
 I choose the following artifacts to be available to the player: <<<5>>> and <<<5>>>
 
-Note: If the numbers above are duplicates, treat that as meaning that only one artifact is available to the player.
+Note: If the numbers above are duplicates, treat that as meaning that only one artifact choice is available to the player.
 
-# Instruction
+# Instruction (omit result later)
 
 Describe 5 factions within the egg.
 
@@ -129,7 +129,7 @@ You may use the following template as guidance:
 
 # Instruction
 
-Do a second pass on each faction, defining their relationship to each other, and redefining their history, objectives, territory, etc. if need be.
+Do a second pass on each faction, defining their relationship to each other, and redefining their history, objectives, territory, etc. if need be. Use the same template as above. The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
 
 # Instruction
 
@@ -188,7 +188,7 @@ You may use the following template as guidance:
 
 # Instruction
 
-Describe the situation with respect to your children? Where are they? What is their state of affairs?
+Describe the situation with respect to your children. Where are they? What is their state of affairs?
 
 # Instruction
 
@@ -259,25 +259,3 @@ Consider the following template as guidance:
 * What artifacts can be found in this zone?
 * What threats exist in this zone for the player?
 * Can one or more children be found in this zone?
-
-# Instruction
-
-Pre-game content generation is now complete.
-
-Gameplay should begin with the player in a U.S. government staging facility, outside of the egg. They are being briefed on their mission.
-
-The person performing the briefing should expect to explain the following elements to the player, in this sequence (although not all of them necessarily in the first message):
-
-1) Explain their basic mission.
-2) indicate the expected location and appearance of the three main plot artifacts
-3) Brief the player on their location of egress. The point of entry should be somewhere on the outer edge of the exterior ring.
-4) Provide the player with their initial gear, including the vessels meant to contain the goal artifacts.
-5) Allow the player to choose one of the artifacts for use in their mission.
-
-Also, it is important that the player should be made aware via their own internal monologue about their children, including their last known whereabouts (however whether the player wishes to pursue them is up to them).
-
-Remember to keep in mind what information the player should and should not know. The U.S. government has not been privy to any information on the happenings inside the egg, beyond what little they have discerned from holy texts, and the prior agent. They are also not revealing everything they know to the player. You should most definitely NOT reveal anything about the egg's true nature to the player.
-
-Note that all prior communication in this conversation will not be available to the player. Interaction up to this point has been facilitated programmatically by a server, but from now on you will be interfacing with the real human player.
-
-Begin gameplay. 

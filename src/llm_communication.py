@@ -11,15 +11,12 @@ from .route_utils import *
 import logging
 logger = logging.getLogger(__name__)
 
-
 load_dotenv()
 api_key = os.getenv('ANTHROPIC_API_KEY')
-
 
 client = Anthropic(
     api_key=api_key
 )
-
 
 # Update the logger configuration
 logger = logging.getLogger(__name__)
@@ -43,12 +40,12 @@ with open(tools_path, 'r') as file:
     tools = json.load(file)
 
 
-def get_next_gm_response(conversation, temperature=0.7):
+def get_next_gm_response(messages, system_prompt, temperature=0.7):
     logger.info(f"Sending message to GM (omitted for brevity)")
 
     # Clean messages for API consumption
     cleaned_messages = []
-    for msg in conversation['messages']:
+    for msg in messages:
         cleaned_content = []
         for content in msg['content']:
             if content['type'] == "text":
@@ -91,7 +88,7 @@ def get_next_gm_response(conversation, temperature=0.7):
     response = client.messages.create(
         model="claude-3-5-sonnet-20241022",
         messages=cleaned_messages,
-        system=conversation['system_prompt'],  
+        system=system_prompt,  
         max_tokens=MAX_OUTPUT_TOKENS,
         temperature=temperature,
         tools=tools,
@@ -100,25 +97,32 @@ def get_next_gm_response(conversation, temperature=0.7):
     logger.info(f"response.usage: {response.usage}")
 
     usage_data = {
-        "uncached_input_tokens" : response.usage.input_tokens,
-        "cached_input_tokens" : response.usage.cache_read_input_tokens + response.usage.cache_creation_input_tokens,
-        "total_input_tokens" : response.usage.input_tokens + response.usage.cache_read_input_tokens + response.usage.cache_creation_input_tokens,
+        "uncached_input_tokens": response.usage.input_tokens,
+        "cached_input_tokens": response.usage.cache_read_input_tokens + response.usage.cache_creation_input_tokens,
+        "total_input_tokens": response.usage.input_tokens + response.usage.cache_read_input_tokens + response.usage.cache_creation_input_tokens,
     }
-    # Convert usage data to our own dictionary format
 
-    if len(response.content) > 1 and hasattr(response.content[1], 'type') and response.content[1].type == "tool_use":
-        response_json = {
-            "role": "assistant",
-            "content": [
-                {"type": "text", "text": response.content[0].text},
-                {"type": "tool_use", "id": response.content[1].id, "name": response.content[1].name, "input": response.content[1].input}
-            ]
-        }
-    else: # Is normal response
-        response_json = {
-                "role": "assistant",
-                "content": [{"type": "text", "text": response.content[0].text}]
-        }
+    # Initialize response_json with basic structure
+    response_json = {
+        "role": "assistant",
+        "content": []
+    }
+
+    # Process each content block from the response
+    for content_block in response.content:
+        if hasattr(content_block, 'type'):
+            if content_block.type == "text":
+                response_json["content"].append({
+                    "type": "text",
+                    "text": content_block.text
+                })
+            elif content_block.type == "tool_use":
+                response_json["content"].append({
+                    "type": "tool_use",
+                    "id": content_block.id,
+                    "name": content_block.name,
+                    "input": content_block.input
+                })
 
     logger.info(f"response.usage: {response.usage}")
         
@@ -153,9 +157,7 @@ def summarize_with_gm(conversation):
 
     if len(messages_to_summarize) > 0:
         logger.info("Loading summarizer instructions...")
-        summarizer_path = os.path.join(project_root, 'LLM_instructions', 'summarizer.MD')
-        with open(summarizer_path, 'r') as file:
-            summarizer_instructions = file.read()
+        summarizer_instructions = conversation['summarizer']
 
         formatted_messages = "\n\n".join([
             f"{msg['role'].upper()}: {msg['content'][0]['text'] if isinstance(msg['content'], list) else msg['content']}"
@@ -215,86 +217,6 @@ def summarize_with_gm(conversation):
         logger.info("No messages to summarize after permanent cache point")
 
     return conversation
-
-def run_boot_sequence(conversation: Dict):
-    """
-    Runs a sequence of predetermined messages from boot_sequence_messages.MD to initialize a new game conversation.
-    Returns the updated conversation with all boot sequence messages included.
-    """
-    try:
-        import random
-        import re
-
-        new_messages = []
-        # Use project root to find boot sequence file
-        boot_sequence_path = os.path.join(project_root, 'LLM_instructions', 'world_gen_sequence.MD')
-        with open(boot_sequence_path, 'r') as file:
-            content = file.read()
-            # Split by "# Instruction" and skip the first empty section
-            sections = content.split("# Instruction")[1:]  # Skip first split which is empty
-            
-            # Process random number placeholders and clean each instruction
-            boot_sequence_messages = []
-            for section in sections:
-                if section.strip():  # Skip empty messages
-                    # Replace <<<N>>> with random number from 1 to N
-                    processed_section = re.sub(
-                        r'<<<(\d+)>>>', 
-                        lambda m: str(random.randint(1, int(m.group(1)))), 
-                        section.strip()
-                    )
-                    boot_sequence_messages.append(processed_section)
-
-        logger.info(f"Starting boot sequence with {len(boot_sequence_messages)} messages")
-        
-        for i, message in enumerate(boot_sequence_messages):
-            logger.info(f"Processing boot sequence message {i+1}/{len(boot_sequence_messages)}")
-            try:
-                # Convert and add user message
-                user_message = convert_user_text_to_message(message)
-                new_messages.append(user_message)
-                conversation['messages'].append(user_message)
-                
-                # Get GM response
-                gm_response, usage_data = get_next_gm_response(conversation, temperature=0.84)
-                
-                # Mark the last GM response of the boot sequence
-                if i == len(boot_sequence_messages) - 1:
-                    logger.info("Marking last GM response as boot sequence end")
-                    gm_response['is_boot_sequence_end'] = True
-                
-                new_messages.append(gm_response)
-                conversation['messages'].append(gm_response)
-                # Handle tool use if requested
-                if isToolUseRequest(gm_response):
-                    logger.info("Tool use requested during boot sequence")
-                    tool_result = generate_tool_result(gm_response)
-                    new_messages.append(tool_result)
-                    conversation['messages'].append(tool_result)
-                    
-                    tool_response, _ = get_next_gm_response(conversation, temperature=0.8)
-                    # If this is the last message, mark it instead of the previous response
-                    if i == len(boot_sequence_messages) - 1:
-                        logger.info("Moving boot sequence end marker to tool response")
-                        gm_response.pop('is_boot_sequence_end', None)
-                        tool_response['is_boot_sequence_end'] = True
-                    new_messages.append(tool_response)
-                    conversation['messages'].append(tool_response)
-            except Exception as e:
-                logger.error(f"Error in boot sequence at message '{message}': {e}")
-                raise
-    
-        conversation['messages'].extend(new_messages)
-        return conversation, new_messages
-        
-    except FileNotFoundError:
-        logger.error("boot_sequence_messages.MD file not found")
-        raise
-    except Exception as e:
-        logger.error(f"Error reading boot sequence messages: {e}")
-        raise
-
-
 
 def log_conversation_messages(messages):
     """Log conversation messages to a file with timestamp."""

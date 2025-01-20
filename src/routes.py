@@ -62,7 +62,7 @@ def advance_conversation_route():
                 'parsing_errors': [],
             }), 404
             
-        conversation, new_messages = chat(user_message_for_server, conversation, should_run_boot_sequence)
+        conversation, new_messages = advance_conversation(user_message_for_server, conversation, should_run_boot_sequence)
         
         save_conversation(conversation)
 

@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "LLM_instructions"
+		},
+		{
+			"path": "../DesignDocuments"
+		}
+	],
+	"settings": {}
+}

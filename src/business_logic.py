@@ -9,24 +9,10 @@ from .llm_communication import *
 import logging
 logger = logging.getLogger(__name__)
 
-# Get the absolute path to the project root directory
-current_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.dirname(current_dir)
-
-manual_instructions = ""
-manual_path = os.path.join(project_root, 'LLM_instructions', 'game_manual.MD')
-with open(manual_path, 'r') as file:
-    manual_instructions = file.read()
-
-# Add intro path constant here
-intro_path = os.path.join(project_root, 'LLM_instructions', 'intro_blurb.MD')
-
-zombie_system_prompt = [{
-        "type": "text",
-        "text": manual_instructions,
-        "cache_control": {"type": "ephemeral"}
-}]
-
+# Update the logger configuration
+logger.setLevel(logging.INFO)
+handler = logging.StreamHandler()
+logger.addHandler(handler)
 
 CONVERSATIONS_DIR = "conversations"
 
@@ -69,32 +55,16 @@ def create_new_conversation():
         'messages': [],
         'last_updated': datetime.now().isoformat(),
         'cache_points': [],
-        'system_prompt': zombie_system_prompt,
+        'gameplay_system_prompt': get_gameplay_system_prompt(),
+        'game_setup_system_prompt': get_game_setup_system_prompt(),
+        'summarizer_system_prompt': get_summarizer_system_prompt(),
         'prompt_version': datetime.now().isoformat()
     }
 
     logger.info(f"Created conversation with ID: {conversation['conversation_id']}")
     
-    # Use the constant intro_path instead of defining it here
-    #with open(intro_path, 'r') as file:
-    #    intro_blurb = file.read()
-    #    logger.info(f"Read intro blurb, length: {len(intro_blurb)}")
-
-    # Format the intro message properly
-    #intro_message = {
-    #    'role': 'assistant',
-    #    'content': [{
-    #        'type': 'text',
-    #        'text': intro_blurb
-    #    }],
-    #    'timestamp': datetime.utcnow().isoformat()
-    #}
-    #conversation['messages'].append(intro_message)
-
-
-    logger.info("Added intro message to conversation")
-        
     # Save the updated conversation
+
     save_conversation(conversation)
     logger.info("Saved conversation")
 
@@ -189,11 +159,21 @@ def update_conversation_cache_points(conversation):
 
     return conversation
 
-def chat(user_message, conversation, should_run_boot_sequence):
+def advance_conversation(user_message, conversation, should_create_generated_plot_info):
     new_messages = []
 
-    if should_run_boot_sequence:
-        conversation, new_messages = run_boot_sequence(conversation)
+    if should_create_generated_plot_info:
+        logger.info("Creating generated plot info")
+        # First create the generated plot info
+        plot_messages = create_dynamic_world_gen_data_messages(conversation['messages'], conversation['game_setup_system_prompt'])
+        conversation['messages'].extend(plot_messages)
+        new_messages.extend(plot_messages)
+        
+        # Then execute the final startup instruction
+        logger.info("Executing final startup instruction")
+        conversation, final_messages = execute_final_startup_instruction(conversation)
+        new_messages.extend(final_messages)
+        
         # Update cache points after boot sequence is complete
         logger.info("Boot sequence completed, updating cache points")
         conversation = update_conversation_cache_points(conversation)
@@ -204,7 +184,7 @@ def chat(user_message, conversation, should_run_boot_sequence):
     conversation['messages'].append(user_message)
         
     # get and save gm response
-    gm_response_json, usage_data = get_next_gm_response(conversation, temperature=0.5)
+    gm_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.5)
     conversation['messages'].append(gm_response_json)
     new_messages = [gm_response_json]
 
@@ -217,7 +197,7 @@ def chat(user_message, conversation, should_run_boot_sequence):
         new_messages.append(tool_result_json)
 
         # get and save gm response to tool result
-        tool_use_response_json, usage_data = get_next_gm_response(conversation, 0.8)
+        tool_use_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.8)
         conversation['messages'].append(tool_use_response_json)
         new_messages.append(tool_use_response_json)
     else:
@@ -231,5 +211,105 @@ def chat(user_message, conversation, should_run_boot_sequence):
         conversation = update_conversation_cache_points(conversation)
 
     return conversation, new_messages
+
+def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_prompt):
+    logger.info("Creating dynamic world gen data messages")
+    try:
+        import random
+        import re   
+
+        # Get pre-parsed instruction sections
+        world_gen_instructions_w_omit_data = get_world_gen_sequence_array()
+        
+        temp_conversation = {
+            'messages': existing_messages.copy(),
+            'game_setup_system_prompt': game_setup_system_prompt
+        }
+
+        logger.info(f"Starting boot sequence with {len(world_gen_instructions_w_omit_data)} messages")
+        
+        final_llm_responses = []
+        
+        for i, world_gen_instruction_w_omit_data in enumerate(world_gen_instructions_w_omit_data):
+            logger.info(f"Processing boot sequence message {i+1}/{len(world_gen_instructions_w_omit_data)}")
+            try:
+                # Convert and add user message
+                world_gen_instruction = convert_user_text_to_message(world_gen_instruction_w_omit_data['text'])
+                temp_conversation['messages'].append(world_gen_instruction)
+                
+                # Get GM response
+                gm_response, usage_data = get_next_gm_response(temp_conversation['messages'],temp_conversation['game_setup_system_prompt'], temperature=0.84)
+                temp_conversation['messages'].append(gm_response)
+
+                if not world_gen_instruction_w_omit_data['omit_result']:
+                    final_llm_responses.append(gm_response)
+                # Mark the last GM response of the boot sequence
+                if i == len(world_gen_instructions_w_omit_data) - 1:
+                    logger.info("Marking last GM response as boot sequence end")
+                    gm_response['is_boot_sequence_end'] = True
+                
+                # Handle tool use if requested
+                if isToolUseRequest(gm_response):
+                    logger.info("Tool use requested during boot sequence")  
+                    tool_result = generate_tool_result(gm_response)
+                    temp_conversation['messages'].append(tool_result)
+                    
+                    tool_response, _ = get_next_gm_response(temp_conversation['messages'], game_setup_system_prompt, temperature=0.8)
+                    temp_conversation['messages'].append(tool_response)     
+                    
+                    if i == len(world_gen_instructions_w_omit_data) - 1:
+                        logger.info("Moving boot sequence end marker to tool response")
+                        gm_response.pop('is_boot_sequence_end', None)
+                        tool_response['is_boot_sequence_end'] = True
+                    
+                    if not world_gen_instruction_w_omit_data['omit_result']:
+                        final_llm_responses.append(tool_result)
+                        final_llm_responses.append(tool_response)
+                
+            except Exception as e:
+                logger.error(f"Error in boot sequence at message '{world_gen_instruction_w_omit_data['text']}': {e}")
+                raise
+
+        return final_llm_responses
+        
+    except Exception as e:
+        logger.error(f"Error reading boot sequence messages: {e}")
+        raise
+
+def execute_final_startup_instruction(conversation: Dict):
+    """
+    Execute the final startup instruction after world generation is complete.
+    Returns the updated conversation and any new messages.
+    """
+    logger.info("Executing final startup instruction")
+    try:
+        # Get the final instruction content
+        final_instruction = get_final_startup_instruction_string()
+        
+        # Convert the instruction to a user message
+        user_message = convert_user_text_to_message(final_instruction)
+        conversation['messages'].append(user_message)
+        
+        # Get GM response
+        gm_response, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.7)
+        conversation['messages'].append(gm_response)
+        new_messages = [gm_response]
+        
+        # Handle any tool use if requested
+        if isToolUseRequest(gm_response):
+            logger.info("Tool use requested during final startup instruction")
+            tool_result = generate_tool_result(gm_response)
+            conversation['messages'].append(tool_result)
+            new_messages.append(tool_result)
+            
+            tool_response, _ = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.7)
+            conversation['messages'].append(tool_response)
+            new_messages.append(tool_response)
+        
+        return conversation, new_messages
+        
+    except Exception as e:
+        logger.error(f"Error executing final startup instruction: {e}")
+        raise
 
 

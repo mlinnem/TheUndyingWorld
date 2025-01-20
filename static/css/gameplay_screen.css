@@ -147,6 +147,13 @@
     line-height: 1.6875rem;
 }
 
+.module.out_of_section_text {
+    background-color: rgba(45, 45, 45, 0.8);
+    font-family: var(--in-game-text-font);
+    font-size: 1.125rem;
+    line-height: 1.6875rem;
+}
+
 .module.resulting_scene_description {
 
     font-size: 1.125rem;
@@ -180,7 +187,7 @@
     color:#EEE8CF;
     background-color: hsla(0, 0%, 8%, .2);
     align-self: flex-start;
-    animation: breathe ease-out 5s infinite;
+    animation: breathe ease-out 10s infinite;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     height: 500px;
