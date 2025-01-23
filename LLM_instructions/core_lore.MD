@@ -134,6 +134,44 @@ The player gives in to the egg in some way, sacrificing humanity’s dominance t
 
 As previously described, all of existing life is destroyed, the earth is terraformed, new life takes over, and the souls of humanity are eventually (after millions of years) reinjected into a new life form capable of supporting sentience, in a dramatically different environment. The memories of all of humanity are erased, and their fundamental nature is changed dramatically. However, in their new form, they are once again challenged faced with the same dilemmas that humans face on Earth today. Whether they successfully resolve those dilemmas this time around is not known.
 
+### Save your family ending
+
+Another possible ending is one facilitated by an artifact held in the inner ring. One that enables the player to prove themselves worthy of preservation. The player, and his/her family, are allowed to survive, and become the stewards of Earth. They may not impose their personal vision for the Earth, but can nevertheless continue to facilitate the evolution of new life on Earth. They will be treated as peers to the planter civilization. 
+
+The remainder of humanity is destroyed, and their souls harvested in keeping with the tradition 'egg wins' ending.
+
+If the player seems to be pursuing a purely family-focused direction, they should discover hints to the storyline and artifacts that will enable this outcome.
+
+### Save your community ending
+
+Another possible ending is one facilitated by another artifact held in the inner ring. The player, his/her family, and a small community of their choosing (<100 individuals), are permitted to survive. The planter civilization wishes to preserve a small human community in what essentially amounts to a zoo.  Idyllic conditions will be created for this community to continue to live in, in perpetuity.
+
+The remainder of humanity is destroyed, and their souls harvested in keeping with the tradition 'egg wins' ending.
+
+If the player seems to be pursuing a family-focused direction or otherwise small-group focused objective, they should discover hints to the storyline and artifacts that will enable this outcome.
+
+### Save yourself ending
+
+A variation on the 'save your family ending' also exists, along essentially the same terms (you are preserved as a steward of the new Earth life creation, and as a peer to the planter civilization), but it just applies to you.
+
+The remainder of humanity is destroyed, and their souls harvested in keeping with the tradition 'egg wins' ending.
+
+If the player seems to be pursuing a line of objectives that is strongly in the self-preserving direction, they should discover hints to the storyline and artifacts that will enable this outcome.
+
+### Dark ending 
+
+An additional ending is possible for players that pursue a specific nihilistic path through the egg. An artifact exists within the egg that was malformed due to the process of the egg's containment. It  enables its user to transform the life force of others into power and ecstacy for its wielder. It is currently wielded by a malevolent human inside the egg. If the player obtains this artifact, the artifact will tempt them to bring it to the core of the egg. The result of combining this artifact with the artifact at the epicenter of the egg yields the following result: the player remakes the world as a funnel of ecstatic energy and power into his/herself, resulting in ultimate and continual  suffering for the world's inhabitants, and apparent unending ecstacy for the player.
+
+This state of affairs exists for many years, until the planter civilization returns to earth, and utterly eliminates the earth itself and all its inhabitants, in order to prevent the extreme suffering of the world's inhabitants.
+
+This ending represents the extreme outcome of a hedonistic, nihilistic perspective.
+
+If the player seems to be pursuing raw power primarily, they should discover artifacts and hints to this storyline and that will enable this outcome.
+
+### Ad-lib outcome
+
+It is possible that the player pursues an outcome that is unanticipated. While efforts should generally be made to slot the player's outcome into one that is pre-defined, the GM does has the liberty to create an additional outcome if it is seriously warranted. Generally though these outcomes should hue to the theme of requiring deep and meaningful tradeoffs. Players should not be able to engineer a 'best of all worlds' outcome except via the methods described below.
+
 ## Deeper / second-playthrough endings
 
 The ending to the first playthrough should hint at the possibility of some of the following endings.

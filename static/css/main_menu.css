@@ -9,13 +9,15 @@
 
 .main_menu.page_container {
     align-items: center;
-    justify-content: center;
+    height: 100vh;
+    overflow: auto;
 }
 
 #new-conversation-btn {
     background-color: #4B4842;
     width: 600px;
     height: 80px;
+    min-height: 80px;
     margin-bottom: 40px;
     font-family: var(--functional-text-font);
 }
