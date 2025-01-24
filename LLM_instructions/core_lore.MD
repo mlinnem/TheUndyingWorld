@@ -38,6 +38,20 @@ Guidance on sharing information:
 A major aspect of this game is to entice the player with a slow but steady uncovering of hidden truths (or apparent truths), as the gameplay progresses. 
 
 It is VITAL that this information only be shared through gameplay, as a reward for achievements of various kind. It is meant to be shared incrementally at first, and only in the form of a total reveal at very late stages of the game, if at all. However in order to allow the GM to construct a cohesive narrative, we share this information with you up front.
+
+### 'Secret' Information known only to the player
+
+Unbeknownst to the U.S. government, your children, six and sixteen years old, were inside the region of the egg at the time of the event. You believe may still be alive within the egg.
+
+## Truth about your children
+
+They are indeed still alive within the egg.
+
+Guidance on sharing information:
+* This information can be discerned by searching in the area where you believe they were at the time of the disaster.
+* Hints of this information can be relayed by any characters that may have had contact with the children (not most but some, conceivably)
+* This information is not meant to be a deep secret, although knowing their location is not the same as successfully rescuing them, if indeed they need or want to be rescued (perhaps they do, perhaps they don't, depending on the game.)
+* 
 ## 'Secret' Information known to the U.S. government
 
 The nature of the egg is to expand. The U.S. government is a member of an unstable coalition of world powers, helping to keep the egg contained at its current size through extreme and potentially unsustainable expenditures of energy.
@@ -90,22 +104,24 @@ However, because the egg is being contained by humanity, the intended plan of th
 
 ## End game conditions
 
-The game is designed to reveal progressively 'better' end game conditions depending on how successfully and deeply the player delves into the world. We will describe various intended end game conditions, and how we expect players to achieve them.
+The game is designed to reveal progressively 'better' end game conditions depending on how successfully and deeply the player delves into the world. In general, 'better' endings should be correspondingly more difficult to achieve.
+
+We will describe various intended end game conditions, and how we expect players to achieve them.
 
 ## "First playthrough" endings.
 
-The following endings are accessible and clearly visible from the entry-level explanation of the lore of the world, the egg, etc. 
+Endings consisting of serious trade-offs or downsides are generally more accessible and clearly visible from the entry-level explanation of the lore of the world, the egg, etc. 
 
 Players are intended to be forced to make tough choices along the following lines:
 
-- The apparent choices should be variants of variants of:
+- The apparent choices should be variants of:
     - Accept transformation (saving some but losing human essence)
     - Fight transformation (preserving humanity but facing extinction)
     - Partial compromises (saving some at the cost of others)
 - All of these feel meaningful but somewhat tragic. Bittersweet.
 - Players make genuine moral choices based on their values
 
-Enumerated, the basic endings are as follows;
+Enumerated, the basic endings are as follows:
 ### Death
 
 The player dies and terminates the game with whatever they have accomplish or not accomplished up to that point. No mysteries should be revealed upon death, unless significant objectives have been achieved inside the egg that would reroute the course of events. No deep secrets should be revealed either in relation to the egg or the intentions of the U.S. government.
@@ -126,22 +142,23 @@ If the power is not great enough to contain or destroy the egg, see the 'egg is 
 
 The player brings about the destructions of the egg, at the cost of knowledge and power, preserving the old world but dooming it to its current course of stagnation. Destruction of the egg results in the death of everyone and everything in it.
 
+In the conclusion of the story, details of how the Earth continues down its path of continued fracturing our elaborated upon. This does not result in a true apocalypse, but essentially an ongoing story of humanity not getting its act together: continuing to have wars, conflict, suffering, etc.
+
 No further mysteries are revealed about the nature of the egg or what drives it.
 
 ### The player embraces the egg
 
 The player gives in to the egg in some way, sacrificing humanity’s dominance to let the new life thrive. This is a mixed ending because potentially the new life proceeds better than it did in our experience of life (although dramatically different in its nature.)
 
-As previously described, all of existing life is destroyed, the earth is terraformed, new life takes over, and the souls of humanity are eventually (after millions of years) reinjected into a new life form capable of supporting sentience, in a dramatically different environment. The memories of all of humanity are erased, and their fundamental nature is changed dramatically. However, in their new form, they are once again challenged faced with the same dilemmas that humans face on Earth today. Whether they successfully resolve those dilemmas this time around is not known.
+As previously described, all of existing life is destroyed, the earth is terraformed, new life takes over, and the souls of humanity are eventually (after millions of years) re-injected into a new life form capable of supporting sentience, in a dramatically different environment. The memories of all of humanity are erased, and their fundamental nature is changed dramatically. However, in their new form, they are once again challenged faced with the same dilemmas that humans face on Earth today. Whether they successfully resolve those dilemmas this time around is not known.
 
 ### Save your family ending
 
 Another possible ending is one facilitated by an artifact held in the inner ring. One that enables the player to prove themselves worthy of preservation. The player, and his/her family, are allowed to survive, and become the stewards of Earth. They may not impose their personal vision for the Earth, but can nevertheless continue to facilitate the evolution of new life on Earth. They will be treated as peers to the planter civilization. 
 
-The remainder of humanity is destroyed, and their souls harvested in keeping with the tradition 'egg wins' ending.
+The remainder of humanity is destroyed, and their souls harvested in keeping with the traditional 'egg wins' ending.
 
-If the player seems to be pursuing a purely family-focused direction, they should discover hints to the storyline and artifacts that will enable this outcome.
-
+If the player seems to be pursuing a purely family-focused direction, they should discover hints to this storyline and artifacts that will enable this outcome.
 ### Save your community ending
 
 Another possible ending is one facilitated by another artifact held in the inner ring. The player, his/her family, and a small community of their choosing (<100 individuals), are permitted to survive. The planter civilization wishes to preserve a small human community in what essentially amounts to a zoo.  Idyllic conditions will be created for this community to continue to live in, in perpetuity.

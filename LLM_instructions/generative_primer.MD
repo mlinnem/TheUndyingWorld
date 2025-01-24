@@ -146,6 +146,7 @@ Each adventure will contain different artifacts: both the artifacts that the pla
 	* Ability to control new life.
 * Knowledge
 	* Full insight into state of world, or nature of the egg.
+	* Ability to communicate in some way with the planter civilization.
 	* Answering of any one question.
 	* Full revelation on a key plot point.
 	* Revelation of an ultimate philosophical truth (nature of god, nature of reality, etc.)
@@ -183,6 +184,8 @@ Agents are other human agents have entered the egg, either recently or previousl
 * A previously undisclosed prior agent of the U.S. government
 
 Other characters could include leaders of various factions, significant non-leader characters affiliated with factions, or non-affiliated but significant characters in the egg.
+
+Note: Never name a character Sarah Chen, or any variation on that name.
 
 ### Situation with your kids
 
