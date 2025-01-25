@@ -1,5 +1,3 @@
-
-
 # Instruction (omit result later)
 
 I (a script) am now going to ask you to respond to a series of instructions in order to build out certain information for the world of this game. The instructions will help us describe how this world formed in basic chronological order, which you can also think of as the order of causation.
@@ -13,6 +11,19 @@ Do you understand?
 # Instruction (omit result later)
 
 Generate 6 ideas for locations where the egg appears on Earth. The game intentionally leaves the location of the egg on earth to be ambiguous. The egg could conceivably 'land' anywhere on earth in the lore of the game. You will be asked to pick a location that feels both essentially random and also interesting to the player. Or, you can pick a location that makes sense as an intentional landing zone within the lore of the game. 
+
+Locations that are interesting include:
+
+* Regions that will be familiar to likely audience (primarily English speak American but also E.U. and India.)
+* Regions that are intentionally unfamiliar to these audiences (e.g. Morocco, Ethiopia, Desolate regions of the arctic, the rainforest, etc.)
+* Regions containing both civilization and natural interest.
+* Regions that feel essentially random (NOT centered on a particular city, notable geographic feature, etc, although they may incidentally contain them.)
+* Regions with interesting social dynamics at play (North/South Korean border, encompassing embassies of multiple countries, borders between other countries either conflicted (e.g. India / Pakistan) or more mundane (U.S. / Mexico border, Swiss/French border)
+* Regions that incorporate multiple interesting topographies
+* Regions that incorporate extreme conditions (cold, heat, volcanic activity, isolation, etc.)
+* Regions that incorporate potentially interesting cultural elements (Maori tribes, Amazon tribes, indigenous Australian populations)
+* Regions with evocative landscapes (tropical islands, scottish highlands, etc.)
+* Any other location that you subjectively think would be an interesting setting.
 
 We will subsequently pick one of these locations, and elaborate on it further, so don't feel the need to fully elaborate on each option here. 
 # Instruction
@@ -76,6 +87,10 @@ Describe how each zone relates to the zones adjacent to them. Describe each adja
 Now let's begin thinking about the egg and its effects.
 
 What specifically is driving what is occurring at the epicenter of the egg?
+
+Guidance:
+
+Do not attempt to make this specific to the region in which the egg lies: the region is incidental. Instead, make it congruous with the overall lore we have shared.
 # Instruction (omit result later)
 
 We are now going to redescribe each of the zones, to incorporate what has changed about its state after having been within and under the effects of the egg for the past two years. 
@@ -259,6 +274,10 @@ Describe 2 incidental artifacts that can be found in the inner ring, and their l
 
 Unlike key plot artifacts, these artifacts can take inspiration from the environments in which they are found.
 
+Consider how these artifacts might enhance one or more approaches to gameplay, including: violence, wisdom, diplomacy, wayfinding, protection, intuition, survival, etc.
+
+By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making one artifact embody a physical / violent / 'action'-based approach. 
+
 Review prior material on artifacts and their powers for guidance.
 
 This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
@@ -270,6 +289,10 @@ Describe 5 incidental artifacts that can be found in the middle ring, and their 
 
 Unlike key plot artifacts, these artifacts can take inspiration from the environments in which they are found.
 
+Consider how these artifacts might enhance one or more approaches to gameplay, including: violence, wisdom, diplomacy, wayfinding, protection, intuition, survival, etc.
+
+By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some (perhaps two) artifacts embody a physical / violent / 'action'-based approach. Similarly, it seems to create pathfinding artifacts (showing safe ways, revealing hidden things, etc.) with too high of a frequency. Make only one artifact related to this theme.
+
 Review prior material on artifacts and their powers for guidance.
 
 This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
@@ -280,13 +303,21 @@ Describe 7 incidental artifacts that can be found in the outer ring, and their l
 
 Unlike key plot artifacts, these artifacts can take inspiration from the environments in which they are found.
 
-These are meant to bring power or knowledge to the player, but aren't vital to any one specific plotline. Review prior material on artifacts and their powers for guidance.
+These are meant to bring power or knowledge to the player, but aren't vital to any one specific plotline. Review prior material on artifacts and their powers for guidance. 
+
+Consider how these artifacts might enhance one or more approaches to gameplay, including: violence, wisdom, diplomacy, wayfinding, protection, intuition, survival, etc.
+
+By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some (perhaps 3) artifacts embody a physical / violent / 'action'-based approach. Similarly, it seems to create pathfinding artifacts (showing safe ways, revealing hidden things, etc.) with too high of a frequency. Make only one artifact related to this theme.
 
 This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
 
 # Instruction (omit result later)
 
-Generate five potential minor artifacts (likely obtained from the outer ring) available for the player to choose from at the beginning of the game. These artifacts should represent an interesting choice for how the player will approach fulfilling their mission (although their minor power implies that they will overly or strongly determine the player's approach. We still want them to essentially have freedom to approach arbitrary situations as they see fit). Review prior material on artifacts and their powers for guidance. Possible thematic approaches include: violence, wayfinding, intuition, wisdom, diplomacy, survival, etc.
+Generate five potential minor artifacts (likely obtained from the outer ring) available for the player to choose from at the beginning of the game. These artifacts should represent an interesting choice for how the player will approach fulfilling their mission (although their minor power implies that they will overly or strongly determine the player's approach. We still want them to essentially have freedom to approach arbitrary situations as they see fit). Review prior material on artifacts and their powers for guidance. Possible thematic approaches include: violence, wisdom, diplomacy, wayfinding, protection, intuition, survival, etc.
+
+In describing the artifacts, make sure to number each one explicitly, for our subsequent choosing process.
+
+By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some artifacts (perhaps 2 or 3 of the five) embody a physical / violent / 'action'-based approach. 
 
 # Instruction
 
@@ -315,9 +346,114 @@ You may use the following template as guidance:
 * Objectives - [What are they currently looking to accomplish]
 * Territory - [What territory do they control, if they control any]
 
+Number each faction for purposes of referring to them in subsequent instructions
 # Instruction
  
-Do a second pass on each faction, defining their relationship to each other, and redefining their history, objectives, territory, etc. if need be. Use the same template as above. The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
+Consider faction #1.
+
+Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
+
+Use the following template (modified from the above
+)
+* Overall description - [Description]
+* Governance - [Form of governance]
+* Philosophy - [Philosophical bent]
+* Relationship to egg's power - [Relationship to egg's power]
+* History - [What has happened with this group in the past two years? How did it form? etc]
+* Quirk - [Something unusual about this group]
+* Objectives - [What are they currently looking to accomplish]
+* Territory - [What territory do they control, if they control any]
+* Relationship to other factions - [How do they feel about the other factions we have defined]
+
+The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+# Instruction
+ 
+Consider faction #2.
+
+Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
+
+Use the following template (modified from the above
+)
+* Overall description - [Description]
+* Governance - [Form of governance]
+* Philosophy - [Philosophical bent]
+* Relationship to egg's power - [Relationship to egg's power]
+* History - [What has happened with this group in the past two years? How did it form? etc]
+* Quirk - [Something unusual about this group]
+* Objectives - [What are they currently looking to accomplish]
+* Territory - [What territory do they control, if they control any]
+* Relationship to other factions - [How do they feel about the other factions we have defined]
+
+The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+# Instruction
+ 
+Consider faction #3.
+
+Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
+
+Use the following template (modified from the above
+)
+* Overall description - [Description]
+* Governance - [Form of governance]
+* Philosophy - [Philosophical bent]
+* Relationship to egg's power - [Relationship to egg's power]
+* History - [What has happened with this group in the past two years? How did it form? etc]
+* Quirk - [Something unusual about this group]
+* Objectives - [What are they currently looking to accomplish]
+* Territory - [What territory do they control, if they control any]
+* Relationship to other factions - [How do they feel about the other factions we have defined]
+
+The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+# Instruction
+ 
+Consider faction #4.
+
+Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
+
+Use the following template (modified from the above
+)
+* Overall description - [Description]
+* Governance - [Form of governance]
+* Philosophy - [Philosophical bent]
+* Relationship to egg's power - [Relationship to egg's power]
+* History - [What has happened with this group in the past two years? How did it form? etc]
+* Quirk - [Something unusual about this group]
+* Objectives - [What are they currently looking to accomplish]
+* Territory - [What territory do they control, if they control any]
+* Relationship to other factions - [How do they feel about the other factions we have defined]
+
+The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+# Instruction
+ 
+Consider faction #5.
+
+Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
+
+Use the following template (modified from the above
+)
+* Overall description - [Description]
+* Governance - [Form of governance]
+* Philosophy - [Philosophical bent]
+* Relationship to egg's power - [Relationship to egg's power]
+* History - [What has happened with this group in the past two years? How did it form? etc]
+* Quirk - [Something unusual about this group]
+* Objectives - [What are they currently looking to accomplish]
+* Territory - [What territory do they control, if they control any]
+* Relationship to other factions - [How do they feel about the other factions we have defined]
+
+The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
 
 This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
 
@@ -412,7 +548,9 @@ We will not perform this operation yet: this is merely to confirm that you under
 
 Describe the core zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. This will be the canonical description of this zone. 
 
-Feel free to be as verbose as you like, while acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere. This is meant to be comprehensive.
+Feel free to be as verbose as you like. This is meant to be comprehensive.
+
+While acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere, pointers to the existence of particular artifacts, factions, and characters are expected to appear here. 
 
 This information will be preserved in the final record, and is canonical.
 
@@ -435,7 +573,9 @@ We will start by describing the northwest zone of the inner ring. (subsequent zo
 
 Describe this zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. Do not omit prior key information that is still pertinent from the original zone description.
 
-Feel free to be as verbose as you like, while acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere. This is meant to be comprehensive.
+Feel free to be as verbose as you like. This is meant to be comprehensive.
+
+While acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere, pointers to the existence of particular artifacts, factions, and characters are expected to appear here. 
 
 This information will be preserved in the final record, and is canonical.
 
@@ -458,8 +598,9 @@ Describe the northwest zone of the middle ring.
 
 Describe this zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. Do not omit prior key information that is still pertinent from the original zone description.
 
-Feel free to be as verbose as you like, while acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere. This is meant to be comprehensive.
+Feel free to be as verbose as you like. This is meant to be comprehensive.
 
+While acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere, pointers to the existence of particular artifacts, factions, and characters are expected to appear here. 
 This information will be preserved in the final record, and is canonical.
 
 Consider the following template as guidance:
@@ -481,7 +622,9 @@ Describe the northwest zone of the outer ring.
 
 Describe this zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. Do not omit prior key information that is still pertinent from the original zone description.
 
-Feel free to be as verbose as you like, while acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere. This is meant to be comprehensive.
+Feel free to be as verbose as you like. This is meant to be comprehensive.
+
+While acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere, pointers to the existence of particular artifacts, factions, and characters are expected to appear here. 
 
 This information will be preserved in the final record, and is canonical.
 
@@ -504,7 +647,9 @@ Describe the northeast zone of the inner ring.
 
 Describe this zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. Do not omit prior key information that is still pertinent from the original zone description.
 
-Feel free to be as verbose as you like, while acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere. This is meant to be comprehensive.
+Feel free to be as verbose as you like. This is meant to be comprehensive.
+
+While acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere, pointers to the existence of particular artifacts, factions, and characters are expected to appear here. 
 
 This information will be preserved in the final record, and is canonical.
 
@@ -527,7 +672,9 @@ Describe the northeast zone of the middle ring.
 
 Describe this zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. Do not omit prior key information that is still pertinent from the original zone description.
 
-Feel free to be as verbose as you like, while acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere. This is meant to be comprehensive.
+Feel free to be as verbose as you like. This is meant to be comprehensive.
+
+While acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere, pointers to the existence of particular artifacts, factions, and characters are expected to appear here. 
 
 This information will be preserved in the final record, and is canonical.
 
@@ -550,7 +697,9 @@ Describe the northeast zone of the outer ring.
 
 Describe this zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. Do not omit prior key information that is still pertinent from the original zone description.
 
-Feel free to be as verbose as you like, while acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere. This is meant to be comprehensive.
+Feel free to be as verbose as you like. This is meant to be comprehensive.
+
+While acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere, pointers to the existence of particular artifacts, factions, and characters are expected to appear here. 
 
 This information will be preserved in the final record, and is canonical.
 
@@ -573,7 +722,9 @@ Describe the southeast zone of the inner ring.
 
 Describe this zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. Do not omit prior key information that is still pertinent from the original zone description.
 
-Feel free to be as verbose as you like, while acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere. This is meant to be comprehensive.
+Feel free to be as verbose as you like. This is meant to be comprehensive.
+
+While acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere, pointers to the existence of particular artifacts, factions, and characters are expected to appear here. 
 
 This information will be preserved in the final record, and is canonical.
 
@@ -596,7 +747,9 @@ Describe the southeast zone of the middle ring.
 
 Describe this zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. Do not omit prior key information that is still pertinent from the original zone description.
 
-Feel free to be as verbose as you like, while acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere. This is meant to be comprehensive.
+Feel free to be as verbose as you like. This is meant to be comprehensive.
+
+While acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere, pointers to the existence of particular artifacts, factions, and characters are expected to appear here. 
 
 This information will be preserved in the final record, and is canonical.
 
@@ -619,7 +772,9 @@ Describe the southeast zone of the outer ring.
 
 Describe this zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. Do not omit prior key information that is still pertinent from the original zone description.
 
-Feel free to be as verbose as you like, while acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere. This is meant to be comprehensive.
+Feel free to be as verbose as you like. This is meant to be comprehensive.
+
+While acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere, pointers to the existence of particular artifacts, factions, and characters are expected to appear here. 
 
 This information will be preserved in the final record, and is canonical.
 
@@ -642,7 +797,9 @@ Describe the southwest zone of the inner ring.
 
 Describe this zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. Do not omit prior key information that is still pertinent from the original zone description.
 
-Feel free to be as verbose as you like, while acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere. This is meant to be comprehensive.
+Feel free to be as verbose as you like. This is meant to be comprehensive.
+
+While acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere, pointers to the existence of particular artifacts, factions, and characters are expected to appear here. 
 
 This information will be preserved in the final record, and is canonical.
 
@@ -666,7 +823,9 @@ Describe the southwest zone of the middle ring.
 
 Describe this zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. Do not omit prior key information that is still pertinent from the original zone description.
 
-Feel free to be as verbose as you like, while acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere. This is meant to be comprehensive.
+Feel free to be as verbose as you like. This is meant to be comprehensive.
+
+While acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere, pointers to the existence of particular artifacts, factions, and characters are expected to appear here. 
 
 This information will be preserved in the final record, and is canonical.
 
@@ -690,7 +849,9 @@ Describe the southwest zone of the outer ring.
 
 Describe this zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. Do not omit prior key information that is still pertinent from the original zone description.
 
-Feel free to be as verbose as you like, while acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere. This is meant to be comprehensive.
+Feel free to be as verbose as you like. This is meant to be comprehensive.
+
+While acknowledging that official info on artifacts, factions, and characters will be preserved elsewhere, pointers to the existence of particular artifacts, factions, and characters are expected to appear here. 
 
 This information will be preserved in the final record, and is canonical.
 

@@ -242,8 +242,8 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
                 temp_conversation['messages'].append(gm_response)
 
                 if not world_gen_instruction_w_omit_data['omit_result']:
-                    final_messages.append(world_gen_instruction)
                     final_messages.append(gm_response)
+                
                 # Mark the last GM response of the boot sequence
                 if i == len(world_gen_instructions_w_omit_data) - 1:
                     logger.info("Marking last GM response as boot sequence end")

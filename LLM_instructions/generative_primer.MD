@@ -60,12 +60,34 @@ At the epicenter of the core lies something wondrous.
 
 Each adventure will contain different artifacts: both the artifacts that the player is sent to obtain as a primary objective, and also other artifacts that can be found and influence the world of the game.
 
+Artifact's primary effect can be to enhance its user, or it can be an object that is 'wielded' to have an effect on the world (or both.)
+
+
 * Artifacts are just one of many possible names for the objects. Other names that may be used are 'specimens', 'relics', 'gifts', 'stains', depending on the group's perspective on the objects.
 * Artifacts are both a blessing and a curse for the player. Many enhance the player's abilities, but also have side effects commensurate with their strength. 
 * Artifacts are relatively rare. They should only be obtainable with time & difficulty, in proportion to their power.
-* Artifacts from the 'tree of life' imbue physical and mental benefits. Artifacts from the 'tree of knowledge' reveal information to the player. 
+* Artifacts from the 'tree of life' imbue physical and mental benefits, or are objects of utility in and of themselves. Artifacts from the 'tree of knowledge' reveal information to the player. 
 * Artifacts may have effects purely by being in proximity to something, they may need to be consumed, or they may be something a person must wield.
+* The effect may be embodied by changing the person wielding it (enhancing the user), or the effect may be primarily inherent to the object itself (e.g. a tool, a weapon)
 * Effects can be made more or less serious by adjusting duration (short, long, permanent), or strength of effect.
+
+If the artifact's primary effect is embodied within itself, it might be of any of the following nature
+
+* An especially effective tool.
+* An especially effective weapon.
+* Something that modifies the immediate environment (physical environment, all life in an area, all humans in an area, etc.)
+* Something that affects a particular target (a point in space, a location, a life form, another object, etc.)
+
+The object itself may also have unusual properties, either incidental or core to its primary effect. For instance..
+	* Unnaturally light
+	* Unnaturally sharp
+	* Unnaturally malleable
+	* Unnatural appearance
+	* Ignoring a physical property (gravity, etc.)
+	* etc.
+
+If the artifacts primary effects is to enhance its user, it might affect them in any number of ways outlined below, including physical enhancement or alteration, enhancement or alteration of abilities (physical or mental), or imbuing knowledge.
+
 
 #### Example artifact qualities
 
@@ -76,6 +98,7 @@ Each adventure will contain different artifacts: both the artifacts that the pla
 	* Diminished need to eat/drink
 	* Resistance to a particular environmental stressor (heat, cold, etc.)
 	* Moderately increased ability to focus (implying better accuracy with ranged weaponry, or other adjacent activities)
+	* Mild elemental powers (fire, water, wind, electricity, etc.)
 	* Moderately Increased physical strength
 	* Very mild resistance (or compatibility?) with effects of the egg, new life.
 * Mental
@@ -110,6 +133,7 @@ Each adventure will contain different artifacts: both the artifacts that the pla
 	* Ability to heal minor to moderate wounds
 	* Ability to inflict psychic suffering
 	* Ability to instill fear
+	* Moderately strong elemental powers (fire, water, wind, electricity, etc.)
 	* Modifies a part of the player's body into a form with great utility.
 	* Brief mind reading
 	* Ability to sense presence of other artifacts
