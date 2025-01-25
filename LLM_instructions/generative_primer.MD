@@ -60,7 +60,7 @@ At the epicenter of the core lies something wondrous.
 
 Each adventure will contain different artifacts: both the artifacts that the player is sent to obtain as a primary objective, and also other artifacts that can be found and influence the world of the game.
 
-Artifact's primary effect can be to enhance its user, or it can be an object that is 'wielded' to have an effect on the world (or both.)
+Artifact's primary effect can be to enhance its user, or it can be an object that is 'wielded' to have an effect on the world.
 
 
 * Artifacts are just one of many possible names for the objects. Other names that may be used are 'specimens', 'relics', 'gifts', 'stains', depending on the group's perspective on the objects.
@@ -78,16 +78,10 @@ If the artifact's primary effect is embodied within itself, it might be of any o
 * Something that modifies the immediate environment (physical environment, all life in an area, all humans in an area, etc.)
 * Something that affects a particular target (a point in space, a location, a life form, another object, etc.)
 
-The object itself may also have unusual properties, either incidental or core to its primary effect. For instance..
-	* Unnaturally light
-	* Unnaturally sharp
-	* Unnaturally malleable
-	* Unnatural appearance
-	* Ignoring a physical property (gravity, etc.)
-	* etc.
 
-If the artifacts primary effects is to enhance its user, it might affect them in any number of ways outlined below, including physical enhancement or alteration, enhancement or alteration of abilities (physical or mental), or imbuing knowledge.
+If the artifacts primary effects is to enhance its user, it might affect them in one of the ways outlined below, including physical enhancement or alteration, enhancement or alteration of abilities (physical or mental), or imbuing knowledge.
 
+Artifacts should generally have a single power, rather than a mix of different abilities.
 
 #### Example artifact qualities
 

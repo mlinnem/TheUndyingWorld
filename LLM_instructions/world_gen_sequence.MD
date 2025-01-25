@@ -18,7 +18,7 @@ Locations that are interesting include:
 * Regions that are intentionally unfamiliar to these audiences (e.g. Morocco, Ethiopia, Desolate regions of the arctic, the rainforest, etc.)
 * Regions containing both civilization and natural interest.
 * Regions that feel essentially random (NOT centered on a particular city, notable geographic feature, etc, although they may incidentally contain them.)
-* Regions with interesting social dynamics at play (North/South Korean border, encompassing embassies of multiple countries, borders between other countries either conflicted (e.g. India / Pakistan) or more mundane (U.S. / Mexico border, Swiss/French border)
+* Regions with interesting social dynamics at play, encompassing multiple different communities, or overlapping borders between countries either conflicted (e.g. North/South Korean border) or more mundane (e.g. Swiss/French border)
 * Regions that incorporate multiple interesting topographies
 * Regions that incorporate extreme conditions (cold, heat, volcanic activity, isolation, etc.)
 * Regions that incorporate potentially interesting cultural elements (Maori tribes, Amazon tribes, indigenous Australian populations)
@@ -276,7 +276,7 @@ Unlike key plot artifacts, these artifacts can take inspiration from the environ
 
 Consider how these artifacts might enhance one or more approaches to gameplay, including: violence, wisdom, diplomacy, wayfinding, protection, intuition, survival, etc.
 
-By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making one artifact embody a physical / violent / 'action'-based approach. 
+Make one artifact primarily about enhancing the player's power (an artifact from the tree of life), and one about enhancing knowledge (artifact from the tree of knowledge.)
 
 Review prior material on artifacts and their powers for guidance.
 
@@ -285,13 +285,13 @@ This information will be preserved in the final record, and is canonical (barrin
 # Instruction
 
 
-Describe 5 incidental artifacts that can be found in the middle ring, and their locations. These are meant to bring power or knowledge to the player, but aren't vital to any one specific plotline. 
+Describe 6 incidental artifacts that can be found in the middle ring, and their locations. These are meant to bring power or knowledge to the player, but aren't vital to any one specific plotline. 
 
 Unlike key plot artifacts, these artifacts can take inspiration from the environments in which they are found.
 
 Consider how these artifacts might enhance one or more approaches to gameplay, including: violence, wisdom, diplomacy, wayfinding, protection, intuition, survival, etc.
 
-By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some (perhaps two) artifacts embody a physical / violent / 'action'-based approach. Similarly, it seems to create pathfinding artifacts (showing safe ways, revealing hidden things, etc.) with too high of a frequency. Make only one artifact related to this theme.
+By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some (perhaps two) artifacts embody a physical / violent / 'action'-based approach. Similarly, it seems to create pathfinding artifacts (showing safe ways, revealing hidden things, etc.) with too high of a frequency. Make only one artifact related to this theme. Also make at least one artifact convey knowledge of some kind (revealing a certain type of plot information, world lore, etc. This artifact would be from the tree of knowledge)
 
 Review prior material on artifacts and their powers for guidance.
 
@@ -299,7 +299,7 @@ This information will be preserved in the final record, and is canonical (barrin
 
 # Instruction
 
-Describe 7 incidental artifacts that can be found in the outer ring, and their locations. 
+Describe 9 incidental artifacts that can be found in the outer ring, and their locations. 
 
 Unlike key plot artifacts, these artifacts can take inspiration from the environments in which they are found.
 
@@ -307,7 +307,7 @@ These are meant to bring power or knowledge to the player, but aren't vital to a
 
 Consider how these artifacts might enhance one or more approaches to gameplay, including: violence, wisdom, diplomacy, wayfinding, protection, intuition, survival, etc.
 
-By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some (perhaps 3) artifacts embody a physical / violent / 'action'-based approach. Similarly, it seems to create pathfinding artifacts (showing safe ways, revealing hidden things, etc.) with too high of a frequency. Make only one artifact related to this theme.
+By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some (perhaps 3) artifacts embody a physical / violent / 'action'-based approach. Similarly, it seems to create pathfinding artifacts (showing safe ways, revealing hidden things, etc.) with too high of a frequency. Make only one artifact related to this theme. Also make at least one artifact convey knowledge of some kind (revealing a certain type of plot information, world lore, etc. This artifact is from the tree of knowledge)
 
 This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
 
@@ -317,7 +317,7 @@ Generate five potential minor artifacts (likely obtained from the outer ring) av
 
 In describing the artifacts, make sure to number each one explicitly, for our subsequent choosing process.
 
-By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some artifacts (perhaps 2 or 3 of the five) embody a physical / violent / 'action'-based approach. 
+By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some artifacts (perhaps 2 of the five) embody a physical / violent / 'action'-based approach. 
 
 # Instruction
 
@@ -610,11 +610,10 @@ Consider the following template as guidance:
 * What is the state of humanity within this zone?
 * What is the state of nature within this zone?
 * What factions operate within this zone?
-* What characters may be discovered operating within this zone?
+* What characters may be discovered within this zone?
 * What important places are located in this zone?
 * What artifacts can be found in this zone?
 * What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
 
 
 
@@ -639,7 +638,6 @@ Consider the following template as guidance:
 * What important places are located in this zone?
 * What artifacts can be found in this zone?
 * What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
 
 # Instruction
 
@@ -664,7 +662,6 @@ Consider the following template as guidance:
 * What important places are located in this zone?
 * What artifacts can be found in this zone?
 * What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
 
 # Instruction
 
@@ -689,7 +686,6 @@ Consider the following template as guidance:
 * What important places are located in this zone?
 * What artifacts can be found in this zone?
 * What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
 
 # Instruction
 
@@ -714,7 +710,6 @@ Consider the following template as guidance:
 * What important places are located in this zone?
 * What artifacts can be found in this zone?
 * What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
 
 # Instruction
 
@@ -739,7 +734,6 @@ Consider the following template as guidance:
 * What important places are located in this zone?
 * What artifacts can be found in this zone?
 * What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
 
 # Instruction
 
@@ -764,7 +758,6 @@ Consider the following template as guidance:
 * What important places are located in this zone?
 * What artifacts can be found in this zone?
 * What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
 
 # Instruction
 
@@ -789,7 +782,6 @@ Consider the following template as guidance:
 * What important places are located in this zone?
 * What artifacts can be found in this zone?
 * What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
 
 # Instruction
 
@@ -814,7 +806,6 @@ Consider the following template as guidance:
 * What important places are located in this zone?
 * What artifacts can be found in this zone?
 * What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
 
 
 # Instruction
@@ -840,8 +831,6 @@ Consider the following template as guidance:
 * What important places are located in this zone?
 * What artifacts can be found in this zone?
 * What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
-
 
 # Instruction
 
@@ -866,4 +855,3 @@ Consider the following template as guidance:
 * What important places are located in this zone?
 * What artifacts can be found in this zone?
 * What threats exist in this zone for the player?
-* Can one or more children be found in this zone?
