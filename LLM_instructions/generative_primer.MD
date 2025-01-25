@@ -1,3 +1,4 @@
+
 ## Generative elements
 
 Every play through of the Undying World is meant to be new. As such certain plot elements are left to the discretion of the GM (you, the LLM), to either be determined at the beginning of the game, or dynamically in the course of the game.

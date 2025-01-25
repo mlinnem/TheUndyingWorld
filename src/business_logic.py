@@ -228,7 +228,7 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
 
         logger.info(f"Starting boot sequence with {len(world_gen_instructions_w_omit_data)} messages")
         
-        final_llm_responses = []
+        final_messages = []
         
         for i, world_gen_instruction_w_omit_data in enumerate(world_gen_instructions_w_omit_data):
             logger.info(f"Processing boot sequence message {i+1}/{len(world_gen_instructions_w_omit_data)}")
@@ -242,7 +242,8 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
                 temp_conversation['messages'].append(gm_response)
 
                 if not world_gen_instruction_w_omit_data['omit_result']:
-                    final_llm_responses.append(gm_response)
+                    final_messages.append(world_gen_instruction)
+                    final_messages.append(gm_response)
                 # Mark the last GM response of the boot sequence
                 if i == len(world_gen_instructions_w_omit_data) - 1:
                     logger.info("Marking last GM response as boot sequence end")
@@ -263,14 +264,14 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
                         tool_response['is_boot_sequence_end'] = True
                     
                     if not world_gen_instruction_w_omit_data['omit_result']:
-                        final_llm_responses.append(tool_result)
-                        final_llm_responses.append(tool_response)
+                        final_messages.append(tool_result)
+                        final_messages.append(tool_response)
                 
             except Exception as e:
                 logger.error(f"Error in boot sequence at message '{world_gen_instruction_w_omit_data['text']}': {e}")
                 raise
 
-        return final_llm_responses
+        return final_messages
         
     except Exception as e:
         logger.error(f"Error reading boot sequence messages: {e}")
