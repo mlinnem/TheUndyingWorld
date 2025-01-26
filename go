@@ -21,4 +21,6 @@ def main():
         exit(0)
 
 if __name__ == "__main__":
+    # Clear the terminal before running main
+    os.system('clear' if os.name == 'posix' else 'cls')
     main()
