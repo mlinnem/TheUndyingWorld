@@ -144,14 +144,14 @@ def _format_result(result_message):
 
 
 # TODO: Make this and related functions smarter about map, quadrants, zones, etc.
-def _format_map_data(map_data_message):
-    map_data_block = map_data_message['content'][0]['text']
-    data = _all_but_header(map_data_block)
+def _format_world_gen_data(world_gen_data_message):
+    world_gen_data_block = world_gen_data_message['content'][0]['text']
+    data = _all_but_header(world_gen_data_block)
     
     return [{
         "source": "llm",
-        "type": "map_data",
-        "map_data": data
+        "type": "world_gen_data",
+        "world_gen_data": data
     }]
 
 def _format_ooc_message(ooc_message):
@@ -226,7 +226,7 @@ def _process_mixed_content(message):
             elif 'result' in header_type:
                 objects.extend(_format_result({'content': [{'text': reconstructed}]}))
             elif any(term in header_type for term in ['map', 'zone', 'quadrant']):
-                objects.extend(_format_map_data({'content': [{'text': reconstructed}]}))
+                objects.extend(_format_world_gen_data({'content': [{'text': reconstructed}]}))
 
     return objects
 
@@ -256,9 +256,9 @@ def produce_conversation_objects_for_client(messages):
             elif _is_result(message):
                 logger.debug(f"Formatting result: {message}")
                 objects_for_client.extend(_format_result(message))
-            elif is_map_data(message):
-                logger.debug(f"Formatting map data: {message}")
-                objects_for_client.extend(_format_map_data(message))
+            elif is_world_gen_data(message):
+                logger.debug(f"Formatting world gen data: {message}")
+                objects_for_client.extend(_format_world_gen_data(message))
             elif _is_ooc_message(message):
                 logger.debug(f"Formatting OOC message: {message}")
                 objects_for_client.extend(_format_ooc_message(message))
@@ -336,7 +336,7 @@ def _is_ooc_message(message):
                 return True
     return False
 
-def is_map_data(message):
+def is_world_gen_data(message):
     logger.debug(f"Checking if message is map data: {message}")
     if message['role'] == 'assistant':
         if message['content'][0]['type'] == 'text':

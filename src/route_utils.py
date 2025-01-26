@@ -1,6 +1,13 @@
 import logging
 import traceback
 
+# Set up logging configuration
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
 logger = logging.getLogger(__name__)
 
 def convert_user_text_to_message(user_text):
@@ -111,13 +118,17 @@ def convert_messages_to_cos(messages):
 
                                     if i == 0:
                                         if section.strip():
+                                            logger.warning(f"Out of section text: {body}")
                                             cos.append({'type': 'out_of_section_text', 'text': body})
                                     else:
                                         if 'ooc message' in c_header:
+                                            logger.debug(f"OOC message: {body}")
                                             cos.append({'type': 'ooc_message', 'text': body})
                                         elif 'map' in c_header or 'zone' in c_header or 'quad' in c_header:
-                                            cos.append({'type': 'map_data', 'text': body})
+                                            logger.debug(f"Map data: {body}")
+                                            cos.append({'type': 'world_gen_data', 'text': body})
                                         elif 'difficulty analysis' in c_header:
+                                            logger.debug(f"Difficulty analysis: {body}")
                                             cos.append({'type': 'difficulty_analysis', 'text': body})
                                         elif 'difficulty target' in c_header:
                                             try:
@@ -129,17 +140,23 @@ def convert_messages_to_cos(messages):
                                             except ValueError:
                                                 # This is to handle the case when it is 'Trivial' but we might want to validate more here.
                                                 cos.append({'type': 'difficulty_target', 'text': body})
-                                        elif 'world reveal analysis' in c_header:
+                                        elif 'reveal analysis' in c_header:
+                                            logger.debug(f"reveal analysis: {body}")
                                             cos.append({'type': 'world_reveal_analysis', 'text': body})
-                                        elif 'world reveal level' in c_header:
+                                        elif 'reveal level' in c_header:
+                                            logger.debug(f"reveal level: {body}")
                                             cos.append({'type': 'world_reveal_level', 'text': body})
                                         elif 'resulting scene' in c_header:
+                                            logger.debug(f"Resulting scene description: {body}")
                                             cos.append({'type': 'resulting_scene_description', 'text': body})
                                         elif 'tracked operations' in c_header:
+                                            logger.debug(f"Tracked operations: {body}")
                                             cos.append({'type': 'tracked_operations', 'text': body})
                                         elif 'condition' in c_header:
+                                            logger.debug(f"Condition table: {body}")
                                             cos.append({'type': 'condition_table', 'text': body})
                                         else:
+                                            logger.warning(f"Unrecognized section: {header}")
                                             cos.append({'type': 'unrecognized_section', 'header_text': header.strip(), 'body_text': body})
                                 except Exception as e:
                                     logger.error(f"Error processing section '{header[:50]}...': {str(e)}\n{traceback.format_exc()}")

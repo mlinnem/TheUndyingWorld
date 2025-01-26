@@ -184,7 +184,7 @@
     border-bottom-right-radius: 20px;
 }
 
-.module.map_data {
+.module.world_gen_data {
 
     font-size: .75rem;
     line-height: 1.125rem;
@@ -240,8 +240,11 @@
     background-color: #132E2E;
 }
 
+.module.tracked_operations {
+    background-color: #191C1C;
+}
+
 .module.condition_table {
-    
     background-color: #191C1C;
 }
 

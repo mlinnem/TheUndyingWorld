@@ -2,6 +2,8 @@
 
 I (a script) am now going to ask you to respond to a series of instructions in order to build out certain information for the world of this game. The instructions will help us describe how this world formed in basic chronological order, which you can also think of as the order of causation.
 
+Each response you produce should be in the form of a 'map gen data block', as documented elsewhere in the formatting instructions.
+
 In some cases we will take an iterative approach, in which we redescribe something to incorporate new information was have produced since the initial pass. By the end we will have canonical descriptions for all key elements.
 
 We will also be stripping the instructions themselves from the official record, so make sure to reiterate any instructions you feel are important to be retained in the final document.
@@ -313,20 +315,20 @@ This information will be preserved in the final record, and is canonical (barrin
 
 # Instruction (omit result later)
 
-Generate five potential minor artifacts (likely obtained from the outer ring) available for the player to choose from at the beginning of the game. These artifacts should represent an interesting choice for how the player will approach fulfilling their mission (although their minor power implies that they will overly or strongly determine the player's approach. We still want them to essentially have freedom to approach arbitrary situations as they see fit). Review prior material on artifacts and their powers for guidance. Possible thematic approaches include: violence, wisdom, diplomacy, wayfinding, protection, intuition, survival, etc.
+Generate six potential minor artifacts (likely obtained from the outer ring) available for the player to choose from at the beginning of the game. These artifacts should represent an interesting choice for how the player will approach fulfilling their mission (although their minor power implies that they will overly or strongly determine the player's approach. We still want them to essentially have freedom to approach arbitrary situations as they see fit). Review prior material on artifacts and their powers for guidance. Possible thematic approaches include: violence, wisdom, diplomacy, wayfinding, protection, intuition, survival, etc.
 
 In describing the artifacts, make sure to number each one explicitly, for our subsequent choosing process.
 
-By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some artifacts (perhaps 2 of the five) embody a physical / violent / 'action'-based approach. 
+By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some artifacts (perhaps 2 of the six) embody a physical / violent / 'action'-based approach. 
 
 # Instruction
 
 
-I choose the following artifacts to be available to the player: <<<5>>> and <<<5>>>
+I choose the following artifacts to be available to the player: <<<6>>> and <<<6>>>
 
-Note: If the numbers above are duplicates, treat that as meaning that only one artifact choice is available to the player.
+Note: If the numbers above are duplicates, you (the GM) may make a choice of a second artifact to make available to the player.
 
-Describe these artifacts in more detail.
+Describe these selected artifacts in more detail.
 
 This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
 
@@ -855,3 +857,12 @@ Consider the following template as guidance:
 * What important places are located in this zone?
 * What artifacts can be found in this zone?
 * What threats exist in this zone for the player?
+
+
+# Instruction
+  
+Briefly note the location in which the player will be inserted into the egg. It should be somewhere on the periphery of the egg (outermost area of an outer ring zone.)
+
+Guidance:
+
+In the lore of the game, we presume that the location of entry is chosen primarily because the U.S. government is able to surreptitiously provide entrance into the egg at this location, and not because it is an optimal strategic location. However as a practicality it should also not be annoyingly distant from any objectives a player is likely to want to pursue first (a primary questline artifact, or a child's location.)
