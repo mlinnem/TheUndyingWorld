@@ -187,7 +187,7 @@
     color:#EEE8CF;
     background-color: hsla(0, 0%, 8%, .2);
     align-self: flex-start;
-    animation: breathe ease-out 10s infinite;
+    animation: breathe ease-out 17s infinite;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     height: 500px;
@@ -288,4 +288,53 @@
     100% { 
         backdrop-filter: blur(10px);
     }
+}
+
+/* Collapsible module styles */
+.module.collapsible {
+    position: relative;
+}
+
+.collapse-button {
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.25);
+    border: none;
+    color: #EEE8CF;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.collapse-button:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.module.collapsed .module_contents {
+    display: none;
+}
+
+.module.collapsed {
+    max-height: 50px;
+    overflow: hidden;
+}
+
+/* Add a preview text for collapsed state */
+.collapse-preview {
+    display: none;
+    padding: 10px 1.875rem;
+    color: #EEE8CF;
+    font-style: italic;
+    opacity: 0.7;
+}
+
+.module.collapsed .collapse-preview {
+    display: block;
 }

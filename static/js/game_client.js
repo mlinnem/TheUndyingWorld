@@ -53,6 +53,33 @@ function addConversationObject(co) {
     let coDiv;
     let color;  // Used in difficulty_roll and world_reveal_roll cases
 
+    // Helper function to make a module collapsible
+    function makeModuleCollapsible(moduleDiv, previewText = "Click to expand...") {
+        moduleDiv.classList.add('collapsible', 'collapsed');
+        
+        // Create collapse button
+        const collapseBtn = document.createElement('button');
+        collapseBtn.className = 'collapse-button';
+        collapseBtn.innerHTML = '+';
+        
+        // Create preview element and add it before module_contents
+        const preview = document.createElement('div');
+        preview.className = 'collapse-preview';
+        preview.textContent = previewText;
+        
+        // Find the module_contents element and insert preview before it
+        const moduleContents = moduleDiv.querySelector('.module_contents');
+        moduleDiv.insertBefore(preview, moduleContents);
+        
+        // Add click handler
+        collapseBtn.addEventListener('click', () => {
+            moduleDiv.classList.toggle('collapsed');
+            collapseBtn.innerHTML = moduleDiv.classList.contains('collapsed') ? '+' : '−';
+        });
+        
+        moduleDiv.insertBefore(collapseBtn, moduleDiv.firstChild);
+    }
+
     if (co.type === 'user_message') {
         console.debug("adding user message");
         coDiv = util.make_module(co);
@@ -66,12 +93,14 @@ function addConversationObject(co) {
         coDiv = util.make_module(co);
         util.inject_content_into_element(coDiv, '.module_contents', util.header("Map Data") + util.body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding', 'info-text-style', 'left');
+        makeModuleCollapsible(coDiv, "Map Data (click to expand)");
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'ooc_message') {
         console.debug("adding ooc message");
         coDiv = util.make_module(co);
         util.inject_content_into_element(coDiv, '.module_contents', util.body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding' , 'primary-text-style', 'left');
+        makeModuleCollapsible(coDiv, "OOC Message (click to expand)");
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'difficulty_analysis') {
         console.debug("adding difficulty analysis");
@@ -142,12 +171,14 @@ function addConversationObject(co) {
         coDiv = util.make_module(co);
         util.inject_content_into_element(coDiv, '.module_contents', util.body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding', "left");
+        makeModuleCollapsible(coDiv, "Additional Info (click to expand)");
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'unrecognized_section') {
         console.debug("adding unrecognized section");
         coDiv = util.make_module(co);
         util.inject_content_into_element(coDiv, '.module_contents', util.header(co.header_text) + util.body_text(marked.parse(co.body_text)));
         coDiv.classList.add('freestanding', 'primary-text-style', 'left');
+        makeModuleCollapsible(coDiv, `${co.header_text} (click to expand)`);
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'server_error') {
         console.debug("adding server error");
