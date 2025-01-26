@@ -41,6 +41,35 @@ function get_or_create_prescene() {
     }
 }
 
+function get_or_create_difficulty_check_element() {
+    const previousElement = chatMessagesWrapper.lastElementChild;
+    if (previousElement && previousElement.classList.contains('difficulty_check')) {
+        return previousElement;
+    } else {
+        const difficultyCheckElement = document.createElement('div');
+        difficultyCheckElement.classList.add('co','module','difficulty_check', 'left', 'top');
+        const header = document.createElement('span');
+        header.classList.add('header');
+        header.textContent = "Difficulty Check";
+        difficultyCheckElement.appendChild(header);
+        const bar = document.createElement('div');
+        bar.classList.add('bar');
+        difficultyCheckElement.appendChild(bar);
+        const difficultyData = document.createElement('span');
+        difficultyData.classList.add('difficulty_data');
+        difficultyData.textContent = "";
+        difficultyCheckElement.appendChild(difficultyData);
+        chatMessagesWrapper.appendChild(difficultyCheckElement);
+        return difficultyCheckElement;
+    }
+}
+
+function get_or_create_world_reveal_check_element() {
+    const previousElement = chatMessagesWrapper.lastElementChild;
+    if (previousElement && previousElement.classList.contains('world_reveal_check')) {
+        return previousElement;
+    }
+}
 
 
 function addConversationObjects(conversation_objects) {
@@ -62,11 +91,11 @@ function addConversationObject(co) {
         coDiv.classList.add('right')
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'map_data' || co.type === 'world_gen_data')  {
-        console.debug("adding world gen data");
-        coDiv = util.make_module(co);
-        util.inject_content_into_element(coDiv, '.module_contents', util.header("World Gen Data") + util.body_text(marked.parse(co.text)));
-        coDiv.classList.add('freestanding', 'info-text-style', 'left');
-        chatMessagesWrapper.appendChild(coDiv);
+        // console.debug("adding world gen data");
+        // coDiv = util.make_module(co);
+        // util.inject_content_into_element(coDiv, '.module_contents', util.header("World Gen Data") + util.body_text(marked.parse(co.text)));
+        // coDiv.classList.add('freestanding', 'info-text-style', 'left');
+        // chatMessagesWrapper.appendChild(coDiv); 
     } else if (co.type === 'ooc_message') {
         console.debug("adding ooc message");
         coDiv = util.make_module(co);
@@ -74,29 +103,29 @@ function addConversationObject(co) {
         coDiv.classList.add('freestanding' , 'primary-text-style', 'left');
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'difficulty_analysis') {
-        console.debug("adding difficulty analysis");
-        const presceneDiv = get_or_create_prescene();
-        const difficultyElement = util.get_or_create_difficulty_element(presceneDiv);
-        util.inject_content_into_element(difficultyElement, '.difficulty_analysis', util.body_text(marked.parse(co.text)));
+        // console.debug("adding difficulty analysis");
+        // const presceneDiv = get_or_create_difficulty_check_element();
+        // const difficultyElement = util.get_or_create_difficulty_element(presceneDiv);
+        // util.inject_content_into_element(difficultyElement, '.difficulty_analysis', util.body_text(marked.parse(co.text)));
     } else if (co.type === 'difficulty_target') {
         console.debug("adding difficulty target");
-        const presceneDiv = get_or_create_prescene();
-        const difficultyElement = util.get_or_create_difficulty_element(presceneDiv);
+        const difficultyCheckElement = get_or_create_difficulty_check_element();
+        const difficultyElement = util.get_or_create_difficulty_element(difficultyCheckElement);
         util.inject_content_into_element(difficultyElement, '.difficulty_target', util.header("Target") + util.data_text(co.text));
     } else if (co.type === 'world_reveal_analysis') {
-        console.debug("adding world reveal analysis");
-        const presceneDiv = get_or_create_prescene();
-        const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
-        util.inject_content_into_element(worldRevealElement, '.world_reveal_analysis', util.body_text(marked.parse(co.text)));
+        // console.debug("adding world reveal analysis");
+        // const presceneDiv = get_or_create_prescene();
+        // const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
+        // util.inject_content_into_element(worldRevealElement, '.world_reveal_analysis', util.body_text(marked.parse(co.text)));
     } else if (co.type === 'world_reveal_level') {
-        console.debug("adding world reveal level");
-        const presceneDiv = get_or_create_prescene();
-        const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
-        util.inject_content_into_element(worldRevealElement, '.world_reveal_level', util.header("Level") + util.data_text(co.text));
+        // console.debug("adding world reveal level");
+        // const presceneDiv = get_or_create_prescene();
+        // const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
+        // util.inject_content_into_element(worldRevealElement, '.world_reveal_level', util.header("Level") + util.data_text(co.text));
     } else if (co.type === 'difficulty_roll') {
         console.debug("adding difficulty roll");
-        const presceneDiv = get_or_create_prescene();
-        const difficultyElement = util.get_or_create_difficulty_element(presceneDiv);
+        const difficultyCheckElement = get_or_create_difficulty_check_element();
+        const difficultyElement = util.get_or_create_difficulty_element(difficultyCheckElement);
         color = util.determine_difficulty_color(difficultyElement, co.integer);
         difficultyElement.style.backgroundColor = color;
         util.inject_content_into_element(difficultyElement, '.difficulty_roll', util.header("Roll") + util.data_text(co.integer.toString()));

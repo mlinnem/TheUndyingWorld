@@ -108,6 +108,11 @@
     flex: 1;
 }
 
+.difficulty_check {
+    height: 51px;
+    padding-right: 20px;
+}
+
 .freestanding {
     margin-top: 2.5rem;
     margin-bottom: 2.5rem;

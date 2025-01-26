@@ -10,5 +10,9 @@
 			"path": "../DesignDocuments"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"*.html": "jinja-html"
+		}
+	}
 }
