@@ -142,6 +142,11 @@ function addConversationObject(co) {
         console.debug("adding difficulty target");
         const difficultyCheckElement = get_or_create_difficulty_check_element();
         if (co.text === "Trivial") {
+            util.inject_style_into_element(difficultyCheckElement, '.separator', `display: none;`);
+            util.inject_style_into_element(difficultyCheckElement, '.difficulty-roll', `display: none;`);
+            util.inject_content_into_element(difficultyCheckElement, '.difficulty-target', util.info_text("Trivial Success"));
+            util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar-filled', `background-color: hsl(180, 42%, 18%); width: 100%;`);
+            util.inject_style_into_element(difficultyCheckElement, '.difficulty-target', `margin: 0px;`);
         } else {
             util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar', `width: 100%;`);
             util.inject_style_into_element(difficultyCheckElement, '.target-marker', `left: ${co.text}%; display: block;`);
@@ -160,8 +165,9 @@ function addConversationObject(co) {
     } else if (co.type === 'difficulty_roll') {
         console.debug("adding difficulty roll");
         const difficultyCheckElement = get_or_create_difficulty_check_element();
+        color = util.determine_difficulty_color(difficultyCheckElement, co.integer);
         util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar', `width: 100%;`);
-        util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar-filled', `width: ${co.integer}%;`);
+        util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar-filled', `width: ${co.integer}%; background-color: ${color};`);
         util.inject_content_into_element(difficultyCheckElement, '.difficulty-roll', util.info_text(co.integer.toString()));
     } else if (co.type === 'world_reveal_roll') {
         // console.debug("adding world reveal roll");

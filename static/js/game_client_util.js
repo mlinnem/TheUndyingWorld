@@ -63,7 +63,7 @@ export function get_or_create_world_reveal_element(analysisDiv) {
 }
 
 export function determine_difficulty_color(difficultyElement, rolledValue) {
-    const targetElement = difficultyElement.querySelector('.difficulty_target');
+    const targetElement = difficultyElement.querySelector('.difficulty-target');
     const targetText = targetElement ? targetElement.textContent.replace('Target', '').trim() : null;
     let targetValue, degreeOfSuccess, degreeOfFailure, l;
     
@@ -72,16 +72,32 @@ export function determine_difficulty_color(difficultyElement, rolledValue) {
         targetValue = parseInt(targetText);
         if (rolledValue >= targetValue) {
             degreeOfSuccess = (rolledValue - targetValue) / (100 - targetValue);
-            l = degreeOfSuccess * 43;
-            return 'hsl(140,' + l + '%, 10%)';
+            if (degreeOfSuccess <= .66) {
+                return 'hsl(180, 42%, 18%)';
+            } else {
+                return 'hsl(180, 100%, ' + Math.round(18 + (degreeOfSuccess - .66)* 22) + '%)';
+            }
         } else {
             degreeOfFailure = (targetValue - rolledValue) / targetValue;
-            l = degreeOfFailure * 43;
-            return 'hsl(359,' + l + '%, 10%)';
+
+            let h = 0;
+            let s = 0;
+            let l = 25 + (degreeOfFailure * 25);
+
+            if (degreeOfFailure <= .66) {
+                let degreeOfFailureInThisRange = degreeOfFailure / .66;
+                h = 50 - (50 * degreeOfFailureInThisRange);
+                s = 42;
+            } else {
+                let degreeOfFailureInThisRange = (degreeOfFailure - .66) / .33;
+                h = 0;
+                s = 42 + (degreeOfFailureInThisRange * 18);
+            }
+            return 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
         }
     } else {
-        console.debug("targetText is not a number");
-        return 'hsl(180, 43%, 10%)';
+        console.warning("targetText is not a number");
+        return 'hsl(0, 0%, 50%)';
     }
 }
 
