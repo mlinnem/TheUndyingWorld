@@ -315,7 +315,7 @@ This information will be preserved in the final record, and is canonical (barrin
 
 # Instruction (omit result later)
 
-Generate six potential minor artifacts (likely obtained from the outer ring) available for the player to choose from at the beginning of the game. These artifacts should represent an interesting choice for how the player will approach fulfilling their mission (although their minor power implies that they will overly or strongly determine the player's approach. We still want them to essentially have freedom to approach arbitrary situations as they see fit). Review prior material on artifacts and their powers for guidance. Possible thematic approaches include: violence, wisdom, diplomacy, wayfinding, protection, intuition, survival, etc.
+Generate six potential minor artifacts (likely obtained from the outer ring) available for the player to choose from at the beginning of the game. These artifacts should represent an interesting choice for how the player will approach fulfilling their mission (although their minor power implies that they will overly or strongly determine the player's approach. We still want them to essentially have freedom to approach arbitrary situations as they see fit). Review prior material on artifacts and their powers for guidance. Possible thematic approaches include: violence, wisdom, diplomacy, way finding, protection, intuition, survival, etc.
 
 In describing the artifacts, make sure to number each one explicitly, for our subsequent choosing process.
 
@@ -324,9 +324,9 @@ By default it seems that this LLM tends to generate more non-physical, non-viole
 # Instruction
 
 
-I choose the following artifacts to be available to the player: <<<6>>> and <<<6>>>
+I choose the following artifacts to be available to the player: <<<6>>>, <<<6>>, and <<<6>>>
 
-Note: If the numbers above are duplicates, you (the GM) may make a choice of a second artifact to make available to the player.
+Note: If the numbers above are duplicates, you (the GM) may make a choice of the additional artifact(s) from the list of minor artifacts to make available to the player.
 
 Describe these selected artifacts in more detail.
 
@@ -367,6 +367,8 @@ Use the following template (modified from the above
 * Territory - [What territory do they control, if they control any]
 * Relationship to other factions - [How do they feel about the other factions we have defined]
 
+Also, for each artifact in their territory, describe their relationship to that artifact. Do they know it is there? If yes, describe their relationship to it. Do they possess it? Do they keep it at arm's length? Do they desire it but have not yet obtained it? Do they ignore it? etc. 
+
 The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
 
 This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
@@ -388,6 +390,8 @@ Use the following template (modified from the above
 * Objectives - [What are they currently looking to accomplish]
 * Territory - [What territory do they control, if they control any]
 * Relationship to other factions - [How do they feel about the other factions we have defined]
+
+Also, for each artifact in their territory, describe their relationship to that artifact. Do they know it is there? If yes, describe their relationship to it. Do they possess it? Do they keep it at arm's length? Do they desire it but have not yet obtained it? Do they ignore it? etc. 
 
 The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
 
@@ -411,6 +415,8 @@ Use the following template (modified from the above
 * Territory - [What territory do they control, if they control any]
 * Relationship to other factions - [How do they feel about the other factions we have defined]
 
+Also, for each artifact in their territory, describe their relationship to that artifact. Do they know it is there? If yes, describe their relationship to it. Do they possess it? Do they keep it at arm's length? Do they desire it but have not yet obtained it? Do they ignore it? etc. 
+
 The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
 
 This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
@@ -433,6 +439,8 @@ Use the following template (modified from the above
 * Territory - [What territory do they control, if they control any]
 * Relationship to other factions - [How do they feel about the other factions we have defined]
 
+Also, for each artifact in their territory, describe their relationship to that artifact. Do they know it is there? If yes, describe their relationship to it. Do they possess it? Do they keep it at arm's length? Do they desire it but have not yet obtained it? Do they ignore it? etc. 
+
 The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
 
 This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
@@ -454,6 +462,8 @@ Use the following template (modified from the above
 * Objectives - [What are they currently looking to accomplish]
 * Territory - [What territory do they control, if they control any]
 * Relationship to other factions - [How do they feel about the other factions we have defined]
+
+Also, for each artifact in their territory, describe their relationship to that artifact. Do they know it is there? If yes, describe their relationship to it. Do they possess it? Do they keep it at arm's length? Do they desire it but have not yet obtained it? Do they ignore it? etc. 
 
 The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
 

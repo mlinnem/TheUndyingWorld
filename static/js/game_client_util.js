@@ -20,6 +20,17 @@ export function inject_style_into_element(element, style_class, style) {
     styleElement.style = style;
 }
 
+export function append_style_to_element(element, style_class, style_to_append) {
+    let styleElement = element.querySelector(style_class);
+    let currentStyle = styleElement.style.cssText;
+    if (currentStyle) {
+        styleElement.style = currentStyle + '; ' + style_to_append;
+    } else {
+        styleElement.style = style_to_append;
+    }
+}
+
+
 export function header(label) {
     return "<span class='header'>" + label + "</span>";
 }

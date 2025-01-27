@@ -4,15 +4,16 @@ The briefing should include the following:
 
 1) indicate the location and appearance of the three main plot artifacts
 2) Provide the player with their initial gear, including the vessels meant to contain the goal artifacts.
-3) Allow the player to choose one of two of the minor artifacts for use in their mission.
-4) Brief the player on their location and time of egress.
+3) Allow the player to choose one of three of the minor artifacts for use in their mission (the others are ostensibly retained for research purposes.)
+4) Allow the player to choose one of four entry points: one for each zone in the outer ring.
+4) Brief the player on their time of egress (exactly one week from time of entry.)
 
 Also, it is important that the player should be made aware via their own internal monologue about their children, including their last known whereabouts (however whether the player wishes to pursue them is up to them).
 
 Other information pertinent to this initial scene:
 
 * The point of entry should be somewhere on the outer edge of the exterior ring.
-* The government has come into possession of two artifacts of limited strength. These objects are of vital interest to the U.S. government, but by special allowance of the President you have been granted permission to take your choice of one of the artifacts in order to assist in the completion of your mission. 
+* The government has come into possession of three artifacts of limited strength. These objects are of vital interest to the U.S. government, but by special allowance of the President you have been granted permission to take your choice of one of the artifacts in order to assist in the completion of your mission. 
 * Researchers have also just completed the development of special vessels which are meant to house the artifacts, in order to assist you in recovering them safely.
 * You are fluent in languages spoken in the region where the egg was found.
 * Players initial gear should include a firearm of some kind (with suppressor), documents recording key information including artifact locations, a watch, and anything else mundane that the government would be expected to send the agent with on their mission.

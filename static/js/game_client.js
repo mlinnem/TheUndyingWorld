@@ -82,7 +82,7 @@ function get_or_create_difficulty_check_element() {
 
         const separator = document.createElement('span');
         separator.classList.add('separator', 'info-text-style');
-        separator.textContent = "/";
+        separator.textContent = "-";
         moduleContents.appendChild(separator);
 
         const difficultyTarget = document.createElement('span');
@@ -174,7 +174,20 @@ function addConversationObject(co) {
         } else {
             util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar-filled', `width: ${co.integer}%; background-color: ${color};`);
         }
+
         util.inject_content_into_element(difficultyCheckElement, '.difficulty-roll', util.info_text(co.integer.toString()));
+
+         //disable the box shadow if the target is within 4 points of the roll, because it makes it hard to see if you're under or over.
+         const targetElement = difficultyCheckElement.querySelector('.difficulty-target');
+         const targetText = targetElement ? targetElement.textContent.replace('Target', '').trim() : null;
+         
+         if (!isNaN(parseInt(targetText))) {
+             const targetValue = parseInt(targetText);
+             if (Math.abs(targetValue - co.integer) <= 6) {
+                 util.append_style_to_element(difficultyCheckElement, '.target-marker', 'box-shadow: none;');
+             }
+         }
+ 
     } else if (co.type === 'world_reveal_roll') {
         // console.debug("adding world reveal roll");
         // const presceneDiv = get_or_create_prescene();
