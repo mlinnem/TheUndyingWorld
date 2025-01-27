@@ -22,6 +22,9 @@
     font-family: var(--functional-text-font);
 }
 
+.analysis-text {
+      margin-top: .625rem;
+}
 /* Add transition after a tiny delay to avoid initial animation */
 #new-conversation-btn.ready-for-transition {
     transition: background-color 0.5s ease, color 0.5s ease;

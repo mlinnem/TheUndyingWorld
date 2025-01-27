@@ -177,7 +177,7 @@ function addConversationObject(co) {
         const difficultyCheckElement = get_or_create_difficulty_check_element();
         const analysisText = difficultyCheckElement.querySelector('.analysis-text');
         if (analysisText) {
-            analysisText.innerHTML = util.body_text(marked.parse(co.text));
+            analysisText.innerHTML = marked.parse(co.text);
         }
     } else if (co.type === 'difficulty_target') {
         console.debug("adding difficulty target");
@@ -230,6 +230,8 @@ function addConversationObject(co) {
 
              // Adding text to analysis text to completely explain what's up. This is jank though.
              const analysisText = difficultyCheckElement.querySelector('.conversation-body-text');
+             // Huge hack to make the text sit below the difficulty bar with right distance.
+
              if (analysisText) {
                  analysisText.innerHTML = analysisText.innerHTML + `\n\n You rolled a ${co.integer} on a 100-sided die, `;
                  if (co.integer == targetValue) {
@@ -254,8 +256,7 @@ function addConversationObject(co) {
                     }
                  }
              }
-         }
- 
+         } 
     } else if (co.type === 'world_reveal_roll') {
         // console.debug("adding world reveal roll");
         // const presceneDiv = get_or_create_prescene();

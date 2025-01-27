@@ -104,6 +104,11 @@
     background-color: var(--info-module-background-color);
 }
 
+.analysis-text {
+      margin-top: .625rem; /* Reduced from normal because of header situation */
+      margin-bottom: 2.5rem; 
+}
+
 .difficulty_check_contents {
     height: 51px;
     display: flex;
