@@ -179,6 +179,7 @@ function addConversationObject(co) {
         if (analysisText) {
             analysisText.innerHTML = marked.parse(co.text);
         }
+
     } else if (co.type === 'difficulty_target') {
         console.debug("adding difficulty target");
         const difficultyCheckElement = get_or_create_difficulty_check_element();
@@ -188,6 +189,10 @@ function addConversationObject(co) {
             util.inject_content_into_element(difficultyCheckElement, '.difficulty-target', util.info_text("Trivial Success"));
             util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar-filled', `background-color: hsl(180, 42%, 18%); width: 100%;`);
             util.inject_style_into_element(difficultyCheckElement, '.difficulty-target', `margin: 0px;`);
+            const analysisText = difficultyCheckElement.querySelector('.analysis-text');
+            if (analysisText && analysisText.innerHTML) {
+                analysisText.innerHTML += "\n\nThus your action is a success.";
+            }
         } else {
             util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar', `width: 100%;`);
             util.inject_style_into_element(difficultyCheckElement, '.target-marker', `left: ${co.text}%; display: block;`);
@@ -229,7 +234,7 @@ function addConversationObject(co) {
              }
 
              // Adding text to analysis text to completely explain what's up. This is jank though.
-             const analysisText = difficultyCheckElement.querySelector('.conversation-body-text');
+             const analysisText = difficultyCheckElement.querySelector('.analysis-text');
              // Huge hack to make the text sit below the difficulty bar with right distance.
 
              if (analysisText) {
@@ -256,7 +261,8 @@ function addConversationObject(co) {
                     }
                  }
              }
-         } 
+         }
+ 
     } else if (co.type === 'world_reveal_roll') {
         // console.debug("adding world reveal roll");
         // const presceneDiv = get_or_create_prescene();
