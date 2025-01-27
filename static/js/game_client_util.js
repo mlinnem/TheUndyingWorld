@@ -15,6 +15,11 @@ export function inject_content_into_element(element, content_container_class, co
     contentContainer.classList.remove('no_contents');
 }
 
+export function inject_style_into_element(element, style_class, style) {
+    let styleElement = element.querySelector(style_class);
+    styleElement.style = style;
+}
+
 export function header(label) {
     return "<span class='header'>" + label + "</span>";
 }
@@ -25,6 +30,10 @@ export function body_text(contents) {
 
 export function data_text(contents) {
     return "<div class='conversation-data-text info-text-style'>" + contents + "</div>";
+}
+
+export function info_text(contents) {
+    return "<div class='info-text-style'>" + contents + "</div>";
 }
 
 export function get_or_create_difficulty_element(analysisDiv) {

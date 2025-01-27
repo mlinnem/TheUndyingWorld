@@ -48,17 +48,48 @@ function get_or_create_difficulty_check_element() {
     } else {
         const difficultyCheckElement = document.createElement('div');
         difficultyCheckElement.classList.add('co','module','difficulty_check', 'left', 'top');
+        
+        const moduleContents = document.createElement('div');
+        moduleContents.classList.add('module_contents', 'has_contents', 'difficulty_check_contents');
+        difficultyCheckElement.appendChild(moduleContents);
+
         const header = document.createElement('span');
         header.classList.add('header');
         header.textContent = "Difficulty Check";
-        difficultyCheckElement.appendChild(header);
-        const bar = document.createElement('div');
-        bar.classList.add('bar');
-        difficultyCheckElement.appendChild(bar);
-        const difficultyData = document.createElement('span');
-        difficultyData.classList.add('difficulty_data');
-        difficultyData.textContent = "";
-        difficultyCheckElement.appendChild(difficultyData);
+        header.style = "white-space: nowrap;";
+        moduleContents.appendChild(header);
+
+       
+        const difficultyBar = document.createElement('div');
+        difficultyBar.classList.add('difficulty-bar');
+
+        const difficultyBarFilled = document.createElement('div');
+        difficultyBarFilled.classList.add('difficulty-bar-filled');
+        difficultyBar.appendChild(difficultyBarFilled);
+
+        const targetMarker = document.createElement('div');
+        targetMarker.classList.add('target-marker');
+        difficultyBar.appendChild(targetMarker);
+
+        moduleContents.appendChild(difficultyBar);
+        
+    
+
+        const difficultyRoll = document.createElement('span');
+        difficultyRoll.classList.add('difficulty-roll');
+        difficultyRoll.textContent = "";
+        moduleContents.appendChild(difficultyRoll);
+
+        const separator = document.createElement('span');
+        separator.classList.add('separator', 'info-text-style');
+        separator.textContent = "/";
+        moduleContents.appendChild(separator);
+
+        const difficultyTarget = document.createElement('span');
+        difficultyTarget.classList.add('difficulty-target');
+        difficultyTarget.textContent = "Trivial";
+        moduleContents.appendChild(difficultyTarget);
+
         chatMessagesWrapper.appendChild(difficultyCheckElement);
         return difficultyCheckElement;
     }
@@ -110,8 +141,9 @@ function addConversationObject(co) {
     } else if (co.type === 'difficulty_target') {
         console.debug("adding difficulty target");
         const difficultyCheckElement = get_or_create_difficulty_check_element();
-        const difficultyElement = util.get_or_create_difficulty_element(difficultyCheckElement);
-        util.inject_content_into_element(difficultyElement, '.difficulty_target', util.header("Target") + util.data_text(co.text));
+        util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar', `width: 100%;`);
+        util.inject_style_into_element(difficultyCheckElement, '.target-marker', `left: ${co.text}%;`);
+        util.inject_content_into_element(difficultyCheckElement, '.difficulty-target', util.info_text(co.text));
     } else if (co.type === 'world_reveal_analysis') {
         // console.debug("adding world reveal analysis");
         // const presceneDiv = get_or_create_prescene();
@@ -125,17 +157,16 @@ function addConversationObject(co) {
     } else if (co.type === 'difficulty_roll') {
         console.debug("adding difficulty roll");
         const difficultyCheckElement = get_or_create_difficulty_check_element();
-        const difficultyElement = util.get_or_create_difficulty_element(difficultyCheckElement);
-        color = util.determine_difficulty_color(difficultyElement, co.integer);
-        difficultyElement.style.backgroundColor = color;
-        util.inject_content_into_element(difficultyElement, '.difficulty_roll', util.header("Roll") + util.data_text(co.integer.toString()));
+        util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar', `width: 100%;`);
+        util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar-filled', `width: ${co.integer}%;`);
+        util.inject_content_into_element(difficultyCheckElement, '.difficulty-roll', util.info_text(co.integer.toString()));
     } else if (co.type === 'world_reveal_roll') {
-        console.debug("adding world reveal roll");
-        const presceneDiv = get_or_create_prescene();
-        const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
-        color = util.determine_world_reveal_color(worldRevealElement, co.integer);
-        worldRevealElement.style.backgroundColor = color;
-        util.inject_content_into_element(worldRevealElement, '.world_reveal_roll', util.header("Roll") + util.data_text(co.integer.toString()));
+        // console.debug("adding world reveal roll");
+        // const presceneDiv = get_or_create_prescene();
+        // const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
+        // color = util.determine_world_reveal_color(worldRevealElement, co.integer);
+        // worldRevealElement.style.backgroundColor = color;
+        // util.inject_content_into_element(worldRevealElement, '.world_reveal_roll', util.header("Roll") + util.data_text(co.integer.toString()));
     } else if (co.type === 'resulting_scene_description') {
         console.debug("adding resulting scene description");
         coDiv = util.make_module(co);
