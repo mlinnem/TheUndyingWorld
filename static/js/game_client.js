@@ -42,26 +42,60 @@ function get_or_create_prescene() {
 }
 
 function get_or_create_difficulty_check_element() {
+
+
     const previousElement = chatMessagesWrapper.lastElementChild;
     if (previousElement && previousElement.classList.contains('difficulty_check')) {
         return previousElement;
     } else {
-        const difficultyCheckElement = document.createElement('div');
-        difficultyCheckElement.classList.add('co','module','difficulty_check', 'left', 'top');
+
+        //This is jank, lol
+
+        // Breadth first (ish)
+    
+        const difficultyCheckModule = document.createElement('div');
+        difficultyCheckModule.classList.add('co','module','difficulty_check', 'left', 'top');
         
         const moduleContents = document.createElement('div');
-        moduleContents.classList.add('module_contents', 'has_contents', 'difficulty_check_contents');
-        difficultyCheckElement.appendChild(moduleContents);
+        moduleContents.classList.add('module_contents', 'has_contents');
+        difficultyCheckModule.appendChild(moduleContents);
+
+        const headerContents = document.createElement('div');
+        headerContents.classList.add('difficulty_check_contents');
+        moduleContents.appendChild(headerContents);
+
+        const bodyContents = document.createElement('div');
+        bodyContents.classList.add('difficulty_analysis_contents', 'hidden');
+        moduleContents.appendChild(bodyContents);
 
         const header = document.createElement('span');
         header.classList.add('header');
         header.textContent = "Difficulty Check";
         header.style = "white-space: nowrap;";
-        moduleContents.appendChild(header);
+        headerContents.appendChild(header);
 
-       
         const difficultyBar = document.createElement('div');
         difficultyBar.classList.add('difficulty-bar');
+        headerContents.appendChild(difficultyBar);
+
+        const difficultyRoll = document.createElement('span');
+        difficultyRoll.classList.add('difficulty-roll');
+        difficultyRoll.textContent = "";
+        headerContents.appendChild(difficultyRoll);
+
+        const separator = document.createElement('span');
+        separator.classList.add('separator', 'info-text-style');
+        separator.textContent = "-";
+        headerContents.appendChild(separator);
+
+        const difficultyTarget = document.createElement('span');
+        difficultyTarget.classList.add('difficulty-target');
+        difficultyTarget.textContent = "Trivial";
+        headerContents.appendChild(difficultyTarget);
+
+        const expandCollapseCaratBox = document.createElement('div');
+        expandCollapseCaratBox.classList.add('expand-collapse-carat-box');
+        headerContents.append(expandCollapseCaratBox);
 
         const difficultyBarFilled = document.createElement('div');
         difficultyBarFilled.classList.add('difficulty-bar-filled');
@@ -71,27 +105,32 @@ function get_or_create_difficulty_check_element() {
         targetMarker.classList.add('target-marker');
         difficultyBar.appendChild(targetMarker);
 
-        moduleContents.appendChild(difficultyBar);
+        const expandCollapseCaratImg = document.createElement('img');
+        expandCollapseCaratImg.src = '/static/images/MagPlus.svg';
+        expandCollapseCaratImg.classList.add('expand-collapse-carat');
+        expandCollapseCaratBox.appendChild(expandCollapseCaratImg);
+
+        expandCollapseCaratBox.addEventListener('click', function() {
+            const img = this.querySelector('.expand-collapse-carat');
+            const contents = this.closest('.difficulty_check_contents');
+            
+            if (img.src.includes('MagPlus.svg')) {
+                img.src = '/static/images/MagMinus.svg';
+                bodyContents.classList.remove('hidden');
+            } else {
+                img.src = '/static/images/MagPlus.svg';
+                bodyContents.classList.add('hidden');
+            }
+        });
+
+        // Add analysis text container (initially hidden)
+        const analysisText = document.createElement('div');
+        analysisText.classList.add('analysis-text', 'info-text-style');
+        bodyContents.appendChild(analysisText);
+
+        chatMessagesWrapper.appendChild(difficultyCheckModule);
         
-    
-
-        const difficultyRoll = document.createElement('span');
-        difficultyRoll.classList.add('difficulty-roll');
-        difficultyRoll.textContent = "";
-        moduleContents.appendChild(difficultyRoll);
-
-        const separator = document.createElement('span');
-        separator.classList.add('separator', 'info-text-style');
-        separator.textContent = "-";
-        moduleContents.appendChild(separator);
-
-        const difficultyTarget = document.createElement('span');
-        difficultyTarget.classList.add('difficulty-target');
-        difficultyTarget.textContent = "Trivial";
-        moduleContents.appendChild(difficultyTarget);
-
-        chatMessagesWrapper.appendChild(difficultyCheckElement);
-        return difficultyCheckElement;
+        return difficultyCheckModule;
     }
 }
 
@@ -134,10 +173,12 @@ function addConversationObject(co) {
         coDiv.classList.add('freestanding' , 'primary-text-style', 'left');
         chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'difficulty_analysis') {
-        // console.debug("adding difficulty analysis");
-        // const presceneDiv = get_or_create_difficulty_check_element();
-        // const difficultyElement = util.get_or_create_difficulty_element(presceneDiv);
-        // util.inject_content_into_element(difficultyElement, '.difficulty_analysis', util.body_text(marked.parse(co.text)));
+        console.debug("adding difficulty analysis");
+        const difficultyCheckElement = get_or_create_difficulty_check_element();
+        const analysisText = difficultyCheckElement.querySelector('.analysis-text');
+        if (analysisText) {
+            analysisText.innerHTML = util.body_text(marked.parse(co.text));
+        }
     } else if (co.type === 'difficulty_target') {
         console.debug("adding difficulty target");
         const difficultyCheckElement = get_or_create_difficulty_check_element();
@@ -185,6 +226,33 @@ function addConversationObject(co) {
              const targetValue = parseInt(targetText);
              if (Math.abs(targetValue - co.integer) <= 6) {
                  util.append_style_to_element(difficultyCheckElement, '.target-marker', 'box-shadow: none;');
+             }
+
+             // Adding text to analysis text to completely explain what's up. This is jank though.
+             const analysisText = difficultyCheckElement.querySelector('.conversation-body-text');
+             if (analysisText) {
+                 analysisText.innerHTML = analysisText.innerHTML + `\n\n You rolled a ${co.integer} on a 100-sided die, `;
+                 if (co.integer == targetValue) {
+                     analysisText.innerHTML = analysisText.innerHTML + `hitting the difficulty target of ${targetText} exactly, which is (barely) a success.`;
+                 } else if (co.integer > targetValue) {
+                    let degreeOfSuccess = (co.integer - targetValue) / (100 - targetValue);
+                    if (degreeOfSuccess < 0.15) {
+                        analysisText.innerHTML = analysisText.innerHTML + `barely exceeding the difficulty target of ${targetText}, resulting in a mild success.`;
+                    } else if (degreeOfSuccess < 0.8) {
+                        analysisText.innerHTML = analysisText.innerHTML + `exceeding the difficulty target of ${targetText}, resulting in a success.`;
+                    } else { // Mega success
+                        analysisText.innerHTML = analysisText.innerHTML + `greatly exceeding the difficulty target of ${targetText}, resulting in an exceptional success.`;
+                    }
+                 } else { // Failure
+                    let degreeOfFailure = (targetValue - co.integer) / targetValue;
+                    if (degreeOfFailure < 0.15) {
+                        analysisText.innerHTML = analysisText.innerHTML + `barely missing the difficulty target of ${targetText}, resulting in a mild failure.`;
+                    } else if (degreeOfFailure < 0.8) {
+                        analysisText.innerHTML = analysisText.innerHTML + `missing the difficulty target of ${targetText}, resulting in a failure.`;
+                    } else { // Serious failure
+                        analysisText.innerHTML = analysisText.innerHTML + `dramatically missing the difficulty target of ${targetText}, resulting in a serious failure.`;
+                    }
+                 }
              }
          }
  

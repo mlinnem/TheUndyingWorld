@@ -16,6 +16,10 @@ export function inject_content_into_element(element, content_container_class, co
 }
 
 export function inject_style_into_element(element, style_class, style) {
+    console.debug("injecting style into element");
+    console.debug("element: ", element);
+    console.debug("style_class: ", style_class);
+    console.debug("style: ", style);
     let styleElement = element.querySelector(style_class);
     styleElement.style = style;
 }
