@@ -148,11 +148,13 @@
     height: 2px;
     background-color: #997600;
     border-radius: var(--border-radius);
+    width: 0%;
 }
 
 .target-marker {
     width: 2px;
     height: 22px;
+    display: none;
     border-radius: var(--border-radius);
     background-color: #6B6B61;
     position: relative;

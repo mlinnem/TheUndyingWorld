@@ -141,9 +141,12 @@ function addConversationObject(co) {
     } else if (co.type === 'difficulty_target') {
         console.debug("adding difficulty target");
         const difficultyCheckElement = get_or_create_difficulty_check_element();
-        util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar', `width: 100%;`);
-        util.inject_style_into_element(difficultyCheckElement, '.target-marker', `left: ${co.text}%;`);
-        util.inject_content_into_element(difficultyCheckElement, '.difficulty-target', util.info_text(co.text));
+        if (co.text === "Trivial") {
+        } else {
+            util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar', `width: 100%;`);
+            util.inject_style_into_element(difficultyCheckElement, '.target-marker', `left: ${co.text}%; display: block;`);
+            util.inject_content_into_element(difficultyCheckElement, '.difficulty-target', util.info_text(co.text));
+        }
     } else if (co.type === 'world_reveal_analysis') {
         // console.debug("adding world reveal analysis");
         // const presceneDiv = get_or_create_prescene();
