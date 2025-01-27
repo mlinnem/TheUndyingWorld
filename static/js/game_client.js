@@ -167,7 +167,13 @@ function addConversationObject(co) {
         const difficultyCheckElement = get_or_create_difficulty_check_element();
         color = util.determine_difficulty_color(difficultyCheckElement, co.integer);
         util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar', `width: 100%;`);
-        util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar-filled', `width: ${co.integer}%; background-color: ${color};`);
+        if (co.integer == 1 || co.integer == 2) {
+            util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar-filled', `width: ${co.integer}%; background-color: ${color}; box-shadow: 0 0 4px 2px hsla(0, 60%, 50%, 0.25);`);
+        } else if (co.integer == 99 || co.integer == 100) {
+            util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar-filled', `width: ${co.integer}%; background-color: ${color}; box-shadow: 0 0 4px 2px hsla(180, 100%, 35%, 0.25);`);
+        } else {
+            util.inject_style_into_element(difficultyCheckElement, '.difficulty-bar-filled', `width: ${co.integer}%; background-color: ${color};`);
+        }
         util.inject_content_into_element(difficultyCheckElement, '.difficulty-roll', util.info_text(co.integer.toString()));
     } else if (co.type === 'world_reveal_roll') {
         // console.debug("adding world reveal roll");
