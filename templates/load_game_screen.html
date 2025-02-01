@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Undying World</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/all.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/new_game_screen.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/load_game_screen.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Roboto+Serif:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
@@ -19,8 +19,7 @@
             </div>
         </div>
         <div class="choose-your-world">Pick a game state to load</div>
-        <div class="world-picker">
-        <div id="conversation-list"></div>
+        <div id="saved-game-picker">
         </div>
     </div>
     <script type="module" src="{{ url_for('static', filename='js/load_game_screen.js') }}"></script>

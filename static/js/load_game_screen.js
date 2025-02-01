@@ -1,6 +1,6 @@
 // New file for index.html specific functionality
 document.addEventListener('DOMContentLoaded', () => {
-    const conversationList = document.getElementById('conversation-list');
+    const conversationList = document.getElementById('saved-game-picker');
     const updateStatus = document.getElementById('update-status');
     updateConversationList();
 
@@ -37,9 +37,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     span.textContent = "Started on " + formattedDate + ", last updated " + formattedDate + " (" + conv.message_count + " messages)";
                     convDiv.appendChild(span);
                     
-                    // Change to use href instead of onclick
-                    convDiv.onclick = () => window.location.href = `/game/${conv.conversation_id}`;
                     
+                    const controlBox = document.createElement('div');
+                    controlBox.classList.add('control-box');
+
+                    const continueBtn = document.createElement('button');
+                    continueBtn.textContent = 'Continue';
+                    continueBtn.classList.add('continue-btn');
+                    continueBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        window.location.href = `/game/${conv.conversation_id}`;
+                    };
+
+                    controlBox.appendChild(continueBtn);
+
                     const deleteBtn = document.createElement('button');
                     deleteBtn.textContent = 'X';
                     deleteBtn.classList.add('delete-btn');
@@ -47,7 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         e.stopPropagation();
                         deleteConversation(conv.conversation_id);
                     };
-                    convDiv.appendChild(deleteBtn);
+
+                    controlBox.appendChild(deleteBtn);
+                    
+                    convDiv.appendChild(controlBox)
                     conversationList.appendChild(convDiv);
                 });
             })

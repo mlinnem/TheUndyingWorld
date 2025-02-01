@@ -26,33 +26,26 @@
     margin-left: 20px;
 }
 
-.world-picker {
+
+
+#saved-game-picker {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 20px;
     margin-left: 20px;
     margin-right: 20px;
     border-radius: var(--border-radius);
     background-color: var(--far-background-color);
 }
-
-.world-picker {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    padding: 20px;
-    gap: 20px;
-}
   
-@media (max-width: 1300px) {
-    .world-picker {
+@media (min-width: 1300px) {
+    #saved-game-picker {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (max-width: 600px) {
-    .world-picker {
-        grid-template-columns: 1fr;
-    }
-}
-
-.built-in-world {
+.saved-game {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -372,4 +365,135 @@
     100% { 
         backdrop-filter: blur(10px);
     }
+}
+
+
+/* Conversation item */
+
+/* .conversation-item {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+    height: 120px;
+    padding: 15px;
+    align-items: center;
+    background-color: #182525;
+    border-radius: 20px;
+    background-color: #151919;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    font-family: 'Roboto Slab', serif;
+    color: var(--main-text-color);
+} */
+
+
+.conversation-item {
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    background-color: var(--card-background-color);
+}
+
+.saved-game-title {
+    margin: 20px;
+    font-family: var(--header-text-font);
+    font-size: 18px;
+    color: var(--main-text-color);
+}
+
+.conversation-item-text {
+    flex: 0 1 auto;
+    margin: 20px;
+    font-family: var(--in-game-text-font);
+    font-size: 12px;
+    color: var(--main-text-color);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    line-height: 27px;
+}
+
+.continue-button {        
+    margin-top: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: calc(100% - 40px);
+    background-color: #4B4842;
+    height: 55px;
+    font-family: var(--header-text-font);
+    font-size: 18px;
+    color: var(--main-text-color);
+    border-radius: var(--border-radius);
+}
+
+.conversation-item {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    border-radius: 20px;
+    background-color: var(--card-background-color);
+    overflow: hidden;
+}
+
+.conversation-item-text {
+    text-align: left;
+    margin-left: 20px;
+    flex-basis: 100px;
+    flex-grow: 1;
+    line-height: 1.4;
+}
+
+.control-box {
+    display: flex;
+    flex-basis: 100px;
+    flex-direction: row;
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.continue-btn:hover {
+    background-color: #997600;
+    color: var(--main-text-color);
+    transition: background-color 0.5s ease, color 0.5s ease;
+
+}
+
+.conversation-item .delete-btn:hover {
+    background-color: #ff0000;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.conversation-item.active {
+    background-color:  #4B4842;
+    .conversation-item {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    border-radius: 20px;
+    background-color: var(--card-background-color);
+    overflow: hidden;
+}
+    color: var(--main-text-color);
+}
+
+.conversation-item button {
+    font-size: 0.8em;
+    border: 0px;
+    flex-grow: 1;
+    border-radius: 20px;
+    flex-shrink: 0;
+}
+
+.delete-btn {
+    margin-left: 10px;
+    background-color: var(--far-background-color);
+    min-width: 40px;
+    max-width: 80px;
+}
+
+.continue-btn {
+    background-color: var(--button-background-color);
 }
