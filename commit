@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+
+import subprocess
+import os
+import sys
+
+def main():
+    # Check if commit message was provided
+    if len(sys.argv) != 2:
+        print("Error: Please provide a commit message")
+        print("Usage: ./commit \"your commit message\"")
+        exit(1)
+
+    # Get the commit message from command line argument
+    commit_message = sys.argv[1]
+    
+    # Get the directory containing this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Change to the script directory
+    os.chdir(script_dir)
+    
+    try:
+        # Stage all changes
+        subprocess.run(['git', 'add', '-A', '.'], check=True)
+        
+        # Commit with the provided message
+        subprocess.run(['git', 'commit', '-m', commit_message], check=True)
+        
+        # Push to origin main
+        subprocess.run(['git', 'push', 'origin', 'main'], check=True)
+        
+        print("Successfully committed and pushed changes!")
+        
+    except subprocess.CalledProcessError as e:
+        print(f"Error during git operations: {e}")
+        exit(1)
+    except KeyboardInterrupt:
+        print("\nOperation cancelled by user")
+        exit(0)
+
+if __name__ == "__main__":
+    main()
