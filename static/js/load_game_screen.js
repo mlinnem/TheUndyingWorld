@@ -4,6 +4,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateStatus = document.getElementById('update-status');
     updateConversationList();
 
+    function getTimeAgo(date) {
+        const seconds = Math.floor((new Date() - date) / 1000);
+        
+        let interval = seconds / 31536000; // years
+        if (interval > 1) {
+            return Math.floor(interval) + ' years ago';
+        }
+        
+        interval = seconds / 2592000; // months
+        if (interval > 1) {
+            return Math.floor(interval) + ' months ago';
+        }
+        
+        interval = seconds / 86400; // days
+        if (interval > 1) {
+            return Math.floor(interval) + ' days ago';
+        }
+        
+        interval = seconds / 3600; // hours
+        if (interval > 1) {
+            return Math.floor(interval) + ' hours ago';
+        }
+        
+        interval = seconds / 60; // minutes
+        if (interval > 1) {
+            return Math.floor(interval) + ' minutes ago';
+        }
+        
+        if(seconds < 10) return 'just now';
+        
+        return Math.floor(seconds) + ' seconds ago';
+    }
+
     function updateConversationList() {
         fetch('/get_conversation_listings')
             .then(response => response.json())
@@ -23,19 +56,62 @@ document.addEventListener('DOMContentLoaded', () => {
                     const convDiv = document.createElement('div');
                     convDiv.classList.add('conversation-item');
                     
-                    const span = document.createElement('span');
-                    span.classList.add('conversation-item-text');
+                  
+                    
+                    const text_content_block = document.createElement('div');
+                    text_content_block.classList.add('conversation-item-text-block');
+
+                    const title = document.createElement('div');
+                    title.classList.add('conversation-item-title');
+                    title.textContent = conv.location;
+                    text_content_block.appendChild(title);
+
+                    const metadata = document.createElement('div');
+                    metadata.classList.add('conversation-item-metadata');
+                    metadata.textContent = conv.location;
+                    text_content_block.appendChild(metadata);
                     
                     const date = new Date(conv.name);
-                    const formattedDate = date.toLocaleString('en-US', {
+                    
+                    const formattedDateForLastUpdated = date.toLocaleString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                    });
+
+                    const createdDate = new Date(conv.created_at);
+                    const formattedDateForCreatedAt = createdDate.toLocaleString('en-US', {
                         month: 'short',
                         day: 'numeric',
                         hour: '2-digit',
                         minute: '2-digit',
                     });
                     
-                    span.textContent = "Started on " + formattedDate + ", last updated " + formattedDate + " (" + conv.message_count + " messages)";
-                    convDiv.appendChild(span);
+                    const lastPlayedString = "Played " + getTimeAgo(date);
+                    const messageCountString = "" + conv.message_count + " messages in game";
+                    const dateStartedString = "Started on " + formattedDateForCreatedAt;
+
+                    const metadataList = document.createElement('ul');
+                    metadataList.style.listStyle = 'none';
+                    metadataList.style.padding = '0';
+                    metadataList.style.margin = '0';
+
+                    const lastPlayedLi = document.createElement('li');
+                    lastPlayedLi.textContent = lastPlayedString;
+                    metadataList.appendChild(lastPlayedLi);
+
+                    const messageCountLi = document.createElement('li'); 
+                    messageCountLi.textContent = messageCountString;
+                    metadataList.appendChild(messageCountLi);
+
+                    const dateStartedLi = document.createElement('li');
+                    dateStartedLi.textContent = dateStartedString;
+                    metadataList.appendChild(dateStartedLi);
+
+                    metadata.textContent = '';
+                    metadata.appendChild(metadataList);
+                    convDiv.appendChild(text_content_block);
                     
                     
                     const controlBox = document.createElement('div');

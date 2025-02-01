@@ -39,7 +39,7 @@
     background-color: var(--far-background-color);
 }
   
-@media (min-width: 2300px) {
+@media (min-width: 2000px) {
     #saved-game-picker {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -444,9 +444,12 @@
     overflow: hidden;
 }
 
-.conversation-item-text {
+.conversation-item-text-block {
     text-align: left;
+    margin-top: 20px;
+    margin-bottom: 30px;
     margin-left: 20px;
+    margin-right: 20px;
     flex-basis: 100px;
     flex-grow: 1;
     line-height: 1.4;
@@ -454,6 +457,25 @@
     font-weight: 300;
     font-size: 12px;
 }
+
+li {
+    margin-top: 10px;
+}
+
+.conversation-item-title {
+    font-family: var(--header-text-font);
+    font-size: 18px;
+    color: var(--main-text-color);
+}
+
+.conversation-item-metadata {
+    font-family: var(--data-text-font);
+    font-weight: 300;
+    font-size: 12px;
+    color: var(--main-text-color);
+    margin-top: 20px;
+}
+
 
 .control-box {
     display: flex;

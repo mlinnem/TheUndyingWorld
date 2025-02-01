@@ -37,6 +37,8 @@ def get_conversation_listings():
             'conversation_id': conversation_id,
             'name': conversation['name'],
             'last_updated': conversation['last_updated'],
+            'created_at': conversation['created_at'],
+            'location': conversation['location'],
             'message_count': len(conversation['messages'])
         };
         conversation_listings.append(conversation_listing)
@@ -54,6 +56,7 @@ def create_new_conversation():
         'name': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'messages': [],
         'last_updated': datetime.now().isoformat(),
+        'created_at': datetime.now().isoformat(),
         'cache_points': [],
         'gameplay_system_prompt': get_gameplay_system_prompt(),
         'game_setup_system_prompt': get_game_setup_system_prompt(),

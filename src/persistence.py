@@ -19,6 +19,11 @@ def read_conversation(conversation_id):
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
             conversation_data = json.load(f)
+            if 'location' not in conversation_data:
+                conversation_data['location'] = 'Untitled location'
+            if 'created_at' not in conversation_data:
+                # Use 1970-01-01 as the "beginning of time" default date
+                conversation_data['created_at'] = '1970-01-01T00:00:00'
             return conversation_data
     return None
 
