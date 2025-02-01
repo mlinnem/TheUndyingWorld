@@ -5,24 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Undying World</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/all.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_menu.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/new_game_screen.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Roboto+Serif:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
-    <div class="main_menu page_container">
-            <div id="game_title">The Undying World</div>
-            <button id="new-conversation-btn">New Game</button>
-            <div id="conversation-list"></div>
+    <div class="gameplay_screen page_container">
+        <div class="page-title-bar">
+            <img class="header-bar-left" src="{{ url_for('static', filename='images/TheUndyingWorld.png') }}" alt="The Undying World">
+            <div class="header-bar-right">
+                <h2 id="chat-title">Load Game</h2>
+                <a href="/" class="back-button">← Main Menu</a>
+            </div>
+        </div>
+        <div class="choose-your-world">Pick a game state to load</div>
+        <div id="conversation-list"></div>
     </div>
-    <script type="module" src="{{ url_for('static', filename='js/index_client.js') }}"></script>
-    <script>
-        // Add transition class after a tiny delay to prevent initial animation
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('new-conversation-btn').classList.add('ready-for-transition');
-            }, 100);
-        });
-    </script>
+    <script type="module" src="{{ url_for('static', filename='js/load_game_client.js') }}"></script>
 </body>
 </html>
