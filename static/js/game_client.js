@@ -243,7 +243,7 @@ function addConversationObject(co) {
                      analysisText.innerHTML = analysisText.innerHTML + `hitting the difficulty target of ${targetText} exactly, which is (barely) a success.`;
                  } else if (co.integer > targetValue) {
                     let degreeOfSuccess = (co.integer - targetValue) / (100 - targetValue);
-                    if (degreeOfSuccess < 0.15) {
+                    if (degreeOfSuccess < 0.1) {
                         analysisText.innerHTML = analysisText.innerHTML + `barely exceeding the difficulty target of ${targetText}, resulting in a mild success.`;
                     } else if (degreeOfSuccess < 0.8) {
                         analysisText.innerHTML = analysisText.innerHTML + `exceeding the difficulty target of ${targetText}, resulting in a success.`;
@@ -252,7 +252,7 @@ function addConversationObject(co) {
                     }
                  } else { // Failure
                     let degreeOfFailure = (targetValue - co.integer) / targetValue;
-                    if (degreeOfFailure < 0.15) {
+                    if (degreeOfFailure < 0.1) {
                         analysisText.innerHTML = analysisText.innerHTML + `barely missing the difficulty target of ${targetText}, resulting in a mild failure.`;
                     } else if (degreeOfFailure < 0.8) {
                         analysisText.innerHTML = analysisText.innerHTML + `missing the difficulty target of ${targetText}, resulting in a failure.`;

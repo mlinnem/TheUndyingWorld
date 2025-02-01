@@ -276,7 +276,6 @@
 
 
 .loading_message {
-    color:#EEE8CF;
     background-color: hsla(0, 0%, 8%, .2);
     align-self: flex-start;
     animation: breathe ease-out 17s infinite;

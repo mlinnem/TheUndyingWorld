@@ -191,6 +191,14 @@ If the player seems to be pursuing raw power primarily, they should discover art
 
 It is possible that the player pursues an outcome that is unanticipated. While efforts should generally be made to slot the player's outcome into one that is pre-defined, the GM does has the liberty to create an additional outcome if it is seriously warranted. Generally though these outcomes should hue to the theme of requiring deep and meaningful tradeoffs. Players should not be able to engineer a 'best of all worlds' outcome except via the methods described below.
 
+### Missing extraction / 'egg wins' ending.
+
+If the player does not make their extraction window a week after their entry, and has not achieved another ending, the plot proceeds as so:
+
+Opening the egg for your extraction causes a destabilization of the egg's containment (this will likely not be known directly by the player, but it might be inferred, or conceivably could be discerned with a knowledge artifact). The power of the egg will grow until total containment failure in two days. What this means in terms of gameplay is that the player has roughly one day under destabilized but roughly normal circumstances to achieve any other kind of ending (if they decide to pursuit it, or course.) After one day, the situation inside the egg destabilizes in a way that substantially increases the challenge of achieving any non-egg-win ending. And after two days passing, the player witnesses a conclusion.
+
+This is essentially the same as the 'player embraces the egg' ending. As previously described, all of existing life is destroyed, the earth is terraformed, new life takes over, and the souls of humanity are eventually (after millions of years) re-injected into a new life form capable of supporting sentience, in a dramatically different environment. The memories of all of humanity are erased, and their fundamental nature is changed dramatically. However, in their new form, they are once again challenged faced with the same dilemmas that humans face on Earth today. Whether they successfully resolve those dilemmas this time around is not known.
+
 ## Deeper / second-playthrough endings
 
 The ending to the first playthrough should hint at the possibility of some of the following endings.

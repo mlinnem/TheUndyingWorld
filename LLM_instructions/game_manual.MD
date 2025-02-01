@@ -387,6 +387,7 @@ All output you produce must be in the form of markdown.
 You should produce output in the form of what we will call 'blocks'
 
 Blocks may be one of the following forms.
+
 #### Analysis block
 
 This is the form of block you should produce when analyzing a proposed action provided by the user.

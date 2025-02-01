@@ -18,6 +18,10 @@ def index_route():
 def new_game_route():
     return render_template('new_game_screen.html')
 
+@routes.route('/load_game')
+def load_game_route():
+    return render_template('load_game_screen.html')
+
 @routes.route('/game/<conversation_id>')
 def game_route(conversation_id):
     logger.info(f"Accessing game route with conversation_id: {conversation_id}")
