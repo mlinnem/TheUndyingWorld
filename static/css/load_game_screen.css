@@ -39,9 +39,15 @@
     background-color: var(--far-background-color);
 }
   
-@media (min-width: 1300px) {
+@media (min-width: 2300px) {
     #saved-game-picker {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    #saved-game-picker {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -444,6 +450,9 @@
     flex-basis: 100px;
     flex-grow: 1;
     line-height: 1.4;
+    font-family: var(--data-text-font);
+    font-weight: 300;
+    font-size: 12px;
 }
 
 .control-box {
@@ -452,6 +461,7 @@
     flex-direction: row;
     flex-grow: 1;
     padding: 20px;
+    max-width: 500px;
 }
 
 .continue-btn:hover {
