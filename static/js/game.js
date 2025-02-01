@@ -1,5 +1,5 @@
 // Import all exports from client_util.js with a wildcard
-import * as util from './game_client_util.js';
+import * as util from './game_util.js';
 
 // DOM Elements
 const chatContainer = document.getElementById('chat-container');

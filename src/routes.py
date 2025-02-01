@@ -36,7 +36,7 @@ def game_route(conversation_id):
     session['current_conversation_id'] = conversation_id
     
     # Render the game template with the conversation ID
-    return render_template('gameplay_screen.html', conversation_id=conversation_id)
+    return render_template('game.html', conversation_id=conversation_id)
 
 @routes.route('/advance_conversation', methods=['POST'])
 def advance_conversation_route():
