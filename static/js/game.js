@@ -29,18 +29,6 @@ userInput.addEventListener('input', function() {
     }
 });
 
-function get_or_create_prescene() {
-    const previousElement = chatMessagesWrapper.lastElementChild;
-    if (previousElement && previousElement.classList.contains('pre_scene')) {
-        return previousElement;
-    } else {
-        const analysisDiv = document.createElement('div');
-        analysisDiv.classList.add('co','module','pre_scene', 'left', 'top');
-        chatMessagesWrapper.appendChild(analysisDiv);
-        return analysisDiv;
-    }
-}
-
 function get_or_create_difficulty_check_element() {
 
 
@@ -324,45 +312,6 @@ function addConversationObject(co) {
     }
 }
 
-function startNewConversation() {
-    console.log("starting new conversation");
-    fetch('/create_conversation', { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-            console.log("New conversation response:", data);  // Debug log
-            if (data.status === 'success') {
-                console.log("New conversation data:", data);  // Debug log
-                activeConversationId = data.conversation_id;
-                localStorage.setItem('activeConversationId', data.conversation_id);
-                chatMessagesWrapper.innerHTML = '';
-                
-                // Store the count of conversation objects
-                conversationObjectCounts[data.conversation_id] = data.new_conversation_objects.length;
-                console.log("New conversation objects:", data.new_conversation_objects);  // Debug log
-                
-                // Format the chat title
-                const date = new Date(data.conversation_name);
-                const formattedDate = date.toLocaleString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                });
-                chatTitle.textContent = formattedDate;
-                
-                // Display the intro message
-                console.log("new_conversation_objects: ", data.new_conversation_objects);
-                addConversationObjects(data.new_conversation_objects);
-                updateConversationList();
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error.message || error);
-            console.error('Original stack trace:', error.stack || 'No stack trace available');
-            updateStatus.textContent = 'Error starting new conversation';
-        });
-}
-
 // Load initial conversation data
 fetch('/get_conversation', {
     method: 'POST',
@@ -374,16 +323,21 @@ fetch('/get_conversation', {
 .then(response => response.json())
 .then(data => {
     if (data.status === 'success') {
+        let location = data.location;
+        let created_at = data.created_at;
         addConversationObjects(data.new_conversation_objects);
-        // Format the chat title
-        const date = new Date(data.conversation_name);
-        const formattedDate = date.toLocaleString('en-US', {
+        
+        // Format the created_at date
+        const formattedCreatedDate = new Date(created_at);
+        created_at = formattedCreatedDate.toLocaleString('en-US', {
             month: 'short',
             day: 'numeric',
-            hour: '2-digit',
+            hour: 'numeric',
             minute: '2-digit',
-        });
-        chatTitle.textContent = "On " + formattedDate;
+            hour12: true
+        }).replace(' PM', 'PM').replace(' AM', 'AM');
+        
+        chatTitle.textContent = location + ", created on " + created_at;
     }
 })
 .catch(error => {

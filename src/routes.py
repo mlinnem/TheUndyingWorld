@@ -154,6 +154,8 @@ def get_conversation_route():
                 'message_count': conversation['message_count'],
                 'last_updated': conversation['last_updated'],
                 'new_conversation_objects': conversation_objects,
+                'created_at': conversation['created_at'],
+                'location': conversation['location'],
                 'parsing_errors': [],
             })
             return jsonified_result

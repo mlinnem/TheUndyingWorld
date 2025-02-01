@@ -23,6 +23,11 @@
                 document.getElementById('new-conversation-btn').classList.add('ready-for-transition');
             }, 100);
         });
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('load-game-btn').classList.add('ready-for-transition');
+            }, 100);
+        });
     </script>
 </body>
 </html>

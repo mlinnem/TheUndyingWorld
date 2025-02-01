@@ -21,6 +21,10 @@
     background-color: #151919;
 }
 
+#load-game-btn:hover {
+    background-color: #997600;   
+}
+
 .main-menu-button {
     width: 600px;
     height: 80px;
@@ -31,6 +35,10 @@
 
 /* Add transition after a tiny delay to avoid initial animation */
 #new-conversation-btn.ready-for-transition {
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+#load-game-btn.ready-for-transition {
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
