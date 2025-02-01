@@ -44,10 +44,11 @@
                 <div class="built-in-world">
                     <div class="world-title">Custom World</div>
                     <div class="world-description">Begin dialog with the GM immediately. When ready to generate a game world, enter the command 'run_boot_sequence' to generate a custom world.</div>
-                    <button class="play-world-button">Select</button>
+                    <button id="custom-world-button" class="play-world-button">Select</button>
                 </div>
             </div>
         </div>
     </div>
+    <script type="module" src="{{ url_for('static', filename='js/new_game_screen.js') }}"></script>
 </body>
 </html>
