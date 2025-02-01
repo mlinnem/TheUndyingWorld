@@ -53,6 +53,9 @@
 }
 
 .built-in-world {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     border-radius: 20px;
     background-color: var(--card-background-color);
     overflow: hidden;
@@ -66,6 +69,7 @@
 }
 
 .world-description {
+    flex-grow: 1;
     margin: 20px;
     font-family: var(--in-game-text-font);
     font-size: 12px;
@@ -77,9 +81,11 @@
     line-height: 27px;
 }
 
-.play-world-button {
-    display: block;
-    margin: 20px;
+.play-world-button {        
+    margin-top: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
     width: calc(100% - 40px);
     background-color: #4B4842;
     height: 55px;
