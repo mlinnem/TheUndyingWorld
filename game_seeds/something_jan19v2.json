@@ -1,6 +1,7 @@
 {
-  "conversation_id": "20250119153701",
+  "conversation_id": "something_jan19v2",
   "name": "2025-01-19 15:37:01",
+  "description": "Something",
   "messages": [
     {
       "role": "user",

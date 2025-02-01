@@ -1,5 +1,3 @@
-# OOC Message
-
 The year is 2035. Civilization has descended into chaos: Global warming, pandemics, and further and further sub-divided information bubbles have caused states to descend into conflict with states, and people to descend into conflict with one another.
 
 Two years ago, an unexplained event began in a certain region of the globe. Ostensibly a new virus that threatened humanity. What remained of the world order sealed the region off, preventing anyone from entering.

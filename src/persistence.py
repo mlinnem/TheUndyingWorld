@@ -7,6 +7,7 @@ logger = logging.getLogger(__name__)
 
 CONVERSATIONS_DIR = "conversations"
 LLM_INSTRUCTIONS_DIR = "LLM_instructions"
+GAME_SEEDS_DIR = "game_seeds"
 
 if not os.path.exists(CONVERSATIONS_DIR):
     os.makedirs(CONVERSATIONS_DIR)
@@ -24,6 +25,15 @@ def read_conversation(conversation_id):
             if 'created_at' not in conversation_data:
                 # Use 1970-01-01 as the "beginning of time" default date
                 conversation_data['created_at'] = '1970-01-01T00:00:00'
+            if 'gameplay_system_prompt' not in conversation_data:
+                conversation_data['gameplay_system_prompt'] = get_gameplay_system_prompt()
+                conversation_data['gameplay_system_prompt_date'] = datetime.now().isoformat()
+            if 'game_setup_system_prompt' not in conversation_data:
+                conversation_data['game_setup_system_prompt'] = get_game_setup_system_prompt()
+                conversation_data['game_setup_system_prompt_date'] = datetime.now().isoformat()
+            if 'summarizer_system_prompt' not in conversation_data:
+                conversation_data['summarizer_system_prompt'] = get_summarizer_system_prompt()
+                conversation_data['summarizer_system_prompt_date'] = datetime.now().isoformat()
             return conversation_data
     return None
 
@@ -50,6 +60,55 @@ def read_all_conversation_ids():
             conversation_ids.append(conversation_id)
     return conversation_ids
   
+# Game seed functions
+
+def read_game_seed(conversation_id):
+    file_path = os.path.join(GAME_SEEDS_DIR, f"{conversation_id}.json")
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as f:
+            conversation_data = json.load(f)
+            if 'location' not in conversation_data:
+                conversation_data['location'] = 'Untitled location'
+            if 'created_at' not in conversation_data:
+                # Use 1970-01-01 as the "beginning of time" default date
+                conversation_data['created_at'] = '1970-01-01T00:00:00'
+            if 'gameplay_system_prompt' not in conversation_data:
+                conversation_data['gameplay_system_prompt'] = get_gameplay_system_prompt()
+                conversation_data['gameplay_system_prompt_date'] = datetime.now().isoformat()
+            if 'game_setup_system_prompt' not in conversation_data:
+                conversation_data['game_setup_system_prompt'] = get_game_setup_system_prompt()
+                conversation_data['game_setup_system_prompt_date'] = datetime.now().isoformat()
+            if 'summarizer_system_prompt' not in conversation_data:
+                conversation_data['summarizer_system_prompt'] = get_summarizer_system_prompt()
+                conversation_data['summarizer_system_prompt_date'] = datetime.now().isoformat()
+            return conversation_data
+        return None
+    return None
+
+
+def write_game_seed(game_seed):
+    logger.info(f"Saving game seed {game_seed['conversation_id']}")
+    conversation_id = game_seed['conversation_id']
+    game_seed['last_updated'] = datetime.now().isoformat()
+    file_path = os.path.join(GAME_SEEDS_DIR, f"{conversation_id}.json")
+    with open(file_path, 'w') as f:
+        json.dump(game_seed, f, indent=2)
+
+def delete_game_seed(conversation_id):
+    file_path = os.path.join(GAME_SEEDS_DIR, f"{conversation_id}.json")
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        return True
+    return False
+
+def read_all_game_seed_ids():
+    conversation_ids = []
+    for filename in os.listdir(GAME_SEEDS_DIR):
+        if filename.endswith(".json"):
+            conversation_id = filename[:-5]  # Remove .json extension
+            conversation_ids.append(conversation_id)
+    return conversation_ids
+
 # LLM instructions functions
 
 def get_game_setup_system_prompt():

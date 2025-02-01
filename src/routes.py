@@ -38,6 +38,17 @@ def game_route(conversation_id):
     # Render the game template with the conversation ID
     return render_template('game.html', conversation_id=conversation_id)
 
+
+# Game seed routes
+
+@routes.route('/get_game_world_listings', methods=['GET'])
+def get_get_seed_listings_route():
+    game_seed_listings = get_game_seed_listings()
+    return jsonify({'game_seed_listings': game_seed_listings})
+
+
+# Conversation routes
+
 @routes.route('/advance_conversation', methods=['POST'])
 def advance_conversation_route():
     try:

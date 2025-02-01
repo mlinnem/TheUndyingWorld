@@ -19,6 +19,19 @@ CONVERSATIONS_DIR = "conversations"
 if not os.path.exists(CONVERSATIONS_DIR):
     os.makedirs(CONVERSATIONS_DIR)
 
+
+def get_game_seed_listings():
+    game_seed_ids = read_all_game_seed_ids()
+    game_seed_listings = []
+    for game_seed_id in game_seed_ids:
+        game_seed = read_game_seed(game_seed_id)
+        game_seed_listings.append(game_seed)
+    return game_seed_listings
+
+
+# Conversation functions
+
+
 def save_conversation(conversation):
     logger.info(f"Saving conversation {conversation['conversation_id']}")
     conversation['last_updated'] = datetime.now().isoformat()
@@ -59,9 +72,11 @@ def create_new_conversation():
         'created_at': datetime.now().isoformat(),
         'cache_points': [],
         'gameplay_system_prompt': get_gameplay_system_prompt(),
+        'gameplay_system_prompt_date' : datetime.now().isoformat(),
         'game_setup_system_prompt': get_game_setup_system_prompt(),
+        'game_setup_system_prompt_date' : datetime.now().isoformat(),
         'summarizer_system_prompt': get_summarizer_system_prompt(),
-        'prompt_version': datetime.now().isoformat()
+        'summarizer_system_prompt_date' : datetime.now().isoformat(),
     }
 
     logger.info(f"Created conversation with ID: {conversation['conversation_id']}")
