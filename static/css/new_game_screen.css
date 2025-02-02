@@ -62,10 +62,13 @@
 }
 
 .world-title {
-    margin: 20px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
     font-family: var(--header-text-font);
-    font-size: 18px;
+    font-size: 18px;    
     color: var(--main-text-color);
+    height: 50px;
 }
 
 .world-description {
@@ -76,7 +79,6 @@
     color: var(--main-text-color);
     margin-left: 20px;
     margin-right: 20px;
-    margin-top: 30px;
     margin-bottom: 40px;
     line-height: 27px;
 }

@@ -46,6 +46,9 @@ def get_get_seed_listings_route():
     game_seed_listings = get_game_seed_listings()
     return jsonify({'game_seed_listings': game_seed_listings})
 
+# @routes.route('/start_game', methods=['POST'])
+# def start_game_route():
+
 
 # Conversation routes
 
