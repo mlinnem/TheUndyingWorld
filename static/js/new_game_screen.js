@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fetch and display game world listings
     updateGameWorldListings();
     
-    customWorldButton.addEventListener('click', startNewConversation);
+    customWorldButton.addEventListener('click', startNewCustomConversation);
 
     function updateGameWorldListings() {
         fetch('/get_game_world_listings')
@@ -24,8 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     worldCard.innerHTML = `
                         <div class="world-title">${world.description}</div>
                         <div class="world-description">${world.description}</div>
-                        <button class="play-world-button">Play</button>
+                        <button class="play-world-button" data-seed-id="${world.id}">Play</button>
                     `;
+                    
+                    const playButton = worldCard.querySelector('.play-world-button');
+                    playButton.addEventListener('click', () => startNewConversationFromSeed(world.id));
                     
                     worldPicker.appendChild(worldCard);
                 });
@@ -38,12 +41,35 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    function startNewConversation() {
-        fetch('/create_conversation', { method: 'POST' })
+    function startNewConversationFromSeed(seedId) {
+        fetch('/create_conversation_from_seed', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ seed_id: seedId })
+        })
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    // Redirect to the game page with the new conversation
+                    window.location.href = `/game/${data.conversation_id}`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function startNewCustomConversation() {
+        fetch('/create_conversation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
                     window.location.href = `/game/${data.conversation_id}`;
                 }
             })

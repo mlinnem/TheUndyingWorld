@@ -42,7 +42,7 @@ def game_route(conversation_id):
 # Game seed routes
 
 @routes.route('/get_game_world_listings', methods=['GET'])
-def get_get_seed_listings_route():
+def get_seed_listings_route():
     game_seed_listings = get_game_seed_listings()
     return jsonify({'game_seed_listings': game_seed_listings})
 
@@ -90,6 +90,8 @@ def advance_conversation_route():
 
         new_conversation_objects = convert_messages_to_cos(new_messages)
 
+        new_conversation_objects = filter_conversation_objects(new_conversation_objects)
+
         return jsonify({
             'status': 'success',
             'success_type': 'full_success',
@@ -98,6 +100,7 @@ def advance_conversation_route():
             'message_count': conversation['message_count'],
             'last_updated': conversation['last_updated'],
             'new_conversation_objects': new_conversation_objects,
+            'game_has_begun': conversation['game_has_begun'],
             'parsing_errors': [],
         })
     
@@ -113,13 +116,46 @@ def advance_conversation_route():
             'parsing_errors': [],
         }), 500
 
+@routes.route('/create_conversation_from_seed', methods=['POST'])
+def create_conversation_from_seed_route():
+    try:
+        logger.info("Creating new conversation from seed")
+        data = request.get_json()
+        seed_id = data.get('seed_id')
+        
+        if not seed_id:
+            return jsonify({
+                'status': 'error',
+                'message': 'No seed ID provided'
+            }), 400
+
+        conversation = create_conversation_from_seed(seed_id)
+
+        # Save the seeded conversation
+        save_conversation(conversation)
+
+        return jsonify({
+            'status': 'success',
+            'redirect_url': f'/game/{conversation['conversation_id']}',
+            'conversation_id': conversation['conversation_id']
+        })
+
+    except Exception as e:
+        logger.error(f"Error creating conversation from seed: {e}")
+        logger.error(f"Stack trace: {traceback.format_exc()}")
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+        
+        
 @routes.route('/create_conversation', methods=['POST'])
 def create_conversation_route():
     try:
         logger.info("Starting new conversation creation")
         
         # Create the conversation
-        conversation = create_new_conversation()
+        conversation = create_new_conversation_from_scratch()
         conversation_id = conversation['conversation_id']
         
         # Instead of returning JSON, return a redirect URL
@@ -160,6 +196,7 @@ def get_conversation_route():
         
         if conversation:
             conversation_objects = convert_messages_to_cos(conversation['messages'])
+            filtered_conversation_objects = filter_conversation_objects(conversation_objects)
             jsonified_result = jsonify({
                 'status': 'success',
                 'success_type': 'full_success',
@@ -167,7 +204,9 @@ def get_conversation_route():
                 'conversation_name': conversation['name'],
                 'message_count': conversation['message_count'],
                 'last_updated': conversation['last_updated'],
-                'new_conversation_objects': conversation_objects,
+                'intro_blurb': conversation['intro_blurb'],
+                'new_conversation_objects': filtered_conversation_objects,
+                'game_has_begun': conversation['game_has_begun'],
                 'created_at': conversation['created_at'],
                 'location': conversation['location'],
                 'parsing_errors': [],

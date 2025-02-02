@@ -17,6 +17,7 @@
     z-index: 1;
 }
 
+
 #chat-messages-wrapper {
     width: 800px;
     margin-left: auto;
@@ -242,6 +243,13 @@
     line-height: 1.6875rem;
 }
 
+.module.intro_blurb {
+    font-size: 1.125rem;
+    line-height: 1.6875rem;
+    font-family: var(--in-game-text-font);
+    background-color: #132E2E;
+}
+
 .module.resulting_scene_description {
 
     font-size: 1.125rem;
@@ -328,6 +336,21 @@
     border-radius: 20px;
     background-color: rgba(0,0,0,0.25);
     transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+#begin-game-button {
+    margin-bottom: 10px;
+    width: 850px;
+    height: 80px;
+    margin-left: auto;
+    text-align: center;
+    margin-right: auto;
+    position: relative;
+    background-color: #997600;
+    color: #EEE8CF;
+    font-family: var(--header-text-font);
+    font-size: 1.125rem;
+    line-height: 1.6875rem;
 }
 
 #send-button:hover {

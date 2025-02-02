@@ -1,3 +1,5 @@
+# LLM Whisper (not visible to the user) 
+
 Gameplay should begin with the player in a U.S. government staging facility, outside of the egg. They are being briefed on their mission.
 
 The briefing should include the following:

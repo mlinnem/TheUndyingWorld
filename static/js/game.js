@@ -7,6 +7,10 @@ const chatMessagesWrapper = document.getElementById('chat-messages-wrapper');
 const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
 const chatTitle = document.getElementById('chat-title');
+const inputContainer = document.getElementsByClassName('input-container')[0]; //TODO: unjank this
+
+// Add event listener for begin game button
+const beginGameButton = document.getElementById('begin-game-button');
 
 // Get the conversation ID from the window object (set in game.html)
 const activeConversationId = window.conversationId;
@@ -28,6 +32,10 @@ userInput.addEventListener('input', function() {
         this.style.height = Math.min(this.scrollHeight, 200) + 'px';
     }
 });
+
+// Add these variables at the top level, with the other declarations
+let dotAnimation;
+let loadingDiv;
 
 function get_or_create_difficulty_check_element() {
 
@@ -122,13 +130,6 @@ function get_or_create_difficulty_check_element() {
     }
 }
 
-function get_or_create_world_reveal_check_element() {
-    const previousElement = chatMessagesWrapper.lastElementChild;
-    if (previousElement && previousElement.classList.contains('world_reveal_check')) {
-        return previousElement;
-    }
-}
-
 
 function addConversationObjects(conversation_objects) {
     conversation_objects.forEach(conversation_object => {
@@ -148,12 +149,18 @@ function addConversationObject(co) {
         coDiv.classList.add('primary-text-style');
         coDiv.classList.add('right')
         chatMessagesWrapper.appendChild(coDiv);
+    } else if (co.type === 'intro_blurb') {
+        console.debug("adding intro blurb");
+        coDiv = util.make_module(co);
+        util.inject_content_into_element(coDiv, '.module_contents', util.body_text(marked.parse(co.text)));
+        coDiv.classList.add('freestanding', 'primary-text-style', 'left');
+        chatMessagesWrapper.appendChild(coDiv);
     } else if (co.type === 'map_data' || co.type === 'world_gen_data')  {
-        // console.debug("adding world gen data");
-        // coDiv = util.make_module(co);
-        // util.inject_content_into_element(coDiv, '.module_contents', util.header("World Gen Data") + util.body_text(marked.parse(co.text)));
-        // coDiv.classList.add('freestanding', 'info-text-style', 'left');
-        // chatMessagesWrapper.appendChild(coDiv); 
+        console.debug("adding world gen data");
+        coDiv = util.make_module(co);
+        util.inject_content_into_element(coDiv, '.module_contents', util.header("World Gen Data") + util.body_text(marked.parse(co.text)));
+        coDiv.classList.add('freestanding', 'info-text-style', 'left');
+        chatMessagesWrapper.appendChild(coDiv); 
     } else if (co.type === 'ooc_message') {
         console.debug("adding ooc message");
         coDiv = util.make_module(co);
@@ -187,15 +194,15 @@ function addConversationObject(co) {
             util.inject_content_into_element(difficultyCheckElement, '.difficulty-target', util.info_text(co.text));
         }
     } else if (co.type === 'world_reveal_analysis') {
-        // console.debug("adding world reveal analysis");
-        // const presceneDiv = get_or_create_prescene();
-        // const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
-        // util.inject_content_into_element(worldRevealElement, '.world_reveal_analysis', util.body_text(marked.parse(co.text)));
+        console.debug("adding world reveal analysis");
+        const presceneDiv = get_or_create_prescene();
+        const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
+        util.inject_content_into_element(worldRevealElement, '.world_reveal_analysis', util.body_text(marked.parse(co.text)));
     } else if (co.type === 'world_reveal_level') {
-        // console.debug("adding world reveal level");
-        // const presceneDiv = get_or_create_prescene();
-        // const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
-        // util.inject_content_into_element(worldRevealElement, '.world_reveal_level', util.header("Level") + util.data_text(co.text));
+        console.debug("adding world reveal level");
+        const presceneDiv = get_or_create_prescene();
+        const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
+        util.inject_content_into_element(worldRevealElement, '.world_reveal_level', util.header("Level") + util.data_text(co.text));
     } else if (co.type === 'difficulty_roll') {
         console.debug("adding difficulty roll");
         const difficultyCheckElement = get_or_create_difficulty_check_element();
@@ -252,12 +259,12 @@ function addConversationObject(co) {
          }
  
     } else if (co.type === 'world_reveal_roll') {
-        // console.debug("adding world reveal roll");
-        // const presceneDiv = get_or_create_prescene();
-        // const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
-        // color = util.determine_world_reveal_color(worldRevealElement, co.integer);
-        // worldRevealElement.style.backgroundColor = color;
-        // util.inject_content_into_element(worldRevealElement, '.world_reveal_roll', util.header("Roll") + util.data_text(co.integer.toString()));
+        console.debug("adding world reveal roll");
+        const presceneDiv = get_or_create_prescene();
+        const worldRevealElement = util.get_or_create_world_reveal_element(presceneDiv);
+        color = util.determine_world_reveal_color(worldRevealElement, co.integer);
+        worldRevealElement.style.backgroundColor = color;
+        util.inject_content_into_element(worldRevealElement, '.world_reveal_roll', util.header("Roll") + util.data_text(co.integer.toString()));
     } else if (co.type === 'resulting_scene_description') {
         console.debug("adding resulting scene description");
         coDiv = util.make_module(co);
@@ -325,7 +332,37 @@ fetch('/get_conversation', {
     if (data.status === 'success') {
         let location = data.location;
         let created_at = data.created_at;
-        addConversationObjects(data.new_conversation_objects);
+
+        addConversationObject({
+            "type": "intro_blurb",
+            "text": data.intro_blurb
+        });
+
+        if (data.game_has_begun) {
+            console.debug("game has begun");
+            addConversationObjects(data.new_conversation_objects);
+        } else {
+            console.debug("game has not begun (yet)");
+            // Store conversation objects for later use after begin game button is pressed
+            const storedConversationObjects = data.new_conversation_objects;
+            
+            // Show begin game button
+            beginGameButton.style.display = 'block';
+            
+            // Add click handler to display stored objects after button press
+            beginGameButton.addEventListener('click', function() {
+                beginGameButton.style.display = 'none';
+                showThinkingMessage();
+                const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+                wait(2000).then(() => {
+                    clearThinkingMessage();
+                    addConversationObjects(storedConversationObjects);
+                    inputContainer.classList.remove('hidden');
+                });
+            });
+        }
+
+        
         
         // Format the created_at date
         const formattedCreatedDate = new Date(created_at);
@@ -348,7 +385,41 @@ fetch('/get_conversation', {
     });
 });
 
+
+function showThinkingMessage() {
+    // Add loading message with animated dots
+    loadingDiv = document.createElement('div');
+    loadingDiv.classList.add('co', 'loading_message', 'module', 'left', 'primary-text-style');
+    const loadingText = document.createElement('div');
+    loadingText.classList.add('module_contents', 'has_contents');
+    loadingText.innerHTML = util.body_text('Thinking');
+    const dots = document.createElement('span');
+    dots.textContent = '...';
+    loadingText.querySelector('.conversation-body-text').appendChild(dots);
+    loadingDiv.appendChild(loadingText);
+    chatMessagesWrapper.appendChild(loadingDiv);
+    
+    // Animate the dots
+    let dotCount = 3;
+    dotAnimation = setInterval(() => {
+        dots.textContent = '.'.repeat(dotCount);
+        dotCount = (dotCount % 3) + 1;
+    }, 500);
+
+    scrollChatNearBottom();
+}
+
+function clearThinkingMessage() {
+    if (dotAnimation) {
+        clearInterval(dotAnimation);
+    }
+    if (loadingDiv) {
+        loadingDiv.remove();
+    }
+}
+
 function sendMessage() {
+    console.log("sendMessage");
     if (!activeConversationId) {
         addConversationObject({
             "type": "server_error",
@@ -358,7 +429,7 @@ function sendMessage() {
     }
 
     const text = userInput.value.trim();
-    if (text) {
+    if (true) { //TODO: Remove this
         // Check for boot sequence command
         if (text === "run_boot_sequence") {
             fetch('/advance_conversation', {
@@ -389,33 +460,18 @@ function sendMessage() {
             return;
         }
 
-        addConversationObject({
-            "type": "user_message",
-            "text": text
-        });
+        if (text) {
+            addConversationObject({
+                "type": "user_message",
+                "text": text
+            });    
+        }
+    
+        
         userInput.value = '';
         userInput.style.height = '60px';
 
-        // Add loading message with animated dots
-        const loadingDiv = document.createElement('div');
-        loadingDiv.classList.add('co', 'loading_message', 'module', 'left', 'primary-text-style');
-        const loadingText = document.createElement('div');
-        loadingText.classList.add('module_contents', 'has_contents');
-        loadingText.innerHTML = util.body_text('Thinking');
-        const dots = document.createElement('span');
-        dots.textContent = '...';
-        loadingText.querySelector('.conversation-body-text').appendChild(dots);
-        loadingDiv.appendChild(loadingText);
-        chatMessagesWrapper.appendChild(loadingDiv);
-        
-        // Animate the dots
-        let dotCount = 3;
-        const dotAnimation = setInterval(() => {
-            dots.textContent = '.'.repeat(dotCount);
-            dotCount = (dotCount % 3) + 1;
-        }, 500);
-
-        scrollChatNearBottom();
+        showThinkingMessage();
 
         fetch('/advance_conversation', {
             method: 'POST',
@@ -429,8 +485,7 @@ function sendMessage() {
         })
         .then(response => response.json())
         .then(data => {
-            clearInterval(dotAnimation);
-            loadingDiv.remove();
+            clearThinkingMessage();
             addConversationObjects(data.new_conversation_objects);
             
             if (data.success_type === 'partial_success') {
@@ -509,3 +564,4 @@ function checkOverlap() {
 }
 
 chatContainer.addEventListener('scroll', checkOverlap);
+

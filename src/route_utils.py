@@ -3,7 +3,7 @@ import traceback
 
 # Set up logging configuration
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
@@ -173,8 +173,52 @@ def convert_messages_to_cos(messages):
             else:
                 logger.warning(f"Message has invalid format: role is neither 'user' nor 'assistant'. message: {message}")
 
+            # Check for boot sequence end
+            if message.get('is_boot_sequence_end'):
+                cos.append({'type': 'boot_sequence_end'})
+
     except Exception as e:
         logger.error(f"Error in convert_messages_to_cos: {str(e)}\n{traceback.format_exc()}")
     
     logger.debug(f"First cleaned message: {cos[0] if cos else 'No messages'}")
     return cos
+
+def filter_conversation_objects(conversation_objects):
+    logger.info("Filtering conversation objects: " + str(len(conversation_objects)))
+    """
+    Filter out specific conversation object types that should not be sent to the user.
+    
+    Args:
+        conversation_objects (list): List of conversation objects to filter
+        
+    Returns:
+        list: Filtered list of conversation objects
+    """
+    if not conversation_objects:
+        return []
+        
+    filtered_types = {
+        'world_gen_data',  # Filter out map generation data
+        'world_reveal_roll',  # Filter out world reveal roll
+        'world_reveal_analysis',  # Filter out world reveal analysis
+        'world_reveal_level',  # Filter out world reveal level
+    }
+    
+    # Find the index of boot_sequence_end if it exists
+    boot_end_index = next(
+        (i for i, obj in enumerate(conversation_objects) 
+         if obj.get('type') == 'boot_sequence_end'),
+        -1
+    )
+    logger.debug("boot_end_index: " + str(boot_end_index))
+    
+    # If boot_sequence_end was found, only keep objects after it
+    # We subtract 1 because we want the last message of the boot sequence to be included in the conversation
+    start_index = (boot_end_index + 1) - 1 if boot_end_index >= 0 else 0
+    
+    result = [
+        obj for obj in conversation_objects[start_index:]
+        if obj.get('type') not in filtered_types
+    ]
+    logger.info("conversation objects after filtering: " + str(len(result)))
+    return result

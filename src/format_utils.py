@@ -3,11 +3,20 @@ from flask import jsonify, session
 
 import json
 import traceback
+from .persistence import *
 
 import logging
 logger = logging.getLogger(__name__)
 
 
+def produce_intro_blurb_for_server(intro_blurb):
+    return {
+        "role": "assistant",
+        "content": [{
+            "type": "text",
+            "text": "# OOC Message\n\n" + intro_blurb
+        }]
+    }
 
 def produce_user_message_for_server(user_message):
     return {
@@ -230,13 +239,33 @@ def _process_mixed_content(message):
 
     return objects
 
-def _is_mixed_content(message):
-    """Check if the message contains multiple types of content"""
-    if message['role'] == 'assistant' and message['content'][0]['type'] == 'text':
-        text = message['content'][0]['text']
-        sections = _split_message_sections(text)
-        return len(sections) > 1
+def produce_final_startup_instruction():
+    return {
+        "role": "user",
+        "content": [{
+            "type": "text",
+            "text": get_final_startup_instruction_string()
+        }],
+        "is_begin_game": True
+    }
+
+def _is_begin_game(message):
+    logger.debug(f"Checking if message is begin game: {message}")
+    if message['role'] == 'assistant':
+        if message['content'][0]['type'] == 'text':
+            if _header_contains(message['content'][0]['text'], ['begin game']):
+                return True
     return False
+
+def _format_begin_game(message):
+    begin_game_block = message['content'][0]['text']
+    text = _all_but_header(begin_game_block)
+    
+    return [{
+        "source": "llm",
+        "type": "begin_game",
+        "begin_game_message": text
+    }]
 
 def produce_conversation_objects_for_client(messages):
     objects_for_client = []
@@ -247,6 +276,9 @@ def produce_conversation_objects_for_client(messages):
             if _is_user_message(message):
                 logger.debug(f"Formatting user message: {message}")
                 objects_for_client.extend(_format_user_message(message))
+            elif _is_begin_game(message):
+                logger.debug(f"Formatting begin game message: {message}")
+                objects_for_client.extend(_format_begin_game(message))
             elif _is_analysis(message):
                 logger.debug(f"Formatting analysis: {message}")
                 objects_for_client.extend(_format_analysis(message))
@@ -349,3 +381,12 @@ def _header_contains(text_in_message, has_one_of_these_array):
     header = text_in_message.split("\n")[0].strip().lower()
     # Convert all search terms to lowercase and check if any are in the header
     return any(term.lower() in header for term in has_one_of_these_array)
+
+def produce_whisper_dummy_message():
+    return {
+        "role": "user",
+        "content": [{
+            "type": "text",
+            "text": "[Ignore this message. This is only included to solicit an additional response from the LLM, after we have injected the prior additional context into the assistant chat history. This message will be removed from the transcript afterwards.]"
+        }]
+    }

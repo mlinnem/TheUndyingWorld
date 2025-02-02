@@ -1,6 +1,7 @@
 {
   "conversation_id": "something_jan19v2",
   "name": "2025-01-19 15:37:01",
+  "location": "Something",
   "description": "Something",
   "messages": [
     {
@@ -512,8 +513,7 @@
           "type": "text",
           "text": "# OOC message\n\nOUTER RING NORTHWEST ZONE\n\"The International Research Complex\"\n\nGeography:\n- Massive glacier complex (80% coverage)\n- Multiple converging ice flows (some showing temporal properties)\n- Terminal moraine fields with temporal pockets\n- Deep crevasse systems (some leading to temporal voids)\n- Ice seracs up to 50m high (frozen in various time states)\n- Unstable glacial lakes\n- Rock outcroppings (showing evolutionary acceleration)\n- Avalanche zones that loop in time\n- Wind-scoured ridges\n- Lateral moraines with temporal properties\n\nPre-Egg Civilization Remnants:\nResearch Infrastructure:\n- Large glaciology research station\n- Climate change monitoring center\n- Ice core storage facility\n- Specialized laboratories\n- Staff accommodation (30 person)\n- Power generation facility\n- Water processing plant\n- Equipment warehouses\n- Vehicle garage\n- Helicopter landing zone\n\nState of Humanity:\nGlacier Research Collective Control:\n- ~40 transformed researchers\n- Scientific teams studying temporal effects\n- Support staff\n- Security personnel\n- Equipment specialists\n- Field researchers\n\nState of Nature:\nFlora:\n- Minimal vegetation except on moraines\n- Temporal-resistant ice-edge plants\n- Evolution-accelerated lichens\n- Plants growing through time loops\n- Ice-adapted new species\n\nFauna:\n- Time-shifted snow leopards\n- Birds navigating temporal currents\n- Evolution-accelerated ice creatures\n- Temporal-resistant insects\n- New ice-dwelling species\n\nFaction Presence:\nPrimary: Glacier Research Collective\nNotable Activities:\n- Scientific research\n- Resource gathering\n- Territory defense\n- Temporal anomaly study\n- Evolution monitoring\n\nSecondary:\n- Time Salvage Crew (covert operations)\n- Corporate Agent (observation)\n\nNotable Characters:\n- Senior Research Team\n- Time Salvage scouts\n- The Equipment Specialist\n- Corporate Agent's observers\n- Independent researchers\n\nArtifacts Present:\n1. \"The Researcher's Thermos\"\n- Location: Research station break room\n- Effect: Liquid purification/enhancement\n\n2. \"The Data Logger\"\n- Location: Remote monitoring site\n- Effect: Temporal measurement\n\n3. \"The Safety Line\"\n- Location: Emergency cache\n- Effect: Enhanced survival probability\n\nThreats:\nEnvironmental:\n- Temporal crevasses\n- Unstable ice formations\n- Extreme weather\n- Time-shifted avalanches\n- Evolution-accelerated predators\n\nSocial:\n- Territorial researchers\n- Security patrols\n- Competing agents\n- Scientific hazards\n- Factional conflicts\n\nChild Status: None present\n\nOUTER RING NORTHEAST ZONE\n\"The Tourist Hub\"\n\n[Continue with similar detailed breakdowns for other zones? Would you like me to proceed with the remaining three outer ring zones in similar detail?]"
         }
-      ],
-      "is_boot_sequence_end": true
+      ]
     },
     {
       "role": "user",

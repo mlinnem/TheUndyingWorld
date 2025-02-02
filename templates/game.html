@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Undying World</title>
+    <title>The Undying Earth</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/all.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/game.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Roboto+Serif:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -23,7 +23,8 @@
             <div id="chat-container">
                 <div id="chat-messages-wrapper"></div>
             </div>
-            <div class="input-container">
+            <button id="begin-game-button">Begin</button>
+            <div class="input-container hidden">
                 <textarea id="user-input" class="primary-text-style" placeholder="Propose an action..."></textarea>
                 <button id="send-button">Send</button>
             </div>

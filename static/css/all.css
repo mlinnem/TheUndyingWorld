@@ -52,24 +52,23 @@ button {
 }
 
 .background-image1 {    
-    background-image: url('/static/images/BigBoyDarker.png');
+    background-image: url('/static/images/LongBoy.png');
     background-size: cover;
     background-position: center;
     background-repeat: repeat-y;
 }
 
 .background-image2 {    
-    background-image: url('/static/images/UpscaledBackground.png');
+    background-image: url('/static/images/LongBoy.png');
     background-size: cover;
     background-position: center;
     background-repeat: repeat-y;
 }
 
-
-
 .hidden {
-    display: none;
+    display: none !important;
 }
+
     
 .info-text-style {
     font-family: var(--data-text-font);

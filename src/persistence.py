@@ -25,15 +25,47 @@ def read_conversation(conversation_id):
             if 'created_at' not in conversation_data:
                 # Use 1970-01-01 as the "beginning of time" default date
                 conversation_data['created_at'] = '1970-01-01T00:00:00'
+            if 'intro_blurb' not in conversation_data:
+                conversation_data['intro_blurb'] = get_intro_blurb_string()
+                conversation_data['intro_blurb_date'] = datetime.now().isoformat()
             if 'gameplay_system_prompt' not in conversation_data:
+                logger.warning("No gameplay_system_prompt found in file. Setting gameplay_system_prompt to default: " + conversation_id)
                 conversation_data['gameplay_system_prompt'] = get_gameplay_system_prompt()
                 conversation_data['gameplay_system_prompt_date'] = datetime.now().isoformat()
             if 'game_setup_system_prompt' not in conversation_data:
+                logger.warning("No game_setup_system_prompt found in file. Setting game_setup_system_prompt to default: " + conversation_id)
                 conversation_data['game_setup_system_prompt'] = get_game_setup_system_prompt()
                 conversation_data['game_setup_system_prompt_date'] = datetime.now().isoformat()
             if 'summarizer_system_prompt' not in conversation_data:
+                logger.warning("No summarizer_system_prompt found in file. Setting summarizer_system_prompt to default: " + conversation_id)
                 conversation_data['summarizer_system_prompt'] = get_summarizer_system_prompt()
                 conversation_data['summarizer_system_prompt_date'] = datetime.now().isoformat()
+            if 'game_setup_system_prompt_date' not in conversation_data:
+                logger.warning("No game_setup_system_prompt_date found in file. Setting game_setup_system_prompt_date to now: " + conversation_id)
+                conversation_data['game_setup_system_prompt_date'] = datetime.now().isoformat()
+            if 'gameplay_system_prompt_date' not in conversation_data:
+                logger.warning("No gameplay_system_prompt_date found in file. Setting gameplay_system_prompt_date to now: " + conversation_id)
+                conversation_data['gameplay_system_prompt_date'] = datetime.now().isoformat()
+            if 'intro_blurb_date' not in conversation_data:
+                logger.warning("No intro_blurb_date found in file. Setting intro_blurb_date to now: " + conversation_id)
+                conversation_data['intro_blurb_date'] = datetime.now().isoformat()
+            if 'summarizer_system_prompt_date' not in conversation_data:
+                logger.warning("No summarizer_system_prompt_date found in file. Setting summarizer_system_prompt_date to now: " + conversation_id)
+                conversation_data['summarizer_system_prompt_date'] = datetime.now().isoformat()
+            if 'intro_blurb' not in conversation_data:
+                logger.warning("No intro_blurb found in file. Setting intro_blurb to default: " + conversation_id)
+                conversation_data['intro_blurb'] = get_intro_blurb_string()
+                conversation_data['intro_blurb_date'] = datetime.now().isoformat()
+            if 'intro_blurb_date' not in conversation_data:
+                logger.warning("No intro_blurb_date found in file. Setting intro_blurb_date to now: " + conversation_id)
+                conversation_data['intro_blurb_date'] = datetime.now().isoformat()
+            if 'game_has_begun' not in conversation_data:
+                logger.warning("No game_has_begun found in file. Setting game_has_begun to False: " + conversation_id)
+                conversation_data['game_has_begun'] = True
+                conversation_data['game_has_begun_date'] = datetime.now().isoformat()
+            if 'game_has_begun_date' not in conversation_data and conversation_data['game_has_begun']:
+                logger.warning("No game_has_begun_date found in file, even though game_has_begun is True. Setting game_has_begun_date to now: " + conversation_id)
+                conversation_data['game_has_begun_date'] = datetime.now().isoformat()
             return conversation_data
     return None
 
@@ -63,26 +95,64 @@ def read_all_conversation_ids():
 # Game seed functions
 
 def read_game_seed(conversation_id):
+    logger.info("Reading game seed: " + conversation_id)
     file_path = os.path.join(GAME_SEEDS_DIR, f"{conversation_id}.json")
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
             conversation_data = json.load(f)
+            if 'id' not in conversation_data:
+                logger.warning("No ID found in file. Setting game seed id: " + conversation_id)
+                conversation_data['id'] = conversation_id
             if 'location' not in conversation_data:
-                conversation_data['location'] = 'Untitled location'
+                logger.warning("No location found in file. Setting location to 'No location': " + conversation_id)
+                conversation_data['location'] = 'No location'
+            if 'description' not in conversation_data:
+                logger.warning("No description found in file. Setting description to 'No description': " + conversation_id)
+                conversation_data['description'] = 'No description'
             if 'created_at' not in conversation_data:
+                logger.warning("No created_at found in file. Setting created_at to '1970-01-01T00:00:00': " + conversation_id)
                 # Use 1970-01-01 as the "beginning of time" default date
                 conversation_data['created_at'] = '1970-01-01T00:00:00'
+            if 'intro_blurb' not in conversation_data:
+                conversation_data['intro_blurb'] = get_intro_blurb_string()
+                conversation_data['intro_blurb_date'] = datetime.now().isoformat()
             if 'gameplay_system_prompt' not in conversation_data:
+                logger.warning("No gameplay_system_prompt found in file. Setting gameplay_system_prompt to default: " + conversation_id)
                 conversation_data['gameplay_system_prompt'] = get_gameplay_system_prompt()
                 conversation_data['gameplay_system_prompt_date'] = datetime.now().isoformat()
             if 'game_setup_system_prompt' not in conversation_data:
+                logger.warning("No game_setup_system_prompt found in file. Setting game_setup_system_prompt to default: " + conversation_id)
                 conversation_data['game_setup_system_prompt'] = get_game_setup_system_prompt()
                 conversation_data['game_setup_system_prompt_date'] = datetime.now().isoformat()
             if 'summarizer_system_prompt' not in conversation_data:
+                logger.warning("No summarizer_system_prompt found in file. Setting summarizer_system_prompt to default: " + conversation_id)
                 conversation_data['summarizer_system_prompt'] = get_summarizer_system_prompt()
                 conversation_data['summarizer_system_prompt_date'] = datetime.now().isoformat()
+            if 'game_setup_system_prompt_date' not in conversation_data:
+                logger.warning("No game_setup_system_prompt_date found in file. Setting game_setup_system_prompt_date to now: " + conversation_id)
+                conversation_data['game_setup_system_prompt_date'] = datetime.now().isoformat()
+            if 'gameplay_system_prompt_date' not in conversation_data:
+                logger.warning("No gameplay_system_prompt_date found in file. Setting gameplay_system_prompt_date to now: " + conversation_id)
+                conversation_data['gameplay_system_prompt_date'] = datetime.now().isoformat()
+            if 'intro_blurb_date' not in conversation_data:
+                logger.warning("No intro_blurb_date found in file. Setting intro_blurb_date to now: " + conversation_id)
+                conversation_data['intro_blurb_date'] = datetime.now().isoformat()
+            if 'summarizer_system_prompt_date' not in conversation_data:
+                logger.warning("No summarizer_system_prompt_date found in file. Setting summarizer_system_prompt_date to now: " + conversation_id)
+                conversation_data['summarizer_system_prompt_date'] = datetime.now().isoformat()
+            if 'intro_blurb' not in conversation_data:
+                logger.warning("No intro_blurb found in file. Setting intro_blurb to default: " + conversation_id)
+                conversation_data['intro_blurb'] = get_intro_blurb_string()
+                conversation_data['intro_blurb_date'] = datetime.now().isoformat()
+            if 'intro_blurb_date' not in conversation_data:
+                logger.warning("No intro_blurb_date found in file. Setting intro_blurb_date to now: " + conversation_id)
+                conversation_data['intro_blurb_date'] = datetime.now().isoformat()
+            if 'game_has_begun' not in conversation_data:
+                logger.warning("No game_has_begun found in file. Setting game_has_begun to False: " + conversation_id)
+                conversation_data['game_has_begun'] = False
+                conversation_data['game_has_begun_date'] = datetime.now().isoformat()        
             return conversation_data
-        return None
+    logger.warning("Game seed not found: " + conversation_id)
     return None
 
 

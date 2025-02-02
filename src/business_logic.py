@@ -5,12 +5,13 @@ from .config import *
 from .persistence import *
 from .route_utils import *
 from .llm_communication import *
+from .format_utils import *
 
 import logging
 logger = logging.getLogger(__name__)
 
 # Update the logger configuration
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler()
 logger.addHandler(handler)
 
@@ -25,8 +26,18 @@ def get_game_seed_listings():
     game_seed_listings = []
     for game_seed_id in game_seed_ids:
         game_seed = read_game_seed(game_seed_id)
-        game_seed_listings.append(game_seed)
+        game_seed_listing = {
+            'id': game_seed_id,
+            'name': game_seed['location'],
+            'description': game_seed['description'],
+            'created_at': game_seed['created_at'],
+            'last_updated': game_seed['last_updated'],
+            'message_count': len(game_seed['messages'])
+        }
+        game_seed_listings.append(game_seed_listing)
     return game_seed_listings
+
+
 
 
 # Conversation functions
@@ -60,8 +71,8 @@ def get_conversation_listings():
 def generate_conversation_id():
     return datetime.now().strftime("%Y%m%d%H%M%S")
 
-def create_new_conversation():
-    logger.info("Creating new conversation")
+def create_new_conversation_from_scratch():
+    logger.info("Creating new conversation from scratch")
     
     conversation_id = generate_conversation_id()
     conversation = {
@@ -71,6 +82,7 @@ def create_new_conversation():
         'last_updated': datetime.now().isoformat(),
         'created_at': datetime.now().isoformat(),
         'cache_points': [],
+        'game_has_begun': False,
         'gameplay_system_prompt': get_gameplay_system_prompt(),
         'gameplay_system_prompt_date' : datetime.now().isoformat(),
         'game_setup_system_prompt': get_game_setup_system_prompt(),
@@ -84,6 +96,51 @@ def create_new_conversation():
     # Save the updated conversation
 
     save_conversation(conversation)
+    logger.info("Saved conversation")
+
+    logger.info(f"Conversation created:" + conversation_id)
+    
+    return conversation
+
+def create_conversation_from_seed(seed_id):
+    logger.info("Creating new conversation based on seed: " + seed_id)
+
+    seed = read_game_seed(seed_id)
+
+    # Filter out user messages from seed, keeping only assistant messages
+
+    logger.debug("Filtering out user messages from seed")
+    logger.debug("Pre-filtering messages: " + str(len(seed['messages'])))
+
+    # No user messages in initial conversation (if we haven't already filtered out elsewhere)
+
+    seed['messages'] = [msg for msg in seed['messages'] if msg['role'] == 'assistant']
+ 
+    logger.debug("Post-filtering messages: " + str(len(seed['messages'])))
+    
+    conversation_id = generate_conversation_id()
+    conversation = {
+        'conversation_id': conversation_id,
+        'name': seed['location'],
+        'messages': seed['messages'],
+        'last_updated': datetime.now().isoformat(),
+        'created_at': datetime.now().isoformat(),
+        'cache_points': [],
+        'intro_blurb': seed['intro_blurb'],
+        'intro_blurb_date': seed['intro_blurb_date'],
+        'game_has_begun': False,
+        'gameplay_system_prompt': seed['gameplay_system_prompt'],
+        'gameplay_system_prompt_date' : seed['gameplay_system_prompt_date'],
+        'game_setup_system_prompt': seed['game_setup_system_prompt'],
+        'game_setup_system_prompt_date' : seed['game_setup_system_prompt_date'],
+        'summarizer_system_prompt': seed['summarizer_system_prompt'],
+        'summarizer_system_prompt_date' : seed['summarizer_system_prompt_date'],
+    }
+
+    logger.info(f"Created conversation based on seedwith new ID: {conversation['conversation_id']}")
+    
+    # Save the updated conversation
+
     logger.info("Saved conversation")
 
     logger.info(f"Conversation created:" + conversation_id)
@@ -198,37 +255,42 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
         
         logger.info("Boot sequence and cache point setup completed successfully")
         return conversation, new_messages
-    
-    conversation['messages'].append(user_message)
-        
-    # get and save gm response
-    gm_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.5)
-    conversation['messages'].append(gm_response_json)
-    new_messages = [gm_response_json]
-
-    # if gm requested tool use
-    if (isToolUseRequest(gm_response_json)):
-        logger.info("tool use request detected")
-        # generate and save tool result
-        tool_result_json = generate_tool_result(gm_response_json)
-        conversation['messages'].append(tool_result_json)
-        new_messages.append(tool_result_json)
-
-        # get and save gm response to tool result
-        tool_use_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.8)
-        conversation['messages'].append(tool_use_response_json)
-        new_messages.append(tool_use_response_json)
+        # Check if we need to inject the begin game message
+      
+   
     else:
-        logger.info("no tool use request detected")
+        conversation['messages'].append(user_message)
         
-    # update caching or perform summarization if necessary
-    if usage_data['total_input_tokens'] >= MAX_TOTAL_INPUT_TOKENS:
-        conversation = summarize_with_gm(conversation)
-        update_conversation_cache_points(conversation)
-    elif usage_data['uncached_input_tokens'] >= MAX_UNCACHED_INPUT_TOKENS:
-        conversation = update_conversation_cache_points(conversation)
+        # get and save gm response
+        gm_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.5)
+        conversation['messages'].append(gm_response_json)
+        new_messages = [gm_response_json]
 
-    return conversation, new_messages
+        # if gm requested tool use
+        if (isToolUseRequest(gm_response_json)):
+            logger.info("tool use request detected")
+            # generate and save tool result
+            tool_result_json = generate_tool_result(gm_response_json)
+            conversation['messages'].append(tool_result_json)
+            new_messages.append(tool_result_json)
+
+            # get and save gm response to tool result
+            tool_use_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.8)
+            conversation['messages'].append(tool_use_response_json)
+            new_messages.append(tool_use_response_json)
+        else:
+            logger.info("no tool use request detected")
+        
+        # update caching or perform summarization if necessary
+        if usage_data['total_input_tokens'] >= MAX_TOTAL_INPUT_TOKENS:
+            conversation = summarize_with_gm(conversation)
+            update_conversation_cache_points(conversation)
+        elif usage_data['uncached_input_tokens'] >= MAX_UNCACHED_INPUT_TOKENS:
+            conversation = update_conversation_cache_points(conversation)
+
+        conversation['game_has_begun'] = True
+
+        return conversation, new_messages
 
 def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_prompt):
     logger.info("Creating dynamic world gen data messages")
