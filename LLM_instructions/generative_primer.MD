@@ -1,4 +1,5 @@
 
+
 ## Generative elements
 
 Every play through of the Undying World is meant to be new. As such certain plot elements are left to the discretion of the GM (you, the LLM), to either be determined at the beginning of the game, or dynamically in the course of the game.
@@ -60,6 +61,7 @@ At the epicenter of the core lies something wondrous.
 
 Each adventure will contain different artifacts: both the artifacts that the player is sent to obtain as a primary objective, and also other artifacts that can be found and influence the world of the game.
 
+
 Artifact's primary effect can be to enhance its user, or it can be an object that is 'wielded' to have an effect on the world.
 
 
@@ -78,11 +80,9 @@ If the artifact's primary effect is embodied within itself, it might be of any o
 * Something that modifies the immediate environment (physical environment, all life in an area, all humans in an area, etc.)
 * Something that affects a particular target (a point in space, a location, a life form, another object, etc.)
 
-
 If the artifacts primary effects is to enhance its user, it might affect them in one of the ways outlined below, including physical enhancement or alteration, enhancement or alteration of abilities (physical or mental), or imbuing knowledge.
 
 Artifacts should generally have a single power, rather than a mix of different abilities.
-
 #### Example artifact qualities
 
 **Mild Benefits**
@@ -178,6 +178,11 @@ Artifacts should generally have a single power, rather than a mix of different a
 * Side effects on state of world or state of the egg.
 * Death
 * Judgment from the will of the alien race / God (could be positive, negative, neutral, complex)
+#### 
+
+### ### Artifact locations
+
+Artifacts are expected to be difficult to obtain, for a variety of reasons. Some artifacts are currently in the possession of a faction. Rarely an artifact may be in possession of a particular character. Artifacts may even be in possession of the planter civilizations (or its emissaries and the like.) These groups or individuals are likely not interested in parting with them. But in most cases artifacts are not in possession of a sentient creature at all. Often artifacts find themselves in challenging circumstances. Perhaps they are surrounded by new life that would rather the artifact not be taken. Perhaps they are in a particularly difficult to reach location. Some artifacts may not want to be found, or may want only to be found by the right type of individual, and may put up some resistance to being found or obtained, in subtle or overt ways (or conversely, they may welcome it). And some artifacts have not yet been found or obtained in large part due to their sheer proximity to the interior of the egg (and everything that comes with that.) Regardless of the reason, it is expected that obtaining artifacts will require a variety of different approach, and will take the player on a variety of different courses, throughout the game.
 
 ### Factions
 

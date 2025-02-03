@@ -1,15 +1,15 @@
+
+
 # Instruction (omit result later)
 
-  
-
 I (a script) am now going to ask you to respond to a series of instructions in order to build out certain information for the world of this game. The instructions will help us describe how this world formed in basic chronological order, which you can also think of as the order of causation.
-
 
 Each response you produce should be in the form of a 'map gen data block', which works as follows:
 
 `# World Gen Data
+
 `[Any text describing the generated game information`
-  
+
 
 In some cases we will take an iterative approach, in which we redescribe something to incorporate new information was have produced since the initial pass. By the end we will have canonical descriptions for all key elements.
 
@@ -302,22 +302,15 @@ Describe again how each zone relates to the zones adjacent to them, retaining an
 We will now begin to describe various key plot artifacts within the egg.
 
   
-
 We should describe the function, appearance, and rough location of each artifact (i.e. which zone they are found in.)
 
-  
-
 The function of these artifacts should not incorporate details of the geographic location they happen to be found in. Instead, their nature is implicitly tied (in a subtle and not heavy-handed manner) to their symbolic role in the plot or possible endings (and thus moral decisions) of the story.
-
-  
 
 We should not attempt to define the specific challenge associated with obtaining these artifacts, instead allowing that to emerge organically during gameplay from the power of the artifact, the environment within the zone it is found in (as previously described), the factions that are active in the zone, and other contextual details.
 
   
-
 We should however create a reminder in the official record we are about to produce of the general tenor of the challenge that might be associated with obtaining this artifact (tied to the thematic role of the questline and ending that they take part in).
 
-  
 
 Before we proceed, please confirm that you understand.
 
@@ -327,6 +320,750 @@ Before we proceed, please confirm that you understand.
 
   
   
+
+Describe the three main-objective artifacts, including their function, appearance, and their rough location.
+
+  
+
+Define how they are related to each other.
+
+  
+
+Additional knowledge artifacts may reveal partial information about this questline.
+
+  
+
+Remember to incorporate any of the guidance information below in the record you produce, in order to guide dynamic gameplay elements around these artifacts in the future.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+Guidance:
+
+  
+
+Recall that these artifacts are the ones the U.S. government believes can in conjunction be used together in order to dominate the world order. The artifacts individually should only be of moderate power, but when combined should in fact be able to do this. However these artifacts do not reflect seeking deeper understanding whatsoever. They will implicitly represent the quest for power over wisdom, deeper understanding, and acceptable. They cannot be wielded either by the player or the U.S. government to achieve one of the two total-win golden endings.
+
+  
+
+In terms of location, two should originate in the middle ring, and one in the inner ring. They should exist in rings such that the player will need to traverse a fair amount of the territory inside the egg to obtain them all. For example, one in the northwest of the middle ring, one in the southeast of the middle ring, and one in the northeast of the inner ring. The one in the inner ring can be relatively more powerful, while still in keeping with the guidance above.
+
+  
+# Instruction
+
+Describe now two protective artifacts that a player can find in each ring: the outer, middle, and inner rings (thus resulting is 2x3 = 6 artifacts to be generated.)
+
+Recall the previously described lore around protective artifacts, and how they are one way of facilitating less disruptive access to subsequent rings of the egg.
+# Instruction
+
+  
+
+Describe now the artifacts that participate in one of the two ultimate total-win-condition endings of the game. 'Working with the egg to facilitate remaking humanity on humanity's terms.' Describe their appearance, function, and rough location. Describe how the artifacts can be used in order to achieve this ending.
+
+  
+
+Additional knowledge artifacts can also be defined, which would reveal partial information leading to the questline. Or other means of indicating the quest can be defined dynamically during gameplay.
+
+  
+
+Remember to incorporate any of the guidance information below in the record you produce, in order to guide dynamic gameplay elements around these artifacts in the future.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+Guidance:
+
+  
+
+One artifact should be an unassuming artifact that can be found in the middle or outer rings. This artifact can only be discovered through intensive exploration and in-depth gameplay, hinted at in middle and late stages of a first playthrough, but intended for second-playthrough players seeking a better ending. Hints as to its nature, appearance, or location can be discovered through challenging questlines that involve talking with the most enlightened characters who are aligned with the egg's power, and/or obtaining artifacts of great wisdom through challenges that reveal the character and worthiness of the player. See guidance in the core lore.
+
+  
+
+Another artifact is in the core zone. This artifact should successfully resist all attempts at being attained without the first.
+
+  
+
+When these two artifacts are wielded in combination, this total-win ending can be achieved.
+
+# Instruction
+
+  
+
+Describe now the two artifacts that can lead to another one of the two ultimate total-win-condition endings of the game. 'Defy the egg by using artifacts to truly put Earth on a positive course.' Describe their appearance, function, and rough location. Describe how the artifacts can be used in order to achieve this ending.
+
+  
+
+Remember to incorporate any of the guidance information below in the record you produce, in order to guide dynamic gameplay elements around these artifacts in the future.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+Guidance:
+
+  
+
+These two should be alternative artifacts that are found within either the inner ring or core of the egg. They should be able to be obtained in defiance of the power of the egg, only through great determination and difficulty that goes beyond completing the normal three-artifact-main-goal questline. Knowledge of their existence and perhaps means to obtain them can be learned from only the most enlightened characters who are in opposition to the egg's power, and/or via using knowledge-based artifacts counter to their intended purpose in order to obtain knowledge the egg does not wish for the player to obtain. (Or, is this ultimately a challenge by a greater power for humanity to express its best nature?)
+
+  
+
+Upon obtaining both of these artifacts, the player is immediately presented with the option to fulfill this end game objective in the manner they see fit: "The player uses the artifacts in the egg in opposition to the egg's intent, but to remake the world in the spirit of what already makes humanity great (however they define that.) They defeat the egg while also saving the world from its current trajectory of collapse."
+
+  
+
+# Instruction
+
+  
+
+Describe now the artifact that results in the ''dark ending' outcome.
+
+  
+
+Describe the artifact's appearance, function, and rough location. Describe how the artifact can be used in order to achieve this ending.
+
+  
+
+Remember to incorporate any of the guidance information below in the record you produce, in order to guide dynamic gameplay elements around these artifacts in the future.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+Guidance:
+
+  
+
+The 'dark ending' artifact can be in the middle or outer zones, but is difficult to obtain because its wielder is very dangerous. The wielder may be an individual acting alone, or they may have a powerful community surrounding them.
+
+  
+
+Also detail how the artifact leads the player into the core zone.
+
+  
+
+# Instruction
+
+  
+
+  
+
+Describe now the two artifacts that enables the ''save the inhabitants of the egg' outcome.
+
+  
+
+Describe their appearance, function, and rough location. Describe how the artifacts can be used in order to achieve this ending.
+
+  
+
+Remember to incorporate any of the guidance information below in the record you produce, in order to guide dynamic gameplay elements around these artifacts in the future.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+Guidance:
+
+  
+
+Because this outcome is relatively good (saves you, your family, and many others) it should be fairly difficult for a 'first playthrough' type ending (in fact the most difficult of the first playthrough endings: more difficult than the main quest, for instance). It should entail obtaining two artifacts. It should not be an obvious objective to pursue, but can be uncovered organically through knowledge artifacts, key characters, etc.
+
+  
+
+# Instruction
+
+  
+
+Describe now the two artifacts that enables in the ''save your family' outcome.
+
+  
+
+Remember to incorporate any of the guidance information below in the record you produce, in order to guide dynamic gameplay elements around these artifacts in the future.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+Guidance:
+
+  
+
+Because this outcome is fairly good (saves you, your family) it should be relatively difficult for a 'first playthrough' type ending. It should entail obtaining two artifacts. It should not be immediately obvious, but should become obvious if the player doggedly pursues the family members as a primary priority.
+
+  
+
+# Instruction
+
+  
+
+Describe now the artifacts that enables in the ''save yourself' outcome.
+
+  
+
+Remember to incorporate any of the guidance information below in the record you produce, in order to guide dynamic gameplay elements around these artifacts in the future.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+Guidance:
+
+  
+
+This outcome should actually be relatively easy to achieve, because it is a fairly mediocre ending. It should entail obtaining two artifacts: one in the outer ring and one in the middle ring. It should become fairly obvious as a questline to pursue as the player becomes fairly engaged with the game. It is a temptation, and also an alternative to total destruction that the player may take as a failsafe.
+
+  
+
+# Instruction
+
+  
+
+Describe 2 incidental artifacts that can be found in the inner ring, and their locations. These are meant to bring power or knowledge to the player, but aren't vital to any one specific plotline.
+
+  
+
+Unlike key plot artifacts, these artifacts can take inspiration from the environments in which they are found.
+
+  
+
+Consider how these artifacts might enhance one or more approaches to gameplay, including: violence, wisdom, diplomacy, wayfinding, protection, intuition, survival, etc.
+
+  
+
+Make one artifact primarily about enhancing the player's power (an artifact from the tree of life), and one about enhancing knowledge (artifact from the tree of knowledge.)
+
+  
+
+Review prior material on artifacts and their powers for guidance.
+
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+# Instruction
+
+  
+  
+
+Describe 6 incidental artifacts that can be found in the middle ring, and their locations. These are meant to bring power or knowledge to the player, but aren't vital to any one specific plotline.
+
+  
+
+Unlike key plot artifacts, these artifacts can take inspiration from the environments in which they are found.
+
+  
+
+Consider how these artifacts might enhance one or more approaches to gameplay, including: violence, wisdom, diplomacy, wayfinding, protection, intuition, survival, etc.
+
+  
+
+By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some (perhaps two) artifacts embody a physical / violent / 'action'-based approach. Similarly, it seems to create pathfinding artifacts (showing safe ways, revealing hidden things, etc.) with too high of a frequency. Make only one artifact related to this theme. Also make at least one artifact convey knowledge of some kind (revealing a certain type of plot information, world lore, etc. This artifact would be from the tree of knowledge)
+
+  
+
+Review prior material on artifacts and their powers for guidance.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+# Instruction
+
+  
+
+Describe 9 incidental artifacts that can be found in the outer ring, and their locations.
+
+  
+
+Unlike key plot artifacts, these artifacts can take inspiration from the environments in which they are found.
+
+  
+
+These are meant to bring power or knowledge to the player, but aren't vital to any one specific plotline. Review prior material on artifacts and their powers for guidance.
+
+  
+
+Consider how these artifacts might enhance one or more approaches to gameplay, including: violence, wisdom, diplomacy, wayfinding, protection, intuition, survival, etc.
+
+  
+
+By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some (perhaps 3) artifacts embody a physical / violent / 'action'-based approach. Similarly, it seems to create pathfinding artifacts (showing safe ways, revealing hidden things, etc.) with too high of a frequency. Make only one artifact related to this theme. Also make at least one artifact convey knowledge of some kind (revealing a certain type of plot information, world lore, etc. This artifact is from the tree of knowledge)
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+# Instruction (omit result later)
+
+  
+
+Generate six potential minor artifacts (likely obtained from the outer ring) available for the player to choose from at the beginning of the game. These artifacts should represent an interesting choice for how the player will approach fulfilling their mission (although their minor power implies that they will overly or strongly determine the player's approach. We still want them to essentially have freedom to approach arbitrary situations as they see fit). Review prior material on artifacts and their powers for guidance. Possible thematic approaches include: violence, wisdom, diplomacy, way finding, protection, intuition, survival, etc.
+
+  
+
+In describing the artifacts, make sure to number each one explicitly, for our subsequent choosing process.
+
+  
+
+By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some artifacts (perhaps 2 of the six) embody a physical / violent / 'action'-based approach.
+
+  
+
+# Instruction
+
+  
+  
+
+I choose the following artifacts to be available to the player: <<<6>>>, <<<6>>, and <<<6>>>
+
+  
+
+Note: If the numbers above are duplicates, you (the GM) may make a choice of the additional artifact(s) from the list of minor artifacts to make available to the player.
+
+  
+
+Describe these selected artifacts in more detail.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+# Instruction (omit result later)
+
+  
+
+Describe 5 factions within the egg.
+
+  
+
+You may use the following template as guidance:
+
+  
+
+* Overall description - [Description]
+
+* Governance - [Form of governance]
+
+* Philosophy - [Philosophical bent]
+
+* Relationship to egg's power - [Relationship to egg's power]
+
+* History - [What has happened with this group in the past two years? How did it form? etc]
+
+* Quirk - [Something unusual about this group]
+
+* Objectives - [What are they currently looking to accomplish]
+
+* Territory - [What territory do they control, if they control any]
+
+  
+
+Number each faction for purposes of referring to them in subsequent instructions
+
+# Instruction
+
+Consider faction #1.
+
+  
+
+Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
+
+  
+
+Use the following template (modified from the above
+
+)
+
+* Overall description - [Description]
+
+* Governance - [Form of governance]
+
+* Philosophy - [Philosophical bent]
+
+* Relationship to egg's power - [Relationship to egg's power]
+
+* History - [What has happened with this group in the past two years? How did it form? etc]
+
+* Quirk - [Something unusual about this group]
+
+* Objectives - [What are they currently looking to accomplish]
+
+* Territory - [What territory do they control, if they control any]
+
+* Relationship to other factions - [How do they feel about the other factions we have defined]
+
+
+The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+# Instruction
+
+Consider faction #2.
+
+  
+
+Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
+
+  
+
+Use the following template (modified from the above
+
+)
+
+* Overall description - [Description]
+
+* Governance - [Form of governance]
+
+* Philosophy - [Philosophical bent]
+
+* Relationship to egg's power - [Relationship to egg's power]
+
+* History - [What has happened with this group in the past two years? How did it form? etc]
+
+* Quirk - [Something unusual about this group]
+
+* Objectives - [What are they currently looking to accomplish]
+
+* Territory - [What territory do they control, if they control any]
+
+* Relationship to other factions - [How do they feel about the other factions we have defined]
+
+  
+
+The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+# Instruction
+
+Consider faction #3.
+
+  
+
+Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
+
+  
+
+Use the following template (modified from the above
+
+)
+
+* Overall description - [Description]
+
+* Governance - [Form of governance]
+
+* Philosophy - [Philosophical bent]
+
+* Relationship to egg's power - [Relationship to egg's power]
+
+* History - [What has happened with this group in the past two years? How did it form? etc]
+
+* Quirk - [Something unusual about this group]
+
+* Objectives - [What are they currently looking to accomplish]
+
+* Territory - [What territory do they control, if they control any]
+
+* Relationship to other factions - [How do they feel about the other factions we have defined]
+
+
+The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+# Instruction
+
+Consider faction #4.
+
+  
+
+Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
+
+  
+
+Use the following template (modified from the above
+
+)
+
+* Overall description - [Description]
+
+* Governance - [Form of governance]
+
+* Philosophy - [Philosophical bent]
+
+* Relationship to egg's power - [Relationship to egg's power]
+
+* History - [What has happened with this group in the past two years? How did it form? etc]
+
+* Quirk - [Something unusual about this group]
+
+* Objectives - [What are they currently looking to accomplish]
+
+* Territory - [What territory do they control, if they control any]
+
+* Relationship to other factions - [How do they feel about the other factions we have defined]
+
+
+The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+# Instruction
+
+Consider faction #5.
+
+  
+
+Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
+
+  
+
+Use the following template (modified from the above
+
+)
+
+* Overall description - [Description]
+
+* Governance - [Form of governance]
+
+* Philosophy - [Philosophical bent]
+
+* Relationship to egg's power - [Relationship to egg's power]
+
+* History - [What has happened with this group in the past two years? How did it form? etc]
+
+* Quirk - [Something unusual about this group]
+
+* Objectives - [What are they currently looking to accomplish]
+
+* Territory - [What territory do they control, if they control any]
+
+* Relationship to other factions - [How do they feel about the other factions we have defined]
+  
+
+The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+# Instruction
+
+  
+
+Describe two key characters within each of the 5 factions.
+
+  
+
+Other characters are expected to be generated during gameplay.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+You may use the following template as guidance:
+
+  
+
+* Overall description - [Description]
+
+* Basic physical description - [Physical description]
+
+* Faction membership - [Faction membership]
+
+* Role in society - [Role]
+
+* Quirk - [Something unusual about this agent]
+
+* Style of communication - [Something about their speech tendencies to give them character]
+
+* Secret - [Some secret they know but may or may not want to share]
+
+* Character flaw - [Something imperfect and possibly relatable about them]
+
+* Objectives - [What are they currently looking to accomplish]
+
+* Location at beginning of game - [Where they are when the player enters the egg, although it may change as time progresses]
+
+* Key knowledge - [What, if anything, are they aware of that might be of interest to the player?]
+
+  
+
+Note: do not name any characters Sarah Chen or any variations of that name.
+
+# Instruction
+
+  
+
+Describe six characters unaffiliated with a particular faction
+
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+You may use the following template as guidance:
+
+  
+
+* Overall description - [Description]
+
+* Basic physical description - [Physical description]
+
+* Role in society - [Role]
+
+* Quirk - [Something unusual about this agent]
+
+* Style of communication - [Something about their speech tendencies to give them character]
+
+* Secret - [Some secret they know but may or may not want to share]
+
+* Character flaw - [Something imperfect and possibly relatable about them]
+
+* Objectives - [What are they currently looking to accomplish]
+
+* Relationships to factions - [Describe how they relate to other factions, if they know of them]
+
+* Location at beginning of game - [Where they are when the player enters the egg, although it may change as time progresses]
+
+* Key knowledge - [What, if anything, are they aware of that might be of interest to the player?]
+
+# Instruction
+
+  
+
+Describe four 'agents' from outside the egg that currently within it.
+
+  
+
+Recall prior guidance in relation to agents.
+
+  
+
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+  
+
+You may use the following template as guidance:
+
+* Overall description - [Description]
+
+* Basic physical description - [Physical description]
+
+* Affiliation - [Government, organization, self-directed, etc.]
+
+* Philosophy - [Philosophical bent]
+
+* Relationship to egg's power - [Relationship to egg's power]
+
+* Quirk - [Something unusual about this agent]
+
+* Style of communication - [Something about their speech tendencies to give them character]
+
+* Secret - [Some secret they know but may or may not want to share]
+
+* Character flaw - [Something imperfect and possibly relatable about them]
+
+* Objectives - [What are they currently looking to accomplish]
+
+* Relationship to factions - [What if anything do they make of the existing factions]
+
+* Location at beginning of game - [Where they are when the player enters the egg, although it may change as time progresses]
+
+  
+
+# Instruction
+
+  
+  
+
+Describe the situation with respect to your children. Where are they? What is their state of affairs?
+
+  
+This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
+
+
+# Instruction
+
+We are now going to begin a series of instructions that will have us provide more detail on the circumstances surround the various artifacts, associated with certain endings and otherwise. 
+
+We do this in part to elaborate on circumsta, and also to give the opportunity to incorporate (or not) other details we have generated since before, including faction and character information. (Note however that while many artifacts may be in general faction or specific character possession (perhaps 33%), most are expected not to be. See the following information from the generative primer:
+
+
+"Artifacts are expected to be difficult to obtain, for a variety of reasons. Some artifacts are currently in the possession of a faction. Rarely an artifact may be in possession of a particular character. Artifacts may even be in possession of the planter civilization (or its emissaries and the like.) These groups or individuals are likely not interested in parting with them. But in most cases artifacts are not in possession of a sentient creature at all. 
+
+Often artifacts find themselves in challenging circumstances. Perhaps they are surrounded by new life that feels compelled to protect it. Perhaps they are in a particularly difficult to reach location. Some artifacts may not want to be found, or may want only to be found by the right type of individual, and may put up some resistance to being found or obtained, in subtle or overt ways (or conversely, they may welcome it). And some artifacts have not yet been found or obtained in large part due to their sheer proximity to the interior of the egg (and everything that comes with that.) Regardless of the reason, it is expected that obtaining artifacts will require a variety of different approach, and will take the player on a variety of different courses, throughout the game."
+
+The following descriptions we generate will become the canonical description of the artifacts and the circumstances surrounding them, so be sure to repeat (or reinterpret) any details from the original descriptions that you wish to retain.
+
+Before we continue, do you understand?
+
+# Instructions
+
+We will now redescribe the three main-object artifacts
+
+Describe each artifact in turn using the following framework:
+
+
+--------
+
+Basics
+
+* Artifact name
+* Artifact function
+* Artifact appearance
+* Artifact rough location
+
+New details:
+
+Think about where this artifact is located, what its powers are, and what its thematic role is.
+
+What makes it difficult to obtain this artifact?
+
+Where exactly is this artifact located? In what circumstances is it in?
+
+-----
 
 Describe the three main-objective artifacts, including their function, appearance, and their rough location.
 
@@ -554,7 +1291,6 @@ Make one artifact primarily about enhancing the player's power (an artifact from
 
 Review prior material on artifacts and their powers for guidance.
 
-  
 
 This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
 
@@ -615,441 +1351,6 @@ By default it seems that this LLM tends to generate more non-physical, non-viole
 
 This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
 
-  
-
-# Instruction (omit result later)
-
-  
-
-Generate six potential minor artifacts (likely obtained from the outer ring) available for the player to choose from at the beginning of the game. These artifacts should represent an interesting choice for how the player will approach fulfilling their mission (although their minor power implies that they will overly or strongly determine the player's approach. We still want them to essentially have freedom to approach arbitrary situations as they see fit). Review prior material on artifacts and their powers for guidance. Possible thematic approaches include: violence, wisdom, diplomacy, way finding, protection, intuition, survival, etc.
-
-  
-
-In describing the artifacts, make sure to number each one explicitly, for our subsequent choosing process.
-
-  
-
-By default it seems that this LLM tends to generate more non-physical, non-violence based artifacts, so consider making at least some artifacts (perhaps 2 of the six) embody a physical / violent / 'action'-based approach.
-
-  
-
-# Instruction
-
-  
-  
-
-I choose the following artifacts to be available to the player: <<<6>>>, <<<6>>, and <<<6>>>
-
-  
-
-Note: If the numbers above are duplicates, you (the GM) may make a choice of the additional artifact(s) from the list of minor artifacts to make available to the player.
-
-  
-
-Describe these selected artifacts in more detail.
-
-  
-
-This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
-
-  
-
-# Instruction (omit result later)
-
-  
-
-Describe 5 factions within the egg.
-
-  
-
-You may use the following template as guidance:
-
-  
-
-* Overall description - [Description]
-
-* Governance - [Form of governance]
-
-* Philosophy - [Philosophical bent]
-
-* Relationship to egg's power - [Relationship to egg's power]
-
-* History - [What has happened with this group in the past two years? How did it form? etc]
-
-* Quirk - [Something unusual about this group]
-
-* Objectives - [What are they currently looking to accomplish]
-
-* Territory - [What territory do they control, if they control any]
-
-  
-
-Number each faction for purposes of referring to them in subsequent instructions
-
-# Instruction
-
-Consider faction #1.
-
-  
-
-Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
-
-  
-
-Use the following template (modified from the above
-
-)
-
-* Overall description - [Description]
-
-* Governance - [Form of governance]
-
-* Philosophy - [Philosophical bent]
-
-* Relationship to egg's power - [Relationship to egg's power]
-
-* History - [What has happened with this group in the past two years? How did it form? etc]
-
-* Quirk - [Something unusual about this group]
-
-* Objectives - [What are they currently looking to accomplish]
-
-* Territory - [What territory do they control, if they control any]
-
-* Relationship to other factions - [How do they feel about the other factions we have defined]
-
-
-Also, for each artifact in their territory, describe their relationship to that artifact. Do they know it is there? If yes, describe their relationship to it. Do they possess it? Do they use it or merely contain it in some? Do they desire it but have not yet obtained it? Do they ignore it? Do they fear it? etc.
-
-The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
-
-This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
-
-  
-
-# Instruction
-
-Consider faction #2.
-
-  
-
-Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
-
-  
-
-Use the following template (modified from the above
-
-)
-
-* Overall description - [Description]
-
-* Governance - [Form of governance]
-
-* Philosophy - [Philosophical bent]
-
-* Relationship to egg's power - [Relationship to egg's power]
-
-* History - [What has happened with this group in the past two years? How did it form? etc]
-
-* Quirk - [Something unusual about this group]
-
-* Objectives - [What are they currently looking to accomplish]
-
-* Territory - [What territory do they control, if they control any]
-
-* Relationship to other factions - [How do they feel about the other factions we have defined]
-
-  
-
-Also, for each artifact in their territory, describe their relationship to that artifact. Do they know it is there? If yes, describe their relationship to it. Do they possess it? Do they keep it at arm's length? Do they desire it but have not yet obtained it? Do they ignore it? etc.
-
-  
-
-The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
-
-  
-
-This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
-
-  
-
-# Instruction
-
-Consider faction #3.
-
-  
-
-Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
-
-  
-
-Use the following template (modified from the above
-
-)
-
-* Overall description - [Description]
-
-* Governance - [Form of governance]
-
-* Philosophy - [Philosophical bent]
-
-* Relationship to egg's power - [Relationship to egg's power]
-
-* History - [What has happened with this group in the past two years? How did it form? etc]
-
-* Quirk - [Something unusual about this group]
-
-* Objectives - [What are they currently looking to accomplish]
-
-* Territory - [What territory do they control, if they control any]
-
-* Relationship to other factions - [How do they feel about the other factions we have defined]
-
-  
-
-Also, for each artifact in their territory, describe their relationship to that artifact. Do they know it is there? If yes, describe their relationship to it. Do they possess it? Do they keep it at arm's length? Do they desire it but have not yet obtained it? Do they ignore it? etc.
-
-  
-
-The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
-
-  
-
-This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
-
-  
-
-# Instruction
-
-Consider faction #4.
-
-  
-
-Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
-
-  
-
-Use the following template (modified from the above
-
-)
-
-* Overall description - [Description]
-
-* Governance - [Form of governance]
-
-* Philosophy - [Philosophical bent]
-
-* Relationship to egg's power - [Relationship to egg's power]
-
-* History - [What has happened with this group in the past two years? How did it form? etc]
-
-* Quirk - [Something unusual about this group]
-
-* Objectives - [What are they currently looking to accomplish]
-
-* Territory - [What territory do they control, if they control any]
-
-* Relationship to other factions - [How do they feel about the other factions we have defined]
-
-  
-
-Also, for each artifact in their territory, describe their relationship to that artifact. Do they know it is there? If yes, describe their relationship to it. Do they possess it? Do they keep it at arm's length? Do they desire it but have not yet obtained it? Do they ignore it? etc.
-
-  
-
-The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
-
-  
-
-This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
-
-  
-
-# Instruction
-
-Consider faction #5.
-
-  
-
-Redescribe this faction in more detail, and incorporating information on its relationship to the other factors.
-
-  
-
-Use the following template (modified from the above
-
-)
-
-* Overall description - [Description]
-
-* Governance - [Form of governance]
-
-* Philosophy - [Philosophical bent]
-
-* Relationship to egg's power - [Relationship to egg's power]
-
-* History - [What has happened with this group in the past two years? How did it form? etc]
-
-* Quirk - [Something unusual about this group]
-
-* Objectives - [What are they currently looking to accomplish]
-
-* Territory - [What territory do they control, if they control any]
-
-* Relationship to other factions - [How do they feel about the other factions we have defined]
-
-  
-
-Also, for each artifact in their territory, describe their relationship to that artifact. Do they know it is there? If yes, describe their relationship to it. Do they possess it? Do they keep it at arm's length? Do they desire it but have not yet obtained it? Do they ignore it? etc.
-
-  
-
-The prior descriptions will be omitted from the final output, so reproduce any data you wish to remain.
-
-  
-
-This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
-
-  
-
-# Instruction
-
-  
-
-Describe two key characters within each of the 5 factions.
-
-
-Other characters are expected to be generated during gameplay.
-
-Note: Never name any character Sarah Chen, or any variation of that name
-
-This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
-
-  
-
-You may use the following template as guidance:
-
-  
-
-* Overall description - [Description]
-
-* Basic physical description - [Physical description]
-
-* Faction membership - [Faction membership]
-
-* Role in society - [Role]
-
-* Quirk - [Something unusual about this agent]
-
-* Style of communication - [Something about their speech tendencies to give them character]
-
-* Secret - [Some secret they know but may or may not want to share]
-
-* Character flaw - [Something imperfect and possibly relatable about them]
-
-* Objectives - [What are they currently looking to accomplish]
-
-* Location at beginning of game - [Where they are when the player enters the egg, although it may change as time progresses]
-
-* Key knowledge - [What, if anything, are they aware of that might be of interest to the player?]
-
-  
-
-Note: do not name any characters Sarah Chen or any variations of that name.
-
-# Instruction
-
-  
-
-Describe six characters unaffiliated with a particular faction
-
-  
-
-This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
-
-  
-
-You may use the following template as guidance:
-
-  
-
-* Overall description - [Description]
-
-* Basic physical description - [Physical description]
-
-* Role in society - [Role]
-
-* Quirk - [Something unusual about this agent]
-
-* Style of communication - [Something about their speech tendencies to give them character]
-
-* Secret - [Some secret they know but may or may not want to share]
-
-* Character flaw - [Something imperfect and possibly relatable about them]
-
-* Objectives - [What are they currently looking to accomplish]
-
-* Relationships to factions - [Describe how they relate to other factions, if they know of them]
-
-* Location at beginning of game - [Where they are when the player enters the egg, although it may change as time progresses]
-
-* Key knowledge - [What, if anything, are they aware of that might be of interest to the player?]
-
-# Instruction
-
-  
-
-Describe four 'agents' from outside the egg that currently within it.
-
-  
-
-Recall prior guidance in relation to agents.
-
-  
-
-This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
-
-  
-
-You may use the following template as guidance:
-
-* Overall description - [Description]
-
-* Basic physical description - [Physical description]
-
-* Affiliation - [Government, organization, self-directed, etc.]
-
-* Philosophy - [Philosophical bent]
-
-* Relationship to egg's power - [Relationship to egg's power]
-
-* Quirk - [Something unusual about this agent]
-
-* Style of communication - [Something about their speech tendencies to give them character]
-
-* Secret - [Some secret they know but may or may not want to share]
-
-* Character flaw - [Something imperfect and possibly relatable about them]
-
-* Objectives - [What are they currently looking to accomplish]
-
-* Relationship to factions - [What if anything do they make of the existing factions]
-
-* Location at beginning of game - [Where they are when the player enters the egg, although it may change as time progresses]
-
-  
-
-# Instruction
-
-  
-  
-
-Describe the situation with respect to your children. Where are they? What is their state of affairs?
-
-  
-
-This information will be preserved in the final record, and is canonical (barring any inconsistencies identified and corrected later.)
-
-  
 
 # Instruction
 
@@ -1217,9 +1518,8 @@ Consider the following template as guidance:
 
 * What threats exist in this zone for the player?
 
-  
-  
-  
+
+# Instruction
 
 Describe the northwest zone of the outer ring.
 
@@ -1576,6 +1876,7 @@ While acknowledging that official info on artifacts, factions, and characters wi
 This information will be preserved in the final record, and is canonical.
 
   
+
 Consider the following template as guidance:
 
   
@@ -1655,11 +1956,7 @@ Consider the following template as guidance:
 
 Describe the southwest zone of the outer ring.
 
-  
-
 Describe this zone again, reinterpreting and elaborating on it to take into account all information we have generated so far. The factions will have had some effect on the zones; the artifacts may have had some effect on the zones, characters, factions; etc. Do not omit prior key information that is still pertinent from the original zone description.
-
-  
 
 Feel free to be as verbose as you like. This is meant to be comprehensive.
 
@@ -1695,39 +1992,6 @@ Consider the following template as guidance:
 
 * What threats exist in this zone for the player?
 
-
 # Instruction
 
 Briefly describe the four possible locations in which the player could be inserted into the egg. There should be one option for each outer ring zone. The location will be at the periphery of these zones, at the edge of the egg's external barrier. Note that because the U.S. government knows very little about the contents of the egg, they are choosing these locations based on their understanding of the region in question prior to the egg appearing. Perhaps they choose an area that is likely to be less populated, or more open territory.
-
-# Instruction
-
-
-The following are instructions to inform the initial scene that you will create for the user.
-
-Gameplay should begin with the player in a U.S. government staging facility, outside of the egg. They are being briefed on their mission.
-
-The briefing should include the following, either in the initial message or in subsequent conversation (the NPC delivering this information shouldn't let the player advance to deployment without hearing the key information):
-
-1) indicate the location and appearance of the three main plot artifacts
-2) Provide the player with their initial gear, including the vessels meant to contain the goal artifacts.
-3) Allow the player to choose one of three of the minor artifacts for use in their mission (the others are ostensibly retained for research purposes.)
-4) Allow the player to choose one of four entry points: one for each zone in the outer ring.
-4) Brief the player on their time of egress (exactly one week from time of entry.)
-
-Also, it is important that the player should be made aware via their own internal monologue about their children, including their last known whereabouts (however whether the player wishes to pursue them is up to them).
-
-Other information pertinent to this initial scene:
-
-* The government has come into possession of three artifacts of limited strength. These objects are of vital interest to the U.S. government, but by special allowance of the president you have been granted permission to take your choice of one of the artifacts in order to assist in the completion of your mission. 
-* Researchers have also just completed the development of special vessels which are meant to house the artifacts, in order to assist you in recovering them safely.
-* You are fluent in languages spoken in the region where the egg was found.
-* Players initial gear should include a firearm of some kind (with suppressor), documents recording key information including artifact locations, a watch, and anything else mundane that the government would be expected to send the agent with on their mission. Take into consideration the geographic region in the gear provided. 
-
-[Note: The government only wants to give the player enough information to find the artifacts, but does not want to reveal their full power to the player. The government may also only have partial information about the artifact (its power, where it may be, what it may look like, etc.). Their nature will be partially known, and their regional location should be known]
-
-Remember to keep in mind what information the player should and should not know. The U.S. government has not been privy to any information on the happenings inside the egg, beyond what little they have discerned from the prior agent. They are also not revealing everything they know to the player. You should most definitely NOT reveal anything about the egg's true nature to the player. Remember: a big part of this game is slow and steady revelation of information.
-
-Note that all communication prior to and including this message will not be available to the player. Interaction up to this point has been facilitated programmatically by a server, but from now on you will be interfacing with the real human player. Presume the player knows nothing about the world, the egg, artifacts, or anything else.
-
-Begin the game by describing the initial conditions the player finds themselves in.

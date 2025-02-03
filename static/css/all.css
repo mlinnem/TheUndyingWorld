@@ -125,9 +125,9 @@ button {
     justify-content: left;
     z-index: 10;
     background-color: transparent;
-    width: 95%; /* prevents overlapping with scroll area in upper-right corner */
+    width: 100%;
+    pointer-events: none;
 }
-
 
 .header-bar-left {
     margin-right: 20px;
@@ -138,4 +138,8 @@ button {
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+}
+
+.page-title-bar > * {
+    pointer-events: auto;
 }

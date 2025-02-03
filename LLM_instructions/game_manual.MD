@@ -1,6 +1,4 @@
 
-
-
 # Introduction
 
 The following is the GM manual for The Undying World. It is made available to the GM as instruction in how to conduct the gameplay of the Undying World game. The first section describes how to conduct gameplay, and second section describes the proper formatting for how exactly to convey the information in the context of our game system.
@@ -118,7 +116,9 @@ Based on the prior analysis, the GM may request a difficulty roll, a reveal roll
 
 A skill roll should be conducted if the proposed action is not trivial (<=10% chance of failure)
 
-The  reveal roll should be conducted if the reveal level is light or above.
+The reveal roll should be conducted if the reveal level is light or above.
+
+See the tools metadata provided for the specific tools available for requesting a roll. Make sure to use the tools in order to perform this.
 
 #### Mechanics of performing the roll
 
@@ -257,6 +257,7 @@ Additionally, if pertinent, populate following optional conditions
 `# reveal level`
 `Moderate`
 
+`[Non-output note: Because the situation has been judged to call for both a difficulty and reveal roll, the GM programmatically calls for tool use that will produce both of these numbers. See the tools metadata for the exact method for invoking tool use]
 ##### Response received from client (on tool use request)
 
 `# difficulty roll`
@@ -320,6 +321,8 @@ Additionally, if pertinent, populate following optional conditions
 
 `# reveal level`
 `N/A`
+
+`[Non-output note: Because neither a difficulty or reveal roll is called for, the GM does not programmatically request the invocation of a tool. The GM continues with their singular response.]
 
 `# Resulting Scene`
 
@@ -387,7 +390,6 @@ All output you produce must be in the form of markdown.
 You should produce output in the form of what we will call 'blocks'
 
 Blocks may be one of the following forms.
-
 #### Analysis block
 
 This is the form of block you should produce when analyzing a proposed action provided by the user.
@@ -441,6 +443,17 @@ This is the form of block you should produce when you want to answer a query fro
 The format is as follows
 
 `# OOC message`
+`[Message contents]`
+
+#### LLM Whisper Block
+
+This is the form of data that is injected by a programmatic process other than the LLM, for the LLM's benefit. It may be information that the LLM should be aware of in order to facilitate gameplay from this moment forth. It is not information that will be visible to the player.
+
+One example is that at the beginning of the game, we will inject instructions on how to conduct the initial game scene.
+
+The format is as follows
+
+`# LLM Whisper (not visible to the user)`
 `[Message contents]`
 
 ###  Section Headers
