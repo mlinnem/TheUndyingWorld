@@ -202,6 +202,7 @@ def filter_conversation_objects(conversation_objects):
         'world_reveal_roll',  # Filter out world reveal roll
         'world_reveal_analysis',  # Filter out world reveal analysis
         'world_reveal_level',  # Filter out world reveal level
+        'tracked_operations',  # Filter out tracked operations
     }
     
     # Find the index of boot_sequence_end if it exists

@@ -35,7 +35,7 @@
 
 .left {
     align-self: flex-start;
-    max-width: 80%;
+    max-width: 100%;
 }
 
 .right {

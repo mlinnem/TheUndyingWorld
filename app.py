@@ -1,6 +1,6 @@
 from flask import Flask
 import secrets
-from src.routes import routes
+from server_code.routes import routes
 import http.client as http_client
 from anthropic import Anthropic
 import os

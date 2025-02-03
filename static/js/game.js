@@ -354,7 +354,7 @@ fetch('/get_conversation', {
                 beginGameButton.style.display = 'none';
                 showThinkingMessage();
                 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-                wait(2000).then(() => {
+                wait(4500).then(() => {
                     clearThinkingMessage();
                     addConversationObjects(storedConversationObjects);
                     inputContainer.classList.remove('hidden');
