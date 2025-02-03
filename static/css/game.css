@@ -31,7 +31,7 @@
     overflow: hidden;
     width: 100%;
 }
-
+l
 
 .left {
     align-self: flex-start;
@@ -292,7 +292,7 @@
     height: 500px;
     font-family: var(--in-game-text-font);
     backdrop-filter: blur(10px);
-    max-width: 80%;
+    max-width: 100%;
     font-size: 1.125rem;
     line-height: 1.6875rem;
     border-top-left-radius: 20px;
@@ -339,6 +339,7 @@
 }
 
 #begin-game-button {
+    display: block;
     margin-bottom: 10px;
     width: 850px;
     height: 80px;
@@ -450,4 +451,28 @@
 
 .module.collapsed .collapse-preview {
     display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#user-input:disabled {
+    background-color: #3a3833;
+    color: rgba(255, 247, 218, 0.5);
+    cursor: not-allowed;
+}
+
+#send-button.disabled {
+    background-color: rgba(0,0,0,0.15);
+    cursor: not-allowed;
+}
+
+#send-button.disabled:hover {
+    background-color: rgba(0,0,0,0.15);
 }

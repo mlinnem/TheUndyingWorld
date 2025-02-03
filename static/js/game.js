@@ -36,6 +36,7 @@ userInput.addEventListener('input', function() {
 // Add these variables at the top level, with the other declarations
 let dotAnimation;
 let loadingDiv;
+let isWaitingForResponse = false;
 
 function get_or_create_difficulty_check_element() {
 
@@ -341,17 +342,18 @@ fetch('/get_conversation', {
         if (data.game_has_begun) {
             console.debug("game has begun");
             addConversationObjects(data.new_conversation_objects);
+            inputContainer.classList.remove('hidden');
         } else {
             console.debug("game has not begun (yet)");
             // Store conversation objects for later use after begin game button is pressed
             const storedConversationObjects = data.new_conversation_objects;
             
             // Show begin game button
-            beginGameButton.style.display = 'block';
+            beginGameButton.classList.remove('hidden');
             
             // Add click handler to display stored objects after button press
             beginGameButton.addEventListener('click', function() {
-                beginGameButton.style.display = 'none';
+                beginGameButton.classList.add('hidden');
                 showThinkingMessage();
                 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
                 wait(4500).then(() => {
@@ -418,8 +420,25 @@ function clearThinkingMessage() {
     }
 }
 
+function updateInputState() {
+    const sendButton = document.getElementById('send-button');
+    const userInput = document.getElementById('user-input');
+    
+    if (isWaitingForResponse) {
+        sendButton.classList.add('disabled');
+        userInput.placeholder = "Waiting for response...";
+    } else {
+        sendButton.classList.remove('disabled');
+        userInput.placeholder = "Propose an action...";
+    }
+}
+
 function sendMessage() {
-    console.log("sendMessage");
+    // Prevent sending if already waiting for response
+    if (isWaitingForResponse) {
+        return;
+    }
+
     if (!activeConversationId) {
         addConversationObject({
             "type": "server_error",
@@ -432,6 +451,7 @@ function sendMessage() {
     if (true) { //TODO: Remove this
         // Check for boot sequence command
         if (text === "run_boot_sequence") {
+            isWaitingForResponse = true;
             fetch('/advance_conversation', {
                 method: 'POST',
                 headers: {
@@ -446,6 +466,7 @@ function sendMessage() {
             .then(response => response.json())
             .then(data => {
                 addConversationObjects(data.new_conversation_objects);
+                isWaitingForResponse = false;
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -454,6 +475,7 @@ function sendMessage() {
                     "type": "server_error",
                     "text": "An error occurred during boot sequence. Please try again."
                 });
+                isWaitingForResponse = false;
             });
             userInput.value = '';
             userInput.style.height = '60px';
@@ -467,11 +489,12 @@ function sendMessage() {
             });    
         }
     
-        
         userInput.value = '';
         userInput.style.height = '60px';
 
         showThinkingMessage();
+        isWaitingForResponse = true;
+        updateInputState();
 
         fetch('/advance_conversation', {
             method: 'POST',
@@ -487,6 +510,8 @@ function sendMessage() {
         .then(data => {
             clearThinkingMessage();
             addConversationObjects(data.new_conversation_objects);
+            isWaitingForResponse = false;
+            updateInputState();
             
             if (data.success_type === 'partial_success') {
                 let errorMessage;
@@ -516,13 +541,14 @@ function sendMessage() {
             }
         })
         .catch(error => {
-            clearInterval(dotAnimation);
-            loadingDiv.remove();
+            clearThinkingMessage();
             console.error('Error:', error);
             addConversationObject({
                 "type": "server_error",
                 "text": "An unhandled error occurred. Refresh this page and try again."
             });
+            isWaitingForResponse = false;
+            updateInputState();
         });
     }
 }
