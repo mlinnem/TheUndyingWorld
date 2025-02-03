@@ -111,7 +111,7 @@ export function determine_difficulty_color(difficultyElement, rolledValue) {
             return 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
         }
     } else {
-        console.warning("targetText is not a number");
+        console.warn("targetText is not a number");
         return 'hsl(0, 0%, 50%)';
     }
 }

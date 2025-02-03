@@ -563,7 +563,7 @@ let hasOverlapped = false;  // Track if overlap has occurred
 function checkOverlap() {
     if (hasOverlapped) return;  // Skip checking if overlap has already occurred
 
-    const headerBar = document.querySelector('.header-bar');
+    const headerBar = document.querySelector('.page-title-bar');
     const chatTitle = document.getElementById('chat-title');
     const chatMessagesWrapper = document.getElementById('chat-messages-wrapper');
 
