@@ -10,10 +10,14 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
-    <div class="main_menu page_container background-image1">
-            <div id="game_title">The Undying Earth</div>
-            <a href="/new_game"><button class="main-menu-button" id="new-conversation-btn">New Game</button></a>
-            <a href="/load_game"><button class="main-menu-button" id="load-game-btn">Load Game</button></a>
+    <div class="main_menu page_container">
+        <div class="background-image1" style="background-image: url('/static/images/LongBoy.png');"></div>
+        <div class="background-image2" style="background-image: url('/static/images/CityScape.png');"></div>
+        <div class="background-image3" style="background-image: url('/static/images/BigBoy3.png');"></div>
+        <div class="background-image4" style="background-image: url('/static/images/Human.png');"></div>
+        <div id="game_title">The Undying Earth</div>
+        <a href="/new_game"><button class="main-menu-button" id="new-conversation-btn">New Game</button></a>
+        <a href="/load_game"><button class="main-menu-button" id="load-game-btn">Load Game</button></a>
     </div>
     <script type="module" src="{{ url_for('static', filename='js/main_menu.js') }}"></script>
     <script>

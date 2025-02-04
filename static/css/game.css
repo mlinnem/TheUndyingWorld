@@ -299,6 +299,7 @@ l
     border-top-right-radius: 20px;  
     -webkit-mask-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 1) 50%, hsla(0, 0%, 0%, 0) 100%);
     mask-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 1) 50%, hsla(0, 0%, 0%, 0) 100%);
+    z-index: 10;
 }
 
 .input-container {
