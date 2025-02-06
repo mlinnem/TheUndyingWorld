@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 import logging
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 # Load environment variables and set up Anthropic client
 load_dotenv()
