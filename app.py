@@ -33,6 +33,7 @@ logging.getLogger("anthropic").setLevel(logging.WARNING)
 
 if __name__ == '__main__':
     logger.info("Starting Flask application...")
+    logger.debug("Present Working Directory: %s", os.getcwd())
     if os.getenv('DEPLOY_ENV') == 'Railway':
         logger.info("Running in Railway environment")
         app.run(debug=True, host='0.0.0.0')
