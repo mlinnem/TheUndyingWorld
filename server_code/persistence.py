@@ -288,7 +288,9 @@ def _get_llm_instructions(name):
     logger.debug(f"Current working directory: {os.getcwd()}")
     # Get the absolute path of the 'LLM_instructions' directory
     llm_instructions_dir = os.path.abspath('LLM_instructions')
-    file_path = os.path.join(llm_instructions_dir, f"{name}.md")
+    # Print the list of files in the 'LLM_instructions' directory
+    logger.debug(f"Files in LLM_instructions directory: {os.listdir(llm_instructions_dir)}")
+    file_path = os.path.join(llm_instructions_dir, f"{name}.MD")
     logger.debug(f"LLM instructions directory: {llm_instructions_dir}")
     with open(file_path, 'r') as f:
         logger.info(f"LLM instructions for {name} found")
