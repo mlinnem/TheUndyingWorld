@@ -11,6 +11,9 @@ def main():
     os.chdir(script_dir)
     
     try:
+        # Install required packages
+        subprocess.run(['pip', 'install', '-r', 'requirements.txt'], check=True)
+        
         # Run server.py
         subprocess.run(['python', 'app.py'], check=True)
     except subprocess.CalledProcessError as e:
