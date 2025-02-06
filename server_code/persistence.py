@@ -284,7 +284,9 @@ def get_final_startup_instruction_string():
 
 def _get_llm_instructions(name):
     logger.info(f"Getting LLM instructions for {name}")
-    file_path = os.path.join(LLM_INSTRUCTIONS_DIR, f"{name}.md")
+    # Get the absolute path of the 'LLM_instructions' directory
+    llm_instructions_dir = os.path.abspath('LLM_instructions')
+    file_path = os.path.join(llm_instructions_dir, f"{name}.md")
     with open(file_path, 'r') as f:
         logger.info(f"LLM instructions for {name} found")
         return f.read()
