@@ -32,4 +32,7 @@ logging.getLogger("anthropic").setLevel(logging.WARNING)
 
 if __name__ == '__main__':
     logger.info("Starting Flask application...")
-    app.run(debug=True)
+    if os.getenv('DEPLOY_ENV') == 'Railway':
+        app.run(debug=True, host='0.0.0.0')
+    else:
+        app.run(debug=True, host='127.0.0.1')
