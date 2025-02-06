@@ -1,9 +1,12 @@
 import os
 import json
 from datetime import datetime
-
 import logging
+
 logger = logging.getLogger(__name__)
+
+# Turn on debug logging
+logging.basicConfig(level=logging.DEBUG)
 
 CONVERSATIONS_DIR = "conversations"
 LLM_INSTRUCTIONS_DIR = "LLM_instructions"
@@ -16,6 +19,7 @@ if not os.path.exists(CONVERSATIONS_DIR):
 # Conversation functions
 
 def read_conversation(conversation_id):
+    logger.info(f"Reading conversation {conversation_id}")
     file_path = os.path.join(CONVERSATIONS_DIR, f"{conversation_id}.json")
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
@@ -66,6 +70,7 @@ def read_conversation(conversation_id):
             if 'game_has_begun_date' not in conversation_data and conversation_data['game_has_begun']:
                 logger.warning("No game_has_begun_date found in file, even though game_has_begun is True. Setting game_has_begun_date to now: " + conversation_id)
                 conversation_data['game_has_begun_date'] = datetime.now().isoformat()
+            logger.info(f"Conversation {conversation_id} loaded successfully")
             return conversation_data
     return None
 
@@ -278,6 +283,8 @@ def get_final_startup_instruction_string():
     return final_startup_instruction
 
 def _get_llm_instructions(name):
+    logger.info(f"Getting LLM instructions for {name}")
     file_path = os.path.join(LLM_INSTRUCTIONS_DIR, f"{name}.md")
     with open(file_path, 'r') as f:
+        logger.info(f"LLM instructions for {name} found")
         return f.read()
