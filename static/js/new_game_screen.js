@@ -1,4 +1,4 @@
-// New file for index.html specific functionality
+
 document.addEventListener('DOMContentLoaded', () => {
     const customWorldButton = document.getElementById('custom-world-button');
     const worldPicker = document.querySelector('.world-picker');

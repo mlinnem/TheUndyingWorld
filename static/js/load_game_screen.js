@@ -1,4 +1,4 @@
-// New file for index.html specific functionality
+
 document.addEventListener('DOMContentLoaded', () => {
     const conversationList = document.getElementById('saved-game-picker');
     const updateStatus = document.getElementById('update-status');

@@ -75,7 +75,7 @@ button {
     background-repeat: repeat-y;
     z-index: -2;
     opacity: 0;
-    animation: cycleBackgrounds2 75s infinite;
+    animation: cycleBackgrounds2 100s infinite;
 }
 
 .background-image3 {
@@ -89,7 +89,7 @@ button {
     background-repeat: repeat-y;
     z-index: -2;
     opacity: 0;
-    animation: cycleBackgrounds3 75s infinite;
+    animation: cycleBackgrounds3 100s infinite;
 }
 
 .background-image4 {
@@ -103,7 +103,7 @@ button {
     background-repeat: repeat-y;
     z-index: -2;
     opacity: 0;
-    animation: cycleBackgrounds4 75s infinite;
+    animation: cycleBackgrounds4 100s infinite;
 }
 
 .background-image5 {
@@ -117,53 +117,203 @@ button {
     background-repeat: repeat-y;
     z-index: -2;
     opacity: 0;
-    animation: cycleBackgrounds5 75s infinite;
+    animation: cycleBackgrounds5 100s infinite;
 }
 
+.background-image6 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat-y;
+    z-index: -2;
+    opacity: 0;
+    animation: cycleBackgrounds6 100s infinite;
+}
+
+.background-image7 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat-y;
+    z-index: -2;
+    opacity: 0;
+    animation: cycleBackgrounds7 100s infinite;
+}
+
+.background-image8 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat-y;
+    z-index: -2;
+    opacity: 0;
+    animation: cycleBackgrounds8 100s infinite;
+}
+
+.background-image9 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat-y;
+    z-index: -2;
+    opacity: 0;
+    animation: cycleBackgrounds9 100s infinite;
+}
+
+.background-image10 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat-y;
+    z-index: -2;
+    opacity: 0;
+    animation: cycleBackgrounds10 100s infinite;
+}
+
+
+
 @keyframes cycleBackgrounds2 {
-    0%, 10% {
+    0%, 8% {
         opacity: 0;
+        left: -288px;
+        width: 110%;
+        height: 110%;
     }
-    15%, 30% {
+    10% {
         opacity: 1;
+        left: -240px;
+        width: 110%;
+        height: 110%;
+    } 
+    
+    20% {
+        opacity: 1;
+        left: 0px;
+        width: 110%;
+        height: 110%;
     }
-    35%, 100% {
+
+    22%, 100% {
+        left: 48px;
         opacity: 0;
+        width: 110%;
+        height: 110%;
     }
 }
 
 @keyframes cycleBackgrounds3 {
-    0%, 25% {
+    0%, 18% {
         opacity: 0;
     }
-    30%, 45% {
+    20%, 30% {
         opacity: 1;
     }
-    50%, 100% {
+    32%, 100% {
         opacity: 0;
     }
 }
 
 @keyframes cycleBackgrounds4 {
-    0%, 45% {
+    0%, 28% {
         opacity: 0;
     }
-    50%, 65% {
+    30%, 40% {
         opacity: 1;
     }
-    70%, 100% {
+    42%, 100% {
         opacity: 0;
     }
 }
 
 @keyframes cycleBackgrounds5 {
-    0%, 65% {
+    0%, 38% {
         opacity: 0;
     }
-    70%, 85% {
+    40%, 50% {
         opacity: 1;
     }
-    90%, 100% {
+    52%, 100% {
+        opacity: 0;
+    }
+}
+
+@keyframes cycleBackgrounds6 {
+    0%, 48% {
+        opacity: 0;
+    }
+    50%, 60% {
+        opacity: 1;
+    }
+    62%, 100% {
+        opacity: 0;
+    }
+}
+
+@keyframes cycleBackgrounds7 {
+    0%, 58% {
+        opacity: 0;
+    }
+    60%, 70% {
+        opacity: 1;
+    }
+    72%, 100% {
+        opacity: 0;
+    }
+}
+
+
+@keyframes cycleBackgrounds8 {
+    0%, 68% {
+        opacity: 0;
+    }
+    70%, 80% {
+        opacity: 1;
+    }
+    82%, 100% {
+        opacity: 0;
+    }
+}
+
+@keyframes cycleBackgrounds9 {
+    0%, 78% {
+        opacity: 0;
+    }
+    80%, 90% {
+        opacity: 1;
+    }
+    92%, 100% {
+        opacity: 0;
+    }
+}
+
+@keyframes cycleBackgrounds10 {
+    0%, 88% {
+        opacity: 0;
+    }
+    90%, 98% {
+        opacity: 1;
+    }
+    100%, 100% {
         opacity: 0;
     }
 }
@@ -228,7 +378,6 @@ button {
     justify-content: left;
     z-index: 10;
     background-color: transparent;
-    width: 100%;
     pointer-events: none;
 }
 

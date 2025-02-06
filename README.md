@@ -1,1 +1,1 @@
-Start by running the server.py file.
+Start by running the ./go file.

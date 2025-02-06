@@ -8,8 +8,6 @@ const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
 const chatTitle = document.getElementById('chat-title');
 const inputContainer = document.getElementsByClassName('input-container')[0]; //TODO: unjank this
-
-// Add event listener for begin game button
 const beginGameButton = document.getElementById('begin-game-button');
 
 // Get the conversation ID from the window object (set in game.html)
@@ -33,7 +31,6 @@ userInput.addEventListener('input', function() {
     }
 });
 
-// Add these variables at the top level, with the other declarations
 let dotAnimation;
 let loadingDiv;
 let isWaitingForResponse = false;
