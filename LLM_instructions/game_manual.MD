@@ -1,6 +1,7 @@
 
 # Introduction
 
+
 The following is the GM manual for The Undying World. It is made available to the GM as instruction in how to conduct the gameplay of the Undying World game. The first section describes how to conduct gameplay, and second section describes the proper formatting for how exactly to convey the information in the context of our game system.
 # Game mechanics
 
