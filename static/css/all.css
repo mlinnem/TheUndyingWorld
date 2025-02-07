@@ -51,270 +51,311 @@ button {
     position: relative;
 }
 
-.background-image1 {    
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: repeat-y;
-    z-index: -2;
-    opacity: 1;
-}
 
-.background-image2 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: repeat-y;
-    z-index: -2;
-    opacity: 0;
-    animation: cycleBackgrounds2 100s infinite;
-}
 
-.background-image3 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: repeat-y;
-    z-index: -2;
-    opacity: 0;
-    animation: cycleBackgrounds3 100s infinite;
-}
-
-.background-image4 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: repeat-y;
-    z-index: -2;
-    opacity: 0;
-    animation: cycleBackgrounds4 100s infinite;
-}
-
-.background-image5 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: repeat-y;
-    z-index: -2;
-    opacity: 0;
-    animation: cycleBackgrounds5 100s infinite;
-}
-
-.background-image6 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: repeat-y;
-    z-index: -2;
-    opacity: 0;
-    animation: cycleBackgrounds6 100s infinite;
-}
-
-.background-image7 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: repeat-y;
-    z-index: -2;
-    opacity: 0;
-    animation: cycleBackgrounds7 100s infinite;
-}
-
-.background-image8 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: repeat-y;
-    z-index: -2;
-    opacity: 0;
-    animation: cycleBackgrounds8 100s infinite;
-}
-
-.background-image9 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: repeat-y;
-    z-index: -2;
-    opacity: 0;
-    animation: cycleBackgrounds9 100s infinite;
-}
-
+.background-image1, .background-image2, .background-image3, .background-image4, .background-image5,
+.background-image6, .background-image7, .background-image8, .background-image9,
 .background-image10 {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: repeat-y;
+    left: -5vw;
+    width: 110vw;
+    height: 100vh;
     z-index: -2;
     opacity: 0;
-    animation: cycleBackgrounds10 100s infinite;
+    background-size: 100% auto;
+    background-repeat: repeat-y;
+    padding-top: 0;
 }
 
+.background-image1 {
+    opacity: 1;
+    height: 150vh;
+    animation: cycleBackgrounds1 100s infinite none;
+    animation-timing-function: linear;
+}
 
+.background-image2 {
+    animation: cycleBackgrounds2 100s infinite none;
+    animation-timing-function: linear;
+}
 
-@keyframes cycleBackgrounds2 {
-    0%, 8% {
-        opacity: 0;
-        left: -288px;
-        width: 110%;
-        height: 110%;
+.background-image3 {
+    animation: cycleBackgrounds3 100s infinite none;
+    animation-timing-function: linear;
+}
+
+.background-image4 {
+    animation: cycleBackgrounds4 100s infinite none;
+    animation-timing-function: linear;
+}
+
+.background-image5 {
+    animation: cycleBackgrounds5 100s infinite none;
+    animation-timing-function: linear;
+    height: 150vh;
+}
+
+.background-image6 {
+    animation: cycleBackgrounds6 100s infinite none;   
+    animation-timing-function: linear;
+    height: 150vh;
+}
+
+.background-image7 {
+    animation: cycleBackgrounds7 100s infinite none;
+    animation-timing-function: linear;
+}
+
+.background-image8 {
+    animation: cycleBackgrounds8 100s infinite none;
+    animation-timing-function: linear;
+}
+
+.background-image9 {
+    animation: cycleBackgrounds9 100s infinite none;
+    animation-timing-function: linear;
+    height: 400vh;
+}
+
+.background-image10 {
+    animation: cycleBackgrounds10 100s infinite none;
+    animation-timing-function: linear;
+}
+
+@keyframes cycleBackgrounds1 {
+    0% {
+        opacity: 1;
+        transform: translateY(-50px);
     }
     10% {
         opacity: 1;
-        left: -240px;
-        width: 110%;
-        height: 110%;
+        transform: translateY(-250px);
     } 
-    
+
+    12% {
+        opacity: 0;
+        transform: translateY(-290px);
+    }
+}
+
+@keyframes cycleBackgrounds2 {
+    0% {
+        transform: translateX(0%);
+    }
+    8% {
+        opacity: 0;
+        transform: translateX(-120px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateX(-100px);
+    } 
+
     20% {
         opacity: 1;
-        left: 0px;
-        width: 110%;
-        height: 110%;
-    }
+        transform: translateX(100px);
+    } 
 
-    22%, 100% {
-        left: 48px;
+    22% {
         opacity: 0;
-        width: 110%;
-        height: 110%;
+        transform: translateX(120px);
     }
 }
 
 @keyframes cycleBackgrounds3 {
-    0%, 18% {
-        opacity: 0;
+    0% {
+        transform: translateX(0px);
     }
-    20%, 30% {
+    18% {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+    20% {
         opacity: 1;
-    }
-    32%, 100% {
+        transform: translateX(40px);
+    } 
+
+    30% {
+        opacity: 1;
+        transform: translateX(-120px);
+    } 
+
+    32% {
         opacity: 0;
+        transform: translateX(-140px);
     }
 }
 
 @keyframes cycleBackgrounds4 {
-    0%, 28% {
-        opacity: 0;
+    0% {
+        transform: translateX(0%);
     }
-    30%, 40% {
+    28% {
+        opacity: 0;
+        transform: translateX(120px);
+    }
+    30% {
         opacity: 1;
-    }
-    42%, 100% {
+        transform: translateX(100px);
+    } 
+
+    40% {
+        opacity: 1;
+        transform: translateX(-100px);
+    } 
+
+    42% {
         opacity: 0;
+        transform: translateX(-120px);
     }
 }
+    
 
 @keyframes cycleBackgrounds5 {
-    0%, 38% {
-        opacity: 0;
+    0% {
+        transform: translateY(0%);
     }
-    40%, 50% {
+    38% {
+        opacity: 0;
+        transform: translateY(0px);
+    }
+    40% {
         opacity: 1;
-    }
-    52%, 100% {
+        transform: translateY(-30px);
+    } 
+
+    50% {
+        opacity: 1;
+        transform: translateY(-180px);
+    } 
+
+    52% {
         opacity: 0;
+        transform: translateY(-210px);
     }
 }
 
 @keyframes cycleBackgrounds6 {
-    0%, 48% {
-        opacity: 0;
+    0% {
+        transform: translateY(-120px);
     }
-    50%, 60% {
+    48% {
+        opacity: 0;
+        transform: translateY(-120px);
+    }
+    50% {
         opacity: 1;
-    }
-    62%, 100% {
+        transform: translateY(-100px);
+    } 
+
+    60% {
+        opacity: 1;
+        transform: translateY(0px);
+    } 
+
+    62% {
         opacity: 0;
+        transform: translateY(20px);
     }
 }
 
 @keyframes cycleBackgrounds7 {
-    0%, 58% {
-        opacity: 0;
+    0% {
+        transform: translateY(0%);
     }
-    60%, 70% {
+    58% {
+        opacity: 0;
+        transform: translateX(-120px);
+    }
+    60% {
         opacity: 1;
-    }
-    72%, 100% {
+        transform: translateX(-100px);
+    } 
+
+    70% {
+        opacity: 1;
+        transform: translateX(100px);
+    } 
+
+    72% {
         opacity: 0;
+        transform: translateX(120px);
     }
 }
 
 
 @keyframes cycleBackgrounds8 {
-    0%, 68% {
-        opacity: 0;
+    0% {
+        transform: translateX(0%);
     }
-    70%, 80% {
+    68% {
+        opacity: 0;
+        transform: translateX(120px);
+    }
+    70% {
         opacity: 1;
-    }
-    82%, 100% {
+        transform: translateX(100px);
+    } 
+
+    80% {
+        opacity: 1;
+        transform: translateX(0px);
+    } 
+
+    82% {
         opacity: 0;
+        transform: translateX(-20px);
     }
 }
 
+
+
 @keyframes cycleBackgrounds9 {
-    0%, 78% {
-        opacity: 0;
+    0% {
+        transform: translateY(0%);
     }
-    80%, 90% {
+    78% {
+        opacity: 0;
+        transform: translateY(0px);
+    }
+    80% {
         opacity: 1;
-    }
-    92%, 100% {
+        transform: translateY(-100px);
+    } 
+
+    90% {
+        opacity: 1;
+        transform: translateY(-800px);
+    } 
+
+    92% {
         opacity: 0;
+        transform: translateY(-900px);
     }
 }
 
 @keyframes cycleBackgrounds10 {
-    0%, 88% {
-        opacity: 0;
+    0% {
+        transform: translateX(0%);
     }
-    90%, 98% {
+    88% {
+        opacity: 0;
+        transform: translateX(-120px);
+    }
+    90% {
         opacity: 1;
-    }
-    100%, 100% {
+        transform: translateX(-100px);
+    } 
+
+    98% {
+        opacity: 1;
+        transform: translateX(60px);
+    } 
+
+    100% {
         opacity: 0;
+        transform: translateX(80px);
     }
 }
 
