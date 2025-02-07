@@ -578,7 +578,7 @@ function checkOverlap() {
             titleRect.right > messageRect.left &&
             titleRect.left < messageRect.right
         ) {
-            headerBar.style.backgroundColor = '#002727';
+            headerBar.style.backgroundColor = '#132020';
             hasOverlapped = true;  // Set flag to true once overlap occurs
             chatContainer.removeEventListener('scroll', checkOverlap);  // Remove scroll listener
             break;  // Exit loop once overlap is found
