@@ -52,6 +52,18 @@ button {
 }
 
 
+.background-image0 {
+    position: fixed;
+    top: 0;
+    left: -5vw;
+    width: 110vw;
+    height: 100vh;
+    z-index: -2;
+    opacity: 1;
+    background-size: 100% auto;
+    background-repeat: repeat-y;
+    padding-top: 0;
+}
 
 .background-image1, .background-image2, .background-image3, .background-image4, .background-image5,
 .background-image6, .background-image7, .background-image8, .background-image9,
