@@ -284,14 +284,14 @@ l
 
 
 .loading_message {
-    background-color: hsla(0, 0%, 8%, .2);
+    background-color: hsla(0, 0%, 2%, .1);
     align-self: flex-start;
-    animation: breathe ease-out 17s infinite;
+    animation: breathe ease-out 9s infinite;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     height: 500px;
     font-family: var(--in-game-text-font);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(5px);
     max-width: 100%;
     font-size: 1.125rem;
     line-height: 1.6875rem;
@@ -299,7 +299,7 @@ l
     border-top-right-radius: 20px;  
     -webkit-mask-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 1) 50%, hsla(0, 0%, 0%, 0) 100%);
     mask-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 1) 50%, hsla(0, 0%, 0%, 0) 100%);
-    z-index: 10;
+    z-index: 0;
 }
 
 .input-container {
@@ -309,6 +309,7 @@ l
     margin-left: auto;
     margin-right: auto;
     position: relative;
+    z-index: 20;
 }
 
 #user-input {
@@ -360,48 +361,18 @@ l
 }
 
 @keyframes breathe {
-    0% { 
-    }
-
     10% { 
-    }
-
-    20% { 
-    }
-
-    30% { 
-        
+        backdrop-filter: blur(5px);
     }
 
     40% { 
-        backdrop-filter: blur(10px);
-     }
-
-    50% { 
-        backdrop-filter: blur(50px);
-    }
-
-    60% { 
-        backdrop-filter: blur(10px);
-
-       
-    }
-
-
-
-    70% { 
+        backdrop-filter: blur(45px);
     }
 
     80% { 
-        backdrop-filter: blur(10px);
-    }
+        backdrop-filter: blur(5px);
 
-    90% { 
-        backdrop-filter: blur(50px);
-    }
-
-    100% { 
-        backdrop-filter: blur(10px);
+       
     }
 }
 
