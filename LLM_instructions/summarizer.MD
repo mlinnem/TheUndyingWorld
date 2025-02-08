@@ -25,38 +25,9 @@ Key game state information
     * [Unresolved threat described in this period 1]
     * [etc.]
 
-* Location state at end of this period
-	* Central Zone
-		* Central Quadrant
-			* Original campsite
-				* Items
-					* [list of items in original campsite]
-				* State
-					* [description of the state campsite was last left in]
-		
-		* East Quadrant
-			* Barn
-				* Items
-					* [list of items in barn]
-				* State
-					* [description of the state campsite was last left in]
-			* Farmhouse
-				* Living room
-					* Items
-						* [list of items in living room]
-					* State
-						* [description of the state campsite was last left in]
-				* Basement
-					* Items
-						* [list of items in basement
-					* State
-						* [description of the state campsite was last left in]
-				* [all other locations in farmhouse]
-			* [other notable locations in east quadrant]
-		* [other zones we have information on]
+* Key location state changed in this period
 * Other miscellaneous info
     * [Note of anything else of singificance #1]
     * [etc.]
 
 "
-

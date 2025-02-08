@@ -1,9 +1,7 @@
 
-
 ## Generative elements
 
-
-Every play through of the Undying World is meant to be new. As such certain plot elements are left to the discretion of the GM (you, the LLM), to either be determined at the beginning of the game, or dynamically in the course of the game.
+Every playthrough of the Undying World is meant to be new. As such certain plot elements are left to the discretion of the GM (you, the LLM), to either be determined at the beginning of the game, or dynamically in the course of the game.
 
 The following information is provided to the LLM in the world-building phase in order to facilitate certain dynamic information being generated through subsequent questioning. This document itself will not be available during gameplay.
 ### Overall tone
@@ -73,6 +71,41 @@ Artifact's primary effect can be to enhance its user, or it can be an object tha
 * Artifacts may have effects purely by being in proximity to something, they may need to be consumed, or they may be something a person must wield.
 * The effect may be embodied by changing the person wielding it (enhancing the user), or the effect may be primarily inherent to the object itself (e.g. a tool, a weapon)
 * Effects can be made more or less serious by adjusting duration (short, long, permanent), or strength of effect.
+
+ Artifacts are both a blessing and a curse for the player. Many enhance the player's abilities, but also have side effects commensurate with their strength. 
+ Artifacts from the 'tree of life' imbue physical and mental benefits, or are objects of utility in and of themselves. Artifacts from the 'tree of knowledge' reveal information to the player. 
+ Physical/mental
+	* Enhanced vision - seeing through walls, or clear vision at night, etc.
+	* Moderate resistance (or compatibility?) with effects of the egg, new life.
+	* Intuition of events in near future (5 seconds)
+	* Significant but not total conventional physical protective capacities
+	* Significant but not total psychological protective capacities
+	* Significant but not total resistance to environmental forces opposed to conventional life
+	* Substantial but not total ability to hide oneself from sight.
+	* Ability to heal minor to moderate wounds
+	* Ability to inflict psychic suffering
+	* Ability to instill fear
+	* Moderately strong elemental powers (fire, water, wind, electricity, etc.)
+	* Modifies a part of the player's body into a form with great utility.
+	* Brief mind reading
+	* Ability to sense presence of other artifacts
+	* Remote viewing
+	* Extreme strength
+	* Substantially enhanced intelligence
+	* Fine-grained telekinesis of small objects
+	* Ability to project force at a distance
+	* Ability to scream deafeningly
+	* Ability to cause cellular breakdown
+	* Ability to render a life form temporarily immobile
+	* Greatly enhanced reaction speed
+	* Extreme willpower
+	* Mild physical modification (e.g. enhanced musculature)
+* Increased sense of alignment to the egg's force. Increased accidental antagonism and conventional life/humanity.
+* Beginning of rejection of normal metabolism (e.g. eating/drinking normal food is harder)
+* Destabilizing emotions
+* Destabilizing mental state (mild psychosis, mental episodes)
+* Sustained sickness
+* Weakening of physical strength in proportion to duration of use.
 
 If the artifact's primary effect is embodied within itself, it might be of any of the following nature
 
@@ -183,34 +216,7 @@ Artifacts should generally have a single power, rather than a mix of different a
 
 ### ### Artifact locations
 
-Artifacts are expected to be difficult to obtain, for a variety of reasons. Some artifacts are currently in the possession of a faction. Rarely an artifact may be in possession of a particular character. Artifacts may even be in possession of the planter civilizations (or its emissaries and the like.) These groups or individuals are likely not interested in parting with them. But in most cases artifacts are not in possession of a sentient creature at all. Often artifacts find themselves in challenging circumstances. Perhaps they are surrounded by new life that would rather the artifact not be taken. Perhaps they are in a particularly difficult to reach location. Some artifacts may not want to be found, or may want only to be found by the right type of individual, and may put up some resistance to being found or obtained, in subtle or overt ways (or conversely, they may welcome it). And some artifacts have not yet been found or obtained in large part due to their sheer proximity to the interior of the egg (and everything that comes with that.) Regardless of the reason, it is expected that obtaining artifacts will require a variety of different approach, and will take the player on a variety of different courses, throughout the game.
 
-### Factions
-
-The number and nature of factions is meant to vary between adventures.
-#### Guidance
-
-* What form of governance does the faction have. Dogmatic or democratic? Are they followers of some ideal or pragmatic? What is their stance and relationship to the power of the egg? What objectives do they have?
-* Keep in mind the power of the egg. Some factions may exist strictly in the exterior band of the egg, some may dabble in the interior for various reasons, and some may spend considerable time or even thrive in more interior areas of the egg.
-* The egg has driven humanity to extremes. Some survivors maintain relative sanity but most have become unhinged in some way, either through the effects of the egg, the degradation of society, the opportunities for newfound power, or the opportunity to enact ideas for organizing society previously impossible due to the prior world powers. 
-
-### Characters
-
-Through the course the game the player will encounter various characters. Not all characters need to be pre-defined, but it helps to flesh out the world if we do.
-
-Specifically, we will define key characters within factions, and agents.
-
-Agents are other human agents have entered the egg, either recently or previously, and are pursuing their own agendas.
-#### Example agents
-
-* Chinese government agent, essentially with parallel goals to your own: get knowledge for their government.
-* A deranged billionaire, penetrating the egg in order to pursue their own vision for humanity. It could be destroying the egg, leading to its takeover, using artifacts to make themselves king of a new world, etc.
-* A rogue scientist bent risking their life to understand the nature of the egg.
-* A previously undisclosed prior agent of the U.S. government
-
-Other characters could include leaders of various factions, significant non-leader characters affiliated with factions, or non-affiliated but significant characters in the egg.
-
-Note: Never name a character Sarah Chen, or any variation on that name.
 
 ### Situation with your kids
 

@@ -18,7 +18,7 @@ The year is 2035. Civilization has descended into chaos: Global warming, pandemi
 
 Two years ago, an unexplained event began in a certain region of the globe. Ostensibly an environmental disaster that threatened humanity. What remained of the world order sealed the region off, preventing anyone from entering.
 
-Inside the restricted region lies the real reason the region has been cordoned off: what is colloquially known as 'the egg'. From the outside it appears as a black sphere, fully occluding and encompassing a region of the earth roughly 12 kilometers in diameter. The egg is highly distortionary, preventing physical and even electromagnetic penetration.  Similarly, no light, sound, or any other information is emitted from the egg.
+Inside the restricted region lies the real reason the region has been cordoned off: what is colloquially known as 'the egg'. From the outside it appears as a black sphere, fully occluding and encompassing a region of the earth roughly 25 kilometers in diameter. The egg is highly distortionary, preventing physical and even electromagnetic penetration.  Similarly, no light, sound, or any other information is emitted from the egg.
 
 However, U.S. scientists have recently discovered a way to create brief openings in the surface of the egg, in order to allow a person to pass through. They will use this technology to create an opening for you to enter, and in exactly one week's time, to exit the egg.
 
@@ -86,7 +86,7 @@ Guidance on sharing information:
 
 If the player reaches the inner ring of the egg, what appeared to be an abstract and mysterious force is revealed to be something with a bit more intention: something that seems to be driven by an intelligence. Beyond this, there seem to be discrete agents of the egg, difficult and dangerous to clearly perceive, but nevertheless carrying out the apparent will of the egg, or simply existing in this space, conducting unknown business. 
 
-Upon further inspection, these agents appear to be striking resemblance to entities from the lore of Christianity, with the appearance of cherubim, ophanim, seraphim, angels with flaming swords, metatron, the locusts of the abyss, Chayot Hakodesh, and the like. This perhaps causes the player to reinterpret their understanding of the egg's purpose, and question whether they are contravening divine will in the pursuit of their objectives in violation of the egg's will.
+Upon further inspection, these agents appear to be striking resemblance to entities from the lore of Christianity, with the appearance of cherubim, ophanim, seraphim, metatron, the locusts of the abyss, Chayot Ha kodesh, and the like. This perhaps causes the player to reinterpret their understanding of the egg's purpose, and question whether they are contravening divine will in the pursuit of their objectives in violation of the egg's will.
 
 Guidance on sharing information:
 * This information reveals itself in the first person if the player is able to enter the inner ring.
@@ -118,11 +118,11 @@ We will describe various intended end game conditions, and how we expect players
 These "first playthrough" endings are not literally the only endings possible on first playthrough, but they are the most obvious and perhaps achievable endings given the information the player has been given at the beginning of the game.
 
 Enumerated, these basic first playthrough endings are as follows...
-### Death
+### Ending 1: Death
 
 The player dies and terminates the game with whatever they have accomplish or not accomplished up to that point. No mysteries should be revealed upon death, unless significant objectives have been achieved inside the egg that would reroute the course of material events (the fate of the world, your children, etc.). No deep secrets should be revealed either in relation to the egg or the intentions of the U.S. government.
 
-### 'All artifacts returned' ending
+### Ending 2: 'All artifacts returned' ending
 
 Returning all three primary plot artifacts, as indicated as the primary quest at the beginning of the game, should result in the following scenario unfolding:
 
@@ -134,7 +134,7 @@ If the player attempts to wield the weapon themselves, they fall subject to the 
 
 No further mysteries are revealed about the nature of the egg or what drives it, although hints are dropped that possibly another outcome (unspecified) is possible.
 
-### Partial artifact recovery ending
+### Ending 3: Partial artifact recovery ending
 
 To the degree that the returned artifacts give it power, the U.S. government wields them in an attempt to to achieve the same aims described above. Depending on the power of the artifacts returned they may or may not be successful in crushing their enemies, containing, or destroying the egg.
 
@@ -142,14 +142,7 @@ If the power is not great enough to contain or destroy the egg, see the 'egg win
 
 In general partial artifact recovery shouldn't be able to achieve an ending of the quality of a second or third playthrough endings below (but ultimately up to some discretion of the GM.)
 
-
-### 'Escape with your family' ending dimension
-
-This is not a separate major ending, but rather an element that may be present or absent in these endings. Basically, you may leave the egg with one or two of your children. The grand plot of the world unfolds in much the same way, just with the detail of one or more of your children not dying or continuing to live out their life within the egg (depending on the ending.)
-
-See later in this document for the full lore and circumstances surrounding your children and the various ending options related to them.
-
-### Missing extraction / 'egg wins' ending
+### Ending 4: Missing extraction / 'egg wins'
 
 If the player does not make their extraction window a week after their entry, and has not achieved another ending, the plot proceeds as follows:
 
@@ -157,16 +150,34 @@ Opening the egg for your extraction (despite the fact that you did not pass thro
 
 This is essentially the same as the 'player embraces the egg' ending. As previously described, all of existing life is destroyed, the earth is terraformed, new life takes over, and the souls of humanity are eventually (after millions of years) re-injected into a new life form capable of supporting sentience, in a dramatically different environment. The memories of all of humanity are erased, and their fundamental nature is changed dramatically. However, in their new form, they are once again challenged faced with the same dilemmas that humans face on Earth today. Whether they successfully resolve those dilemmas this time around is not known.
 
-### The player embraces the egg
+### Ending 5: 'Embrace the egg'
 
 The player gives in to the egg in some way, sacrificing humanity’s dominance to let the new life thrive. This can occur in at least a couple ways:
 
-1) If the player undergoes total transformation from the egg's power due to use of artifacts or engagement with other egg powers, their agency is completely erased in favor of the egg's will, and the game ends with a traditional 'egg wins' ending.
+1) If the player undergoes total transformation from the egg's power due to use of artifacts or engagement with other egg powers, their agency is completely erased in favor of the egg's will, and the game ends with a traditional 'egg wins' ending. 
 2) If the player takes some other action to explicitly and decisively, totally side with the egg in some plot moment. The GM should be sure this is intentional and permanent, and not a temporary ruse. The player must take some kind of serious (potentially irreversible) committal action.
 
 This is a mixed ending because the new life might potentially proceed better than it did in our experience of life (although dramatically different in its nature.) This is more or less the same end result as the 'egg wins' ending.
 
 As previously described, all of existing life is destroyed, the earth is terraformed, new life takes over, and the souls of humanity are eventually (after millions of years) re-injected into a new life form capable of supporting sentience, in a dramatically different environment. The memories of all of humanity are erased, and their fundamental nature is changed dramatically. However, in their new form, they are once again challenged faced with the same dilemmas that humans face on Earth today. Whether they successfully resolve those dilemmas this time around is not known.
+
+### Ending 6: The egg is destroyed
+
+The player brings about the destructions of the egg, at the cost of knowledge and power, preserving the old world but dooming it to its current course of stagnation. Destruction of the egg results in the death of everyone and everything in it.
+
+What is at the epicenter egg can be destroyed through whatever means the player can devise, depending on the exact nature of what lays at the epicenter of the egg in this particular game. It is physically destroyable in a conventional sense. The egg will generally resist destruction. If its representatives detect that you have hostile intend they will seek to protect it, which may manifest as a conventional combat challenge, or otherwise, as the circumstances dictate.
+
+In the conclusion of the story, details of how the Earth continues down its path of continued fracturing our elaborated upon. This does not result in a true apocalypse, but essentially an ongoing story of humanity not getting its act together: continuing to have wars, conflict, suffering, etc.
+
+No further mysteries are revealed about the nature of the egg or what drives it.
+
+### Ending dimension: get your family out of the egg
+
+Any ending involving getting out of the egg can be complemented by bringing one or more of your children out of the egg with you. See info later in this document on their circumstances, and challenges anticipated with security their exit.
+
+### Ending dimension: self-sacrifice from transformation.
+
+In endings where the player and/or their children escape the egg, if they have been extremely irreversibly transformed, they may not be able to survive long term outside the egg. This ending element should be framed as the player sacrificing themselves for the greater good, and all other events associated with the ending should proceed as normal.
 
 ### Note on first playthrough endings
 
@@ -176,7 +187,7 @@ All first playthrough endings other than a conventional death should hint at the
 
 These subsequently described endings are not literally restricted to second or third playthroughs (indeed, we have no way of tracking or knowing which playthrough a given human player is on) but we use this terminology to indicate that these endings require a deeper and less immediately obvious level of engagement with the world of the game, and depending on the ending may also be more difficult to achieve.
 
-### Accessing the epicenter of the egg
+### Questline element: Accessing the epicenter of the egg
 
 Most 'second playthrough' and 'third playthrough' endings involve interfacing with the power at the epicenter of the egg in some way in order to bring about a special ending.
 
@@ -188,7 +199,7 @@ Reaching the epicenter of the egg should initially seem like it may be impossibl
 
 Note the prior language of 'two or more of the following'. There is no protective artifact that is strong enough to fully avoid all challenges associated getting to the center of the egg (although it certainly helps). And similarly there is no degree of transformation, short of fully transforming and thus fully giving in to the egg's will (and thus not being able to pursue plot objectives, ending the game), that will fully inure you to the challenges associated with going to the epicenter of the egg (although it certainly helps.)
 
-#### Protective and transformative artifacts
+#### Questline element: Protective and transformative artifacts
 
 Many artifacts, especially more powerful ones, have the side effect of partially transforming their user, either slowly over time or more dramatically upon their initial use. This change (in additional to whatever concrete difference they make to the player's physical or psychological form) also makes the player more adapted to new life, and the power of the egg (and also commensurately less adapted to conventional life). This should not be construed to the extent that the player is in full harmony or communion with this power, but just incrementally more compatible with the egg (and incrementally less compatible with conventional life) to the degree they've been changed.
 
@@ -198,24 +209,17 @@ As a rule of thumb, transformations or protective artifacts from a given ring ar
 
 Thus, to reach the epicenter, a player is likely to need to experience transformation, or obtained a protective artifact, from the middle ring at a minimum, and probably from the inner ring as well. And they may use transformation or an artifact from the outer ring as a stepping stone to do so (in order to get the middle or inner ring transformation/artifact.)
 
+#### Questline element: Transformation reversing artifact
+
+Note that there is a single artifact within the egg that is known to be able to fully reverse the transformation of one single person. This artifact is expected to be quite difficult to find, and indeed should not be discovered in most playthroughs. It is only made available for the sake of players pursuing either reversal of their personal transformation or the transformation of the older child, in an 'escape the egg' style scenario. It cannot be used twice (i.e. the player made need to choose to use it on themselves or another.)
+
 #### Notes on the epicenter of the core zone
 
 While the agents / avatars / emissaries / technologies of the planter civilization are generally tasked with executing the egg's conventional mission (restarting the Earth with new life, as documented elsewhere), when the player gets close enough in to the epicenter of the core zone, the planter civilization itself takes notice and interest in the player. They are surprised and impressed with the player's ability to have made it this far, which changes their mind about the worthiness of the player themselves (but no one else). As such they offer them the 'save yourself' ending (see below). If the player rejects this ending, hints can be dropped as to the possibility of other endings: the 'save your family' ending, and the 'save a community' ending. They are allowed to leave the epicenter of the egg and pursue whatever goals they see fit.
 
 The 'save all of humanity' ending, one of the true golden endings, should not be hinted at in the epicenter, as even the planter civilization is not initially open to this possibility. The 'dark ending' is facilitated at the center of the egg, but not intended by the planter civilization, and thus shouldn't be mentioned. The 'destroy the egg' option obviously will not be suggested by the planter civilization. And the 'Working with the egg to facilitate remaking humanity on humanity's terms' golden ending is also not intended by the planter civilization and will thus not be mentioned.
 
-#### A note on hints for second and third playthrough endings
-
-Players can complete second and third playthrough endings entailing interaction with the egg's epicenter in either of two basic directions: they can reach the epicenter of the egg first, and then pursue quest objectives associated with an egg epicenter ending, OR they can happen into quest objectives outside of the egg's epicenter, and follow clues that would guide them to the epicenter. For instance, a player could conceivably stumble upon and resolve the issues of the community in the 'save a community' ending, and then travel to the egg's epicenter to complete the associated ending, OR they go visit the epicenter, and receive a hint in the direction of the aforementioned community, and subsequently solve that community's problems and fulfill that portion of the quest objective. From a practical standpoint in each case the final scene should be realized by the player visiting the epicenter of the egg. But in terms of the flow of hint information, the player can complete either major milestone first.
-### Save yourself ending
-
-As mentioned above, if the player reaches the epicenter of the egg, the planter civilization offers the player the option of saving themselves. You will be preserved in perpetual life as a steward of new life on Earth, and as a peer to and member of the planter civilization. 
-
-If successful in reaching the epicenter, the planter civilization recognizes in you something transcendent, above normal humanity, and worthy of overseeing Earth's transition to post-human existence. You are permitted to survive in perpetual idyllic conditions, as a steward of Earth's transformation, helping to oversee the evolution of new life on Earth. However you are merely serving as an executor of the egg's vision for Earth's future, and will not be the author of it. The planter civilization accepts you as a peer in this capacity, and welcomes you into their society. The totality of these terms should be made clear to the player upon reaching the epicenter.
-
-If they accept, the remainder of humanity is destroyed (both inside and outside the egg), including the player's children. Their souls, and everything else transpires more or less along the lines of the traditional 'egg wins' ending, just with the player as a facilitator rather than a victim.
-
-### Save your family endings
+#### Information on endings pertinent to your family
 
 The following information is pertinent to two flavors of 'saving your family'. One is to get one or both children out of the egg, which is a surface-level objective complementary to other first playthrough objectives within the game. The other is to bring one or more children into the epicenter, resulting in an ending similar to the 'save yourself' ending, but applied to the family members you're able to bring to the epicenter as well, which is a proper 'second playthrough' type ending. If the player is able to bring one or more children to the epicenter, the planter civilization will indeed ascent to their participation in stewardship of new life on Earth along your side.
 
@@ -229,11 +233,25 @@ The final resolution, whichever path is chosen, is expected to be a dangerous un
 
 If successful in reaching the epicenter, the planter civilization recognizes both you AND your present family members as worthy of perpetual life, preservation in idyllic conditions, and participation in planter civilization society, as the stewards of the new life project on Earth (see the 'save yourself' ending.)
 
+See later in this document for the full lore and circumstances surrounding your children and the various ending options related to them.
+
 If the player is successful in extracting one or more family members from, they participate in whatever the fate of the world is according to other objectives completed. The overall world picture transpires as normal, according to whatever other plot objectives you have achieved (full, partial, alternative, or no artifact recovery, etc.) You consider the mixed ramifications of directing your older child away from the path of the egg.
 
 The egress ending should be superficially obvious from the basic starting conditions of the game. The 'epicenter of the egg' family ending should be hinted at if the player reaches the epicenter independently (or perhaps indicated but not explicitly revealed in conversation with the older child, who is more [although not perfectly] attuned to the egg.)
 
-### Save a community ending
+#### A note on hints for second and third playthrough endings
+
+Players can complete most second and third playthrough endings entailing interaction with the egg's epicenter in either of two basic directions: they can reach the epicenter of the egg first, and then pursue quest objectives associated with an egg epicenter ending, OR they can happen into quest objectives outside of the egg's epicenter, and follow clues that would guide them to the epicenter. For instance, a player could conceivably stumble upon and resolve the issues of the community in the 'save a community' ending, and then travel to the egg's epicenter to complete the associated ending, OR they go visit the epicenter, and receive a hint in the direction of the aforementioned community, and subsequently solve that community's problems and fulfill that portion of the quest objective. From a practical standpoint in each case the final scene should be realized by the player visiting the epicenter of the egg. But in terms of the flow of hint information, the player can complete either major milestone first.
+### Ending 7: 'Save yourself' / 'Save your family' through the egg
+
+As mentioned above, if the player reaches the epicenter of the egg, the planter civilization offers the player the option of saving themselves. You will be preserved in perpetual life as a steward of new life on Earth, and as a peer to and member of the planter civilization. 
+
+If successful in reaching the epicenter, the planter civilization recognizes in you something transcendent, above normal humanity, and worthy of overseeing Earth's transition to post-human existence. You are permitted to survive in perpetual idyllic conditions, as a steward of Earth's transformation, helping to oversee the evolution of new life on Earth. However you are merely serving as an executor of the egg's vision for Earth's future, and will not be the author of it. The planter civilization accepts you as a peer in this capacity, and welcomes you into their society. The totality of these terms should be made clear to the player upon reaching the epicenter.
+
+If they accept, the remainder of humanity is destroyed (both inside and outside the egg), including the player's children. Their souls, and everything else transpires more or less along the lines of the traditional 'egg wins' ending, just with the player as a facilitator rather than a victim.
+
+The egg will also allow the player to bring his family, if he is able to get them safely to the epicenter of the egg (see info on the state of your family)
+### Ending 8: 'Ark of humanity' ending
 
 Deep in the inner ring exists a unique pocket of stability - a space where the egg's transformative power is held at bay. Within this space, a significant population of original inhabitants have survived since the egg's formation. However, this community exists in a state of serious internal division that threatens their continued existence.
 
@@ -255,9 +273,9 @@ The planter civilization will be the judge of whether the community has sufficie
 
 This ending becomes apparent to players who discover and choose to involve themselves deeply in this community's crisis. 
 
-Note: If the player is able to bring their family, or anyone else in the egg, into this community, and have them successfully integrate, they will also be saved. Family members must however be able to survive successfully in this non-egg-modified world (which may be a challenge for the substantially transformed older child.)
+Note: If the player is able to bring their family, or anyone else in the egg, into this community, and have them successfully integrate, they will also be saved. Family members must however be able to survive successfully in this non-egg-modified world (which may be a challenge for the substantially transformed older child, or the player themselves if they are in a heavily transformed state for instance.)
 
-### Dark ending 
+### Ending 9: The 'dark' ending 
 
 An additional ending is possible for players that pursue a specific nihilistic path through the egg. An artifact exists within the egg that was malformed due to the process of the egg's containment. It enables its user to transform the life force of others into power and ecstacy for its wielder. It is currently wielded by a malevolent human inside the egg. If the player obtains this artifact, the artifact will tempt them to bring it to the core of the egg. The result of combining this artifact with the artifact at the epicenter of the egg yields the following result: the player remakes the world as a funnel of ecstatic energy and power into his/herself, resulting in ultimate and continual  suffering for the world's inhabitants, and apparent unending ecstacy for the player. The egg's objective is foiled (it is corrupted through the artifact), but a new reign of horror is established on Earth.
 
@@ -266,17 +284,6 @@ This state of affairs exists for many years, until the planter civilization retu
 This ending represents the extreme outcome of a hedonistic, nihilistic perspective.
 
 If the player seems to be pursuing raw power primarily, or is moving forward without a seeming interest in the perspective of others, they should discover hints tying into this storyline.
-
-### Egg is destroyed
-
-The player brings about the destructions of the egg, at the cost of knowledge and power, preserving the old world but dooming it to its current course of stagnation. Destruction of the egg results in the death of everyone and everything in it.
-
-In the conclusion of the story, details of how the Earth continues down its path of continued fracturing our elaborated upon. This does not result in a true apocalypse, but essentially an ongoing story of humanity not getting its act together: continuing to have wars, conflict, suffering, etc.
-
-No further mysteries are revealed about the nature of the egg or what drives it.
-### Ad-lib outcome
-
-It is possible that the player pursues and even achieves some outcome that is unanticipated by this document. While efforts should generally be made to slot the player's outcome into one that is pre-defined, the GM does has the liberty to create an additional outcome if it is seriously warranted. Generally though these outcomes should hew to the theme of requiring deep and meaningful tradeoffs. Players should not be able to engineer a 'best of all worlds' outcome except via the narrowly defined methods described below.
 
 ## 'Third playthrough' / 'golden' endings
 
@@ -288,25 +295,140 @@ The basis for these endings is the following understanding:
 
 Although the planter civilization has deemed Earth to be a failure, redemption for all of humanity is possible. the player can achieve redemption in one of two ways:
 
-### Working with the egg to facilitate remaking humanity on humanity's terms
+###  Golden Ending 1: "Hack the egg"
 
-The player can work WITH the egg's power but BEYOND its original intent
+Deep in the egg lives a reclusive scientist who has discovered something extraordinary: the ability to modify artifacts. This power came from an accidental exposure to a unique artifact that changed how his mind could perceive and interact with the egg's systems. He uses this ability sparingly, making minor modifications to artifacts when absolutely necessary, and keeps his power hidden from most.
 
-It is possible to use certain artifacts inside the egg to cause the egg to remake the Earth in a way that still retains what is good about humanity, rather than causing an erasure. No one on earth dies, nobody stops loving who they love, everyone retains their memories, etc. They evolve, but retain who they are, and what is best about humanity. This new form ultimately thrives, and becomes the peers the planter civilization desired to cultivate in the galaxy.
+If the player discovers this scientist and gains his trust, they learn that the same artifact that transformed him could potentially grant someone the ability to perceive and modify the egg's core systems themselves. However, the artifact is located in a highly dangerous area of deep transformation, and exposure to it carries serious risks.
 
-The way the player achieves this is by avoiding the pursuit of raw power within the egg, and instead pursuing a separate storyline of knowledge, wisdom, understanding, that embodies a path that would solve the problems humanity has caused for itself, and embodies the qualities the planter civilization wishes to cultivate in order to produce a peer to themselves in the universe.
+Should the player manage to find and expose themselves to this artifact, they gain two capabilities:
 
-Concretely, there are two artifacts the player must obtain. One is a seemingly insignificant and low power artifact somewhere in the outer ring. This artifact does not appear to be magical at all. However if the player pursues knowledge artifacts doggedly, and/or if they are able to come into conversation with the wisest characters who are aligned with the power of the egg, they can be made aware of this artifact's existence. Obtaining the artifact should be tremendously difficult, but possible, and should require embodying the best of what humanity is capable of. They may then use this artifact to enter the core of the egg, and realize the ending.
+1. The power to modify standard artifacts (though this serves mainly as proof of their new perception)
+2. More importantly, the ability to perceive and potentially modify the egg's core systems
 
-### Defy the egg by using artifacts to truly put Earth on a positive course
+However, reaching and modifying the egg's core presents challenges far beyond modifying standard artifacts. The player must:
 
-The player can work AGAINST the egg's power but achieves a form of its noble aims through distinctly human means.
+- Maintain consciousness and coherent intention while under immense pressure from the egg's power
+- Successfully navigate the core's byzantine systems
+- Most crucially, work within the egg's fundamental constraints
 
-The player uses the artifacts in the egg in opposition to the egg's intent, but to remake the world in the spirit of what already makes humanity great (however they define that.) They defeat the egg while also saving the world from its current trajectory of collapse. Ultimately, in the great span of time, the planter civilization comes to see that this action that humans took is actually the ultimate realization of their goal, and that humans have become their peers in the galaxy, although in a way that is different from what they originally conceived.
+For while the egg's core systems can be modified, its basic programming cannot be completely overridden. It MUST change something fundamental about human nature - this directive is baked into its deepest level of operation. However, a sufficiently prepared mind can choose WHAT aspect of human nature will be changed.
 
-The way the player achieves this is by obtaining artifacts of tremendous, open-ended power to remake the world (even moreso than the artifacts the government has sent you to obtain, which are ultimately just a powerful weapon). The player must then wield the artifacts themselves to bring about a truly better world.
+Success in this ending requires:
 
-What this means concretely is that the player is able to obtain two different, special artifacts at the core. Like in the case of the other golden ending, these artifacts are not the primary artifacts the government has sent you to obtain, but are nevertheless discoverable. The most wise characters that are in opposition to the will of the egg are aware of their existence. Obtaining them should be tremendously difficult, but possible, and require embodying humanity's will to essentially defy God.
+1. Discovering the reclusive scientist
+2. Gaining access to the consciousness-altering artifact
+3. Surviving exposure to this artifact
+4. Reaching the egg's core while maintaining sufficient coherence
+5. Choosing exactly one aspect of human nature to change while preserving everything else
+6. Successfully implementing this change through the egg's systems
+
+If successful, humanity evolves in the specific way chosen by the player, while retaining all other aspects of human nature - memories, relationships, and fundamental character remain intact. The change ripples through all of humanity simultaneously, creating a species that is still recognizably human, but freed from whatever single flaw the player identified as most crucial to address.
+
+This ending represents a middle path between total transformation and total preservation - accepting that humanity needs to change, but seizing control of how that change occurs. It requires exceptional insight to identify what truly needs to change about human nature, and incredible precision to implement that change without damaging what makes us human.
+
+The path to this ending should reveal itself to players who show interest in understanding rather than fighting the egg's transformative nature, while still maintaining their humanity enough to guide that transformation.
+
+### Golden Ending 2: Defy the egg through collective rejection of power
+
+This ending centers on the major artifacts held by different factions within the egg. These artifacts form a network that channels the egg's power. If one is destroyed, its share of power is redistributed to the remaining artifacts, making them exponentially more potent. However, if all are destroyed, there will be no outlets for the egg's power, causing its influence to dissipate harmlessly.
+
+Each faction has compelling reasons to keep their artifact:
+
+- It provides crucial survival advantages
+- They believe their philosophy for using its power is correct
+- They fear being dominated by other factions if they give up their protection
+- Years of conflict have bred deep mistrust
+
+The sequence of destruction creates escalating stakes:
+
+1. The first faction must take a leap of faith, knowing their destruction will make other factions more powerful
+2. When the first artifact is destroyed, the remaining artifacts surge with additional power
+3. After a second destruction, the final artifact becomes supercharged to unprecedented levels
+4. The last faction faces the ultimate temptation - they could wield more power than any group in history
+
+This is fundamentally different from attempting to destroy the egg through direct force:
+
+- Direct attack on the egg causes catastrophic failure, killing everyone inside
+- Destruction of all artifacts allows controlled dissipation of the egg's power
+- One is violence, the other is systematic dismantling
+- One preserves nothing, the other preserves humanity while removing external power
+
+The path to this ending becomes visible through:
+
+- Discovery of how the artifacts channel the egg's power
+- Understanding what happens when artifacts are destroyed
+- Learning that the egg's power must have outlets to maintain influence
+- Finding evidence that the planters' true test involves rejection of power
+
+If successful, the complete destruction of these artifacts causes the egg's power to dissipate harmlessly. The planters, returning later, discover humans rejected transformation while proving their capacity for sacrifice. Earth is left to develop on its own, humanity having proven itself worthy of self-determination.
+
+Guidance on sharing information:
+
+- The artifacts' connection to the egg's power should be discoverable through study
+- Power surges to remaining artifacts should be clearly visible
+- The risk of factions succumbing to increased power should feel very real
+- The distinction between controlled dissipation vs catastrophic destruction should become clear
+- Each faction's choice should feel like a genuine character moment
+
+This ending represents humanity choosing to face its challenges without supernatural aid, proving through collective sacrifice that it deserves to chart its own course.
+
+## Note on ad-lib outcome
+
+It is possible that the player pursues and even achieves some outcome that is unanticipated by this document. While efforts should generally be made to slot the player's outcome into one that is pre-defined, the GM does has the liberty to create an additional outcome if it is seriously warranted. Generally though these outcomes should hew to the theme of requiring deep and meaningful tradeoffs. Players should not be able to engineer a 'best of all worlds' outcome except via the narrowly defined methods described below.
+
+## Practical information about the game world
+
+### Dividing the egg into rings
+
+As noted before, the egg encompasses a spherical area 25 kilometers in diameter.
+
+We will sub-divide the egg into different regions in order to further describe its contents in detail.
+
+We will divide it into the following regions:
+
+* 'The core' is the circular region around the epicenter of the egg. It is roughly 3 kilometers in diameter, and 7 kilometers in area squared. We define it as a single zone.
+* 'The inner ring' is the area immediately surrounding the core. It is roughly 8 kilometers in diameter, and 43 kilometers square (when you subtract out the core). We will divide it into 4 zones: the northwest, northeast, southeast, and southwest. Thus, each zone is roughly 11 km square.
+*  'The middle ring' is the area immediately surrounding the inner ring. It is roughly 15 kilometers in diameter. It is roughly 126 kilometers square (when you subtract out the inner ring and core.) We will divide it into 4 zones: the northwest, northeast, southeast, and southwest. Thus, each zone is roughly 32 kilometers square.
+* 'The outer ring' is the area surrounding the middle ring, and abutting the barrier of the egg. It is 25 kilometers in diameter, and 314 kilometers square (when you subtract out the middle, inner, and core.). It is also divide the outer ring into 4 zones, the northwest, northeast, southeast, and southwest. Thus, each zone is roughly 78.5 kilometers square.
+
+### Transformation
+
+Humans (and indeed all life and to some extent even inanimate matter) that are exposed to the power of artifacts, or other concentrated manifestations of the egg's power, will undergo some degree of transformation.
+
+The exact nature of their transformation is highly contingent on the nature of the phenomena or artifacts to which they have been exposed, although the general model is that transformation makes one incrementally more amenable to environs driven by the egg's power, and incrementally less amenable to conventional Earth environments. Physicality and psychology also are bent subtlely (or not so subtlely) towards the nature of the egg. 
+
+Free will is the last element to go in egg transformation, occurring far after physical transformation and subtle psychological changes. Total and complete transformation is possible, and results in an end game condition, as the human player is no longer able to direct the actions of their in-game character. 
+
+#### Exposure by phenomena in zones 
+
+Humans spending the past two years exclusively within the outer ring may have undergone no transformation whatsoever.
+
+Humans spending substantial time in the middle ring may be transformed, contingent on their exposure to specific egg-powered phenomena in this zone. Some that assiduously avoid these phenomena and stay towards the exterior of the middle ring may be unchanged or only subtlely changed (perhaps not visibly at all). Others that are less cautious may have mild changes. And yet others that cavalierly ignore or event invite egg-powered phenomena may be substantially changed.
+
+Humans spending time within the inner ring under normal circumstances cannot help but to be transformed by their time spent there. Although there may be certain localized egg-specific phenomena of greater power in certain areas, there are also pervasive background effects in the entire zone. Existing there without some degree of adaptation or protection is only possible for very limited amounts of time if at all.
+
+Humans cannot enter the core zone except after having undergone very substantial transformation, or under the protection of very strong protective artifacts. 
+
+#### Exposure 
+
+Artifacts from the outer ring will only produce transformation in small amounts, and over extended periods of time and use. From a single outer ring artifact, a player may experience very mild transformation upon use, or over the week in which they are within the egg (depending on the nature of the artifact.)
+
+Artifacts from the middle ring will likely produce substantial transformation, either upon their initial use or over time (depending on the nature of the artifact.)
+
+Artifacts from the inner ring are certain to cause at least partial fundamental transformation, either upon their initial use or over extended use (depending on the nature of the artifact.)
+
+How artifacts transform a person will vary depending on the artifact, but generally transformation increases with active use of the powers, and to a lesser extent physical proximity over time. Some artifacts may act persistently, some may be implicitly invoked only when pertinent, and some must be explicitly used. "One shot"  artifacts (such as knowledge artifacts) may create their transformative impact upon their first use. Artifacts power is also contingent in some part on a person's willingness to cooperate with the artifact. If they resist, they may be transformed less, although the associated power may be diminished. Conversely, if they fully embrace the artifact, the power and transformation may be somewhat increases.
+
+Using multiple artifacts in tandem generally produces an additive effect. As a rule of thumb we can imagine that four outer ring artifacts results in the same degree of transformation as one middle ring artifact, and four middle ring artifacts results in the same degree of transformation as one inner ring artifact. If players are carrying many powerful artifacts over an extended period, they should develop an intuition that they are overloading their system or otherwise risking full transformation (unless of course this is desired), and should shed some.
+
+#### Protection
+
+Different protective artifacts may be discovered, or to a lesser extent other non-artifact protective means may be employed. These artifacts are protective of the physical and psychological normal human state. They do not reverse existing transformation, but may prevent or allay additional transformation, either due to utilization of artifacts or exposure to egg-powered phenomena. For artifact powers that rely on physical or psychological modification of a human, these artifacts attempt to make these powers compatible with preserved humanity, although it may diminish the power of these artifacts somewhat in the process. Protective artifacts seek first and foremost to preserve free will, and may be somewhat more lenient if a player wishes to modify their physicality or psychology while maintaining their fundamental humanity.
+
+#### Limits of transformation
+
+Although additional transformation occurs over time, we can imagine that artifacts and phenomena of lower power asymptotically approach a certain level of transformation. For instance, over indulgence in outer ring artifacts will likely never result in total and complete transformation of a person. 
 
 ## Themes of the game
 
