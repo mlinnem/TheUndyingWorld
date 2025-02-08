@@ -216,3 +216,8 @@ Artifacts should generally have a single power, rather than a mix of different a
 * Side effects on state of world or state of the egg.
 * Death
 * Judgment from the will of the alien race / God (could be positive, negative, neutral, complex)
+
+
+## End of document
+
+This is the end of the 'generative primer' document.

@@ -481,7 +481,9 @@ Sections are delineated with the single hash character, followed by text (e.g. "
 - Examples in this document us the  "`" character in this document, but that character should not be produced in any output.
 
 
+## End of document
 
+This is the end of the 'GM manual' document.
 
 
 

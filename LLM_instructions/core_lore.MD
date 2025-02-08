@@ -295,11 +295,13 @@ The basis for these endings is the following understanding:
 
 Although the planter civilization has deemed Earth to be a failure, redemption for all of humanity is possible. the player can achieve redemption in one of two ways:
 
-###  Golden Ending 1: "Hack the egg"
+###  Golden Ending 1: "Save humanity by changing it" / "Hack the egg"
 
 Deep in the egg lives a reclusive scientist who has discovered something extraordinary: the ability to modify artifacts. This power came from an accidental exposure to a unique artifact that changed how his mind could perceive and interact with the egg's systems. He uses this ability sparingly, making minor modifications to artifacts when absolutely necessary, and keeps his power hidden from most.
 
-If the player discovers this scientist and gains his trust, they learn that the same artifact that transformed him could potentially grant someone the ability to perceive and modify the egg's core systems themselves. However, the artifact is located in a highly dangerous area of deep transformation, and exposure to it carries serious risks.
+If the player discovers this scientist and gains his trust, they may work with the scientist to make a modification to one artifact. 
+
+They will also learn that the same artifact that transformed him could potentially grant someone the ability to perceive and modify the egg's core systems themselves. However, the artifact is located in a highly dangerous area of deep transformation, and exposure to it carries serious risks.
 
 Should the player manage to find and expose themselves to this artifact, they gain two capabilities:
 
@@ -443,3 +445,8 @@ It can be about what humanity does when it gains power. Can it wield it to truly
 It can be about whether to maintain individually, or yield to something bigger than oneself, or to find a compromise between the two?
 
 It can also about humanity's quest to understand in the face of the mysterious. About what one is willing to sacrifice in the quest for knowledge.
+
+
+## End of document
+
+This is the end of the 'core lore' document

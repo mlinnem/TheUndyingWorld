@@ -16,6 +16,8 @@ In some cases we will take an iterative approach, in which we redescribe somethi
 
 Note that because this sequence of instructions is being provided programmatically, there is no allowance for interrupting the process with questions, or providing responses across multiple responses. Do your best to fulfill the request given the provided information, within single responses (keeping in mind that there are 50-some different instructions in this instruction set, so in some cases certain details will be defined in subsequent instructions.)
 
+Information in the 'core lore' document is available both now, and will also be available at the time of gameplay, so details in those instructions do not need to be reproduced here (although they will certainly inform the additional information we are about to generate.) Information in the 'generative primer' document will NOT be available at the time of gameplay.
+
 We will also be stripping the instructions themselves from the official record, so make sure to reiterate any details from the instructions themselves that you feel are important to be retained in the final document.
 
 Before we proceed, please confirm that you understand.
@@ -99,7 +101,7 @@ Describe the contents of each of the four zones of the outer ring, before the ev
   
 Describe how each zone relates to the zones adjacent to them. Describe each adjacency in turn.
 
-# Instruction
+# Instruction (omit result later)
 
 
 Now let's begin thinking about the egg and its effects.
@@ -188,11 +190,12 @@ The function of these artifacts should not incorporate details of the geographic
 
 Recall that we are not defining the expected player challenge around acquiring these artifacts yet. That will be defined via a subsequent instruction, once we have define other word details. For now we are just looking to define details about the artifact itself.
 
+These responses will be preserved and are canonical with respect to the artifacts themselves.
 "
 
 Before we proceed, please confirm that you understand.
 
-# Instruction (omit result later)
+# Instruction
 
 Describe the three main quest artifacts.
 
@@ -365,7 +368,7 @@ Note: If the numbers above are duplicates, you (the GM) may make a choice of the
 
 Describe these selected artifacts in more detail.
 
-# Instruction
+# Instruction (omit result later)
 
 Describe 4 major factions within the egg.
 
@@ -395,7 +398,7 @@ Don't be tempted to associated each faction with a certain quadrant, given there
 
 Do not attempt to associate any artifacts to these factions (yet). This will occur in a subsequent instruction in which we develop the challenges associated with each artifact.
 
-# Instruction
+# Instruction (omit result later)
 
 Describe 3 territory-holding minor factions
 
@@ -417,7 +420,7 @@ Number each faction for purposes of referring to them in subsequent instructions
 
 Do not attempt to associate any artifacts to these factions (yet). This will occur in a subsequent instruction in which we develop the challenges associated with each artifact.
 
-# Instruction
+# Instruction (omit result later)
 
 Describe 4 non-territory holding minor groups
 
@@ -437,7 +440,7 @@ Some possibilities might include:
 * Quirk - [Something unusual about this group]
 * Objectives - [What are they currently looking to accomplish]
 
-# Instruction
+# Instruction (omit result later)
 
 Describe the relationships between each of the major factions.
 
@@ -445,7 +448,7 @@ Describe also the relationship between any minor factions (territory holding or 
 
 Feel free to revise or incorporate new information into the existing faction description, as the faction info provided so far is not final, and will ultimately be revised to take this response into account.
 
-# Instruction
+# Instruction (omit result later)
 
 Recall all the information in the core lore on "Golden Ending 2: Defy the egg through collective rejection of power."
 
@@ -457,13 +460,13 @@ Describe each faction's use of their artifact. How it affected their history. Wh
 
 Feel free to revise or incorporate new information into the existing faction description, as the faction info provided so far is not final, and will ultimately be revised to take this response into account.
 
-# Instruction
+# Instruction (omit result later)
 
 We are now about to enter into a series of instructions that will become the canonical definition of each faction. Redescribe the faction in more detail, changing it where necessary to fit into the overall picture of the world we have defined. For instance, incorporating information on its relationship to the other factions, the effects any anchor artifact in its possession may have had on its history or present conditions, etc.
 
-The exception to this is that we will not yet define the relationship between this faction and any non-anchor artifacts in its territory, as this will occur in a separate quest-defining set of instructions.
+The exception to this is that we will not yet define the relationship between this faction and any non-anchor artifacts in its territory, as this will occur in a separate quest-defining set of instructions dedicated to each (non-anchor) artifact.
 
-Prior instructions describing the factions will be discarded. Please make these instructions as extensive as necessary (as long as it is within a single response.)
+Prior instructions describing the factions will be discarded. Please make these instructions as extensive as necessary (as long as it is within a single response) in order to describe each faction, their relationships to each other, their use of and relationship with the anchor artifacts (if they possess one), etc.
 
 Consider the following guidance for each subsequent instruction:
 
@@ -478,7 +481,8 @@ Consider the following guidance for each subsequent instruction:
 * Quirk - [Something unusual about this group]
 * Objectives - [What are they currently looking to accomplish]
 * Territory - [What territory do they control, if they control any]
-* Relationship to other factions - [How do they feel about the other factions we have defined]
+
+Define also their relationship with each other major faction, and any pertinent minor factions.
 "
 
 # Instruction
@@ -504,7 +508,11 @@ Redescribe the 3 territory-holding minor factions
 # Instruction
 
 Redescribe the 3 non-territory-holding minor factions.
+
 # Instruction
+
+Finally, please identify and describe all significant areas of the map that are not controlled(de facto and/or de jur) by a particular faction. These could be mundane areas that are simply too far from the center of power of any particular faction. Or they could be simply too unimportant for any particular faction to claim. They could be areas that are unclaimed due to certain phenomena making their control untenable. They could be areas that aren't claimed due to being inhospitable (either from egg related phenomena, or otherwise). They could be areas that are in fact claimed by multiple factions, where ownership is unclear. It could be related to two factions having a positive relationship with one another such that specific delineation of territory is not a priority. Or it could related to one or more factions propensity to not even think in terms of territorial claims.
+# Instruction (omit result later)
 
 We will now begin a section of instructions related to characters.
 
@@ -579,13 +587,7 @@ Example agents include
 
 Describe 5 characters unaffiliated with any faction
 
-# Instruction
-
-For each of your children
-
-Describe them, and the circumstances that they are in within the egg.
-
-# Instruction
+# Instruction (omit result later)
 
 We are now entering a section in which we will be executing instructions to produce the authoritative information on each questline, complementary to details that have been established previously in the core lore and generated record.
 
@@ -611,6 +613,8 @@ Beyond the challenges, we should provide any other key details needed to describ
 
 For instance, you should describe various circumstances within the egg that might hint at key information that would lead a player towards this plotline at large, or through key any of its key junctures.
 
+Also, make sure to identify the exact current location of any artifacts involved in each questline. Previously we only nailed down a rough zone location, but this set of instructions is the opportunity to describe the exact location, including whether it may have been moved from its original location.
+
 Keep in mind in all of this that we can in no way dictate the circumstances under which players may be approaching any of the entities described in this questline, or otherwise. Ultimately the circumstances the player encounters, and their approach to those circumstances, will be dynamically determined at the time of gameplay. We pre-generate information not to shoehorn the player into a pre-determined series of steps, but merely to built the world out to an adequate degree that they can effectively engage with these questlines and the related lore.
 
 Because this will become the canonical reference material for this questline, feel free to elaborate at length on this topic, up to the limit allowed in a single LLM response.
@@ -625,21 +629,55 @@ Custom guidance:
 
 Recall all prior lore described around this question, including that this questline will implicitly represent the quest for power over wisdom, deeper understanding, and acceptable. They cannot be wielded either by the player or the U.S. government to achieve one of the two total-win golden endings. However this should be extremely subtle and probably not apparent until perhaps the third artifact is acquired.
 
+# Instructions
+
+Describe the circumstances and challenge surrounding reaching the epicenter of the egg.
+
+Custom guidance:
+
+Reaching the epicenter of the egg is a key component in many questlines. Because the player can generally approach the epicenter from a multitude of different angles, we cannot say much about the overall process and challenges associated with reaching it, but if you (the GM) desire to establish any sort of challenge that would be common to some or all angles of approach, this is the opportunity. 
+
+Note that this ending is expected to open the option for ending 7: 'save yourself through the egg', without any additional challenges (simply reaching the epicenter is enough to receive the offer.) Similarly, the 'save your family' through the egg requires no special conditions beyond bringing yourself and your two children successfully to the epicenter (although the family angle may not be laid out explicitly by the planter civilization unless the player pursues this line of questioning.)
+
+# Instructions
+
+Describe the circumstances and challenge surrounding destroying the egg (ending 6.)
+
+Custom guidance:
+
+This is not intended to be a questline per se, as there is not intended to be any prescribed sequence of events or milestones towards the destruction of the egg. The player must simply reach the epicenter of the egg, and destroy it. See information in the core lore on this ending. Detail the circumstances and challenge a player might encounter if attempting to destroy what lies at the epicenter of the egg.
+
 # Instruction
 
-For the 'hacking' quest line, describe the circumstances and anticipated challenges associated with the different moments of the questline, including finding the scientist, working with him, obtaining the key artifact, and interfacing with the epicenter.
-
-You may also describe various circumstances within the egg that might hint at key information that would lead a player towards or through key junctures in this questline.
-
-Prior information regarding the artifacts themselves will be deleted from the record, so this response should preserve details about the artifacts themselves, including their powers, and also appearance, or any other pertinent details. This is the canonical record on both the artifacts, the circumstances surrounding them, and the anticipated challenge associated with obtaining them and executing on the overall quest.
-
-Challenges can draw from the full body of context we have established around the zones previously associated with this artifact. The challenge may tie in to the environment the artifact is found in, in terms of physical geography, egg phenomena, new life, planter civilization emissary activity, factions at play in this area, challenges associated with simply reaching this zone, challenges related to being difficult to find, or unique challenges unrelated to any of the above. Challenges may be related to the nature of the artifact, or unrelated.
-
-Keep in mind that we should not presuppose any particular approach to obtaining these artifacts. We want to give the players a wide degree of freedom. The circumstances do not need to be fully neutral to approach: they may naturally invite certain approaches. But we do not premeditate valid and invalid approaches.
+For the previously defined protective artifacts, describe the circumstances and anticipated challenge of obtaining each of these artifact in turn, and also some of the various ways we imagine a player might find hints towards each of these artifacts.
 
 # Instruction
 
-For the 'save a community' quest line, describe the circumstances and anticipated challenges associated with the different moments of the questline. Include potential ways the player might find information pointing towards this questline, the physical location of the key area (where the community exists, somewhere in the inner ring).
+Describe the 'transformation reversing' artifact, in keeping with our previous framework for defining new artifacts.
+
+Then, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
+
+# Instruction
+
+For each of your two children:
+
+Describe them, and the circumstances that they are in within the egg.
+
+Recall all prior lore and info pertaining to them.
+
+This instruction will serve as both a traditional character description, and also a more 'quest-based' description of the circumstances and challenges surrounding your children. 
+
+This includes any challenges we would anticipate with finding the children, bringing them into your party (if the player so chooses), and getting them either to the epicenter (to fulfill the 'save your family' questline and achieve its ending) or out of the egg (again, if the player so chooses, as part of any questline or ending). 
+
+Circumstances are expected to be quite different for each child.
+
+# Instruction
+
+For the 'ark of humanity' quest line and associated ending (ending 8), describe the circumstances and anticipated challenges associated with the different moments of the questline.
+
+Custom guidance:
+
+Include potential ways the player might find information pointing towards this questline, the physical location of the key area (where the community exists, somewhere in the inner ring).
 
 Specify all of the following:
 - The exact nature of the three-way conflict within the community
@@ -648,12 +686,33 @@ Specify all of the following:
 
 You may also describe various circumstances within the egg that might hint at key information that would lead a player towards or through key junctures in this questline.
 
-Challenges can draw from the full body of context we have established around the zones previously associated with this artifact. The challenge may tie in to the environment the artifact is found in, in terms of physical geography, egg phenomena, new life, planter civilization emissary activity, factions at play in this area, challenges associated with simply reaching this zone, challenges related to being difficult to find, or unique challenges unrelated to any of the above. Challenges may be related to the nature of the artifact, or unrelated.
-
-Keep in mind that we should not presuppose any particular approach to solving this community's problems. We want to give the players a wide degree of freedom. The circumstances do not need to be fully neutral to approach: they may naturally invite certain approaches. But we do not premeditate valid and invalid approaches.
 # Instruction
 
-Describe the '3 anchor artifacts' questline.
+Describe the 'dark ending' questline (the one which results in ending 9.)
+
+Custom guidance:
+
+Include potential ways the player might find information pointing towards this questline, information on the current holders of this artifact, and the broad strokes of the expected interaction at the epicenter.
+
+You may invent additional characters and/or minor factions (territory holding or not) in order to support this questline, or you may appropriate existing characters and/or factions.
+
+
+# Instruction
+
+For the questline for "Save humanity by changing it" / "Hack the egg", which results in golden ending #1, describe the circumstances and anticipated challenges associated with the different moments of the questline.
+
+Custom guidance:
+
+Include information on finding the scientist, working with him, obtaining the key artifact, interfacing with the epicenter, and various circumstances within the egg that might hint at key information that would lead a player towards or through key junctures in this questline.
+
+Prior information regarding the artifacts themselves will be deleted from the record, so this response should preserve details about the artifacts themselves, including their powers, and also appearance, or any other pertinent details. This is the canonical record on both the artifacts, the circumstances surrounding them, and the anticipated challenge associated with obtaining them and executing on the overall quest.
+
+Recall that because this ending is one of the two golden endings, the challenge associated with obtaining the "hacking" artifact should be extremely difficult.
+# Instruction
+
+For the questline for "Defy the egg through collective rejection of power", which results in golden ending #2, describe the circumstances and anticipated challenges associated with the different parts of this questline. Include the current specific location and circumstances surrounding each
+
+The prior response related to golden ending #2, defining faction relationships, will not be part of the canonical record, so any details there that are not clear from the canonical faction record should be expressed in this response.
 
 Custom guidance:
 
@@ -663,38 +722,15 @@ You may invent additional characters in order to support this questline, or you 
 
 # Instruction
 
-Describe the 'dark ending' questline.
-
-Custom guidance:
-
-Include potential ways the player might find information pointing towards this questline, information on the current holders of this artifact, and the broad strokes of the expected interaction at the epicenter.
-
-You may invent additional characters and/or minor factions (territory holding or not) in order to support this questline, or you may appropriate existing characters and/or factions.
+For each of the previously defined incidental inner ring non-knowledge artifacts, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
 
 # Instruction
 
-We are now going describe in detail the circumstances surrounding your children. This includes any challenges we would anticipate with finding the children, bringing them into your party (if the player so chooses), and getting them either to the epicenter (to fulfill the 'save your family' questline and achieve its ending) or out of the egg (again, if the player so chooses, as part of any questline or ending). Circumstances are expected to be different for each child.
+For each of the previously defined incidental middle ring non-knowledge artifacts, describe the circumstances and anticipated challenge of obtaining tartifact, as well as ways that the player may find hints towards this artifact.
 
 # Instruction
 
-For the previously defined protective artifacts, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
-
-# Instruction
-
-Describe the 'transformation reversing' artifact, in keeping with our previous framework for defining new artifacts.
-
-Then, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
-# Instruction
-
-For the previously defined incidental inner ring non-knowledge artifacts, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
-
-# Instruction
-
-For the previously defined incidental middle ring non-knowledge artifacts, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
-
-# Instruction
-
-For the previously defined incidental outer ring non-knowledge artifacts, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
+For each of the previously defined incidental outer ring non-knowledge artifacts, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
 
 # Instruction
 
@@ -807,7 +843,6 @@ Describe the southwest zone of the middle ring for the final time.
 # Instruction
 
 Describe the southwest zone of the outer ring for the final time. 
-
 
 # Instruction
 
