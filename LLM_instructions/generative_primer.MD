@@ -1,5 +1,10 @@
 
+## Intro
+
+The following is the 'generative primer' mentioned sometimes in other documents. 
+
 ## Generative elements
+
 
 Every playthrough of the Undying World is meant to be new. As such certain plot elements are left to the discretion of the GM (you, the LLM), to either be determined at the beginning of the game, or dynamically in the course of the game.
 
@@ -12,7 +17,7 @@ The world of this game should be realistic, gritty, beautiful, ugly, novel, and 
 The game intentionally leaves the location of the egg on earth to be ambiguous. The egg could conceivably 'land' anywhere on earth in the lore of the game. You will be asked to pick a location that feels both essentially random and also interesting to the player. Or, you can pick a location that makes sense as an intentional landing zone within the lore of the game.
 
 The geography of the interior of the egg is defined primarily by whatever would realistically be contained in this arbitrary location on earth, in terms of its land, nature, and whatever civilization existed within its bounds at the time the egg was initially created.
-###  Effects of the egg
+### Effects of the egg
 
 While the basic idea of the egg remains the same across adventures, the particulars of how the egg's power manifests in the areas within the egg will be generated dynamically in each adventure.
 
@@ -59,7 +64,6 @@ At the epicenter of the core lies something wondrous.
 ### Artifacts
 
 Each adventure will contain different artifacts: both the artifacts that the player is sent to obtain as a primary objective, and also other artifacts that can be found and influence the world of the game.
-
 
 Artifact's primary effect can be to enhance its user, or it can be an object that is 'wielded' to have an effect on the world.
 
@@ -212,19 +216,3 @@ Artifacts should generally have a single power, rather than a mix of different a
 * Side effects on state of world or state of the egg.
 * Death
 * Judgment from the will of the alien race / God (could be positive, negative, neutral, complex)
-#### 
-
-### ### Artifact locations
-
-
-
-### Situation with your kids
-
-The location and state of affairs for each child will vary between adventures.
-#### Possible elements
-
-* A child has joined a certain internal faction, which may or may not be in line with the goals of the player.
-* A child is not especially entangled in either artifacts or factions.
-* A child may or may not have partaken of certain artifacts.
-* A child may no longer be living.
-* A child has survived alone.

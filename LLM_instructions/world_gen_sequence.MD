@@ -2,6 +2,8 @@
 
 # Instruction (omit result later)
 
+The following is the 'world gen sequence' mentioned sometimes in other documents. 
+
 I (a script) am now going to ask you to respond to a series of instructions in order to build out certain information for the world of this game. The instructions will help us describe how this world formed in basic chronological order, which you can also think of as the order of causation.
 
 Each response you produce should be in the form of a 'map gen data block', which works as follows:
