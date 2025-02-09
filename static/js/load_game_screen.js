@@ -1,10 +1,10 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const conversationList = document.getElementById('saved-game-picker');
     const updateStatus = document.getElementById('update-status');
     updateConversationList();
 
-    function getTimeAgo(date) {
+    function getTimeAgo(dateStr) {
+        const date = dateStr instanceof Date ? dateStr : new Date(dateStr);
         const seconds = Math.floor((new Date() - date) / 1000);
         
         let interval = seconds / 31536000; // years
@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 conversationList.innerHTML = '';
                 
+                
                 const sortedConversations = data.conversation_listings.sort((a, b) => {
                     if (!a.last_updated && !b.last_updated) {
                         return new Date(b.name) - new Date(a.name);
@@ -53,6 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 sortedConversations.forEach(conv => {
+                    let created_at_date = new Date(conv.created_at);
+
                     const convDiv = document.createElement('div');
                     convDiv.classList.add('conversation-item');
                     
@@ -71,26 +74,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     metadata.textContent = conv.location;
                     text_content_block.appendChild(metadata);
                     
-                    const date = new Date(conv.name);
-                    
-                    const formattedDateForLastUpdated = date.toLocaleString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                    });
-
-                    const createdDate = new Date(conv.created_at);
-                    const formattedDateForCreatedAt = createdDate.toLocaleString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                    });
-                    
+                    const date = conv.last_updated;
+                    console.debug("date is: " + date);
                     const lastPlayedString = "Played " + getTimeAgo(date);
-                    const messageCountString = "" + conv.message_count + " messages in game";
-                    const dateStartedString = "Started on " + formattedDateForCreatedAt;
+                    const messageCountString = "" + conv.message_count + " messages in game (including any setup data)";
+                    const dateStartedString = "Started on " + created_at_date.toLocaleString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                    });
 
                     const metadataList = document.createElement('ul');
                     metadataList.style.listStyle = 'none';

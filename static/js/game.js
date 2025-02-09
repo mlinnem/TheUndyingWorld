@@ -328,7 +328,8 @@ fetch('/get_conversation', {
 .then(response => response.json())
 .then(data => {
     if (data.status === 'success') {
-        let location = data.location;
+        console.debug("conversation data: " + JSON.stringify(data));
+        let name = data.conversation_name;
         let created_at = data.created_at;
 
         addConversationObject({
@@ -373,7 +374,7 @@ fetch('/get_conversation', {
             hour12: true
         }).replace(' PM', 'PM').replace(' AM', 'AM');
         
-        chatTitle.textContent = location + ", created on " + created_at;
+        chatTitle.textContent = name;
     }
 })
 .catch(error => {

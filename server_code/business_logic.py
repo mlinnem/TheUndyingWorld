@@ -120,9 +120,13 @@ def create_conversation_from_seed(seed_id):
     logger.debug("Post-filtering messages: " + str(len(seed['messages'])))
     
     conversation_id = generate_conversation_id()
+    # Create short date string for conversation name
+    short_date = datetime.now().strftime("%b %d")
+
     conversation = {
         'conversation_id': conversation_id,
-        'name': seed['location'],
+        'name': seed['location'] + " (" + short_date +")",
+        'location': seed['location'],
         'messages': seed['messages'],
         'last_updated': datetime.now().isoformat(),
         'created_at': datetime.now().isoformat(),
@@ -137,8 +141,9 @@ def create_conversation_from_seed(seed_id):
         'summarizer_system_prompt': seed['summarizer_system_prompt'],
         'summarizer_system_prompt_date' : seed['summarizer_system_prompt_date'],
     }
+    logger.debug("Conversation created with name: " + str(conversation['name']))
 
-    logger.info(f"Created conversation based on seedwith new ID: {conversation['conversation_id']}")
+    logger.info(f"Created conversation based on seed with new ID: {conversation['conversation_id']}")
     
     # Save the updated conversation
 
