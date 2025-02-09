@@ -29,6 +29,7 @@ def get_game_seed_listings():
         game_seed_listing = {
             'id': game_seed_id,
             'name': game_seed['location'],
+            'location': game_seed['location'],
             'description': game_seed['description'],
             'created_at': game_seed['created_at'],
             'last_updated': game_seed['last_updated'],

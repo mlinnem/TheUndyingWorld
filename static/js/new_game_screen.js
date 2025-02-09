@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     worldCard.classList.add('built-in-world');
                     
                     worldCard.innerHTML = `
-                        <div class="world-title">${world.description}</div>
+                        <div class="world-title">${world.location}</div>
                         <div class="world-description">${world.description}</div>
                         <button class="play-world-button" data-seed-id="${world.id}">Play</button>
                     `;
