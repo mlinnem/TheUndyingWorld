@@ -265,23 +265,27 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
       
    
     else:
+        # Add timestamp to user message
+        user_message['timestamp'] = datetime.now().isoformat()
         conversation['messages'].append(user_message)
         
-        # get and save gm response
+        # Get and save gm response with timestamp
         gm_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.5)
+        gm_response_json['timestamp'] = datetime.now().isoformat()
         conversation['messages'].append(gm_response_json)
         new_messages = [gm_response_json]
 
-        # if gm requested tool use
         if (isToolUseRequest(gm_response_json)):
             logger.info("tool use request detected")
-            # generate and save tool result
+            # Generate and save tool result with timestamp
             tool_result_json = generate_tool_result(gm_response_json)
+            tool_result_json['timestamp'] = datetime.now().isoformat()
             conversation['messages'].append(tool_result_json)
             new_messages.append(tool_result_json)
 
-            # get and save gm response to tool result
+            # Get and save gm response to tool result with timestamp
             tool_use_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.8)
+            tool_use_response_json['timestamp'] = datetime.now().isoformat()
             conversation['messages'].append(tool_use_response_json)
             new_messages.append(tool_use_response_json)
         else:
@@ -319,12 +323,14 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
         for i, world_gen_instruction_w_omit_data in enumerate(world_gen_instructions_w_omit_data):
             logger.info(f"Processing boot sequence message {i+1}/{len(world_gen_instructions_w_omit_data)}")
             try:
-                # Convert and add user message
+                # Convert and add user message with timestamp
                 world_gen_instruction = convert_user_text_to_message(world_gen_instruction_w_omit_data['text'])
+                world_gen_instruction['timestamp'] = datetime.now().isoformat()
                 temp_conversation['messages'].append(world_gen_instruction)
                 
-                # Get GM response
+                # Get GM response with timestamp
                 gm_response, usage_data = get_next_gm_response(temp_conversation['messages'],temp_conversation['game_setup_system_prompt'], temperature=0.84)
+                gm_response['timestamp'] = datetime.now().isoformat()
                 temp_conversation['messages'].append(gm_response)
 
                 if not world_gen_instruction_w_omit_data['omit_result']:
@@ -339,9 +345,11 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
                 if isToolUseRequest(gm_response):
                     logger.info("Tool use requested during boot sequence")  
                     tool_result = generate_tool_result(gm_response)
+                    tool_result['timestamp'] = datetime.now().isoformat()
                     temp_conversation['messages'].append(tool_result)
                     
                     tool_response, _ = get_next_gm_response(temp_conversation['messages'], game_setup_system_prompt, temperature=0.8)
+                    tool_response['timestamp'] = datetime.now().isoformat()
                     temp_conversation['messages'].append(tool_response)     
                     
                     if i == len(world_gen_instructions_w_omit_data) - 1:
@@ -395,12 +403,14 @@ def execute_final_startup_instruction(conversation: Dict):
         # Get the final instruction content
         final_instruction = get_final_startup_instruction_string()
         
-        # Convert the instruction to a user message
+        # Convert the instruction to a user message with timestamp
         user_message = convert_user_text_to_message(final_instruction)
+        user_message['timestamp'] = datetime.now().isoformat()
         conversation['messages'].append(user_message)
         
-        # Get GM response
+        # Get GM response with timestamp
         gm_response, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.7)
+        gm_response['timestamp'] = datetime.now().isoformat()
         conversation['messages'].append(gm_response)
         new_messages = [gm_response]
         
@@ -408,10 +418,12 @@ def execute_final_startup_instruction(conversation: Dict):
         if isToolUseRequest(gm_response):
             logger.info("Tool use requested during final startup instruction")
             tool_result = generate_tool_result(gm_response)
+            tool_result['timestamp'] = datetime.now().isoformat()
             conversation['messages'].append(tool_result)
             new_messages.append(tool_result)
             
             tool_response, _ = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.7)
+            tool_response['timestamp'] = datetime.now().isoformat()
             conversation['messages'].append(tool_response)
             new_messages.append(tool_response)
         
