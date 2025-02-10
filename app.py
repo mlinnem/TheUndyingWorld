@@ -5,7 +5,10 @@ import http.client as http_client
 from anthropic import Anthropic
 import os
 from dotenv import load_dotenv
+from server_code.logger_config import setup_logging
 
+# Initialize logging first
+setup_logging()
 
 import logging
 logger = logging.getLogger(__name__)

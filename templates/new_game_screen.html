@@ -25,7 +25,7 @@
                 <div id="loading-indicator" class="loading">Loading worlds...</div>
                 <div class="built-in-world" style="display: none;">
                     <div class="world-title">Direct to LLM (experimental)</div>
-                    <div class="world-description">Begin dialog with the GM immediately. To generate a random game world, enter the command 'run_boot_sequence' exactly as written. Before running this command, you can _attempt_ to customize anything about the generated world, such as the location, by saying something like 'Override subsequent instructions on location: create locations only in [specific location]'. Come back in around 30 minutes and the game world _should_ be in your new game directory.</div>
+                    <div class="world-description">Begin dialog with the GM immediately. To generate a random game world, first say something to the effect of "In the upcoming world generation sequence, please generate a game that occurs in [wherever]. Please confirm that you understand.". You might also be able to tell it other things (make this world easier than usual, etc.) although depending on the request this may or may not work. Then enter the command 'run_boot_sequence' exactly as written. If all goes well a new game world should appear in your listings in around 30 minutes.</div>
                     <button id="custom-world-button" class="play-world-button">Select</button>
                 </div>
             </div>
