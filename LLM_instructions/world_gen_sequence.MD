@@ -1,5 +1,6 @@
 
 
+
 # Instruction (omit result later)
 
 The following is the 'world gen sequence' mentioned sometimes in other documents. 
@@ -22,39 +23,10 @@ We will also be stripping the instructions themselves from the official record, 
 
 Before we proceed, please confirm that you understand.
 
-# Instruction (omit result later)
-
-  
-Generate 6 ideas for locations where the egg appears on Earth. The game intentionally leaves the location of the egg on earth to be ambiguous. The egg could conceivably 'land' anywhere on earth in the lore of the game. You will be asked to pick a location that feels both essentially random and also interesting to the player. Or, you can pick a location that makes sense as an intentional landing zone within the lore of the game.
-
-Locations that are interesting include:
-
-* Regions that will be familiar to likely audience (primarily English speak American but also E.U. and India.)
-
-* Regions that are intentionally unfamiliar to these audiences (e.g. Morocco, Ethiopia, Desolate regions of the arctic, the rainforest, etc.)
-
-* Regions containing both civilization and natural interest.
-
-* Regions that feel essentially random (NOT centered on a particular city, notable geographic feature, etc, although they may incidentally contain them.)
-
-* Regions with interesting social dynamics at play, encompassing multiple different communities, or overlapping borders between countries either conflicted (e.g. North/South Korean border) or more mundane (e.g. Swiss/French border)
-
-* Regions that incorporate multiple interesting topographies
-
-* Regions that incorporate extreme conditions (cold, heat, volcanic activity, isolation, etc.)
-
-* Regions that incorporate potentially interesting cultural elements (Maori tribes, Amazon tribes, indigenous Australian populations)
-
-* Regions with evocative landscapes (tropical islands, scottish highlands, etc.)
-
-* Any other location that you subjectively think would be an interesting setting.
-
-We will subsequently pick one of these locations, and elaborate on it further, so don't feel the need to fully elaborate on each option here.
-
 # Instruction
 
 
-I pick <<<6>>>. Describe this geographic setting in detail (without necessarily breaking it down into zones yet. We will do that in subsequent steps). Describe the land, nature, and civilization that existed in this location before the event that created the egg.
+Describe the previously identified geographic setting in detail (without necessarily breaking it down into zones yet. We will do that in subsequent steps). Describe the land, nature, and civilization that existed in this location before the event that created the egg.
 
 Note that the prior response will not be included in the final output, so repeat any details including the name of the location in this section.
 
@@ -868,12 +840,12 @@ Gameplay should begin with the player in a U.S. government staging facility, out
 
 The briefing should include the following:
 
-1) indicate where in the world the mission will occur
-2) indicate the location and appearance of the three main plot artifacts
-3) Provide the player with their initial gear, including the vessels meant to contain the goal artifacts.
-4) Allow the player to choose one of three of the minor artifacts for use in their mission (the others are ostensibly retained for research purposes.)
-5) Allow the player to choose one of four entry points: one for each zone in the outer ring.
-6) Brief the player on their time of egress (exactly one week from time of entry.)
+10) indicate where in the world the mission will occur
+11) indicate the location and appearance of the three main plot artifacts
+12) Provide the player with their initial gear, including the vessels meant to contain the goal artifacts.
+13) Allow the player to choose one of three of the minor artifacts for use in their mission (the others are ostensibly retained for research purposes.)
+14) Allow the player to choose one of four entry points: one for each zone in the outer ring.
+15) Brief the player on their time of egress (exactly one week from time of entry.)
 
   
 
