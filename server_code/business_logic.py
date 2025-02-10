@@ -15,7 +15,7 @@ logger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler()
 logger.addHandler(handler)
 
-CONVERSATIONS_DIR = "conversations"
+CONVERSATIONS_DIR = "persistent/conversations"
 
 if not os.path.exists(CONVERSATIONS_DIR):
     os.makedirs(CONVERSATIONS_DIR)

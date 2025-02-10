@@ -8,9 +8,9 @@ logger = logging.getLogger(__name__)
 # Turn on debug logging
 logging.basicConfig(level=logging.DEBUG)
 
-CONVERSATIONS_DIR = "conversations"
+CONVERSATIONS_DIR = "persistent/conversations"
 LLM_INSTRUCTIONS_DIR = "LLM_instructions"
-GAME_SEEDS_DIR = "game_seeds"
+GAME_SEEDS_DIR = "persistent/game_seeds"
 
 if not os.path.exists(CONVERSATIONS_DIR):
     os.makedirs(CONVERSATIONS_DIR)
