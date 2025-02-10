@@ -136,7 +136,7 @@ def create_conversation_from_seed_route():
 
         return jsonify({
             'status': 'success',
-            'redirect_url': f'/game/{conversation['conversation_id']}',
+            'redirect_url': f'/game/{conversation["conversation_id"]}',
             'conversation_id': conversation['conversation_id']
         })
 
