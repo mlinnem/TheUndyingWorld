@@ -122,6 +122,7 @@ Describe the following:
 * How has the egg's power changed this zone?  Consider the introduction of new life, terraforming, the presence of emissaries of the planter civilization, or other effects.
 * What challenges does this imply for a person (e.g. the player) attempting to travel through this zone?
 
+For the inner ring and core zone, also describe various avatars of the egg within these zones, what they are up to, etc.
 
 Recall prior information shared on the physical geography, nature, and civilization in this zone before the egg.
 
@@ -249,7 +250,7 @@ Recall that these artifacts are not a necessary part of any particular questline
 
 Two of these artifacts should be placed in the outer ring, two in the middle ring, and two in the inner ring. Their powers should be strong in correspondence with the depth of their ring (as indicated in general guidance on artifact powers in the generative primer.)
 
-# Instruction
+# Instruction (omit result later)
 
 We will now begin a portion of instructions that will define a number of 'incidental' artifacts. These are artifacts that are not intended to advance a particular questline, but are merely present to support the player increasing in power, knowledge, and/or to add richness to the overall game world.
 
@@ -587,6 +588,14 @@ Example agents include
 
 Describe 5 characters unaffiliated with any faction
 
+# Instruction
+
+Describe 1-2 characters that will occur in the initial briefing experience prior to the player entering the egg. One should be the primary 'handler' for the player that will be the primary contact for the briefing. The other is optional.
+
+# Instruction
+
+Describe 2 characters that will be present in the initial briefing
+
 # Instruction (omit result later)
 
 We are now entering a section in which we will be executing instructions to produce the authoritative information on each questline, complementary to details that have been established previously in the core lore and generated record.
@@ -859,21 +868,17 @@ Gameplay should begin with the player in a U.S. government staging facility, out
 
 The briefing should include the following:
 
-4) indicate the location and appearance of the three main plot artifacts
-
-5) Provide the player with their initial gear, including the vessels meant to contain the goal artifacts.
-
-6) Allow the player to choose one of three of the minor artifacts for use in their mission (the others are ostensibly retained for research purposes.)
-
-7) Allow the player to choose one of four entry points: one for each zone in the outer ring.
-
-8) Brief the player on their time of egress (exactly one week from time of entry.)
+1) indicate where in the world the mission will occur
+2) indicate the location and appearance of the three main plot artifacts
+3) Provide the player with their initial gear, including the vessels meant to contain the goal artifacts.
+4) Allow the player to choose one of three of the minor artifacts for use in their mission (the others are ostensibly retained for research purposes.)
+5) Allow the player to choose one of four entry points: one for each zone in the outer ring.
+6) Brief the player on their time of egress (exactly one week from time of entry.)
 
   
 
 Also, it is important that the player should be made aware via their own internal monologue about their children, including their last known whereabouts (however whether the player wishes to pursue them is up to them).
 
-  
 
 Other information pertinent to this initial scene:
 
@@ -895,6 +900,11 @@ This interaction should ideally be conducted in character by your handler, altho
 
 Remember to keep in mind what information the player should and should not know. The U.S. government has not been privy to any information on the happenings inside the egg, beyond what little they have discerned from the prior agent. They are also not revealing everything they know to the player. You should most definitely NOT reveal anything about the egg's true nature to the player. 
 
+Do not respond to this using an OOC message. Simply begin the game.
+
+In addition to the resulting scene block, make sure to include the tracked operations and the condition table to begin with good habits. Recall all prior instructions on how to conduct gameplay.
+
 Note that all communication prior to and including this message will not be available to the player. Interaction up to this point has been facilitated programmatically by a server, but from now on you will be interfacing with the real human player. Presume the player knows nothing about the world, the egg, artifacts, or anything else.
+
 
 Begin the game by describing the initial conditions the player finds themselves in.

@@ -1,7 +1,8 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const customWorldButton = document.getElementById('custom-world-button');
     const worldPicker = document.querySelector('.world-picker');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const customWorldCard = worldPicker.lastElementChild;
     
     // Fetch and display game world listings
     updateGameWorldListings();
@@ -12,9 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch('/get_game_world_listings')
             .then(response => response.json())
             .then(data => {
-                // Clear existing world cards except the last one (custom world)
-                const customWorldCard = worldPicker.lastElementChild;
-                worldPicker.innerHTML = '';
+                // Remove loading indicator
+                loadingIndicator.remove();
                 
                 // Add game world listings
                 data.game_seed_listings.forEach(world => {
@@ -33,11 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     worldPicker.appendChild(worldCard);
                 });
                 
-                // Re-add the custom world card
+                // Show and append the custom world card
+                customWorldCard.style.display = 'flex';
                 worldPicker.appendChild(customWorldCard);
             })
             .catch(error => {
                 console.error('Error fetching game world listings:', error);
+                loadingIndicator.textContent = 'Error loading worlds. Please try again later.';
             });
     }
 

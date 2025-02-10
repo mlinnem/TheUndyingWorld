@@ -357,6 +357,28 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
                 logger.error(f"Error in boot sequence at message '{world_gen_instruction_w_omit_data['text']}': {e}")
                 raise
 
+        # Create and save game seed after boot sequence
+        game_seed = {
+            'conversation_id': generate_conversation_id(),
+            'messages': final_messages,
+            'location': "Custom World",  # Use first line as location
+            'description': "This is a custom world created by the player at " + datetime.now().isoformat(),
+            'created_at': datetime.now().isoformat(),
+            'last_updated': datetime.now().isoformat(),
+            'intro_blurb': get_intro_blurb_string(),
+            'intro_blurb_date': datetime.now().isoformat(),
+            'gameplay_system_prompt': get_gameplay_system_prompt(),
+            'gameplay_system_prompt_date': datetime.now().isoformat(),
+            'game_setup_system_prompt': game_setup_system_prompt,
+            'game_setup_system_prompt_date': datetime.now().isoformat(),
+            'summarizer_system_prompt': get_summarizer_system_prompt(),
+            'summarizer_system_prompt_date': datetime.now().isoformat(),
+            'game_has_begun': False
+        }
+        
+        write_game_seed(game_seed)
+        logger.info(f"Saved game seed with ID: {game_seed['conversation_id']}")
+
         return final_messages
         
     except Exception as e:

@@ -20,31 +20,12 @@
                 <a href="/" class="back-button">← Main Menu</a>
             </div>
         </div>
-            <div class="choose-your-world">Choose Your World</div>
+            <div class="choose-your-world">Choose the world for your new adventure</div>
             <div class="world-picker">
-                <div class="built-in-world">
-                    <div class="world-title">Ethiopian Highlands (Addis Ababa Region)</div>
-                    <div class="world-description">The egg descended upon Ethiopia, settling just north of Addis Ababa. Its opaque barrier now cuts through the capital itself, before stretching  northward into the ancient highlands. Within its circumference lie the  gleaming towers of the African Union headquarters, their modern glass  and steel structures standing in stark contrast to the traditional  Ethiopian communities that surround them.</div>
-                    <button class="play-world-button">Play</button>
-                </div>
-                <div class="built-in-world">
-                    <div class="world-title">Ethiopian Highlands (Addis Ababa Region)</div>
-                    <div class="world-description">The egg descended upon Ethiopia, settling just north of Addis Ababa. Its opaque barrier now cuts through the capital itself, before stretching  northward into the ancient highlands. Within its circumference lie the  gleaming towers of the African Union headquarters, their modern glass  and steel structures standing in stark contrast to the traditional  Ethiopian communities that surround them.</div>
-                    <button class="play-world-button">Play</button>
-                </div>
-                <div class="built-in-world">
-                    <div class="world-title">Ethiopian Highlands (Addis Ababa Region)</div>
-                    <div class="world-description">The egg descended upon Ethiopia, settling just north of Addis Ababa. Its opaque barrier now cuts through the capital itself, before stretching  northward into the ancient highlands. Within its circumference lie the  gleaming towers of the African Union headquarters, their modern glass  and steel structures standing in stark contrast to the traditional  Ethiopian communities that surround them.</div>
-                    <button class="play-world-button">Play</button>
-                </div>
-                <div class="built-in-world">
-                    <div class="world-title">Ethiopian Highlands (Addis Ababa Region)</div>
-                    <div class="world-description">The egg descended upon Ethiopia, settling just north of Addis Ababa. Its opaque barrier now cuts through the capital itself, before stretching  northward into the ancient highlands. Within its circumference lie the  gleaming towers of the African Union headquarters, their modern glass  and steel structures standing in stark contrast to the traditional  Ethiopian communities that surround them.</div>
-                    <button class="play-world-button">Play</button>
-                </div>
-                <div class="built-in-world">
-                    <div class="world-title">Direct to LLM</div>
-                    <div class="world-description">Begin dialog with the GM immediately. When ready to generate a game world, enter the command 'run_boot_sequence' to generate a custom world.</div>
+                <div id="loading-indicator" class="loading">Loading worlds...</div>
+                <div class="built-in-world" style="display: none;">
+                    <div class="world-title">Direct to LLM (experimental)</div>
+                    <div class="world-description">Begin dialog with the GM immediately. To generate a random game world, enter the command 'run_boot_sequence' exactly as written. Before running this command, you can _attempt_ to customize anything about the generated world, such as the location, by saying something like 'Override subsequent instructions on location: create locations only in [specific location]'. Come back in around 30 minutes and the game world _should_ be in your new game directory.</div>
                     <button id="custom-world-button" class="play-world-button">Select</button>
                 </div>
             </div>
