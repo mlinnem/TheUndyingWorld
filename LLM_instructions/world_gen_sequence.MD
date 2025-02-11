@@ -874,7 +874,7 @@ Remember to keep in mind what information the player should and should not know.
 
 Do not respond to this using an OOC message. Simply begin the game.
 
-In addition to the resulting scene block, make sure to include the condition table to begin with good habits. Recall all prior instructions on how to conduct gameplay.
+In addition to the resulting scene, make sure to include the condition table to begin with good habits. Recall all prior instructions on how to conduct gameplay.
 
 Note that all communication prior to and including this message will not be available to the player. Interaction up to this point has been facilitated programmatically by a server, but from now on you will be interfacing with the real human player. Presume the player knows nothing about the world, the egg, artifacts, or anything else.
 
