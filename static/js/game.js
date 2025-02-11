@@ -130,6 +130,7 @@ function get_or_create_difficulty_check_element() {
 
 
 function addConversationObjects(conversation_objects) {
+    console.debug("adding " + conversation_objects.length + " conversation objects");
     conversation_objects.forEach(conversation_object => {
         addConversationObject(conversation_object);
     });

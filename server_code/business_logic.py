@@ -265,6 +265,9 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
       
    
     else:
+        # Add debug logging for incoming user message
+        logger.debug(f"Received user message: {user_message}")
+        
         # Add timestamp to user message
         user_message['timestamp'] = datetime.now().isoformat()
         conversation['messages'].append(user_message)
@@ -345,6 +348,7 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
                 if isToolUseRequest(gm_response):
                     logger.info("Tool use requested during boot sequence")  
                     tool_result = generate_tool_result(gm_response)
+                    logger.debug(f"Tool result: {tool_result}")
                     tool_result['timestamp'] = datetime.now().isoformat()
                     temp_conversation['messages'].append(tool_result)
                     

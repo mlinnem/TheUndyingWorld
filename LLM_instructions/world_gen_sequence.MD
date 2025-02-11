@@ -510,7 +510,7 @@ Consider the following template for characters:
 
 The egg has driven humanity to extremes. Some survivors maintain relative sanity but most have become unhinged in some way, either through the effects of the egg, the degradation of society, the opportunities for newfound power, or the opportunity to enact ideas for organizing society previously impossible due to the prior world powers. 
 
-Note: Never name a character Sarah Chen, or any variation on that name.
+Note: Never give a character the name Sarah Chen, the last name Chen, or any variation on that name.
 
 # Instruction
 
@@ -874,7 +874,7 @@ Remember to keep in mind what information the player should and should not know.
 
 Do not respond to this using an OOC message. Simply begin the game.
 
-In addition to the resulting scene block, make sure to include the tracked operations and the condition table to begin with good habits. Recall all prior instructions on how to conduct gameplay.
+In addition to the resulting scene block, make sure to include the condition table to begin with good habits. Recall all prior instructions on how to conduct gameplay.
 
 Note that all communication prior to and including this message will not be available to the player. Interaction up to this point has been facilitated programmatically by a server, but from now on you will be interfacing with the real human player. Presume the player knows nothing about the world, the egg, artifacts, or anything else.
 

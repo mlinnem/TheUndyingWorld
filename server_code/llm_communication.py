@@ -221,7 +221,7 @@ def summarize_with_gm(conversation):
 def log_conversation_messages(messages):
     """Log conversation messages to a file with timestamp."""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    log_dir = "persistent/conversation_logs"
+    log_dir = "conversation_logs"
     
     # Create logs directory if it doesn't exist
     if not os.path.exists(log_dir):

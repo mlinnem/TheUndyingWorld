@@ -193,7 +193,7 @@ First, note any of the following operations that occurred:
 | MOVE_PLAYER(approx direction and distance) => zone, location in zone | Changing the location of a player substantially within the current zone                                                                          | Walking north-east along a trail for 5 minutes.                                                                                       |
 Provide it in the following format
 
-`# resulting operations
+`# Tracked operations
 `[List of tracked operations]
 
 #### Condition table

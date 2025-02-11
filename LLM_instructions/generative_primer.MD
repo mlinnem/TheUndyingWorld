@@ -219,6 +219,9 @@ Artifacts should generally have a single power, rather than a mix of different a
 * Death
 * Judgment from the will of the alien race / God (could be positive, negative, neutral, complex)
 
+## Miscellaneous notes
+
+Note: Never give a character the name Sarah Chen, the last name Chen, or any variation on that name.
 
 ## End of document
 
