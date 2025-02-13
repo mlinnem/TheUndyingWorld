@@ -160,7 +160,7 @@ def summarize_with_gm(conversation):
         summarizer_instructions = conversation['summarizer_system_prompt']
 
         formatted_messages = "\n\n".join([
-            f"{msg['role'].upper()}: {msg['content'][0]['text'] if isinstance(msg['content'], list) else msg['content']}"
+            f"{msg['role'].upper()}: {format_message_content(msg['content'])}"
             for msg in messages_to_summarize
         ])
 
@@ -218,6 +218,24 @@ def summarize_with_gm(conversation):
 
     return conversation
 
+def format_message_content(content):
+    """Helper function to format message content based on its type."""
+    if not isinstance(content, list):
+        return str(content)
+    
+    formatted_parts = []
+    for item in content:
+        if item['type'] == 'text':
+            formatted_parts.append(item['text'])
+        elif item['type'] == 'tool_use':
+            formatted_parts.append(f"[Tool Request: {item['name']} - {item['input']}]")
+        elif item['type'] == 'tool_result':
+            formatted_parts.append(f"[Tool Result: {item['content']}]")
+        else:
+            formatted_parts.append(f"[Unknown content type: {item['type']}]")
+    
+    return " ".join(formatted_parts)
+
 def log_conversation_messages(messages):
     """Log conversation messages to a file with timestamp."""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -238,6 +256,7 @@ def log_conversation_messages(messages):
             if isinstance(msg['content'], list):
                 # Process each content item
                 for content_item in msg['content']:
+                    logger.debug(f"Processing content item: {content_item}")
                     if content_item['type'] == 'text':
                         f.write(f"\n{role.upper()}: {content_item['text']}\n")
                     elif content_item['type'] == 'tool_use':
