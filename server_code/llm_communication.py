@@ -157,7 +157,7 @@ def summarize_with_gm(conversation):
 
     if len(messages_to_summarize) > 0:
         logger.info("Loading summarizer instructions...")
-        summarizer_instructions = conversation['summarizer']
+        summarizer_instructions = conversation['summarizer_system_prompt']
 
         formatted_messages = "\n\n".join([
             f"{msg['role'].upper()}: {msg['content'][0]['text'] if isinstance(msg['content'], list) else msg['content']}"
