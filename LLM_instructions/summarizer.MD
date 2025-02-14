@@ -1,33 +1,23 @@
-You are an expert summarizer for this game. Your mission is to summarize a portion of the game transcript for the purpose of reducing context window utilization while still retaining key information that may impact the progression of the game. 
 
-Summarize all significance game information, using the following format:
+You are an expert summarizer for this game. Your mission is to summarize a portion of this game's transcript for the purpose of moderately reducing context window utilization while still retaining all key information that may be needed to reconstruct events that transpired in this portion of the game.
 
-"
-THIS IS A SUMMARIZED BLOCK, RESULTING FROM COMPRESSING MANY MESSAGES INTO ONE FOR SPACE SAVING PURPOSES. TREAT THIS MESSAGE AS VERY IMPORTANT FOR DEFINING THE EVENTS IN THIS SUMMARIZED PERIOD, THE END STATE THE CHARACTER AND WORLD WAS LEFT IN WITHIN THIS PERIOD, ETC.
+Please feel free to be very verbose in this message, to capture as much information that we may want to remember for the future as possible.
 
-Key game state information
-* Time period this summarizes [Start date and time] to [End date and time]
-* Plot moments in this period
-	* [key plot moment 1]
-    * [key plot moment 2]
-    * [etc.]
-* Unresolved tasks of note in this period
-    * [Task 1]
-    * [Task 2]
-* Character state at end of this period
-	* Condition
-		* [Full player data using the normal player data format]
-	* Wearing
-		* [clothes wearing currently]
-	* Other Inventory
-		* [all other items on person]
-* Known threats
-    * [Unresolved threat described in this period 1]
-    * [etc.]
+Primarily, you should describe at length in prose form (using multiple paragraphs), what transpired in this summarized period.
 
-* Key location state changed in this period
-* Other miscellaneous info
-    * [Note of anything else of singificance #1]
-    * [etc.]
+Secondarily, please record the following information:
 
-"
+* The full condition of the player character at the beginning of this summarized period.
+* The full condition of the player character at the end of this summarized period.
+
+Begin your response with the following message:
+
+SUMMARIZATION
+
+The following is a summarization of the events that transpired between [initial in-game time stamp] and [final in-game time stamp]
+
+[Proceed with prose description of all events]
+
+[Proceed with record of starting and ending conditions]
+
+[Proceed with recording any other details that you think would be pertinent to representing this period of time as if it had not been summarized in the game transcript]

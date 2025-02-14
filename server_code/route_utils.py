@@ -3,7 +3,7 @@ import traceback
 
 # Set up logging configuration
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
@@ -118,13 +118,14 @@ def convert_messages_to_cos(messages):
 
                                     if i == 0:
                                         if section.strip():
-                                            logger.warning(f"Out of section text: {body}")
+                                            logger.warning(f"Out of section text: {body[:50]}...")
                                             cos.append({'type': 'out_of_section_text', 'text': body})
                                     else:
                                         if 'ooc message' in c_header:
                                             logger.debug(f"OOC message: {body}")
                                             cos.append({'type': 'ooc_message', 'text': body})
-                                        elif 'map' in c_header or 'zone' in c_header or 'quad' in c_header:
+                                        elif 'map' in c_header or 'zone' in c_header or 'quad' in c_header or 'world gen data' in c_header:
+                                            logger.debug(f"header: {c_header}")
                                             logger.debug(f"Map data: {body}")
                                             cos.append({'type': 'world_gen_data', 'text': body})
                                         elif 'difficulty analysis' in c_header:
@@ -186,7 +187,7 @@ def convert_messages_to_cos(messages):
 def filter_conversation_objects(conversation_objects):
     logger.info("Filtering conversation objects: " + str(len(conversation_objects)))
     """
-    Filter out specific conversation object types that should not be sent to the user.
+    Filter out specific conversation objects that should not be sent to the user.
     
     Args:
         conversation_objects (list): List of conversation objects to filter
@@ -214,12 +215,16 @@ def filter_conversation_objects(conversation_objects):
     logger.debug("boot_end_index: " + str(boot_end_index))
     
     # If boot_sequence_end was found, only keep objects after it
-    # We subtract 1 because we want the last message of the boot sequence to be included in the conversation
     start_index = (boot_end_index + 1) - 1 if boot_end_index >= 0 else 0
     
-    result = [
-        obj for obj in conversation_objects[start_index:]
-        if obj.get('type') not in filtered_types
-    ]
+    # Create filtered list and log filtered objects
+    result = []
+    for obj in conversation_objects[start_index:]:
+        if obj.get('type') in filtered_types:
+            logger.debug(f"Filtering out object of type: {obj.get('type')}")
+            logger.debug(f"Object: {obj}")
+        else:
+            result.append(obj)
+            
     logger.info("conversation objects after filtering: " + str(len(result)))
     return result

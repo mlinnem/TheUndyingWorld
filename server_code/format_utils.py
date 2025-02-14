@@ -372,7 +372,7 @@ def is_world_gen_data(message):
     logger.debug(f"Checking if message is map data: {message}")
     if message['role'] == 'assistant':
         if message['content'][0]['type'] == 'text':
-            if _header_contains(message['content'][0]['text'], ['map', 'zone', 'quadrant']):
+            if _header_contains(message['content'][0]['text'], ['map', 'zone', 'quadrant', 'world gen data']):
                 return True
     return False
 

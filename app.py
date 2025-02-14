@@ -12,7 +12,7 @@ setup_logging()
 
 import logging
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 # Load environment variables and set up Anthropic client
 load_dotenv()

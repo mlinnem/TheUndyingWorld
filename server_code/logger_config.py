@@ -33,7 +33,7 @@ def setup_logging():
     # Create and configure console handler
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(log_formatter)
-    console_handler.setLevel(logging.DEBUG)
+    console_handler.setLevel(logging.INFO)
     
     # Configure the default logger
     logging.basicConfig(

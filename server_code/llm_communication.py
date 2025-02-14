@@ -25,9 +25,9 @@ handler = logging.StreamHandler()
 logger.addHandler(handler)
 
 # Set HTTP-related loggers to WARNING to suppress detailed dumps
-logging.getLogger("httpcore").setLevel(logging.WARNING)
-logging.getLogger("httpx").setLevel(logging.WARNING)
-logging.getLogger("anthropic").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.DEBUG)
+logging.getLogger("httpx").setLevel(logging.DEBUG)
+logging.getLogger("anthropic").setLevel(logging.DEBUG)
 
 # SET UP INITIAL PROMPTS
 
@@ -40,12 +40,22 @@ with open(tools_path, 'r') as file:
     tools = json.load(file)
 
 
-def get_next_gm_response(messages, system_prompt, temperature=0.7):
+def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cache_index=None, dynamic_cache_index=None):
+    
     logger.info(f"Sending message to GM (omitted for brevity)")
+
+    # Add validation for cache indices
+    if permanent_cache_index is not None and (permanent_cache_index < 0 or permanent_cache_index >= len(messages)):
+        logger.warning(f"Invalid permanent_cache_index: {permanent_cache_index}")
+        permanent_cache_index = None
+    
+    if dynamic_cache_index is not None and (dynamic_cache_index < 0 or dynamic_cache_index >= len(messages)):
+        logger.warning(f"Invalid dynamic_cache_index: {dynamic_cache_index}")
+        dynamic_cache_index = None
 
     # Clean messages for API consumption
     cleaned_messages = []
-    for msg in messages:
+    for i, msg in enumerate(messages):
         cleaned_content = []
         for content in msg['content']:
             if content['type'] == "text":
@@ -53,9 +63,13 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7):
                     "type": "text",
                     "text": content['text']
                 }
-                # Only add cache_control if it exists
-                if 'cache_control' in content:
-                    clean_content['cache_control'] = content['cache_control']
+                # Add cache control if this message is at a cache index
+                if i == permanent_cache_index:
+                    logger.debug("Adding permanent cache control at index: " + str(i))
+                    clean_content['cache_control'] = {"type": "ephemeral"}
+                elif i == dynamic_cache_index:
+                    logger.debug("Adding dynamic cache control at index: " + str(i))
+                    clean_content['cache_control'] = {"type": "ephemeral"}
                     
             elif content['type'] == "tool_use":
                 clean_content = {
@@ -128,25 +142,21 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7):
         
     return response_json, usage_data
 
-def summarize_with_gm(conversation):
+def summarize_with_gm_2(conversation):
     logger.info(f"Starting summarization for conversation {conversation['conversation_id']}")
     
-    # Find the last permanent cache point
-    permanent_cache_index = -1
-    for i, msg in enumerate(conversation['messages']):
-        if (isinstance(msg['content'][0], dict) and 
-            msg['content'][0].get('cache_control', {}).get('type') == 'ephemeral'):
-            permanent_cache_index = i
+    # Use the permanent cache index from conversation object
+    permanent_cache_index = conversation.get('permanent_cache_index')
     
-    if permanent_cache_index == -1:
+    if permanent_cache_index is None or permanent_cache_index == -1:
         logger.info("No permanent cache point found, skipping summarization")
         return conversation
 
-    logger.info(f"Found permanent cache point at message index {permanent_cache_index}")
+    logger.info(f"Using permanent cache point at message index {permanent_cache_index}")
 
     # Calculate the range to summarize
     start_index = permanent_cache_index + 1
-    end_index = min(start_index + SUMMARIZATION_BLOCK_SIZE, len(conversation['messages']))
+    end_index = min(start_index + SUMMARIZATION_BLOCK_SIZE, len(conversation['messages']) - 1)
     
     messages_to_summarize = conversation['messages'][start_index:end_index]
     remaining_messages = conversation['messages'][end_index:]
@@ -165,49 +175,73 @@ def summarize_with_gm(conversation):
         ])
 
         logger.info("Preparing to call Claude for summarization...")
-        system_prompt = [{
-            "type": "text",
-            "text": summarizer_instructions
-        }]
+        
+        # Extract just the text from the system prompt if it's in the wrong format
+        if isinstance(summarizer_instructions, list):
+            for item in summarizer_instructions:
+                if isinstance(item, dict) and item.get('type') == 'text':
+                    system_prompt = item.get('text', '')
+                    break
+        else:
+            system_prompt = summarizer_instructions
 
         try:
             logger.info("Calling Claude API for summarization...")
             response = client.messages.create(
                 model="claude-3-5-sonnet-20241022",
-                tools=tools,
                 messages=[{
                     "role": "user",
-                    "content": [{"type": "text", "text": f":{formatted_messages}"}]
+                    "content": [{
+                        "type": "text", 
+                        "text": f"Please provide a comprehensive summary of the following conversation:\n\n{formatted_messages}"
+                    }]
                 }],
-                system=system_prompt,
+                system=system_prompt,  # Now using the corrected system prompt
                 max_tokens=MAX_OUTPUT_TOKENS,
                 temperature=0.6,
             )
 
+            logger.info(f"Response: {response}")
             summary = response.content[0].text
             logger.info("Successfully generated summary")
+            logger.info(f"Summary: {summary}")
             
             # Reconstruct conversation
             logger.info("Reconstructing conversation with summary...")
             original_length = len(conversation['messages'])
+            
+            # Create summary message with cache control
+            summary_message = {
+                "role": "assistant",
+                "content": [{
+                    "type": "text",
+                    "text": f"[SUMMARY OF PREVIOUS CONVERSATION]\n\n{summary}\n\n[END SUMMARY]",
+                    "cache_control": {"type": "ephemeral"}
+                }]
+            }
+            
+            # Update conversation messages
             conversation['messages'] = (
                 conversation['messages'][:permanent_cache_index + 1] +
-                [{
-                    "role": "assistant",
-                    "content": [{
-                        "type": "text",
-                        "text": f"[SUMMARY OF PREVIOUS CONVERSATION]\n\n{summary}\n\n[END SUMMARY]",
-                        "cache_control": {"type": "ephemeral"}
-                    }]
-                }] +
+                [summary_message] +
                 remaining_messages
             )
-            new_length = len(conversation['messages'])
             
+            # Update permanent cache index to be after the summary message
+            conversation['permanent_cache_index'] = permanent_cache_index + 1
+            
+            # Should also update dynamic cache if it would overlap
+            if conversation.get('dynamic_cache_index') is not None:
+                if conversation['dynamic_cache_index'] <= conversation['permanent_cache_index']:
+                    conversation['dynamic_cache_index'] = None
+            
+            # Clear dynamic cache index as it needs to be recalculated
+            conversation['dynamic_cache_index'] = None
+            
+            new_length = len(conversation['messages'])
             logger.info(f"Conversation length changed from {original_length} to {new_length} messages")
             logger.info(f"Successfully replaced {len(messages_to_summarize)} messages with summary")
-            
-            logger.info("Saved updated conversation with summary")
+            logger.info(f"New permanent cache index set to {conversation['permanent_cache_index']}")
             
         except Exception as e:
             logger.error(f"Error during summarization process: {str(e)}", exc_info=True)

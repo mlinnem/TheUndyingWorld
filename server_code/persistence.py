@@ -24,6 +24,21 @@ def read_conversation(conversation_id):
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
             conversation_data = json.load(f)
+            
+            # Add boot_sequence_end_index if missing
+            if 'boot_sequence_end_index' not in conversation_data:
+                logger.info("No boot_sequence_end_index found, scanning messages for marker")
+                boot_sequence_end_index = -1
+                for i, message in enumerate(conversation_data.get('messages', [])):
+                    if message.get('is_boot_sequence_end'):
+                        boot_sequence_end_index = i
+                        break
+                if boot_sequence_end_index != -1:
+                    logger.info(f"Found boot sequence end marker at index {boot_sequence_end_index}")
+                    conversation_data['boot_sequence_end_index'] = boot_sequence_end_index
+                else:
+                    logger.info("No boot sequence end marker found in messages")
+            
             if 'location' not in conversation_data:
                 conversation_data['location'] = 'Untitled location'
             if 'created_at' not in conversation_data:
@@ -70,11 +85,42 @@ def read_conversation(conversation_id):
             if 'game_has_begun_date' not in conversation_data and conversation_data['game_has_begun']:
                 logger.warning("No game_has_begun_date found in file, even though game_has_begun is True. Setting game_has_begun_date to now: " + conversation_id)
                 conversation_data['game_has_begun_date'] = datetime.now().isoformat()
+            
+            # Always use latest summarizer system prompt
+            conversation_data['summarizer_system_prompt'] = get_summarizer_system_prompt()
+            conversation_data['summarizer_system_prompt_date'] = datetime.now().isoformat()
+            
             logger.info(f"Conversation {conversation_id} loaded successfully")
             return conversation_data
     return None
 
+# Conversation functions
+
+
+def _validate_cache_indices(conversation):
+    """Validate and fix cache indices if necessary."""
+    num_messages = len(conversation['messages'])
+    
+    # Validate permanent cache index
+    if conversation.get('permanent_cache_index') is not None:
+        if conversation['permanent_cache_index'] < 0 or conversation['permanent_cache_index'] >= num_messages:
+            logger.warning(f"Invalid permanent_cache_index: {conversation['permanent_cache_index']}")
+            conversation['permanent_cache_index'] = None
+            
+    # Validate dynamic cache index
+    if conversation.get('dynamic_cache_index') is not None:
+        if conversation['dynamic_cache_index'] < 0 or conversation['dynamic_cache_index'] >= num_messages:
+            logger.warning(f"Invalid dynamic_cache_index: {conversation['dynamic_cache_index']}")
+            conversation['dynamic_cache_index'] = None
+        elif conversation.get('permanent_cache_index') is not None:
+            if conversation['dynamic_cache_index'] <= conversation['permanent_cache_index']:
+                logger.warning("Dynamic cache index overlaps with permanent cache index")
+                conversation['dynamic_cache_index'] = None
+                
+    return conversation
+
 def write_conversation(conversation):
+    conversation = _validate_cache_indices(conversation)
     logger.info(f"Saving conversation {conversation['conversation_id']}")
     conversation_id = conversation['conversation_id']
     conversation['last_updated'] = datetime.now().isoformat()
@@ -105,6 +151,21 @@ def read_game_seed(conversation_id):
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
             conversation_data = json.load(f)
+            
+            # Add boot_sequence_end_index if missing
+            if 'boot_sequence_end_index' not in conversation_data:
+                logger.info("No boot_sequence_end_index found, scanning messages for marker")
+                boot_sequence_end_index = -1
+                for i, message in enumerate(conversation_data.get('messages', [])):
+                    if message.get('is_boot_sequence_end'):
+                        boot_sequence_end_index = i
+                        break
+                if boot_sequence_end_index != -1:
+                    logger.info(f"Found boot sequence end marker at index {boot_sequence_end_index}")
+                    conversation_data['boot_sequence_end_index'] = boot_sequence_end_index
+                else:
+                    logger.info("No boot sequence end marker found in messages")
+            
             if 'id' not in conversation_data:
                 logger.warning("No ID found in file. Setting game seed id: " + conversation_id)
                 conversation_data['id'] = conversation_id
@@ -156,6 +217,11 @@ def read_game_seed(conversation_id):
                 logger.warning("No game_has_begun found in file. Setting game_has_begun to False: " + conversation_id)
                 conversation_data['game_has_begun'] = False
                 conversation_data['game_has_begun_date'] = datetime.now().isoformat()        
+            
+            # Always use latest summarizer system prompt
+            conversation_data['summarizer_system_prompt'] = get_summarizer_system_prompt()
+            conversation_data['summarizer_system_prompt_date'] = datetime.now().isoformat()
+            
             return conversation_data
     logger.warning("Game seed not found: " + conversation_id)
     return None

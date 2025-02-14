@@ -11,7 +11,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Update the logger configuration
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 handler = logging.StreamHandler()
 logger.addHandler(handler)
 
@@ -41,7 +41,6 @@ def get_game_seed_listings():
 
 
 
-# Conversation functions
 
 
 def save_conversation(conversation):
@@ -128,6 +127,7 @@ def create_conversation_from_seed(seed_id):
         'name': seed['location'] + " (" + short_date +")",
         'location': seed['location'],
         'messages': seed['messages'],
+        'boot_sequence_end_index': seed.get('boot_sequence_end_index', None),
         'last_updated': datetime.now().isoformat(),
         'created_at': datetime.now().isoformat(),
         'cache_points': [],
@@ -153,11 +153,50 @@ def create_conversation_from_seed(seed_id):
     
     return conversation
 
+
+
+def update_conversation_cache_points_2(conversation):
+    logger.info(f"Updating cache points for conversation {conversation['conversation_id']}")
+    logger.debug(f"Current permanent_cache_index: {conversation.get('permanent_cache_index')}")
+    logger.debug(f"Current dynamic_cache_index: {conversation.get('dynamic_cache_index')}")
+
+    num_boot_sequence_messages = conversation.get('boot_sequence_end_index', -1) + 1
+    num_messages = len(conversation['messages'])
+
+    if num_messages > CACHE_EVERY_N_MESSAGES:
+        dynamic_cache_index = num_messages - (num_messages % CACHE_EVERY_N_MESSAGES) - 1
+        if dynamic_cache_index <= conversation.get('permanent_cache_index', -1):
+            logger.info("Dynamic cache would overlap with permanent cache, setting to None")
+            dynamic_cache_index = None
+        else:
+            logger.info(f"Setting dynamic cache to index {dynamic_cache_index}")
+    else:
+        logger.info("Not enough messages for dynamic cache")
+        dynamic_cache_index = None
+
+    conversation['dynamic_cache_index'] = dynamic_cache_index
+
+    # Initialize permanent_cache_index if it doesn't exist
+    if conversation.get('permanent_cache_index') is None:
+        if num_messages > num_boot_sequence_messages + MESSAGES_TO_PRESERVE_AFTER_BOOT_SEQUENCE:
+            new_permanent_index = num_boot_sequence_messages + MESSAGES_TO_PRESERVE_AFTER_BOOT_SEQUENCE - 1
+            logger.info(f"Setting initial permanent cache index to {new_permanent_index}")
+            conversation['permanent_cache_index'] = new_permanent_index
+        else:
+            logger.debug("Not enough messages after boot sequence for permanent cache")
+            conversation['permanent_cache_index'] = None
+    else:
+        logger.debug("Permanent cache index already set")
+
+    logger.info(f"Final cache indices - permanent: {conversation.get('permanent_cache_index')}, dynamic: {conversation.get('dynamic_cache_index')}")
+    return conversation
+
+
 def update_conversation_cache_points(conversation):
     logger.info(f"Updating cache points for conversation {conversation['conversation_id']}")
     
     # Add a metadata field to track cache point types
-    def add_cache_control(content_block, cache_purpose):
+    def add_cache_control(conversation, content_block, cache_purpose):
         # Create a deep copy of the original block to preserve all fields
         modified_block = content_block.copy()
         
@@ -168,14 +207,23 @@ def update_conversation_cache_points(conversation):
             "timestamp": datetime.now().isoformat()
         }
 
+        if cache_purpose == "permanent":
+            conversation['permanent_cache_index'] = len(conversation['messages']) - 1
+        elif cache_purpose == "conversation":
+            modified_block["cache_control"] = {"type": "conversation"}
+        else:
+            logger.warning(f"Unknown cache purpose: {cache_purpose}")
+
         if content_block['type'] == "text":
             return modified_block
         elif content_block['type'] == "tool_use":
             return modified_block
         elif content_block['type'] == "tool_result":
             return modified_block
+
         else:
-            raise Exception(f"Unknown message type: {content_block['type']}")
+            logger.warning(f"Unknown message type: {content_block['type']}")
+            return modified_block
 
     # Helper function to remove cache control from a content block
     def remove_cache_control(content_block):
@@ -194,7 +242,7 @@ def update_conversation_cache_points(conversation):
                 "tool_use_id": content_block['tool_use_id'],
                 "content": content_block['content']
             }
-        else:
+        elif content_block['type'] == "tool_use_response":
             raise Exception(f"Unknown message type: {content_block['type']}")
 
     # First, remove all cache points
@@ -214,24 +262,24 @@ def update_conversation_cache_points(conversation):
     logger.info(f"Total messages in conversation: {total_messages}")
     
     # Handle permanent cache point
-    if total_messages <= boot_sequence_length + 50:
+    if total_messages <= boot_sequence_length + MESSAGES_TO_PRESERVE_AFTER_BOOT_SEQUENCE:
         # Set permanent cache at end of boot sequence
         if boot_sequence_length > 0:
             logger.info(f"Setting permanent cache point at boot sequence end (message {boot_sequence_length - 1})")
             conversation['messages'][boot_sequence_length - 1]['content'][0] = \
                 add_cache_control(conversation['messages'][boot_sequence_length - 1]['content'][0], "ephemeral")
     else:
-        # Set permanent cache at message 50 after boot sequence
-        permanent_cache_index = boot_sequence_length + 49
+        # Set permanent cache at message 50 (49?) after boot sequence
+        permanent_cache_index = boot_sequence_length + MESSAGES_TO_PRESERVE_AFTER_BOOT_SEQUENCE - 1
         logger.info(f"Setting permanent cache point at message 50 after boot (message {permanent_cache_index})")
         conversation['messages'][permanent_cache_index]['content'][0] = \
             add_cache_control(conversation['messages'][permanent_cache_index]['content'][0], "ephemeral")
 
     # Handle conversation cache point
-    messages_after_initial = total_messages - (boot_sequence_length + 50)
+    messages_after_initial = total_messages - (boot_sequence_length + MESSAGES_TO_PRESERVE_AFTER_BOOT_SEQUENCE)
     if messages_after_initial > 0:
         conversation_cache_index = total_messages - (messages_after_initial % 20) - 1
-        if conversation_cache_index > boot_sequence_length + 49:
+        if conversation_cache_index > boot_sequence_length + (MESSAGES_TO_PRESERVE_AFTER_BOOT_SEQUENCE - 1):
             logger.info(f"Setting conversation cache point at message {conversation_cache_index}")
             conversation['messages'][conversation_cache_index]['content'][0] = \
                 add_cache_control(conversation['messages'][conversation_cache_index]['content'][0], "ephemeral")
@@ -257,7 +305,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
         
         # Update cache points after boot sequence is complete
         logger.info("Boot sequence completed, updating cache points")
-        conversation = update_conversation_cache_points(conversation)
+        conversation = update_conversation_cache_points_2(conversation)
         
         logger.info("Boot sequence and cache point setup completed successfully")
         return conversation, new_messages
@@ -273,7 +321,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
         conversation['messages'].append(user_message)
         
         # Get and save gm response with timestamp
-        gm_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.5)
+        gm_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.5, permanent_cache_index=conversation.get('permanent_cache_index', None), dynamic_cache_index=conversation.get('dynamic_cache_index', None))
         gm_response_json['timestamp'] = datetime.now().isoformat()
         conversation['messages'].append(gm_response_json)
         new_messages = [gm_response_json]
@@ -287,7 +335,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
             new_messages.append(tool_result_json)
 
             # Get and save gm response to tool result with timestamp
-            tool_use_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.8)
+            tool_use_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.8, permanent_cache_index=conversation.get('permanent_cache_index', None), dynamic_cache_index=conversation.get('dynamic_cache_index', None))
             tool_use_response_json['timestamp'] = datetime.now().isoformat()
             conversation['messages'].append(tool_use_response_json)
             new_messages.append(tool_use_response_json)
@@ -296,8 +344,8 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
         
         # update caching or perform summarization if necessary
         if usage_data['total_input_tokens'] >= MAX_TOTAL_INPUT_TOKENS:
-            conversation = summarize_with_gm(conversation)
-            update_conversation_cache_points(conversation)
+            conversation = summarize_with_gm_2(conversation)
+            update_conversation_cache_points_2(conversation)
         elif usage_data['uncached_input_tokens'] >= MAX_UNCACHED_INPUT_TOKENS:
             conversation = update_conversation_cache_points(conversation)
 
@@ -369,12 +417,22 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
                 logger.error(f"Error in boot sequence at message '{world_gen_instruction_w_omit_data['text']}': {e}")
                 raise
 
+        # Find the index of the boot sequence end message
+        boot_sequence_end_index = -1
+        for i, message in enumerate(final_messages):
+            if message.get('is_boot_sequence_end'):
+                boot_sequence_end_index = i
+                break
+        
+        logger.info(f"Boot sequence end found at index {boot_sequence_end_index}")
+
         # Create and save game seed after boot sequence
         game_seed = {
             'conversation_id': generate_conversation_id(),
             'messages': final_messages,
             'location': "Custom World",  # Use first line as location
             'description': "This is a custom world created by the player at " + datetime.now().isoformat(),
+            'boot_sequence_end_index': boot_sequence_end_index,
             'created_at': datetime.now().isoformat(),
             'last_updated': datetime.now().isoformat(),
             'intro_blurb': get_intro_blurb_string(),
