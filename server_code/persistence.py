@@ -16,7 +16,7 @@ if not os.path.exists(CONVERSATIONS_DIR):
 # Conversation functions
 
 def read_conversation(conversation_id):
-    logger.info(f"Reading conversation {conversation_id}")
+    logger.debug(f"Reading conversation {conversation_id}")
     file_path = os.path.join(CONVERSATIONS_DIR, f"{conversation_id}.json")
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
@@ -24,17 +24,17 @@ def read_conversation(conversation_id):
             
             # Add boot_sequence_end_index if missing
             if 'boot_sequence_end_index' not in conversation_data:
-                logger.info("No boot_sequence_end_index found, scanning messages for marker")
+                logger.debug("No boot_sequence_end_index found, scanning messages for marker")
                 boot_sequence_end_index = -1
                 for i, message in enumerate(conversation_data.get('messages', [])):
                     if message.get('is_boot_sequence_end'):
                         boot_sequence_end_index = i
                         break
                 if boot_sequence_end_index != -1:
-                    logger.info(f"Found boot sequence end marker at index {boot_sequence_end_index}")
+                    logger.debug(f"Found boot sequence end marker at index {boot_sequence_end_index}")
                     conversation_data['boot_sequence_end_index'] = boot_sequence_end_index
                 else:
-                    logger.info("No boot sequence end marker found in messages")
+                    logger.debug("No boot sequence end marker found in messages")
             
             if 'location' not in conversation_data:
                 conversation_data['location'] = 'Untitled location'
@@ -87,7 +87,7 @@ def read_conversation(conversation_id):
             conversation_data['summarizer_system_prompt'] = get_summarizer_system_prompt()
             conversation_data['summarizer_system_prompt_date'] = datetime.now().isoformat()
             
-            logger.info(f"Conversation {conversation_id} loaded successfully")
+            logger.debug(f"Conversation {conversation_id} loaded successfully")
             return conversation_data
     return None
 
@@ -118,7 +118,7 @@ def _validate_cache_indices(conversation):
 
 def write_conversation(conversation):
     conversation = _validate_cache_indices(conversation)
-    logger.info(f"Saving conversation {conversation['conversation_id']}")
+    logger.debug(f"Saving conversation {conversation['conversation_id']}")
     conversation_id = conversation['conversation_id']
     conversation['last_updated'] = datetime.now().isoformat()
     file_path = os.path.join(CONVERSATIONS_DIR, f"{conversation_id}.json")
@@ -143,7 +143,7 @@ def read_all_conversation_ids():
 # Game seed functions
 
 def read_game_seed(conversation_id):
-    logger.info("Reading game seed: " + conversation_id)
+    logger.debug("Reading game seed: " + conversation_id)
     file_path = os.path.join(GAME_SEEDS_DIR, f"{conversation_id}.json")
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
@@ -151,20 +151,20 @@ def read_game_seed(conversation_id):
             
             # Add boot_sequence_end_index if missing
             if 'boot_sequence_end_index' not in conversation_data:
-                logger.info("No boot_sequence_end_index found, scanning messages for marker")
+                logger.debug("No boot_sequence_end_index found, scanning messages for marker")
                 boot_sequence_end_index = -1
                 for i, message in enumerate(conversation_data.get('messages', [])):
                     if message.get('is_boot_sequence_end'):
                         boot_sequence_end_index = i
                         break
                 if boot_sequence_end_index != -1:
-                    logger.info(f"Found boot sequence end marker at index {boot_sequence_end_index}")
+                    logger.debug(f"Found boot sequence end marker at index {boot_sequence_end_index}")
                     conversation_data['boot_sequence_end_index'] = boot_sequence_end_index
                 else:
-                    logger.info("No boot sequence end marker found in messages")
+                    logger.debug("No boot sequence end marker found in messages")
             
             if 'id' not in conversation_data:
-                logger.warning("No ID found in file. Setting game seed id: " + conversation_id)
+                logger.warning("No ID found in file. Setting game seed id to: " + conversation_id)
                 conversation_data['id'] = conversation_id
             if 'location' not in conversation_data:
                 logger.warning("No location found in file. Setting location to 'No location': " + conversation_id)
@@ -225,7 +225,7 @@ def read_game_seed(conversation_id):
 
 
 def write_game_seed(game_seed):
-    logger.info(f"Saving game seed {game_seed['conversation_id']}")
+    logger.debug(f"Saving game seed {game_seed['conversation_id']}")
     conversation_id = game_seed['conversation_id']
     game_seed['last_updated'] = datetime.now().isoformat()
     file_path = os.path.join(GAME_SEEDS_DIR, f"{conversation_id}.json")
@@ -346,7 +346,7 @@ def get_final_startup_instruction_string():
     return final_startup_instruction
 
 def _get_llm_instructions(name):
-    logger.info(f"Getting LLM instructions for {name}")
+    logger.debug(f"Getting LLM instructions for {name}")
     # Print the current working directory
     logger.debug(f"Current working directory: {os.getcwd()}")
     # Get the absolute path of the 'LLM_instructions' directory
@@ -356,5 +356,5 @@ def _get_llm_instructions(name):
     file_path = os.path.join(llm_instructions_dir, f"{name}.MD")
     logger.debug(f"LLM instructions directory: {llm_instructions_dir}")
     with open(file_path, 'r') as f:
-        logger.info(f"LLM instructions for {name} found")
+        logger.debug(f"LLM instructions for {name} found")
         return f.read()

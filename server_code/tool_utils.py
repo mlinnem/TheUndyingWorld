@@ -11,7 +11,7 @@ def isToolUseRequest(response_json):
             response_json['content'][1]['type'] == "tool_use")
 
 def generate_tool_result(gm_response_json):
-    logger.info(f"Generating tool result for {gm_response_json}")
+    logger.debug(f"Generating tool result for {gm_response_json}")
 
     tool_use_id = gm_response_json['content'][1]['id']
     function = gm_response_json['content'][1]['name']

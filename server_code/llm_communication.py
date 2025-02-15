@@ -39,7 +39,7 @@ with open(tools_path, 'r') as file:
 
 def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cache_index=None, dynamic_cache_index=None):
     
-    logger.info(f"Sending message to GM (omitted for brevity)")
+    logger.debug(f"Sending message to GM (omitted for brevity)")
 
     # Add validation for cache indices
     if permanent_cache_index is not None and (permanent_cache_index < 0 or permanent_cache_index >= len(messages)):
@@ -105,7 +105,9 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
         tools=tools,
     )
 
-    logger.info(f"response.usage: {response.usage}")
+    logger.info(f"...received response from GM...")
+
+    logger.debug(f"response.usage: {response.usage}")
 
     usage_data = {
         "uncached_input_tokens": response.usage.input_tokens,
@@ -135,55 +137,55 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
                     "input": content_block.input
                 })
 
-    logger.info(f"response.usage: {response.usage}")
+    logger.debug(f"response.usage: {response.usage}")
         
     return response_json, usage_data
 
 def summarize_with_gm_2(conversation):
-    logger.info(f"Starting summarization for conversation {conversation['conversation_id']}")
+    logger.debug(f"Starting summarization for conversation {conversation['conversation_id']}")
     
     permanent_cache_index = conversation.get('permanent_cache_index')
     
     if permanent_cache_index is None or permanent_cache_index == -1:
-        logger.info("No permanent cache point found, skipping summarization")
+        logger.debug("No permanent cache point found, skipping summarization")
         return conversation
 
-    logger.info(f"Using permanent cache point at message index {permanent_cache_index}")
+    logger.debug(f"Using permanent cache point at message index {permanent_cache_index}")
 
     # Calculate initial range to summarize
     start_index = permanent_cache_index + 1
-    logger.info(f"Initial start index is: {start_index}")
-    logger.info(f"The message there is as follows: {conversation['messages'][start_index]}")
+    logger.debug(f"Initial start index is: {start_index}")
+    logger.debug(f"The message there is as follows: {conversation['messages'][start_index]}")
     # Skip any tool_use or tool_result messages at the start
     while start_index < len(conversation['messages']):
-        logger.info(f"Let's check the first message at index {start_index} to see if it's a tool message")
+        logger.debug(f"Let's check the first message at index {start_index} to see if it's a tool message")
         first_message = conversation['messages'][start_index]
-        logger.info(f"First message looks like this: {first_message}")
+        logger.debug(f"First message looks like this: {first_message}")
         found_a_tool = False
         for content_bit in first_message['content']:
-            logger.info(f"This message has a content bit that looks like this: {content_bit}")
+            logger.debug(f"This message has a content bit that looks like this: {content_bit}")
             if content_bit['type'] == 'tool_use' or content_bit['type'] == 'tool_result':
-                logger.info(f"Found a tool message at index {start_index}")
+                logger.debug(f"Found a tool message at index {start_index}")
                 found_a_tool = True
                 break
         if found_a_tool:
-            logger.info(f"Moving to the next message at index {start_index + 1}")
+            logger.debug(f"Moving to the next message at index {start_index + 1}")
             start_index += 1
         else:
-            logger.info(f"No tool message found at index {start_index}, breaking out of the loop")
+            logger.debug(f"No tool message found at index {start_index}, breaking out of the loop")
             break
 
-    logger.info(f"We've found the first non-tool message at index {start_index}, so that should be it going forward")
+    logger.debug(f"We've found the first non-tool message at index {start_index}, so that should be it going forward")
  
 
     end_index = min(start_index + SUMMARIZATION_BLOCK_SIZE, len(conversation['messages']) - 1)
     # Skip any tool_use or tool_result messages at the end
     while end_index < len(conversation['messages']):
         last_message = conversation['messages'][end_index]
-        logger.info(f"Last message: {last_message}")
+        logger.debug(f"Last message: {last_message}")
         found_a_tool = False
         for content_bit in last_message['content']:
-            logger.info(f"Content bit: {content_bit}")
+            logger.debug(f"Content bit: {content_bit}")
             if content_bit['type'] == 'tool_use' or content_bit['type'] == 'tool_result':
                 found_a_tool = True
                 break
@@ -191,17 +193,17 @@ def summarize_with_gm_2(conversation):
             end_index += 1
         else:
             break
-        logger.info(f"Skipped tool message at end, new end_index: {end_index}")
+        logger.debug(f"Skipped tool message at end, new end_index: {end_index}")
     
     messages_to_summarize = conversation['messages'][start_index:end_index + 1]
     remaining_messages = conversation['messages'][end_index + 1:]
 
-    logger.info(f"Preparing to summarize messages from index {start_index} to {end_index}")
-    logger.info(f"Number of messages to summarize: {len(messages_to_summarize)}")
-    logger.info(f"Number of remaining messages: {len(remaining_messages)}")
+    logger.debug(f"Preparing to summarize messages from index {start_index} to {end_index}")
+    logger.debug(f"Number of messages to summarize: {len(messages_to_summarize)}")
+    logger.debug(f"Number of remaining messages: {len(remaining_messages)}")
 
     if len(messages_to_summarize) > 0:
-        logger.info("Loading summarizer instructions...")
+        logger.debug("Loading summarizer instructions...")
         summarizer_instructions = conversation['summarizer_system_prompt']
 
         formatted_messages = "\n\n".join([
@@ -209,7 +211,7 @@ def summarize_with_gm_2(conversation):
             for msg in messages_to_summarize
         ])
 
-        logger.info("Preparing to call Claude for summarization...")
+        logger.debug("Preparing to call Claude for summarization...")
 
         # Extract just the text from the system prompt if it's in the wrong format
         if isinstance(summarizer_instructions, list):
@@ -220,10 +222,10 @@ def summarize_with_gm_2(conversation):
         else:
             system_prompt = summarizer_instructions
 
-        logger.info(f"System prompt: {system_prompt}")
+        logger.debug(f"System prompt: {system_prompt}")
 
         try:
-            logger.info("Calling Claude API for summarization...")
+            logger.debug("Calling Claude API for summarization...")
             response = client.messages.create(
                 model="claude-3-5-sonnet-20241022",
                 messages=[{
@@ -238,13 +240,13 @@ def summarize_with_gm_2(conversation):
                 temperature=0.6,
             )
 
-            logger.info(f"Response: {response}")
+            logger.debug(f"Response: {response}")
             summary = response.content[0].text
-            logger.info("Successfully generated summary")
-            logger.info(f"Summary: {summary}")
+            logger.debug("Successfully generated summary")
+            logger.debug(f"Summary: {summary}")
             
             # Reconstruct conversation
-            logger.info("Reconstructing conversation with summary...")
+            logger.debug("Reconstructing conversation with summary...")
             original_length = len(conversation['messages'])
             
             # Create summary message with cache control
@@ -276,16 +278,16 @@ def summarize_with_gm_2(conversation):
             conversation['dynamic_cache_index'] = None
             
             new_length = len(conversation['messages'])
-            logger.info(f"Conversation length changed from {original_length} to {new_length} messages")
-            logger.info(f"Successfully replaced {len(messages_to_summarize)} messages with summary")
-            logger.info(f"New permanent cache index set to {conversation['permanent_cache_index']}")
+            logger.debug(f"Conversation length changed from {original_length} to {new_length} messages")
+            logger.debug(f"Successfully replaced {len(messages_to_summarize)} messages with summary")
+            logger.debug(f"New permanent cache index set to {conversation['permanent_cache_index']}")
             
         except Exception as e:
             logger.error(f"Error during summarization process: {str(e)}", exc_info=True)
             return conversation
 
     else:
-        logger.info("No messages to summarize after permanent cache point")
+        logger.debug("No messages to summarize after permanent cache point")
 
     return conversation
 

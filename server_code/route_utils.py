@@ -178,7 +178,7 @@ def convert_messages_to_cos(messages):
     return cos
 
 def filter_conversation_objects(conversation_objects):
-    logger.info("Filtering conversation objects: " + str(len(conversation_objects)))
+    logger.debug("Filtering conversation objects: " + str(len(conversation_objects)))
     """
     Filter out specific conversation objects that should not be sent to the user.
     
@@ -219,5 +219,5 @@ def filter_conversation_objects(conversation_objects):
         else:
             result.append(obj)
             
-    logger.info("conversation objects after filtering: " + str(len(result)))
+    logger.debug("conversation objects after filtering: " + str(len(result)))
     return result

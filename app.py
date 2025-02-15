@@ -23,6 +23,8 @@ client = Anthropic(api_key=api_key)
 root_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Initialize Flask app with correct template and static folders using absolute paths
+logger.info("Starting Flask application...")
+
 app = Flask(__name__, 
            template_folder=os.path.join(root_dir, 'templates'),
            static_folder=os.path.join(root_dir, 'static'))
@@ -33,9 +35,9 @@ app.register_blueprint(routes)
 logging.getLogger("httpcore").setLevel(logging.WARNING)
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("anthropic").setLevel(logging.WARNING)
+logging.getLogger("werkzeug").setLevel(logging.WARNING)
 
 if __name__ == '__main__':
-    logger.info("Starting Flask application...")
     logger.debug("Present Working Directory: %s", os.getcwd())
     if os.getenv('DEPLOY_ENV') == 'Railway':
         logger.info("Running in Railway environment")
