@@ -145,7 +145,6 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
 def summarize_with_gm_2(conversation):
     logger.info(f"Starting summarization for conversation {conversation['conversation_id']}")
     
-    # Use the permanent cache index from conversation object
     permanent_cache_index = conversation.get('permanent_cache_index')
     
     if permanent_cache_index is None or permanent_cache_index == -1:
@@ -154,12 +153,51 @@ def summarize_with_gm_2(conversation):
 
     logger.info(f"Using permanent cache point at message index {permanent_cache_index}")
 
-    # Calculate the range to summarize
+    # Calculate initial range to summarize
     start_index = permanent_cache_index + 1
+    logger.info(f"Initial start index is: {start_index}")
+    logger.info(f"The message there is as follows: {conversation['messages'][start_index]}")
+    # Skip any tool_use or tool_result messages at the start
+    while start_index < len(conversation['messages']):
+        logger.info(f"Let's check the first message at index {start_index} to see if it's a tool message")
+        first_message = conversation['messages'][start_index]
+        logger.info(f"First message looks like this: {first_message}")
+        found_a_tool = False
+        for content_bit in first_message['content']:
+            logger.info(f"This message has a content bit that looks like this: {content_bit}")
+            if content_bit['type'] == 'tool_use' or content_bit['type'] == 'tool_result':
+                logger.info(f"Found a tool message at index {start_index}")
+                found_a_tool = True
+                break
+        if found_a_tool:
+            logger.info(f"Moving to the next message at index {start_index + 1}")
+            start_index += 1
+        else:
+            logger.info(f"No tool message found at index {start_index}, breaking out of the loop")
+            break
+
+    logger.info(f"We've found the first non-tool message at index {start_index}, so that should be it going forward")
+ 
+
     end_index = min(start_index + SUMMARIZATION_BLOCK_SIZE, len(conversation['messages']) - 1)
+    # Skip any tool_use or tool_result messages at the end
+    while end_index < len(conversation['messages']):
+        last_message = conversation['messages'][end_index]
+        logger.info(f"Last message: {last_message}")
+        found_a_tool = False
+        for content_bit in last_message['content']:
+            logger.info(f"Content bit: {content_bit}")
+            if content_bit['type'] == 'tool_use' or content_bit['type'] == 'tool_result':
+                found_a_tool = True
+                break
+        if found_a_tool:
+            end_index += 1
+        else:
+            break
+        logger.info(f"Skipped tool message at end, new end_index: {end_index}")
     
-    messages_to_summarize = conversation['messages'][start_index:end_index]
-    remaining_messages = conversation['messages'][end_index:]
+    messages_to_summarize = conversation['messages'][start_index:end_index + 1]
+    remaining_messages = conversation['messages'][end_index + 1:]
 
     logger.info(f"Preparing to summarize messages from index {start_index} to {end_index}")
     logger.info(f"Number of messages to summarize: {len(messages_to_summarize)}")
@@ -175,7 +213,7 @@ def summarize_with_gm_2(conversation):
         ])
 
         logger.info("Preparing to call Claude for summarization...")
-        
+
         # Extract just the text from the system prompt if it's in the wrong format
         if isinstance(summarizer_instructions, list):
             for item in summarizer_instructions:
@@ -184,6 +222,8 @@ def summarize_with_gm_2(conversation):
                     break
         else:
             system_prompt = summarizer_instructions
+
+        logger.info(f"System prompt: {system_prompt}")
 
         try:
             logger.info("Calling Claude API for summarization...")
@@ -222,13 +262,13 @@ def summarize_with_gm_2(conversation):
             
             # Update conversation messages
             conversation['messages'] = (
-                conversation['messages'][:permanent_cache_index + 1] +
+                conversation['messages'][:start_index + 1] +
                 [summary_message] +
                 remaining_messages
             )
             
             # Update permanent cache index to be after the summary message
-            conversation['permanent_cache_index'] = permanent_cache_index + 1
+            conversation['permanent_cache_index'] = start_index + 1
             
             # Should also update dynamic cache if it would overlap
             if conversation.get('dynamic_cache_index') is not None:

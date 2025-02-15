@@ -347,7 +347,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
             conversation = summarize_with_gm_2(conversation)
             update_conversation_cache_points_2(conversation)
         elif usage_data['uncached_input_tokens'] >= MAX_UNCACHED_INPUT_TOKENS:
-            conversation = update_conversation_cache_points(conversation)
+            conversation = update_conversation_cache_points_2(conversation)
 
         conversation['game_has_begun'] = True
 
