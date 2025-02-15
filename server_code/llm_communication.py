@@ -20,14 +20,11 @@ client = Anthropic(
 
 # Update the logger configuration
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)  # Keep your app's logger at INFO
-handler = logging.StreamHandler()
-logger.addHandler(handler)
 
-# Set HTTP-related loggers to WARNING to suppress detailed dumps
-logging.getLogger("httpcore").setLevel(logging.DEBUG)
-logging.getLogger("httpx").setLevel(logging.DEBUG)
-logging.getLogger("anthropic").setLevel(logging.DEBUG)
+# In any file where you need temporary debug output
+from .logger_config import set_console_level_for_module
+# Later, when done debugging
+set_console_level_for_module(__name__, logging.DEBUG)
 
 # SET UP INITIAL PROMPTS
 

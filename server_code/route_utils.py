@@ -1,13 +1,6 @@
 import logging
 import traceback
 
-# Set up logging configuration
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
-)
-
 logger = logging.getLogger(__name__)
 
 def convert_user_text_to_message(user_text):

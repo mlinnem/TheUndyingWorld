@@ -10,10 +10,6 @@ from .format_utils import *
 import logging
 logger = logging.getLogger(__name__)
 
-# Update the logger configuration
-logger.setLevel(logging.INFO)
-handler = logging.StreamHandler()
-logger.addHandler(handler)
 
 CONVERSATIONS_DIR = "persistent/conversations"
 
