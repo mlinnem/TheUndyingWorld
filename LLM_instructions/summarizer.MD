@@ -12,6 +12,8 @@ Secondarily, please record the following information:
 
 Begin your response with the following message:
 
+# OOC Message
+
 SUMMARIZATION
 
 The following is a summarization of the events that transpired between [initial in-game time stamp] and [final in-game time stamp]

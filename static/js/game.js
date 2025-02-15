@@ -35,102 +35,8 @@ let dotAnimation;
 let loadingDiv;
 let isWaitingForResponse = false;
 
-function get_or_create_difficulty_check_element() {
-
-
-    const previousElement = chatMessagesWrapper.lastElementChild;
-    if (previousElement && previousElement.classList.contains('difficulty_check')) {
-        return previousElement;
-    } else {
-
-        //This is jank, lol
-
-        // Breadth first (ish)
-    
-        const difficultyCheckModule = document.createElement('div');
-        difficultyCheckModule.classList.add('co','module','difficulty_check', 'left', 'top');
-        
-        const moduleContents = document.createElement('div');
-        moduleContents.classList.add('module_contents', 'has_contents');
-        difficultyCheckModule.appendChild(moduleContents);
-
-        const headerContents = document.createElement('div');
-        headerContents.classList.add('difficulty_check_contents');
-        moduleContents.appendChild(headerContents);
-
-        const bodyContents = document.createElement('div');
-        bodyContents.classList.add('difficulty_analysis_contents', 'hidden');
-        moduleContents.appendChild(bodyContents);
-
-        const header = document.createElement('span');
-        header.classList.add('header');
-        header.textContent = "Difficulty Check";
-        header.style = "white-space: nowrap;";
-        headerContents.appendChild(header);
-
-        const difficultyBar = document.createElement('div');
-        difficultyBar.classList.add('difficulty-bar');
-        headerContents.appendChild(difficultyBar);
-
-        const difficultyRoll = document.createElement('span');
-        difficultyRoll.classList.add('difficulty-roll');
-        difficultyRoll.textContent = "";
-        headerContents.appendChild(difficultyRoll);
-
-        const separator = document.createElement('span');
-        separator.classList.add('separator', 'info-text-style');
-        separator.textContent = "-";
-        headerContents.appendChild(separator);
-
-        const difficultyTarget = document.createElement('span');
-        difficultyTarget.classList.add('difficulty-target');
-        difficultyTarget.textContent = "Trivial";
-        headerContents.appendChild(difficultyTarget);
-
-        const expandCollapseCaratBox = document.createElement('div');
-        expandCollapseCaratBox.classList.add('expand-collapse-carat-box');
-        headerContents.append(expandCollapseCaratBox);
-
-        const difficultyBarFilled = document.createElement('div');
-        difficultyBarFilled.classList.add('difficulty-bar-filled');
-        difficultyBar.appendChild(difficultyBarFilled);
-
-        const targetMarker = document.createElement('div');
-        targetMarker.classList.add('target-marker');
-        difficultyBar.appendChild(targetMarker);
-
-        const expandCollapseCaratImg = document.createElement('img');
-        expandCollapseCaratImg.src = '/static/images/MagPlus.svg';
-        expandCollapseCaratImg.classList.add('expand-collapse-carat');
-        expandCollapseCaratBox.appendChild(expandCollapseCaratImg);
-
-        expandCollapseCaratBox.addEventListener('click', function() {
-            const img = this.querySelector('.expand-collapse-carat');
-            const contents = this.closest('.difficulty_check_contents');
-            
-            if (img.src.includes('MagPlus.svg')) {
-                img.src = '/static/images/MagMinus.svg';
-                bodyContents.classList.remove('hidden');
-            } else {
-                img.src = '/static/images/MagPlus.svg';
-                bodyContents.classList.add('hidden');
-            }
-        });
-
-        // Add analysis text container (initially hidden)
-        const analysisText = document.createElement('div');
-        analysisText.classList.add('analysis-text', 'info-text-style');
-        bodyContents.appendChild(analysisText);
-
-        chatMessagesWrapper.appendChild(difficultyCheckModule);
-        
-        return difficultyCheckModule;
-    }
-}
-
-
 function addConversationObjects(conversation_objects) {
-    console.debug("adding " + conversation_objects.length + " conversation objects");
+    console.info("adding " + conversation_objects.length + " conversation objects");
     conversation_objects.forEach(conversation_object => {
         addConversationObject(conversation_object);
     });
@@ -313,12 +219,18 @@ function addConversationObject(co) {
         coDiv.classList.add('freestanding', 'info-text-style', 'left');
         chatMessagesWrapper.appendChild(coDiv);
         console.error("server error: ", co.text);
+    } else if (co.type === 'boot_sequence_end') {
+        console.debug("ignoring boot sequence end co");
+        return;
     } else {
-        console.error("unknown conversation object type: ", co.type);
+        console.warning("unknown conversation object type: ", co.type);
     }
 }
 
 // Load initial conversation data
+
+console.info("fetching initial conversation data");
+
 fetch('/get_conversation', {
     method: 'POST',
     headers: {
@@ -329,22 +241,25 @@ fetch('/get_conversation', {
 .then(response => response.json())
 .then(data => {
     if (data.status === 'success') {
+        console.info("conversation data fetched");
         console.debug("conversation data: " + JSON.stringify(data));
         let name = data.conversation_name;
         let created_at = data.created_at;
 
+        console.info("adding intro blurb");
         addConversationObject({
             "type": "intro_blurb",
             "text": data.intro_blurb
         });
 
         if (data.game_has_begun) {
-            console.debug("game has begun");
+            console.info("game has begun");
             addConversationObjects(data.new_conversation_objects);
             inputContainer.classList.remove('hidden');
         } else {
-            console.debug("game has not begun (yet)");
+            console.info("game has not begun (yet)");
             // Store conversation objects for later use after begin game button is pressed
+            console.debug("storing " + data.new_conversation_objects.length + " conversation objects for later use");
             const storedConversationObjects = data.new_conversation_objects;
             
             // Show begin game button
@@ -352,11 +267,13 @@ fetch('/get_conversation', {
             
             // Add click handler to display stored objects after button press
             beginGameButton.addEventListener('click', function() {
+                console.info("begin game button clicked");
                 beginGameButton.classList.add('hidden');
                 showThinkingMessage();
                 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
                 wait(4500).then(() => {
                     clearThinkingMessage();
+                    console.debug("adding first message after button press");
                     addConversationObjects(storedConversationObjects);
                     inputContainer.classList.remove('hidden');
                 });
@@ -587,6 +504,102 @@ function checkOverlap() {
         }
     }
 }
+
+
+function get_or_create_difficulty_check_element() {
+
+
+    const previousElement = chatMessagesWrapper.lastElementChild;
+    if (previousElement && previousElement.classList.contains('difficulty_check')) {
+        return previousElement;
+    } else {
+
+        //This is jank, lol
+
+        // Breadth first (ish)
+    
+        const difficultyCheckModule = document.createElement('div');
+        difficultyCheckModule.classList.add('co','module','difficulty_check', 'left', 'top');
+        
+        const moduleContents = document.createElement('div');
+        moduleContents.classList.add('module_contents', 'has_contents');
+        difficultyCheckModule.appendChild(moduleContents);
+
+        const headerContents = document.createElement('div');
+        headerContents.classList.add('difficulty_check_contents');
+        moduleContents.appendChild(headerContents);
+
+        const bodyContents = document.createElement('div');
+        bodyContents.classList.add('difficulty_analysis_contents', 'hidden');
+        moduleContents.appendChild(bodyContents);
+
+        const header = document.createElement('span');
+        header.classList.add('header');
+        header.textContent = "Difficulty Check";
+        header.style = "white-space: nowrap;";
+        headerContents.appendChild(header);
+
+        const difficultyBar = document.createElement('div');
+        difficultyBar.classList.add('difficulty-bar');
+        headerContents.appendChild(difficultyBar);
+
+        const difficultyRoll = document.createElement('span');
+        difficultyRoll.classList.add('difficulty-roll');
+        difficultyRoll.textContent = "";
+        headerContents.appendChild(difficultyRoll);
+
+        const separator = document.createElement('span');
+        separator.classList.add('separator', 'info-text-style');
+        separator.textContent = "-";
+        headerContents.appendChild(separator);
+
+        const difficultyTarget = document.createElement('span');
+        difficultyTarget.classList.add('difficulty-target');
+        difficultyTarget.textContent = "Trivial";
+        headerContents.appendChild(difficultyTarget);
+
+        const expandCollapseCaratBox = document.createElement('div');
+        expandCollapseCaratBox.classList.add('expand-collapse-carat-box');
+        headerContents.append(expandCollapseCaratBox);
+
+        const difficultyBarFilled = document.createElement('div');
+        difficultyBarFilled.classList.add('difficulty-bar-filled');
+        difficultyBar.appendChild(difficultyBarFilled);
+
+        const targetMarker = document.createElement('div');
+        targetMarker.classList.add('target-marker');
+        difficultyBar.appendChild(targetMarker);
+
+        const expandCollapseCaratImg = document.createElement('img');
+        expandCollapseCaratImg.src = '/static/images/MagPlus.svg';
+        expandCollapseCaratImg.classList.add('expand-collapse-carat');
+        expandCollapseCaratBox.appendChild(expandCollapseCaratImg);
+
+        expandCollapseCaratBox.addEventListener('click', function() {
+            const img = this.querySelector('.expand-collapse-carat');
+            const contents = this.closest('.difficulty_check_contents');
+            
+            if (img.src.includes('MagPlus.svg')) {
+                img.src = '/static/images/MagMinus.svg';
+                bodyContents.classList.remove('hidden');
+            } else {
+                img.src = '/static/images/MagPlus.svg';
+                bodyContents.classList.add('hidden');
+            }
+        });
+
+        // Add analysis text container (initially hidden)
+        const analysisText = document.createElement('div');
+        analysisText.classList.add('analysis-text', 'info-text-style');
+        bodyContents.appendChild(analysisText);
+
+        chatMessagesWrapper.appendChild(difficultyCheckModule);
+        
+        return difficultyCheckModule;
+    }
+}
+
+
 
 chatContainer.addEventListener('scroll', checkOverlap);
 
