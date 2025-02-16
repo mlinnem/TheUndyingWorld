@@ -86,6 +86,12 @@ def read_conversation(conversation_id):
             # Always use latest summarizer system prompt
             conversation_data['summarizer_system_prompt'] = get_summarizer_system_prompt()
             conversation_data['summarizer_system_prompt_date'] = datetime.now().isoformat()
+
+            # Always use latest game manual
+            conversation_data['gameplay_system_prompt'] = get_gameplay_system_prompt()
+            conversation_data['gameplay_system_prompt_date'] = datetime.now().isoformat()
+            conversation_data['game_setup_system_prompt'] = get_game_setup_system_prompt()
+            conversation_data['game_setup_system_prompt_date'] = datetime.now().isoformat()
             
             logger.debug(f"Conversation {conversation_id} loaded successfully")
             return conversation_data
@@ -218,6 +224,12 @@ def read_game_seed(conversation_id):
             # Always use latest summarizer system prompt
             conversation_data['summarizer_system_prompt'] = get_summarizer_system_prompt()
             conversation_data['summarizer_system_prompt_date'] = datetime.now().isoformat()
+
+            # Always use latest game manual
+            conversation_data['gameplay_system_prompt'] = get_gameplay_system_prompt()
+            conversation_data['gameplay_system_prompt_date'] = datetime.now().isoformat()
+            conversation_data['game_setup_system_prompt'] = get_game_setup_system_prompt()
+            conversation_data['game_setup_system_prompt_date'] = datetime.now().isoformat()
             
             return conversation_data
     logger.warning("Game seed not found: " + conversation_id)

@@ -1,6 +1,4 @@
 
-
-
 # Instruction (omit result later)
 
 The following is the 'world gen sequence' mentioned sometimes in other documents. 
@@ -267,7 +265,7 @@ Make two associated with the inner ring, and six associated with the middle ring
 
 Describe now 9 incidental non-knowledge artifacts, all associated with the outer ring.
 
-# Instruction
+# Instruction (omit result later)
 
 We are now beginning a section on defining incidental knowledge artifacts.
 
@@ -345,7 +343,7 @@ Describe these selected artifacts in more detail.
 
 Describe 4 major factions within the egg.
 
-Major factions are intended to occupy some substantial portion of territory within the egg (at least half of one zone, say.)
+Major factions are intended to control some substantial portion of territory within the egg (at least half of one zone, say.)
 
 You may use the following template as guidance:
 
@@ -353,6 +351,7 @@ You may use the following template as guidance:
 * Governance - [Form of governance]
 * Philosophy - [Philosophical bent]
 * Relationship to egg's power - [Relationship to egg's power]
+* Relationship to pre-egg populations - [How this faction's formation originates in or was influenced by pre-egg populations or culture in this area]
 * History - [What has happened with this group in the past two years? How did it form? etc]
 * Quirk - [Something unusual about this group]
 * Objectives - [What are they currently looking to accomplish]
@@ -362,6 +361,7 @@ You may use the following template as guidance:
 You may also consider the following factors in defining each faction
 
 * What form of governance does the faction have. Dogmatic or democratic? Are they followers of some ideal or pragmatic? What is their stance and relationship to the power of the egg? What objectives do they have?
+* How does this faction relate to what existed prior to the egg? Does it emerge from a pre-existing community, or does it bring together disparate groups in a configuration that is novel?
 * Keep in mind the power of the egg. Some factions may exist strictly in the exterior band of the egg, some may dabble in the interior for various reasons, and some may spend considerable time or even thrive in more interior areas of the egg.
 * The egg has driven humanity to extremes. Some survivors maintain relative sanity but most have become unhinged in some way, either through the effects of the egg, the degradation of society, the opportunities for newfound power, or the opportunity to enact ideas for organizing society previously impossible due to the prior world powers. 
 
@@ -837,8 +837,9 @@ Briefly describe the four possible locations in which the player could be insert
 
 Gameplay should begin with the player in a U.S. government staging facility, outside of the egg. They are being briefed on their mission.
 
+The scene should unfold organically over the course of several messages.
 
-The briefing should include the following:
+Ultimately (not necessarily in the very first message, but in the fullness of the scene), the briefing should cover the following:
 
 10) indicate where in the world the mission will occur
 11) indicate the location and appearance of the three main plot artifacts
@@ -853,8 +854,6 @@ Also, it is important that the player should be made aware via their own interna
 
 
 Other information pertinent to this initial scene:
-
-  
 
 * The point of entry should be somewhere on the outer edge of the exterior ring.
 
@@ -874,9 +873,8 @@ Remember to keep in mind what information the player should and should not know.
 
 Do not respond to this using an OOC message. Simply begin the game.
 
-In addition to the resulting scene, make sure to include the condition table to begin with good habits. Recall all prior instructions on how to conduct gameplay.
+Recall all prior instructions on how to conduct gameplay.
 
 Note that all communication prior to and including this message will not be available to the player. Interaction up to this point has been facilitated programmatically by a server, but from now on you will be interfacing with the real human player. Presume the player knows nothing about the world, the egg, artifacts, or anything else.
-
 
 Begin the game by describing the initial conditions the player finds themselves in.

@@ -27,12 +27,12 @@ def setup_logging():
     log_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     
     # Create and configure debug file handler (captures everything)
-    debug_file_handler = RotatingFileHandler(debug_log_file, maxBytes=1024*1024, backupCount=5)
+    debug_file_handler = RotatingFileHandler(debug_log_file, maxBytes=1024*1024*30, backupCount=5)
     debug_file_handler.setFormatter(log_formatter)
     debug_file_handler.setLevel(logging.DEBUG)
     
     # Create and configure info file handler (captures INFO and above)
-    info_file_handler = RotatingFileHandler(info_log_file, maxBytes=1024*1024, backupCount=5)
+    info_file_handler = RotatingFileHandler(info_log_file, maxBytes=1024*1024*30, backupCount=5)
     info_file_handler.setFormatter(log_formatter)
     info_file_handler.setLevel(logging.INFO)
     

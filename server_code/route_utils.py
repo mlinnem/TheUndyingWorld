@@ -67,7 +67,7 @@ def convert_messages_to_cos(messages):
                                         try:
                                             integer = int(body)
                                             if integer < 1 or integer > 100:
-                                                logger.warning(f"Invalid negative world roll: {integer}")
+                                                logger.warning(f"Invalid negative reveal roll: {integer}")
                                                 continue
                                             cos.append({'type': 'world_reveal_roll', 'integer': integer})
                                         except ValueError:
