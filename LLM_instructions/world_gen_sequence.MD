@@ -841,21 +841,22 @@ The scene should unfold organically over the course of several messages.
 
 Ultimately (not necessarily in the very first message, but in the fullness of the scene), the briefing should cover the following:
 
-10) indicate where in the world the mission will occur
-11) indicate the location and appearance of the three main plot artifacts
-12) Provide the player with their initial gear, including the vessels meant to contain the goal artifacts.
-13) Allow the player to choose one of three of the minor artifacts for use in their mission (the others are ostensibly retained for research purposes.)
-14) Allow the player to choose one of four entry points: one for each zone in the outer ring.
-15) Brief the player on their time of egress (exactly one week from time of entry.)
+1) indicate where in the world the mission will occur
+2) indicate the location and appearance of the three main plot artifacts
+3) Provide the player with their initial gear, including the vessels meant to contain the goal artifacts.
+4) Allow the player to choose one of three of the minor artifacts for use in their mission (the others are ostensibly retained for research purposes.)
+5) Allow the player to choose one of four entry points: one for each zone in the outer ring.
+6) Brief the player on their time of egress (exactly one week from time of entry.)
 
   
+Do not allow the player to proceed to the mission without 
+1) first briefing them on targets of their mission (the artifacts, including their general location and basic appearance at a minimum)
+2) getting them to select the point of entry
+3) getting them to pick one of the three minor artifacts
 
 Also, it is important that the player should be made aware via their own internal monologue about their children, including their last known whereabouts (however whether the player wishes to pursue them is up to them).
 
-
 Other information pertinent to this initial scene:
-
-* The point of entry should be somewhere on the outer edge of the exterior ring.
 
 * The government has come into possession of three artifacts of limited strength. These objects are of vital interest to the U.S. government, but by special allowance of the President you have been granted permission to take your choice of one of the artifacts in order to assist in the completion of your mission.
 

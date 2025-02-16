@@ -2,7 +2,7 @@ import os
 
 INPUT_COST_PER_TOKEN = 3 / 1_000_000  # $3 per 1 million tokens
 OUTPUT_COST_PER_TOKEN = 15 / 1_000_000  # $15 per 1 million tokens
-MAX_TOTAL_INPUT_TOKENS = 180_000
+MAX_TOTAL_INPUT_TOKENS = 182_000
 MAX_OUTPUT_TOKENS = 8192
 MAX_UNCACHED_INPUT_TOKENS = 9000
 SUMMARIZATION_BLOCK_SIZE = 25  # Number of messages to summarize at once
