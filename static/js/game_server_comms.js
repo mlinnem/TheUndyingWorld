@@ -34,7 +34,7 @@ async function getInitialConversationDataFromServer(activeConversationId) {
     }
 }
 
-async function sendMessageAndGetResponseFromServer(text,activeConversationId, isBootSequence = false) {
+async function sendMessageAndGetResponseFromServer(text, activeConversationId, isBootSequence = false) {
     const requestBody = {
         user_message: text,
         conversation_id: activeConversationId

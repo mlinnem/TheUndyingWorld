@@ -476,6 +476,21 @@ function _addConversationObject(co) {
     }
 }
 
+let beginGameButtonCallback = null;
+
+ function subscribeToBeginGameButton(callback) {
+    beginGameButtonCallback = callback;
+    beginGameButton.addEventListener('click', callback);
+}
+
+// Optional: Add unsubscribe method if needed
+ function unsubscribeFromBeginGameButton() {
+    if (beginGameButtonCallback) {
+        beginGameButton.removeEventListener('click', beginGameButtonCallback);
+        beginGameButtonCallback = null;
+    }
+}
+
 // Export public functions
 export {
     makeItSoUsersCanProvideInput,
@@ -499,4 +514,6 @@ export {
     _setHeaderBarToSolid,
     _get_or_create_difficulty_check_element,
     subscribeToUserMessageSubmitted,
+    subscribeToBeginGameButton,
+    unsubscribeFromBeginGameButton,
 };
