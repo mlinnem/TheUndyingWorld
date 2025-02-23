@@ -1,4 +1,3 @@
-
 async function getInitialConversationDataFromServer(activeConversationId) {
     try {
         const response = await fetch('/get_conversation', {
@@ -35,7 +34,7 @@ async function getInitialConversationDataFromServer(activeConversationId) {
     }
 }
 
-async function sendMessageAndGetResponseFromServer(text, isBootSequence = false) {
+async function sendMessageAndGetResponseFromServer(text,activeConversationId, isBootSequence = false) {
     const requestBody = {
         user_message: text,
         conversation_id: activeConversationId
@@ -71,4 +70,9 @@ async function sendMessageAndGetResponseFromServer(text, isBootSequence = false)
     // Return just the conversation objects on success
     return data.new_conversation_objects;
 }
+
+export {
+    getInitialConversationDataFromServer,
+    sendMessageAndGetResponseFromServer
+};
 

@@ -14,18 +14,30 @@ let loadingDiv;
 let activeConversationId = window.conversationId;
 let v_isWaitingForResponse;
 
+let hasOverlapped = false;  // Track if overlap has occurred
+
+// Add at the top with other global variables
+const messageSubmittedListeners = [];
+
+// Add this new function
+function subscribeToUserMessageSubmitted(listener) {
+    messageSubmittedListeners.push(listener);
+}
+
 // Wait for DOM to be loaded before adding event listeners
 document.addEventListener('DOMContentLoaded', function() {
     sendButton.addEventListener('click', function() {
         const user_message = userInput.value.trim();
-        on_message_submitted(user_message);
+        // Notify all listeners
+        messageSubmittedListeners.forEach(listener => listener(user_message));
     });
 
     userInput.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             const user_message = userInput.value.trim();
-            on_message_submitted(user_message);
+            // Notify all listeners
+            messageSubmittedListeners.forEach(listener => listener(user_message));
         }
     });
 
@@ -37,43 +49,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     chatContainer.addEventListener('scroll', _checkOverlap);
-
-    on_page_load();
 });
 
-function setupWhenGameAlreadyBegun(name, intro_blurb, conversation_objects) {
-    _add_intro_blurb(intro_blurb);
-    console.debug("conversation objects: " + conversation_objects);
-    _addConversationObjects(conversation_objects);
+function makeItSoUsersCanProvideInput() {
     inputContainer.classList.remove('hidden');
-    _set_chat_title(name);
 }
 
-function setupWhenGameNotYetBegun(name, intro_blurb, new_conversation_objects) {
-    _add_intro_blurb(intro_blurb);
-    console.info("game has not begun (yet)");
-    // Store conversation objects for later use after begin game button is pressed
-    console.debug("storing " + new_conversation_objects.length + " conversation objects for later use");
-    const storedConversationObjects = new_conversation_objects;
-    
-    // Show begin game button
-    beginGameButton.classList.remove('hidden');
-    
-    // Add click handler to display stored objects after button press
-    beginGameButton.addEventListener('click', function() {
-        console.info("begin game button clicked");
-        beginGameButton.classList.add('hidden');
-        _showThinkingMessage();
-        const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-        wait(4500).then(() => {
-            _clearThinkingMessage();
-            console.debug("adding first message after button press");
-            _addConversationObjects(storedConversationObjects);
-            inputContainer.classList.remove('hidden');
-        });
-    });
-    _set_chat_title(name);
+function makeItSoUsersCannotProvideInput() {
+    inputContainer.classList.add('hidden');
 }
+
+
 
 function getUserMessage() {
     return userInput.value.trim();
@@ -97,17 +83,21 @@ function addUserMessage(user_message) {
 }
 
 function addNewMessagesFromServer(conversation_objects) {
-    _addConversationObjects(conversation_objects);
+    renderConversationObjects(conversation_objects);
     v_isWaitingForResponse = false;
+}
+
+function allowUserToBeginGame() {
+    beginGameButton.classList.remove('hidden');
 }
 
 function setWeAreWaitingForServerResponse(status) {
     if (status) {
-        _showThinkingMessage();
+        showServerIsThinking();
         sendButton.classList.add('disabled');
         userInput.placeholder = "Waiting for response...";
     } else {
-        _clearThinkingMessage();
+        showServerIsNoLongerThinking();
         sendButton.classList.remove('disabled');
         userInput.placeholder = "Propose an action...";
     }
@@ -131,14 +121,14 @@ function _set_chat_title(name) {
 }
 
 
-function _add_intro_blurb(intro_blurb) {
+function showIntroBlurb(intro_blurb) {
     _addConversationObject({
         "type": "intro_blurb",
         "text": intro_blurb
     });
 }
 
-function _showThinkingMessage() {
+function showServerIsThinking() {
     // Add loading message with animated dots
     loadingDiv = document.createElement('div');
     loadingDiv.classList.add('co', 'loading_message', 'module', 'left', 'primary-text-style');
@@ -161,7 +151,7 @@ function _showThinkingMessage() {
     _scrollChatNearBottom();
 }
 
-function _clearThinkingMessage() {
+function showServerIsNoLongerThinking() {
     if (dotAnimation) {
         clearInterval(dotAnimation);
     }
@@ -265,8 +255,6 @@ function _scrollChatNearBottom() {
     chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight - 250;
 }
 
-let hasOverlapped = false;  // Track if overlap has occurred
-
 function _checkOverlap() {
     if (hasOverlapped) return;
 
@@ -299,7 +287,7 @@ function _setHeaderBarToSolid() {
 }
 
 // Conversation processing functions
-function _addConversationObjects(conversation_objects) {
+function renderConversationObjects(conversation_objects) {
     console.info("adding " + conversation_objects.length + " conversation objects");
     conversation_objects.forEach(conversation_object => {
         _addConversationObject(conversation_object);
@@ -487,3 +475,28 @@ function _addConversationObject(co) {
         console.warn("unknown conversation object type: ", co.type);
     }
 }
+
+// Export public functions
+export {
+    makeItSoUsersCanProvideInput,
+    makeItSoUsersCannotProvideInput,
+    getUserMessage,
+    getActiveConversationId,
+    weAreWaitingForServerResponse,
+    addUserMessage,
+    addNewMessagesFromServer,
+    setWeAreWaitingForServerResponse,
+    setErrorState,
+    renderConversationObjects as renderConversationObjects,
+    _addConversationObject,
+    showIntroBlurb as showIntroBlurb,
+    showServerIsThinking as _showThinkingMessage,
+    showServerIsNoLongerThinking as _clearThinkingMessage,
+    _set_chat_title as setGameTitle,
+    _resetInputStateToEmpty,
+    _scrollChatNearBottom,
+    _checkOverlap,
+    _setHeaderBarToSolid,
+    _get_or_create_difficulty_check_element,
+    subscribeToUserMessageSubmitted,
+};

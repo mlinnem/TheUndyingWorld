@@ -36,8 +36,8 @@
         window.conversationId = "{{ conversation_id }}";
     </script>
     <script src="{{ url_for('static', filename='js/game_util.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/game_dom.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/game_server_comms.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/game_business_logic.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/game_dom.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/game_server_comms.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/game_business_logic.js') }}"></script>
 </body>
 </html>
