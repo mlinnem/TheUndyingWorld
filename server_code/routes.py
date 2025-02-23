@@ -219,7 +219,16 @@ def get_conversation_listings_route():
 def get_conversation_route():
     try:
         data = request.get_json()
-        conversation_id = data['conversation_id']
+        conversation_id = data.get('conversation_id')
+        
+        # Check if conversation_id was provided
+        if not conversation_id:
+            logger.error("...No conversation ID provided. Returning error.")
+            return jsonify({
+                'status': 'error',
+                'message': 'No conversation ID provided'
+            }), 400
+            
         logger.info(f"Received request for conversation with id: {conversation_id}...")
         conversation = get_conversation(conversation_id)
         

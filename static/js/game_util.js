@@ -1,5 +1,4 @@
-// All exports must be at the top level
-export function make_module(co) {
+function make_module(co) {
     const coDiv = document.createElement('div');
     coDiv.classList.add('co');
     coDiv.classList.add('module');
@@ -8,14 +7,14 @@ export function make_module(co) {
     return coDiv;
 }
 
-export function inject_content_into_element(element, content_container_class, content) {
+function inject_content_into_element(element, content_container_class, content) {
     let contentContainer = element.querySelector(content_container_class);
     contentContainer.innerHTML = content;
     contentContainer.classList.add('has_contents');
     contentContainer.classList.remove('no_contents');
 }
 
-export function inject_style_into_element(element, style_class, style) {
+function inject_style_into_element(element, style_class, style) {
     console.debug("injecting style into element");
     console.debug("element: ", element);
     console.debug("style_class: ", style_class);
@@ -24,7 +23,7 @@ export function inject_style_into_element(element, style_class, style) {
     styleElement.style = style;
 }
 
-export function append_style_to_element(element, style_class, style_to_append) {
+function append_style_to_element(element, style_class, style_to_append) {
     let styleElement = element.querySelector(style_class);
     let currentStyle = styleElement.style.cssText;
     if (currentStyle) {
@@ -34,24 +33,23 @@ export function append_style_to_element(element, style_class, style_to_append) {
     }
 }
 
-
-export function header(label) {
+function header(label) {
     return "<span class='header'>" + label + "</span>";
 }
 
-export function body_text(contents) {
+function body_text(contents) {
     return "<div class='conversation-body-text'>" + contents + "</div>";
 }
 
-export function data_text(contents) {
+function data_text(contents) {
     return "<div class='conversation-data-text info-text-style'>" + contents + "</div>";
 }
 
-export function info_text(contents) {
+function info_text(contents) {
     return "<div class='info-text-style'>" + contents + "</div>";
 }
 
-export function get_or_create_difficulty_element(analysisDiv) {
+function get_or_create_difficulty_element(analysisDiv) {
     const difficultyElement = analysisDiv.querySelector('.difficulty_element');
     if (difficultyElement) {
         return difficultyElement;
@@ -64,7 +62,7 @@ export function get_or_create_difficulty_element(analysisDiv) {
     }
 }
 
-export function get_or_create_world_reveal_element(analysisDiv) {
+function get_or_create_world_reveal_element(analysisDiv) {
     const difficultyElement = analysisDiv.querySelector('.world_reveal_element');
     if (difficultyElement) {
         return difficultyElement;
@@ -77,7 +75,7 @@ export function get_or_create_world_reveal_element(analysisDiv) {
     }
 }
 
-export function determine_difficulty_color(difficultyElement, rolledValue) {
+function determine_difficulty_color(difficultyElement, rolledValue) {
     const targetElement = difficultyElement.querySelector('.difficulty-target');
     const targetText = targetElement ? targetElement.textContent.replace('Target', '').trim() : null;
     let targetValue, degreeOfSuccess, degreeOfFailure, l;
@@ -116,7 +114,7 @@ export function determine_difficulty_color(difficultyElement, rolledValue) {
     }
 }
 
-export function determine_world_reveal_color(worldRevealElement, rolledValue) {
+function determine_world_reveal_color(worldRevealElement, rolledValue) {
     console.debug("determining world reveal color");
     console.debug("rolledValue: ", rolledValue);
     console.debug("worldRevealElement: ", worldRevealElement);
@@ -163,12 +161,4 @@ export function determine_world_reveal_color(worldRevealElement, rolledValue) {
         }
     }
     return 'hsl(0, 0%, 10%)';  // Default return
-}
-
-export function render_difficulty_and_world_reveal_object(difficulty_and_world_reveal_object) {   
-    let rendered_world_reveal_object = difficulty_and_world_reveal_object.difficulty.difficulty_analysis + "\n\n" + 
-        difficulty_and_world_reveal_object["world reveal"].world_reveal_analysis + "\n\n";
-    rendered_world_reveal_object += "Difficulty Target: " + difficulty_and_world_reveal_object.difficulty.difficulty_target + 
-        "\n\n" + "World Reveal Level: " + difficulty_and_world_reveal_object["world reveal"].world_reveal_level + "\n\n";
-    return rendered_world_reveal_object;
 }
