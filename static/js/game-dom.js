@@ -11,9 +11,6 @@ const beginGameButton = document.getElementById('begin-game-button');
 let dotAnimation;
 let loadingDiv;
 
-let activeConversationId = window.conversationId;
-let v_isWaitingForResponse;
-
 let hasOverlapped = false;  // Track if overlap has occurred
 
 // Add at the top with other global variables
@@ -65,13 +62,12 @@ function getUserMessage() {
     return userInput.value.trim();
 }
 
-function getActiveConversationId() {
-    return activeConversationId;
+
+function reactToUserMessageSubmitted() {
+    userInput.value = '';
+    userInput.style.height = '60px';
 }
 
-function weAreWaitingForServerResponse() {
-    return v_isWaitingForResponse;
-}
 
 
 function addUserMessage(user_message) {
@@ -84,24 +80,22 @@ function addUserMessage(user_message) {
 
 function addNewMessagesFromServer(conversation_objects) {
     renderConversationObjects(conversation_objects);
-    v_isWaitingForResponse = false;
 }
 
 function allowUserToBeginGame() {
     beginGameButton.classList.remove('hidden');
 }
 
-function setWeAreWaitingForServerResponse(status) {
-    if (status) {
+function reactToWaitingForServerResponse() {
         showServerIsThinking();
         sendButton.classList.add('disabled');
         userInput.placeholder = "Waiting for response...";
-    } else {
-        showServerIsNoLongerThinking();
-        sendButton.classList.remove('disabled');
-        userInput.placeholder = "Propose an action...";
-    }
-    v_isWaitingForResponse = status;
+}
+
+function reactToNotWaitingForServerResponse() {
+    showServerIsNoLongerThinking();
+    sendButton.classList.remove('disabled');
+    userInput.placeholder = "Propose an action...";
 }
 
 function setErrorState(error_message) {
@@ -112,8 +106,6 @@ function setErrorState(error_message) {
 }
 
 function _resetInputStateToEmpty() {
-    userInput.value = '';
-    userInput.style.height = '60px';
 }
 
 function _set_chat_title(name) {
@@ -284,6 +276,14 @@ function _checkOverlap() {
 
 function _setHeaderBarToSolid() {
     headerBar.style.backgroundColor = '#132020';
+}
+
+function reactToBeginGameInitiated() {
+    beginGameButton.classList.add('hidden');
+}
+
+function beginGameByShowingInitialConversationObjects(conversationObjectsToShowOnBeginGame) {
+    renderConversationObjects(conversationObjectsToShowOnBeginGame);
 }
 
 // Conversation processing functions
@@ -478,13 +478,13 @@ function _addConversationObject(co) {
 
 let beginGameButtonCallback = null;
 
- function subscribeToBeginGameButton(callback) {
+ function subscribeToBeginGameEvent(callback) {
     beginGameButtonCallback = callback;
     beginGameButton.addEventListener('click', callback);
 }
 
 // Optional: Add unsubscribe method if needed
- function unsubscribeFromBeginGameButton() {
+ function unsubscribeFromBeginGameEvent() {
     if (beginGameButtonCallback) {
         beginGameButton.removeEventListener('click', beginGameButtonCallback);
         beginGameButtonCallback = null;
@@ -496,24 +496,27 @@ export {
     makeItSoUsersCanProvideInput,
     makeItSoUsersCannotProvideInput,
     getUserMessage,
-    getActiveConversationId,
-    weAreWaitingForServerResponse,
     addUserMessage,
     addNewMessagesFromServer,
-    setWeAreWaitingForServerResponse,
     setErrorState,
-    renderConversationObjects as renderConversationObjects,
+    beginGameByShowingInitialConversationObjects,
+    renderConversationObjects,
     _addConversationObject,
-    showIntroBlurb as showIntroBlurb,
-    showServerIsThinking as _showThinkingMessage,
-    showServerIsNoLongerThinking as _clearThinkingMessage,
+    showIntroBlurb,
+    showServerIsThinking,
+    allowUserToBeginGame,
+    showServerIsNoLongerThinking,
     _set_chat_title as setGameTitle,
     _resetInputStateToEmpty,
     _scrollChatNearBottom,
+    reactToBeginGameInitiated,
+    reactToWaitingForServerResponse,
+    reactToNotWaitingForServerResponse,
+    reactToUserMessageSubmitted,
     _checkOverlap,
     _setHeaderBarToSolid,
     _get_or_create_difficulty_check_element,
     subscribeToUserMessageSubmitted,
-    subscribeToBeginGameButton,
-    unsubscribeFromBeginGameButton,
+    subscribeToBeginGameEvent,
+    unsubscribeFromBeginGameEvent,
 };

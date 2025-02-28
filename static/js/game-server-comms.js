@@ -1,5 +1,4 @@
 async function getInitialConversationDataFromServer(activeConversationId) {
-    try {
         const response = await fetch('/get_conversation', {
             method: 'POST',
             headers: {
@@ -18,20 +17,12 @@ async function getInitialConversationDataFromServer(activeConversationId) {
                 created_at: data.created_at,
                 intro_blurb: data.intro_blurb,
                 new_conversation_objects: data.new_conversation_objects,
-                game_has_begun: data.game_has_begun
+                game_has_already_begun: data.game_has_begun
             };
         } else {
             console.error("Error fetching conversation data");
             return null;
         }
-    } catch (error) {
-        console.error('Error loading conversation:', error);
-        _addConversationObject({
-            "type": "server_error",
-            "text": "Error loading conversation. Please try refreshing the page."
-        });
-        return null;
-    }
 }
 
 async function sendMessageAndGetResponseFromServer(text, activeConversationId, isBootSequence = false) {

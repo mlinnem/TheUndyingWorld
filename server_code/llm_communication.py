@@ -97,7 +97,7 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
     logger.debug(f"First cleaned message: {cleaned_messages[0] if cleaned_messages else 'No messages'}")
 
     response = client.messages.create(
-        model="claude-3-5-sonnet-20241022",
+        model="claude-3-7-sonnet-20250219",
         messages=cleaned_messages,
         system=system_prompt,  
         max_tokens=MAX_OUTPUT_TOKENS,

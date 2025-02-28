@@ -23,7 +23,7 @@ def get_claude_response(user_message, system_prompt="You are a helpful AI assist
         str: Claude's response text
     """
     response = client.messages.create(
-        model="claude-3-5-sonnet-20241022",
+        model="claude-3-7-sonnet-20250219",
         messages=[{
             "role": "assistant",
             "content": user_message
