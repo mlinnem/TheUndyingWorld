@@ -1,11 +1,11 @@
-import * as uiManager from './game_dom.js';
-import * as server from './game_server_comms.js';
+import * as uiManager from './game-dom.js';
+import * as server from './game-server-comms.js';
 
 let conversationObjectsToShowOnBeginGame = [];
 let weAreWaitingForServerResponse = false;
 let activeConversationId = window.conversationId;
 
-async function on_page_load() {
+async function onPageLoad() {
     try {   
 
          //Get initial conversation data from server
@@ -34,13 +34,13 @@ async function on_page_load() {
 
             uiManager.renderConversationObjects(new_conversation_objects);
 
-            uiManager.subscribeToUserMessageSubmitted(on_message_submitted);
+            uiManager.subscribeToUserMessageSubmitted(onMessageSubmitted);
             uiManager.makeItSoUsersCanProvideInput();     
         } else {
             //Set up UI for a game that is fresh
 
             conversationObjectsToShowOnBeginGame = new_conversation_objects;
-            uiManager.subscribeToBeginGameEvent(on_game_begin_initiated);
+            uiManager.subscribeToBeginGameEvent(onGameBeginInitiated);
             uiManager.allowUserToBeginGame();
 
         }
@@ -51,20 +51,20 @@ async function on_page_load() {
     }
 }
 
-function on_game_begin_initiated() {
+function onGameBeginInitiated() {
     uiManager.reactToBeginGameInitiated();
     uiManager.reactToWaitingForServerResponse();
     const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     wait(4500).then(() => {
         uiManager.reactToNotWaitingForServerResponse();
         uiManager.beginGameByShowingInitialConversationObjects(conversationObjectsToShowOnBeginGame);
-        uiManager.subscribeToUserMessageSubmitted(on_message_submitted);
+        uiManager.subscribeToUserMessageSubmitted(onMessageSubmitted);
         uiManager.makeItSoUsersCanProvideInput();
         
     });
 }
 
-function on_message_submitted(message_text) {
+function onMessageSubmitted(message_text) {
     const user_message = uiManager.getUserMessage();
 
     uiManager.reactToUserMessageSubmitted();
@@ -122,10 +122,10 @@ function on_message_submitted(message_text) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    on_page_load();
+    onPageLoad();
 });
 
 export {
-    on_message_submitted,
-    on_page_load,
+    onMessageSubmitted as on_message_submitted,
+    onPageLoad as on_page_load,
 };
