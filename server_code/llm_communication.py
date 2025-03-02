@@ -11,7 +11,6 @@ from .route_utils import *
 import logging
 logger = logging.getLogger(__name__)
 
-
 load_dotenv()
 api_key = os.getenv('ANTHROPIC_API_KEY')
 
@@ -43,7 +42,6 @@ with open(tools_path, 'r') as file:
 
 
 def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cache_index=None, dynamic_cache_index=None):
-    
     # Convert messages into a single string
     messages_string = "The following is the last few messages between a player and the GM of the game. This is the subject that you are expected to provided coaching around. This conversation data is provided to you as a single message from an apparent user, but in its original form it is a conventional sequence of messages back and forth between a player and the GM of the game (with other messages including tool use and results, and the like.) The following is the content of those messages: \n\n\n\n"
 
@@ -67,18 +65,17 @@ def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cac
         ]
     }]
 
-    # logger.debug("Sending the following messages to get a coaching response:" + 
-    #              json.dumps(messages_for_api, indent=2))
+    
 
     response = client.messages.create(
-        model="claude-3-7-sonnet-20250219",
+        model="claude-3-5-haiku-20241022",
         messages=messages_for_api,  # Pass the list of messages
         system=system_prompt,  
         max_tokens=MAX_OUTPUT_TOKENS,
         temperature=temperature,
     )
 
-    logger.debug(f"response (from getting coaching message): {response}")
+    logger.info(f"response (from getting coaching message): {response}")
 
     logger.info(f"...received response from GM...")
 
@@ -112,6 +109,12 @@ def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cac
 def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cache_index=None, dynamic_cache_index=None):
     
     logger.debug(f"Sending message to GM (omitted for brevity)")
+
+    # Add debug logging for most recent user message
+    for msg in reversed(messages):
+        if msg['role'] == 'user':
+            logger.debug(f"Most recent user message: {msg}")
+            break
 
     # Add validation for cache indices
     if permanent_cache_index is not None and (permanent_cache_index < 0 or permanent_cache_index >= len(messages)):
@@ -287,7 +290,7 @@ def summarize_with_gm_2(conversation):
         try:
             logger.debug("Calling Claude API for summarization...")
             response = client.messages.create(
-                model="claude-3-5-sonnet-20241022",
+                model="claude-3-7-sonnet-20250219",
                 messages=[{
                     "role": "user",
                     "content": [{

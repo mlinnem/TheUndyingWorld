@@ -87,6 +87,45 @@ def set_console_level_for_module(module_name: str, level: int | str):
             
     logger.info(f"Set console logging level to {logging.getLevelName(level)} for {module_name}")
 
+def setup_coaching_logger():
+    """
+    Set up a specialized logger for the coaching system that can be used across multiple files.
+    Returns the logger instance.
+    """
+    # Create logs directory if it doesn't exist
+    log_dir = 'persistent/conversation_logs/'
+    coaching_log_file = os.path.join(log_dir, 'coaching.log')
+    
+    # Create coaching logger
+    coach_logger = logging.getLogger('coaching')
+    coach_logger.setLevel(logging.DEBUG)  # Capture everything at logger level
+    
+    # Create coaching file handler (DEBUG level)
+    coaching_file_handler = RotatingFileHandler(
+        coaching_log_file, 
+        maxBytes=1024*1024*30,  # 30MB
+        backupCount=5
+    )
+    coaching_file_handler.setFormatter(log_formatter)
+    coaching_file_handler.setLevel(logging.DEBUG)  # File gets all debug messages
+    
+    # Create console handler specific to coaching (DEBUG level)
+    coaching_console_handler = logging.StreamHandler()
+    coaching_console_handler.setFormatter(log_formatter)
+    coaching_console_handler.setLevel(logging.DEBUG)  # Console gets DEBUG and above for coaching
+    
+    # Remove any existing handlers
+    coach_logger.handlers.clear()
+    
+    # Add the handlers
+    coach_logger.addHandler(coaching_file_handler)
+    coach_logger.addHandler(coaching_console_handler)
+    
+    # Prevent propagation to avoid duplicate logs
+    coach_logger.propagate = False
+    
+    return coach_logger
+
 # Call setup_logging when this module is imported
 setup_logging()
 

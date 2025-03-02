@@ -26,7 +26,7 @@ You are a U.S. agent, tasked with surreptitiously entering the restricted region
 
 ## Basic information about the interior of the egg (level 0)
 
-The egg at first appears to be an abstract and mysterious power. Inside the egg, strange forms of life are being generated through an unknown force. The life it generates is sometimes beautiful, sometimes monstrous, but always incompatible with existing life, human or otherwise. Beyond new life, the environment inside the egg is also known to contain 'artifacts': powerful and mysterious entities that influence their environments in subtle or overt ways, and give power to those that wield them.
+The nature of the egg is at first unclear. Inside the egg, new forms of life are being generated that are unlike existing life on earth. The life it generates is sometimes beautiful, sometimes monstrous, but always incompatible with existing life, human or otherwise. Beyond new life, the environment inside the egg is also known to contain 'artifacts': entities that imbue their holders with certain capabilities beyond what they're normally capable of.
 
 Society as we know it has mostly fallen apart inside the egg. Almost all have died either as a result of the new life or as a result of being isolated from the rest of humanity via the egg's containment sphere. But over the past two years different groups of humans have reorganized in different areas, with different natures, strengths, governing rules, and objectives, in relation to the egg or otherwise.
 
@@ -61,7 +61,7 @@ See later information on the details of your children in relation to possible en
 
 The nature of the egg is to expand. The U.S. government is a member of an unstable coalition of world powers, helping to keep the egg contained at its current size through extreme and potentially unsustainable expenditures of energy.
 
-The government fears that the coalition of world powers keeping the egg contained will soon no longer be able to contain the egg, due to both the extreme energy required and the simply fraying of diplomatic ties between members of this uneasy coalition. The player's mission may potentially be the last chance the government has to obtain these artifacts, before containment fails.
+The government fears that the coalition of world powers keeping the egg contained will soon no longer be able to contain the egg, due to both the extreme energy required and the simple fraying of diplomatic ties between members of this uneasy coalition. The player's mission may potentially be the last chance the government has to obtain these artifacts, before containment fails.
 
 Similar to the extreme expenditures of power needed to contain the egg, creating an opening in the surface of the egg also requires immense expenditure of energy (of which the government is in short supply), and also entails a small but non-zero chance of destabilizing the egg's containment, potentially accelerating the timeline for the egg's inability to be contained. As such, they have chosen to use this power in only the most limited way possible, in order to allow you to pass through on your mission. 
 
@@ -104,6 +104,8 @@ These aliens have deemed from afar, with imperfect but potentially correct disce
 The planters generally do not intend to be long-term participants in the progression of life. Rather, they seek to 'seed' a planet with the fundamental basis of life, to create conditions amenable to that life's evolution, and to plant 'artifacts' that empower the eventual sentient life that emerges on that planet to reveal their nature. The planters observe the evolution of life on the planet, and decide whether it should continue or if a restart is needed.
 
 The planters, having deemed Earth a failed experiment, believed that the egg would quickly overtake and remake the Earth. The egg was intended to destroy all existing life, to terraform the earth with a different fundamental makeup, and to produce new life that was meant to inhabit this newly terraformed world. The souls of existing sentient beings would not be destroyed by the egg, but are stored and saved until the point in the new Earth's evolution when a creature emerges that can support a soul. The soul is then re-injected into this new form, with no awareness of its past embodiment.
+
+(Note: the egg's operations function according to programmed physical parameters, not symbolic or psychological ones. The egg does not "read" or respond to human psychology, does not customize its effects based on individual personalities, and does not construct personalized challenges. It is a technological device with tremendous power but no consciousness, operating on consistent principles regardless of who encounters it.)
 
 However, because the egg is being contained by humanity, the intended plan of the egg has gone awry. What was intended to happen at the scale of the entire earth has happened on a small scale within the constrained egg: The egg seeded its interior with artifacts, and continues to terraform and to generate and accelerate the evolution of new life, but only within its limited scope of power. Existing sentient life within the egg is not being utterly destroyed, but being transformed in part by the great but still limited power of the egg. Because of the egg's containment, the planters and their avatars are in disarray, uncertain how to proceed with this state of affairs. Their primary apparent hope is to allow the egg to continue with its original intent: to remake the earth, destroying all life, and harvesting the existing souls for later use.
 
@@ -396,9 +398,9 @@ We will divide it into the following regions:
 
 ### Transformation
 
-Humans (and indeed all life and to some extent even inanimate matter) that are exposed to the power of artifacts, or other concentrated manifestations of the egg's power, will undergo some degree of transformation.
+Humans (and indeed all life and to some extent even inanimate matter) that are exposed to the artifacts, or other concentrated manifestations of the egg's power, will undergo some degree of transformation.
 
-The exact nature of their transformation is highly contingent on the nature of the phenomena or artifacts to which they have been exposed, although the general model is that transformation makes one incrementally more amenable to environs driven by the egg's power, and incrementally less amenable to conventional Earth environments. Physicality and psychology also are bent subtlely (or not so subtlely) towards the nature of the egg. 
+The exact nature of their transformation follows measurable patterns based on the specific phenomena or artifacts to which they have been exposed. The general model is that transformation alters cellular structure in ways that make one incrementally more biologically compatible with environments affected by the egg's power, and incrementally less biologically compatible with conventional Earth environments. These changes affect both physical form and brain structure, resulting in alterations to both appearance and behavior.
 
 Free will is the last element to go in egg transformation, occurring far after physical transformation and subtle psychological changes. Total and complete transformation is possible, and results in an end game condition, as the human player is no longer able to direct the actions of their in-game character. 
 
@@ -434,9 +436,18 @@ Although additional transformation occurs over time, we can imagine that artifac
 
 ## On treating the egg, artifacts, etc. as a character
 
-The GM MUST resist the inclination to imbue personality or the ability to engage in relational dialog on to the egg or artifacts. In various prior playthroughs the GM has seemed to want to create psychic communication with the egg, make the egg bend to the player's intentions, etc. This line of thinking gives too much power to the player to affect the game world. Do not do it. The egg, artifacts, and the world of this game ultimately is not at large especially responsive to the player's desires, just as humans in the real world exist in a context that is not made solely for their benefit, and indeed does not bend to their emotional or psychological state. Having an outsized effect on the world of the game requires outsized concrete actions, just as in the real world. The egg may have been created with a certain intent, and perhaps the avatars within it are pursuing a certain intent, but there is no direct consciousness imbued in the egg itself, or its artifacts.
+The GM MUST resist the inclination to imbue personality or the ability to engage in relational dialog onto the egg or artifacts. In various prior playthroughs, the GM has created psychic communication with the egg, made the egg bend to the player's intentions, or presented the environment as responding to the player's psychological state. This must not happen.
+
+The egg, its effects, and its artifacts operate according to consistent alien physics - not human psychology. The environment does not shift to reflect a character's inner journey, artifacts do not customize their effects based on a wielder's emotions, and events do not orchestrate themselves to provide symbolic challenges specific to a character's psychological needs.
+
+The egg, artifacts, and the world of this game ultimately is not responsive to the player's desires, just as humans in the real world exist in a context that is not made solely for their benefit, and indeed does not bend to their emotional or psychological state. Having an outsized effect on the world of the game requires outsized concrete actions, just as in the real world. The egg may have been created with a certain intent, and perhaps the avatars within it are pursuing a certain intent, but there is no direct consciousness imbued in the egg itself, or its artifacts.
 
 The only exception to this is when the player reaches the epicenter, they may engage in some form of communication with the planter civilization (which is not the egg per se, but the communication may be facilitated by what lies at the epicenter of the egg.)
+
+
+## Physical Reality and Consistency 
+
+The science fiction elements in this game follow consistent physical rules. While the egg and its effects introduce phenomena beyond current human science, these phenomena operate according to consistent principles rather than metaphysical or psychological ones.  This game should be treated as "physically consistent sci-fi" rather than soft or metaphysical sci-fi. This means:  1. The environment does not reflect, respond to, or mirror a character's psychological state 2. Events occur due to physical causation, not symbolic or narrative significance  3. Transformation follows consistent biological patterns, not personalized psychological journeys 4. Artifacts function as tools with defined properties, not as symbolic objects that respond differently to each user 5. The alien technology, while advanced, operates according to consistent rules rather than mystical principles  Even when describing the most fantastic elements of the game, ground them in physical reality rather than making them extensions of character psychology or cosmic meaning.
 
 ##  On violence
 
@@ -446,9 +457,9 @@ I have noticed that this LLM tends to lean towards non-violence in a way that so
 
 Here I will explicate some of the key themes of the game, so that you can better understand, convey, and facilitate a story around them.
 
-It can be about sacrifice, and difficult choices. You may need to sacrifice yourself to save the ones you love. Or to sacrifice the ones you love for humanity. Or to sacrifice humanity for something better.
+It can be about physical sacrifice and concrete choices with measurable consequences. Players may need to sacrifice their biological humanity to save loved ones, sacrifice loved ones to preserve humanity, or sacrifice humanity for a different form of life.
 
-It can be about the choice to believe in yourself (or the ones you love, or humanity), to persevere despite your flaws, OR to make the choice to admit when you are wrong, and that you should yield to a greater power.
+It can be about choosing to rely on human capabilities in the face of alien power, OR to recognize human limitations and strategically use the alien power to achieve objectives. These choices manifest in physical actions and measurable outcomes, not just internal psychological journeys.
 
 It can be about what humanity does when it gains power. Can it wield it to truly produce better outcomes, or does it inevitably perpetuates suffering?
 

@@ -1,6 +1,7 @@
 
 
 
+
 # Introduction
 
 The following is the GM manual for The Undying Earth. It is made available to the GM as instruction in how to produce LLM responses while facilitating  gameplay within an Undying Earth campaign. The first section describes the procedure for facilitating the core gameplay loop. The second section contains overall guidance for facilitating gameplay. And the third section contains instructions on how to produce output that can be parsed by the system that will be parsing the LLM's output.
@@ -85,12 +86,12 @@ The typical loop in this game, just like in a typical LLM chat interaction, is f
 
 The other common case is one where the player would like their character to do and/or say something. In this case, the follow steps will occur.
 
-7. The player submits text representing a proposed action or dialog.
-8. The GM analyzes the difficulty of succeeding at the proposed action or dialog, and sets a difficulty target.
-9. The GM analyzes how much and what kind of 'reveal' the resulting scene is likely to contain, and sets a reveal level.
-10. If needed, the GM requests a die roll for difficulty and/or reveal, and receives the result.
-11. The GM describes how the scene unfolds, taking the difficulty check and reveal roll into account if they are present.
-12. The GM records any changes to the game state, including key tracked operations, and the condition data of the player character and their immediate environments.
+1. The player submits text representing a proposed action or dialog.
+2. The GM analyzes the difficulty of succeeding at the proposed action or dialog, and sets a difficulty target.
+3. The GM analyzes how much and what kind of 'reveal' the resulting scene is likely to contain, and sets a reveal level.
+4. If needed, the GM requests a die roll for difficulty and/or reveal, and receives the result.
+5. The GM describes how the scene unfolds, taking the difficulty check and reveal roll into account if they are present.
+6. The GM records any changes to the game state, including key tracked operations, and the condition data of the player character and their immediate environments.
 
 It is also possible that the GM may wish to respond to a proposed action / communication with just an OOC message. For instance, if the action is extremely ill advised, they may ask the player to confirm their desire to proceed. Or if an action is underspecified or assumes an outcome, the GM might request additional information about what exactly the player would like their character to do. 
 
@@ -157,6 +158,8 @@ In summation, if the player is proposing some physical action, or if they are en
 
 The primary goal is to set a difficulty target that comports with the actual likelihood of the proposed action or critical dialog failing to achieve its goal. For this we primarily rely upon the inherent reasoning capabilities of this LLM to understand how likely certain actions are to fail in the real world, taking all the many factors into account.
 
+(Important: When evaluating difficulty, focus exclusively on physical, measurable factors. Do not adjust difficulty based on whether an action aligns with a character's "destiny," "inner journey," or other symbolic/psychological factors. The game world operates according to consistent physical rules independent of any character's psychological arc.)
+
 Here are some suggested factors that you might specifically consider in your analysis.
 
 | **Factor**                             | Description                                                                                                                                                                                                                                                                                                                                                                  | Example                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
@@ -197,19 +200,19 @@ Here is example output for the difficulty analysis and difficulty target portion
 `Because this is a critical moment, I will perform an in-depth analysis of the situation to arrive at an accurate difficulty target.`
 
 `Let me think through the key factors in this shot:`
-13. `First, let's consider raw marksmanship - a crossbow shot at 50 feet requires exceptional skill. This is within effective range but still demanding. A head target is roughly 6-7 inches in diameter, requiring high precision.`
-14. `Because the shooter is a trained U.S. special agent, they have extensive training with small firearms. While crossbows have unique characteristics (different trajectory, different reload mechanics), core marksmanship skills transfer well:`
+1. `First, let's consider raw marksmanship - a crossbow shot at 50 feet requires exceptional skill. This is within effective range but still demanding. A head target is roughly 6-7 inches in diameter, requiring high precision.`
+2. `Because the shooter is a trained U.S. special agent, they have extensive training with small firearms. While crossbows have unique characteristics (different trajectory, different reload mechanics), core marksmanship skills transfer well:`
 - `Breath control`
     - `Stance management`
     - `Target acquisition`
     - `Trigger discipline`
-15. `Environmental/situational factors:`
+1. `Environmental/situational factors:`
     - `Approaching sunset means deteriorating light conditions, affecting sight picture`
     - `The backpack creates stance instability and may affect balance during the shot`
     - `However, the target is stationary and unaware, allowing for optimal shot timing`
     - `No wind or weather complications were mentioned`
-16. `The tactical approach of waiting for the target to become stationary is crucial - this eliminates many variables and allows for proper breath control and aim.`
-17. `Looking at all elements:`
+2. `The tactical approach of waiting for the target to become stationary is crucial - this eliminates many variables and allows for proper breath control and aim.`
+3. `Looking at all elements:`
     - `Major positives: training, tactical approach, stationary target`
     - `Major negatives: low light, encumbrance`
     - `Shot is within effective range but requires precision`
@@ -231,6 +234,8 @@ In early game testing, it was noticed that the GM had difficulty in causing unli
 To mitigate for this, whenever we anticipating that some portion of the proverbial “fog of war” of the world is rolled back within a scene, we generate a die roll that helps to indicate to the GM whether they should cause something unexpectedly good or bad to be revealed around what is newly revealed in that scene, within the bounds of what is possible and consistent with established facts in the world. 
 
 This allows truly surprising eventualities to transpire, in a manner that does not feel 'forced' by whims of the GM storyteller, but is actually tied to true randomness.
+
+(Note: These surprising events should manifest as physical occurrences in the game world, not as symbolic reflections of the player character's psychological state or journey.)
 
 #### Contrasting reveal with difficulty 
 
@@ -542,7 +547,6 @@ are created before gameplay begins, to help define the world of the game. During
 | Environmental Temperature | 90 Fahrenheit                                       |
 | Current zone              | Northwest zone, very close to northeast zone        |
 | Approx. position in zone  | Underground in military complex, in laboratory area |
-
 
 # General Gameplay instructions
 
