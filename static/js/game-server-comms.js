@@ -1,3 +1,25 @@
+const ConversationErrorType = Object.freeze({
+    GENERIC_HTTP_ERROR: 'GENERIC_HTTP_ERROR',
+    SERVER_REPORTED_ERROR: 'SERVER_REPORTED_ERROR',
+    SERVER_ERROR: 'SERVER_ERROR',
+    SERVER_OFFLINE: 'SERVER_OFFLINE',
+    CONNECTION_ERROR: 'CONNECTION_ERROR',
+    SERVER_INTERNAL_ERROR: 'SERVER_INTERNAL_ERROR'
+});
+
+class ConversationError extends Error {
+    constructor(message, type, message_was_persisted, userMessage = null) {
+        super(message);
+        this.name = 'ConversationError';
+        if (!Object.values(ConversationErrorType).includes(type)) {
+            throw new Error(`Invalid ConversationError type: ${type}`);
+        }
+        this.type = type;
+        this.userMessage = userMessage;
+        this.message_was_persisted = message_was_persisted;
+    }
+}
+
 async function getInitialConversationDataFromServer(activeConversationId) {
     const response = await fetch('/get_conversation', {
         method: 'POST',
@@ -41,31 +63,70 @@ async function sendMessageAndGetResponseFromServer(text, activeConversationId, i
 
     
     console.info("...sending message to server...");
-    const response = await fetch('/advance_conversation', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-    });
+    let response;
+    try {
+        response = await fetch('/advance_conversation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        });
+    } catch (error) {
+        // Network error - definitely not persisted
+        console.error("Network error where we weren't even able to get a response from the server: " + error);
+        throw new ConversationError(
+            "Failed to connect to the server. Please check your internet connection and try again.",
+            ConversationErrorType.CONNECTION_ERROR,
+            false
+        );
+    }
+
     console.info("...received response from server...");
 
-    // Add error checking for HTTP errors
+    // For HTTP errors, we need to check the response body for persistence info
     if (!response.ok) {
-        const errorMessage = await response.text();
-        console.error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
-        if (response.status === 403) {
-            console.error("This typically happens when the server is not in fact running.")
+        let errorData;
+        try {
+            errorData = await response.json();
+        } catch {
+            // If we can't parse the JSON, assume message wasn't persisted
+            errorData = { user_message_was_persisted: false };
         }
-        throw new Error("We ran into an error contacting the server. This could be a temporary issue. Please try again later.");
+
+        const wasMessagePersisted = errorData.user_message_was_persisted || false;
+
+        if (response.status === 403) {
+            throw new ConversationError(
+                `The server appears to be offline. Perhaps try again later.`,
+                ConversationErrorType.SERVER_OFFLINE,
+                wasMessagePersisted,
+                text
+            );
+        } else {
+
+            throw new ConversationError(
+                `There was some sort of server error. Refresh and perhaps try again later.`,
+                ConversationErrorType.GENERIC_HTTP_ERROR,
+                wasMessagePersisted,
+                text
+            );
+
+        }
     }
 
     const data = await response.json();
     
 
     if (data.status === 'error') {
-        console.error("Error fetching conversation data");
-        throw new Error(data.error_message || 'An unexpected error occurred. Try again later.');
+        const wasMessagePersisted = data.user_message_was_persisted || false;
+
+        throw new ConversationError(
+            `The server had some sort of internal error. Refresh and perhaps try again later.`,
+            ConversationErrorType.SERVER_INTERNAL_ERROR,
+            wasMessagePersisted,
+            text
+        );
     }
 
     // Return just the conversation objects on success
@@ -76,6 +137,8 @@ async function sendMessageAndGetResponseFromServer(text, activeConversationId, i
 
 export {
     getInitialConversationDataFromServer,
-    sendMessageAndGetResponseFromServer
+    sendMessageAndGetResponseFromServer,
+    ConversationErrorType,
+    ConversationError
 };
 

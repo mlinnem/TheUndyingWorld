@@ -247,6 +247,22 @@ function _scrollChatNearBottom() {
     chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight - 250;
 }
 
+function removeLastUserMessage() {
+    console.debug("removing last user message");
+    const lastUserMessage = chatMessagesWrapper.lastElementChild;
+    console.debug("lastUserMessage: ", lastUserMessage);
+    if (lastUserMessage && lastUserMessage.classList.contains('user_message')) {
+        console.debug("removing last user message");
+
+        lastUserMessage.classList.add('removing');
+        lastUserMessage.addEventListener('animationend', () => {
+            lastUserMessage.remove();
+        });
+    } else {
+        console.debug("no last user message found");
+    }
+}
+
 function _checkOverlap() {
     if (hasOverlapped) return;
 
@@ -526,4 +542,5 @@ export {
     subscribeToUserMessageSubmitted,
     subscribeToBeginGameEvent,
     unsubscribeFromBeginGameEvent,
+    removeLastUserMessage
 };

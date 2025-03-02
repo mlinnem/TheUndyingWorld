@@ -467,3 +467,17 @@ l
 #send-button.disabled:hover {
     background-color: rgba(0,0,0,0.15);
 }
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.module.removing {
+    animation: fadeOut 1.6s ease-out forwards;
+}

@@ -115,6 +115,12 @@ function onMessageSubmitted(message_text) {
             .catch(error => {
                 console.error("error: ", error);
                 uiManager.reactToNotWaitingForServerResponse();
+                                // First check if this is a ConversationError
+                if (error instanceof server.ConversationError && !error.message_was_persisted) {
+                    // Message wasn't saved on server, remove the optimistically added message
+                    uiManager.removeLastUserMessage();
+                }
+                
                 uiManager.setErrorState(error.message);
             });
     }

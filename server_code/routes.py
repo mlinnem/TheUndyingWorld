@@ -66,6 +66,7 @@ def get_seed_listings_route():
 
 @routes.route('/advance_conversation', methods=['POST'])
 def advance_conversation_route():
+    user_message_was_persisted = False
     try:
         logger.info("Received request to advance conversation...")
         data = request.get_json()
@@ -77,6 +78,7 @@ def advance_conversation_route():
             return jsonify({
                 'status': 'error',
                 'success_type': 'error',
+                'user_message_was_persisted': user_message_was_persisted,
                 'error_type': 'no_conversation',
                 'error_message': 'No conversation ID provided.',
                 'new_conversation_objects': [],
@@ -93,6 +95,7 @@ def advance_conversation_route():
             return jsonify({
                 'status': 'error',
                 'success_type': 'error',
+                'user_message_was_persisted': user_message_was_persisted,
                 'error_type': 'invalid_conversation',
                 'error_message': 'Conversation not found.',
                 'new_conversation_objects': [],
@@ -101,6 +104,8 @@ def advance_conversation_route():
             
         conversation, new_messages = advance_conversation(user_message_for_server, conversation, should_run_boot_sequence)
         save_conversation(conversation)
+        user_message_was_persisted = True
+
         logger.info(f"...Conversation with id {conversation_id} advanced from {len(conversation['messages']) - 1} messages to {len(conversation['messages'])} messages and saved...")
 
         new_conversation_objects = convert_messages_to_cos(new_messages)
@@ -110,6 +115,7 @@ def advance_conversation_route():
         return jsonify({
             'status': 'success',
             'success_type': 'full_success',
+            'user_message_was_persisted': user_message_was_persisted,
             'conversation_id': conversation_id,
             'conversation_name': conversation['name'],
             'message_count': conversation['message_count'],
@@ -126,6 +132,7 @@ def advance_conversation_route():
         return jsonify({
             'status': 'error',
             'success_type': 'error',
+            'user_message_was_persisted': user_message_was_persisted,
             'error_type': 'internal_error',
             'error_message': 'An error occurred while processing your request. Please try again.',
             'new_conversation_objects': [],
