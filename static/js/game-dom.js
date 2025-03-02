@@ -288,10 +288,11 @@ function beginGameByShowingInitialConversationObjects(conversationObjectsToShowO
 
 // Conversation processing functions
 function renderConversationObjects(conversation_objects) {
-    console.info("adding " + conversation_objects.length + " conversation objects");
+ 
     conversation_objects.forEach(conversation_object => {
         _addConversationObject(conversation_object);
     });
+    console.info("added " + conversation_objects.length + " conversation objects to screen");
 }
 
 function _addConversationObject(co) {
@@ -471,7 +472,14 @@ function _addConversationObject(co) {
     } else if (co.type === 'boot_sequence_end') {
         console.debug("ignoring boot sequence end co");
         return;
-    } else {
+    } else if (co.type === 'error') {
+        console.error("server error: ", co.text);
+        coDiv = make_module(co);
+        inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
+        coDiv.classList.add('freestanding', 'info-text-style', 'left', 'error');
+        chatMessagesWrapper.appendChild(coDiv);
+    }
+    else {
         console.warn("unknown conversation object type: ", co.type);
     }
 }

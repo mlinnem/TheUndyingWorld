@@ -91,6 +91,10 @@ l
     justify-content: space-between;
 }
 
+.module.error {
+    background-color: rgba(105, 0, 0, 1);
+}
+
 .prescene_contents {
     padding-left: 1.875rem;
     padding-right: 1.875rem;

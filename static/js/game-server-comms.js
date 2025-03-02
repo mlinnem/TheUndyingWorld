@@ -1,7 +1,7 @@
 async function getInitialConversationDataFromServer(activeConversationId) {
-        const response = await fetch('/get_conversation', {
-            method: 'POST',
-            headers: {
+    const response = await fetch('/get_conversation', {
+        method: 'POST',
+        headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ conversation_id: activeConversationId }),
@@ -10,7 +10,11 @@ async function getInitialConversationDataFromServer(activeConversationId) {
         const data = await response.json();
         
         if (data.status === 'success') {
-            console.info("conversation data fetched");
+
+            if (data.new_conversation_objects && Array.isArray(data.new_conversation_objects)) {
+                let messageCount = data.new_conversation_objects.length;
+                console.info("received " + messageCount + " messages of initial data for conversation id: " + activeConversationId);
+            }
             console.debug("conversation data: " + JSON.stringify(data));
             return {
                 name: data.conversation_name,
@@ -35,6 +39,7 @@ async function sendMessageAndGetResponseFromServer(text, activeConversationId, i
         requestBody.run_boot_sequence = true;
     }
 
+    
     const response = await fetch('/advance_conversation', {
         method: 'POST',
         headers: {
@@ -43,22 +48,20 @@ async function sendMessageAndGetResponseFromServer(text, activeConversationId, i
         body: JSON.stringify(requestBody),
     });
 
+    console.info("...sent a message to server, and awaiting response...");
+
+
     const data = await response.json();
     
-    // If there's any kind of error, throw it with relevant details
-    if (data.success_type === 'partial_success') {
-        const errorMessages = {
-            'authentication_error': 'Authentication error. Please check your API key and try again.',
-            'permission_denied_error': 'Permission denied. Please check your API key permissions.',
-            'rate_limit_error': 'Rate limit exceeded. Please wait a minute before trying again.',
-            'internal_error': 'An internal error occurred. Please try again later.',
-            'unknown_error': data.error_message || 'An unknown error occurred.'
-        };
-        
-        throw new Error(errorMessages[data.error_type] || 'An unexpected error occurred. Try again later.');
+
+    if (data.status === 'error') {
+        console.error("Error fetching conversation data");
+        throw new Error(data.error_message || 'An unexpected error occurred. Try again later.');
     }
 
     // Return just the conversation objects on success
+    console.info("...received " + data.new_conversation_objects.length + " new conversation objects for conversation id: " + activeConversationId + "...");
+    
     return data.new_conversation_objects;
 }
 
