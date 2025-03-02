@@ -1,3 +1,5 @@
+# OOC Message
+
 Gameplay should begin with the player in a U.S. government staging facility, outside of the egg. They are being briefed on their mission.
 
 

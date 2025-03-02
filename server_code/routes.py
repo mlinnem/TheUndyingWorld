@@ -101,7 +101,7 @@ def advance_conversation_route():
             
         conversation, new_messages = advance_conversation(user_message_for_server, conversation, should_run_boot_sequence)
         save_conversation(conversation)
-        logger.info(f"...Conversation with id {conversation_id} advanced and saved...")
+        logger.info(f"...Conversation with id {conversation_id} advanced from {len(conversation['messages']) - 1} messages to {len(conversation['messages'])} messages and saved...")
 
         new_conversation_objects = convert_messages_to_cos(new_messages)
         new_conversation_objects = filter_conversation_objects(new_conversation_objects)

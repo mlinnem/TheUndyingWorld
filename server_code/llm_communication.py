@@ -37,6 +37,44 @@ with open(tools_path, 'r') as file:
     tools = json.load(file)
 
 
+def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cache_index=None, dynamic_cache_index=None):
+    
+    # Convert messages into a single string
+    messages_string = ""
+    for msg in messages:
+        for content in msg['content']:
+            if content['type'] == "text":
+                messages_string += f"{msg['role']}: {content['text']}\n"
+            elif content['type'] == "tool_use":
+                messages_string += f"{msg['role']} tool use - {content['name']}: {content['input']}\n"
+            elif content['type'] == "tool_result":
+                messages_string += f"Tool result: {content['content']}\n"
+
+    # Create a list of messages instead of a single message
+    messages_for_api = [{
+        "role": "user",
+        "content": [
+            {
+                "type": "text",
+                "text": messages_string
+            }
+        ]
+    }]
+
+    response = client.messages.create(
+        model="claude-3-7-sonnet-20250219",
+        messages=messages_for_api,  # Pass the list of messages
+        system=system_prompt,  
+        max_tokens=MAX_OUTPUT_TOKENS,
+        temperature=temperature,
+    )
+
+    logger.info(f"...received response from GM...")
+
+    response_json, usage_data = _process_response(response)
+        
+    return response_json, usage_data
+
 def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cache_index=None, dynamic_cache_index=None):
     
     logger.debug(f"Sending message to GM (omitted for brevity)")
@@ -109,36 +147,8 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
 
     logger.debug(f"response.usage: {response.usage}")
 
-    usage_data = {
-        "uncached_input_tokens": response.usage.input_tokens,
-        "cached_input_tokens": response.usage.cache_read_input_tokens + response.usage.cache_creation_input_tokens,
-        "total_input_tokens": response.usage.input_tokens + response.usage.cache_read_input_tokens + response.usage.cache_creation_input_tokens,
-    }
+    response_json, usage_data = _process_response(response)
 
-    # Initialize response_json with basic structure
-    response_json = {
-        "role": "assistant",
-        "content": []
-    }
-
-    # Process each content block from the response
-    for content_block in response.content:
-        if hasattr(content_block, 'type'):
-            if content_block.type == "text":
-                response_json["content"].append({
-                    "type": "text",
-                    "text": content_block.text
-                })
-            elif content_block.type == "tool_use":
-                response_json["content"].append({
-                    "type": "tool_use",
-                    "id": content_block.id,
-                    "name": content_block.name,
-                    "input": content_block.input
-                })
-
-    logger.debug(f"response.usage: {response.usage}")
-        
     return response_json, usage_data
 
 def summarize_with_gm_2(conversation):
@@ -341,3 +351,38 @@ def log_conversation_messages(messages):
                 f.write(f"\n{role.upper()}: {msg['content']}\n")
                 
         f.write("\n" + "="*50)
+
+def _process_response(response):
+    logger.debug(f"response.usage: {response.usage}")
+
+    usage_data = {
+        "uncached_input_tokens": response.usage.input_tokens,
+        "cached_input_tokens": response.usage.cache_read_input_tokens + response.usage.cache_creation_input_tokens,
+        "total_input_tokens": response.usage.input_tokens + response.usage.cache_read_input_tokens + response.usage.cache_creation_input_tokens,
+    }
+
+    # Initialize response_json with basic structure
+    response_json = {
+        "role": "assistant",
+        "content": []
+    }
+
+    # Process each content block from the response
+    for content_block in response.content:
+        if hasattr(content_block, 'type'):
+            if content_block.type == "text":
+                response_json["content"].append({
+                    "type": "text",
+                    "text": content_block.text
+                })
+            elif content_block.type == "tool_use":
+                response_json["content"].append({
+                    "type": "tool_use",
+                    "id": content_block.id,
+                    "name": content_block.name,
+                    "input": content_block.input
+                })
+
+    logger.debug(f"response.usage: {response.usage}")
+
+    return response_json, usage_data

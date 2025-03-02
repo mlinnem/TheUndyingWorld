@@ -35,10 +35,6 @@ def get_game_seed_listings():
     return game_seed_listings
 
 
-
-
-
-
 def save_conversation(conversation):
     logger.debug(f"Saving conversation {conversation['conversation_id']}")
     conversation['last_updated'] = datetime.now().isoformat()
@@ -238,6 +234,26 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
             new_messages.append(tool_use_response_json)
         else:
             logger.debug("no tool use request detected")
+
+
+        # Get coaching feedback if we have enough messages since boots
+        if conversation['game_has_begun']:
+            # Get boot sequence end index
+            boot_sequence_end_index = conversation.get('boot_sequence_end_index', -1)
+            
+            # Get all messages after boot sequence
+            post_boot_messages = conversation['messages'][boot_sequence_end_index + 1:]
+            
+            # If we have more than 10 messages since boot, get coaching feedback on last 10
+            if len(post_boot_messages) > 10:
+                logger.debug("Getting coaching feedback on last 10 messages")
+                last_10_messages = post_boot_messages[-10:]
+                coaching_response, _ = get_coaching_message(
+                    last_10_messages, 
+                    conversation['coaching_system_prompt'],
+                    temperature=0.4 
+                )
+                logger.info(f"Coaching feedback received: {coaching_response}")
         
         # update caching or perform summarization if necessary
         if usage_data['total_input_tokens'] >= MAX_TOTAL_INPUT_TOKENS:
@@ -249,6 +265,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
             conversation = update_conversation_cache_points_2(conversation)
 
         conversation['game_has_begun'] = True
+        conversation['game_has_begun_date'] = datetime.now().isoformat()
 
         return conversation, new_messages
 

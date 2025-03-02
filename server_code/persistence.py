@@ -23,6 +23,9 @@ def read_conversation(conversation_id):
             conversation_data = json.load(f)
             
             # Add boot_sequence_end_index if missing
+            if 'conversation_id' not in conversation_data:
+                logger.warning("No conversation_id found in file. Setting conversation_id to: " + conversation_id)
+                conversation_data['conversation_id'] = conversation_id
             if 'boot_sequence_end_index' not in conversation_data:
                 logger.debug("No boot_sequence_end_index found, scanning messages for marker")
                 boot_sequence_end_index = -1
@@ -92,6 +95,10 @@ def read_conversation(conversation_id):
             conversation_data['gameplay_system_prompt_date'] = datetime.now().isoformat()
             conversation_data['game_setup_system_prompt'] = get_game_setup_system_prompt()
             conversation_data['game_setup_system_prompt_date'] = datetime.now().isoformat()
+
+            # Always use latest coach system prompt
+            conversation_data['coaching_system_prompt'] = get_coach_system_prompt()
+            conversation_data['coaching_system_prompt_date'] = datetime.now().isoformat()
             
             logger.debug(f"Conversation {conversation_id} loaded successfully")
             return conversation_data
@@ -169,9 +176,9 @@ def read_game_seed(conversation_id):
                 else:
                     logger.debug("No boot sequence end marker found in messages")
             
-            if 'id' not in conversation_data:
+            if 'conversation_id' not in conversation_data:
                 logger.warning("No ID found in file. Setting game seed id to: " + conversation_id)
-                conversation_data['id'] = conversation_id
+                conversation_data['conversation_id'] = conversation_id
             if 'location' not in conversation_data:
                 logger.warning("No location found in file. Setting location to 'No location': " + conversation_id)
                 conversation_data['location'] = 'No location'
@@ -230,6 +237,10 @@ def read_game_seed(conversation_id):
             conversation_data['gameplay_system_prompt_date'] = datetime.now().isoformat()
             conversation_data['game_setup_system_prompt'] = get_game_setup_system_prompt()
             conversation_data['game_setup_system_prompt_date'] = datetime.now().isoformat()
+
+            # Always use latest coach system prompt
+            conversation_data['coaching_system_prompt'] = get_coach_system_prompt()
+            conversation_data['coaching_system_prompt_date'] = datetime.now().isoformat()
             
             return conversation_data
     logger.warning("Game seed not found: " + conversation_id)
@@ -295,6 +306,20 @@ def get_summarizer_system_prompt():
         "text": summarizer,
         "cache_control": {"type": "ephemeral"}
     }]
+
+def get_coach_system_prompt():
+    """
+    Returns the coach instructions as a formatted system prompt.
+    """
+    coach_part = _get_llm_instructions('coach_instruction')
+    core_lore = _get_llm_instructions('core_lore')
+    game_manual = _get_llm_instructions('game_manual')
+    return [{
+        "type": "text",
+        "text": coach_part + "\n\n" + core_lore + "\n\n" + game_manual,
+        "cache_control": {"type": "ephemeral"}
+    }]
+
 
 def get_world_gen_sequence_array():
     """
