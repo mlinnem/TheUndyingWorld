@@ -213,6 +213,11 @@ def filter_conversation_objects(conversation_objects):
     # Create filtered list and log filtered objects
     result = []
     for obj in conversation_objects[start_index:]:
+        # Skip coaching messages
+        if obj.get('is_coaching_message'):
+            logger.debug("Filtering out coaching message")
+            continue
+        
         if obj.get('type') in filtered_types:
             logger.debug(f"Filtering out object of type: {obj.get('type')}")
             logger.debug(f"Object: {obj}")

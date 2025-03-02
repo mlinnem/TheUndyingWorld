@@ -2,6 +2,11 @@ import os
 import logging
 from logging.handlers import RotatingFileHandler
 
+
+  # Create formatter (will be used by all handlers)
+log_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    
+
 def setup_logging():
     # Debug prints to help diagnose the issue
     print("Current working directory:", os.getcwd())
@@ -23,9 +28,7 @@ def setup_logging():
     debug_log_file = os.path.join(log_dir, 'debug.log')
     info_log_file = os.path.join(log_dir, 'info.log')
     
-    # Create formatter (will be used by all handlers)
-    log_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    
+  
     # Create and configure debug file handler (captures everything)
     debug_file_handler = RotatingFileHandler(debug_log_file, maxBytes=1024*1024*30, backupCount=5)
     debug_file_handler.setFormatter(log_formatter)
@@ -39,11 +42,11 @@ def setup_logging():
     # Create and configure console handler
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(log_formatter)
-    console_handler.setLevel(logging.INFO)
+    console_handler.setLevel(logging.INFO)  # Set default console level to INFO
     
     # Configure the default logger
     logging.basicConfig(
-        level=logging.DEBUG,  # Set root logger to capture everything
+        level=logging.DEBUG,  # Root logger still captures everything for file logging
         handlers=[debug_file_handler, info_file_handler, console_handler],
         force=True  # This will remove any existing handlers
     )
@@ -61,12 +64,26 @@ def set_console_level_for_module(module_name: str, level: int | str):
     if isinstance(level, str):
         level = getattr(logging, level.upper())
     
-    target_logger = logging.getLogger(module_name)
+    # Get the logger for this module
+    module_logger = logging.getLogger(module_name)
     
-    # Find the console handler
-    for handler in target_logger.handlers + logging.getLogger().handlers:
+    # Create a new console handler specific to this module
+    module_console_handler = logging.StreamHandler()
+    module_console_handler.setFormatter(log_formatter)
+    module_console_handler.setLevel(level)
+    
+    # Remove any existing console handlers for this module
+    for handler in module_logger.handlers:
         if isinstance(handler, logging.StreamHandler) and not isinstance(handler, logging.FileHandler):
-            handler.setLevel(level)
+            module_logger.removeHandler(handler)
+    
+    # Add the new console handler
+    module_logger.addHandler(module_console_handler)
+    # Ensure the logger's level is low enough to allow the desired messages through
+    module_logger.setLevel(min(level, module_logger.level))
+    
+    # Prevent propagation to avoid duplicate logs
+    module_logger.propagate = False
             
     logger.info(f"Set console logging level to {logging.getLevelName(level)} for {module_name}")
 

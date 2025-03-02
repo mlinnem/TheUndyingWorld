@@ -10,6 +10,14 @@ from .format_utils import *
 import logging
 logger = logging.getLogger(__name__)
 
+# In modules where you want DEBUG output:
+from .logger_config import set_console_level_for_module
+import logging
+
+logger = logging.getLogger(__name__)
+set_console_level_for_module(__name__, logging.DEBUG)  # Only this module will show DEBUG in console
+
+
 
 CONVERSATIONS_DIR = "persistent/conversations"
 
@@ -236,25 +244,34 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
             logger.debug("no tool use request detected")
 
 
-        # Get coaching feedback if we have enough messages since boots
+        # Get coaching feedback if we have enough messages since boot
+        logger.debug(f"conversation['game_has_begun']: {conversation['game_has_begun']}")
         if conversation['game_has_begun']:
+            logger.debug("game has begun")
             # Get boot sequence end index
             boot_sequence_end_index = conversation.get('boot_sequence_end_index', -1)
             
             # Get all messages after boot sequence
             post_boot_messages = conversation['messages'][boot_sequence_end_index + 1:]
             
-            # If we have more than 10 messages since boot, get coaching feedback on last 10
-            if len(post_boot_messages) > 10:
-                logger.debug("Getting coaching feedback on last 10 messages")
-                last_10_messages = post_boot_messages[-10:]
+            # If we have at least one message since boot, get coaching feedback
+            logger.debug(f"len(post_boot_messages): {len(post_boot_messages)}")
+            if len(post_boot_messages) > 0:
+                logger.debug("post boot messages found")
+                logger.debug(f"Getting coaching feedback on {len(post_boot_messages)} messages since boot")
+                messages_to_coach = post_boot_messages[-10:] if len(post_boot_messages) > 10 else post_boot_messages
                 coaching_response, _ = get_coaching_message(
-                    last_10_messages, 
+                    messages_to_coach, 
                     conversation['coaching_system_prompt'],
                     temperature=0.4 
                 )
+                conversation['messages'].append(coaching_response)
                 logger.info(f"Coaching feedback received: {coaching_response}")
+        else:
+            logger.debug("game has not begun")
         
+
+
         # update caching or perform summarization if necessary
         if usage_data['total_input_tokens'] >= MAX_TOTAL_INPUT_TOKENS:
             logger.info("...Identified need to summarize conversation with GM...")

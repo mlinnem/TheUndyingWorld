@@ -11,6 +11,7 @@ from .route_utils import *
 import logging
 logger = logging.getLogger(__name__)
 
+
 load_dotenv()
 api_key = os.getenv('ANTHROPIC_API_KEY')
 
@@ -20,6 +21,10 @@ client = Anthropic(
 
 # Update the logger configuration
 logger = logging.getLogger(__name__)
+
+from .logger_config import set_console_level_for_module
+set_console_level_for_module(__name__, logging.DEBUG)  # Only this module will show DEBUG in console
+
 
 # In any file where you need temporary debug output
 from .logger_config import set_console_level_for_module
@@ -40,7 +45,8 @@ with open(tools_path, 'r') as file:
 def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cache_index=None, dynamic_cache_index=None):
     
     # Convert messages into a single string
-    messages_string = ""
+    messages_string = "The following is the last few messages between a player and the GM of the game. This is the subject that you are expected to provided coaching around. This conversation data is provided to you as a single message from an apparent user, but in its original form it is a conventional sequence of messages back and forth between a player and the GM of the game (with other messages including tool use and results, and the like.) The following is the content of those messages: \n\n\n\n"
+
     for msg in messages:
         for content in msg['content']:
             if content['type'] == "text":
@@ -57,9 +63,12 @@ def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cac
             {
                 "type": "text",
                 "text": messages_string
-            }
+            },
         ]
     }]
+
+    # logger.debug("Sending the following messages to get a coaching response:" + 
+    #              json.dumps(messages_for_api, indent=2))
 
     response = client.messages.create(
         model="claude-3-7-sonnet-20250219",
@@ -69,9 +78,34 @@ def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cac
         temperature=temperature,
     )
 
+    logger.debug(f"response (from getting coaching message): {response}")
+
     logger.info(f"...received response from GM...")
 
-    response_json, usage_data = _process_response(response)
+    logger.debug(f"response.usage: {response.usage}")
+
+    usage_data = {
+        "uncached_input_tokens": response.usage.input_tokens,
+        "cached_input_tokens": response.usage.cache_read_input_tokens + response.usage.cache_creation_input_tokens,
+        "total_input_tokens": response.usage.input_tokens + response.usage.cache_read_input_tokens + response.usage.cache_creation_input_tokens,
+    }
+
+    # Initialize response_json with basic structure
+    response_json = {
+        "role": "coach",
+        "content": []
+    }
+
+    # Process each content block from the response
+    for content_block in response.content:
+        if hasattr(content_block, 'type'):
+            if content_block.type == "text":
+                response_json["content"].append({
+                    "type": "text",
+                    "text": "# LLM Whisper \n\n The following is a coaching message from the coaching system to the GM. It is provided as feedback to the last GM response, and also the last 5 messages or so from the GM prior to that. It is not visible to the player, and should not be spoken of by the GM. It is merely meant to inform subsequent responses from the GM. The coaching message is as follows: \n\n" + content_block.text
+                })
+
+    logger.debug(f"response.usage: {response.usage}")
         
     return response_json, usage_data
 
@@ -88,9 +122,28 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
         logger.warning(f"Invalid dynamic_cache_index: {dynamic_cache_index}")
         dynamic_cache_index = None
 
+    # Filter out coaching messages and keep track of the last one
+    filtered_messages = []
+    last_coaching_message = None
+    for msg in messages:
+        if msg['role'] == 'coach':
+            last_coaching_message = msg  # This will keep getting updated until we find the last one
+        else:
+            filtered_messages.append(msg)
+
+    # Modify system prompt with only the last coaching message if one exists
+    modified_system_prompt = system_prompt
+    if last_coaching_message:
+        coaching_text = ""
+        for content in last_coaching_message['content']:
+            if content['type'] == 'text':
+                logger.debug(f"Adding coaching text to system prompt: {content['text']}")
+                coaching_text += content['text'] + "\n"
+        modified_system_prompt = f"{system_prompt}\n\n{coaching_text}"
+
     # Clean messages for API consumption
     cleaned_messages = []
-    for i, msg in enumerate(messages):
+    for i, msg in enumerate(filtered_messages):
         cleaned_content = []
         for content in msg['content']:
             if content['type'] == "text":
@@ -131,20 +184,17 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
             "content": cleaned_content
         })
 
-    # Log the first few cleaned messages for verification
-    logger.debug(f"First cleaned message: {cleaned_messages[0] if cleaned_messages else 'No messages'}")
-
     response = client.messages.create(
         model="claude-3-7-sonnet-20250219",
         messages=cleaned_messages,
-        system=system_prompt,  
+        system=modified_system_prompt,  # Use the modified system prompt with only the last coaching message
         max_tokens=MAX_OUTPUT_TOKENS,
         temperature=temperature,
         tools=tools,
     )
-
     logger.info(f"...received response from GM...")
 
+    logger.debug(f"response (from getting next GM response): {response}")
     logger.debug(f"response.usage: {response.usage}")
 
     response_json, usage_data = _process_response(response)
@@ -376,6 +426,7 @@ def _process_response(response):
                     "text": content_block.text
                 })
             elif content_block.type == "tool_use":
+                logger.debug("Adding tool use to response")
                 response_json["content"].append({
                     "type": "tool_use",
                     "id": content_block.id,
