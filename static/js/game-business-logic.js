@@ -113,6 +113,7 @@ function onMessageSubmitted(message_text) {
                 uiManager.addNewMessagesFromServer(conversationObjects);
             })
             .catch(error => {
+                console.error("error: ", error);
                 uiManager.reactToNotWaitingForServerResponse();
                 uiManager.setErrorState(error.message);
             });

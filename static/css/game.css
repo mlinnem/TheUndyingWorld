@@ -53,6 +53,17 @@ l
     border-top-right-radius: 20px;
 }
 
+
+/* These two ensure that a stray top module gets a bottom border if it's followed by a freestanding or top module */
+
+.top:has(+ .top) {
+    border-radius: 20px;
+}
+
+.top:has(+ .freestanding) {
+    border-radius: 20px;
+} 
+
 .bottom {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;

@@ -473,7 +473,6 @@ function _addConversationObject(co) {
         console.debug("ignoring boot sequence end co");
         return;
     } else if (co.type === 'error') {
-        console.error("server error: ", co.text);
         coDiv = make_module(co);
         inject_content_into_element(coDiv, '.module_contents', body_text(marked.parse(co.text)));
         coDiv.classList.add('freestanding', 'info-text-style', 'left', 'error');

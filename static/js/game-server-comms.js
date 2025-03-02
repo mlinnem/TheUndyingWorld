@@ -40,6 +40,7 @@ async function sendMessageAndGetResponseFromServer(text, activeConversationId, i
     }
 
     
+    console.info("...sending message to server...");
     const response = await fetch('/advance_conversation', {
         method: 'POST',
         headers: {
@@ -47,9 +48,17 @@ async function sendMessageAndGetResponseFromServer(text, activeConversationId, i
         },
         body: JSON.stringify(requestBody),
     });
+    console.info("...received response from server...");
 
-    console.info("...sent a message to server, and awaiting response...");
-
+    // Add error checking for HTTP errors
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        console.error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
+        if (response.status === 403) {
+            console.error("This typically happens when the server is not in fact running.")
+        }
+        throw new Error("We ran into an error contacting the server. This could be a temporary issue. Please try again later.");
+    }
 
     const data = await response.json();
     
