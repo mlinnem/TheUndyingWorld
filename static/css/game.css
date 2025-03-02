@@ -25,6 +25,10 @@
     position: relative;
 }
 
+#chat-messages-wrapper > *:first-child {
+    margin-top: 5rem;  /* Double the usual 2.5rem margin */
+}
+
 /* Module styles */
 
 .module {
