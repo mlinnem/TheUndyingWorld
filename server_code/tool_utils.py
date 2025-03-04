@@ -4,6 +4,8 @@ from random import randint
 
 logger = logging.getLogger(__name__)
 
+from .logger_config import LogCategory, log_with_category, preview
+
 
 def isToolUseRequest(response_json):
     return (len(response_json['content']) > 1 and 
@@ -41,6 +43,10 @@ def generate_tool_result(gm_response_json):
             }
         ]
     }
+
+    log_with_category(LogCategory.DICE_ROLLS, logging.INFO, f"{roll_string}")
+
+    
 
     return tool_result
 

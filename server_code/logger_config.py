@@ -8,12 +8,13 @@ class LogCategory:
     WORLD_GEN = "WORLD_GEN"
     LLM = "LLM"
     USAGE = "USAGE"
-
+    DICE_ROLLS = "DICE_ROLLS"
 # Default levels for each category
 category_levels = {
     LogCategory.WORLD_GEN: logging.INFO,
     LogCategory.LLM: logging.INFO,
     LogCategory.USAGE: logging.INFO,
+    LogCategory.DICE_ROLLS: logging.INFO,
 }
 
   # Create formatter (will be used by all handlers)
