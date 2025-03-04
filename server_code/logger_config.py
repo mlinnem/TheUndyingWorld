@@ -3,20 +3,30 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 
-  # Create formatter (will be used by all handlers)
-log_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    
+# Define logging categories and their default levels
+class LogCategory:
+    WORLD_GEN = "WORLD_GEN"
+    LLM = "LLM"
+    USAGE = "USAGE"
 
+# Default levels for each category
+category_levels = {
+    LogCategory.WORLD_GEN: logging.INFO,
+    LogCategory.LLM: logging.INFO,
+    LogCategory.USAGE: logging.INFO,
+}
+
+  # Create formatter (will be used by all handlers)
+log_formatter = logging.Formatter('%(asctime)s.%(msecs)03d - %(levelname)s - %(message)s', 
+                                datefmt='%M:%S')
+    
 def setup_logging():
     # Debug prints to help diagnose the issue
-    print("Current working directory:", os.getcwd())
-    print("Attempting to create log directory at:", 'persistent/conversation_logs/')
     
     # Create logs directory if it doesn't exist
     log_dir = 'persistent/conversation_logs/'
     try:
         os.makedirs(log_dir, exist_ok=True)
-        print("Successfully created/verified log directory")
     except Exception as e:
         print(f"Error creating log directory: {e}")
         # Fallback to a local logs directory
@@ -32,7 +42,7 @@ def setup_logging():
     # Create and configure debug file handler (captures everything)
     debug_file_handler = RotatingFileHandler(debug_log_file, maxBytes=1024*1024*30, backupCount=5)
     debug_file_handler.setFormatter(log_formatter)
-    debug_file_handler.setLevel(logging.DEBUG)
+    debug_file_handler.setLevel(logging.INFO)
     
     # Create and configure info file handler (captures INFO and above)
     info_file_handler = RotatingFileHandler(info_log_file, maxBytes=1024*1024*30, backupCount=5)
@@ -42,7 +52,24 @@ def setup_logging():
     # Create and configure console handler
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(log_formatter)
-    console_handler.setLevel(logging.INFO)  # Set default console level to INFO
+    console_handler.setLevel(logging.DEBUG)  # Set to DEBUG to allow all messages through, we'll filter in the filter function
+    
+    # Add a filter to the console handler to respect category levels
+    def category_filter(record):
+        # Extract category from the message if it exists
+        if hasattr(record, 'msg') and isinstance(record.msg, str):
+            message = str(record.msg)
+            if message.startswith('['):
+                try:
+                    category = message[1:message.find(']')]
+                    category_level = category_levels.get(category, logging.INFO)
+                    return record.levelno >= category_level
+                except:
+                    pass
+        # For messages without a category, use the handler's level
+        return record.levelno >= logging.WARNING
+
+    console_handler.addFilter(category_filter)
     
     # Configure the default logger
     logging.basicConfig(
@@ -98,7 +125,7 @@ def setup_coaching_logger():
     
     # Create coaching logger
     coach_logger = logging.getLogger('coaching')
-    coach_logger.setLevel(logging.DEBUG)  # Capture everything at logger level
+    coach_logger.setLevel(logging.INFO)  # Capture everything at logger level
     
     # Create coaching file handler (DEBUG level)
     coaching_file_handler = RotatingFileHandler(
@@ -131,3 +158,55 @@ setup_logging()
 
 # Create module logger
 logger = logging.getLogger(__name__) 
+
+
+
+def set_category_level(category: str, level: int | str):
+    """
+    Set the logging level for a specific category.
+    
+    Args:
+        category: The category to set (use LogCategory class constants)
+        level: Logging level - can be integer or string
+    """
+    if isinstance(level, str):
+        level = getattr(logging, level.upper())
+    
+    category_levels[category] = level
+    logger.info(f"Set {category} logging level to {logging.getLevelName(level)}")
+
+def log_with_category(category: str, level: int, message: str):
+    """
+    Log a message if it meets the category's level threshold.
+    
+    Args:
+        category: The category of the log message
+        level: The logging level for this message
+        message: The message to log
+    """
+    # Remove debug print
+    logging.log(level, f"[{category}] {message}")
+
+def preview(message: str, preview_length: int = 50):
+    """
+    Logs a preview of a long string, showing the first N characters and remaining length.
+    Special characters like newlines will be escaped (e.g., \n, \t).
+    
+    Args:
+        message: The string to preview
+        preview_length: Number of characters to show in preview (default: 50)
+    """
+    if not message:
+        return "Empty or null message"
+        
+    # Escape special characters
+    escaped_message = repr(message)[1:-1]  # repr() adds quotes, so we remove them
+    
+    text_length = len(message)
+    preview = escaped_message[:preview_length]
+    remaining_chars = text_length - preview_length
+    
+    if remaining_chars > 0:
+        return f"{preview}...({remaining_chars} more chars)"
+    else:
+        return f"{preview}" 

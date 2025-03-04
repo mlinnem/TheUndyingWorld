@@ -8,8 +8,11 @@ import json
 from typing import List, Dict
 from .route_utils import * 
 
+from .logger_config import LogCategory, log_with_category, preview
+
 import logging
 logger = logging.getLogger(__name__)
+
 
 load_dotenv()
 api_key = os.getenv('ANTHROPIC_API_KEY')
@@ -21,14 +24,13 @@ client = Anthropic(
 # Update the logger configuration
 logger = logging.getLogger(__name__)
 
-from .logger_config import set_console_level_for_module
-set_console_level_for_module(__name__, logging.DEBUG)  # Only this module will show DEBUG in console
+from .logger_config import set_console_level_for_module, LogCategory, log_with_category
+set_console_level_for_module(__name__, logging.WARNING)  # Only this module will show DEBUG in console
 
 
 # In any file where you need temporary debug output
 from .logger_config import set_console_level_for_module
 # Later, when done debugging
-set_console_level_for_module(__name__, logging.DEBUG)
 
 # SET UP INITIAL PROMPTS
 
@@ -79,7 +81,7 @@ def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cac
 
     logger.info(f"...received response from GM...")
 
-    logger.debug(f"response.usage: {response.usage}")
+    logger.info(f"response.usage: {response.usage}")
 
     usage_data = {
         "uncached_input_tokens": response.usage.input_tokens,
@@ -107,18 +109,13 @@ def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cac
     return response_json, usage_data
 
 def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cache_index=None, dynamic_cache_index=None):
-    
-    logger.debug(f"Sending message to GM (omitted for brevity)")
-
     # Add debug logging for most recent user message
     for msg in reversed(messages):
         if msg['role'] == 'user':
-            logger.debug(f"Most recent user message: {msg}")
             break
 
     # Add validation for cache indices
     if permanent_cache_index is not None and (permanent_cache_index < 0 or permanent_cache_index >= len(messages)):
-        logger.warning(f"Invalid permanent_cache_index: {permanent_cache_index}")
         permanent_cache_index = None
     
     if dynamic_cache_index is not None and (dynamic_cache_index < 0 or dynamic_cache_index >= len(messages)):
@@ -147,21 +144,14 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
     # Clean messages for API consumption
     cleaned_messages = []
     for i, msg in enumerate(filtered_messages):
+        logger.info(f"cleaning message {i} of {len(filtered_messages)}")
         cleaned_content = []
         for content in msg['content']:
             if content['type'] == "text":
                 clean_content = {
                     "type": "text",
                     "text": content['text']
-                }
-                # Add cache control if this message is at a cache index
-                if i == permanent_cache_index:
-                    logger.debug("Adding permanent cache control at index: " + str(i))
-                    clean_content['cache_control'] = {"type": "ephemeral"}
-                elif i == dynamic_cache_index:
-                    logger.debug("Adding dynamic cache control at index: " + str(i))
-                    clean_content['cache_control'] = {"type": "ephemeral"}
-                    
+                }   
             elif content['type'] == "tool_use":
                 clean_content = {
                     "type": "tool_use",
@@ -179,13 +169,38 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
             else:
                 logger.warning(f"Unknown content type: {content['type']}")
                 continue
-                
+
+            if i == permanent_cache_index:
+                logger.info("Adding permanent cache control at index: " + str(i))
+                clean_content['cache_control'] = {"type": "ephemeral"}
+            elif i == dynamic_cache_index:
+                logger.info("Adding dynamic cache control at index: " + str(i))
+                clean_content['cache_control'] = {"type": "ephemeral"}
+                logger.info(f"clean_content: {clean_content}")
             cleaned_content.append(clean_content)
             
         cleaned_messages.append({
             "role": msg['role'],
             "content": cleaned_content
         })
+
+    if cleaned_messages and len(cleaned_messages) > 0:
+        last_message = cleaned_messages[-1]
+        last_text = None
+        text_length = 0
+        
+        # Find the last text content in the message
+        for content in last_message['content']:
+            if content['type'] == 'text':
+                last_text = content['text']
+                text_length = len(last_text)
+        
+        if last_text:
+            log_with_category(LogCategory.LLM, logging.INFO, "** SENDING ** : " + preview(last_text, 50))
+        else:
+            logger.info("Last message contains no text content")
+    else:
+        logger.info("No messages found in cleaned_messages")
 
     response = client.messages.create(
         model="claude-3-7-sonnet-20250219",
@@ -197,10 +212,19 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
     )
     logger.info(f"...received response from GM...")
 
+    # Print the first 30 characters of the response content
+    if response.content and len(response.content) > 0:
+        response_text = response.content[0].text
+        log_with_category(LogCategory.LLM, logging.INFO, "** RECEIVED ** : " + preview(response_text, 50))
+    else:
+        logger.info("No content found in response from GM")
+
     logger.debug(f"response (from getting next GM response): {response}")
-    logger.debug(f"response.usage: {response.usage}")
+    logger.info(f"response.usage: {response.usage}")
 
     response_json, usage_data = _process_response(response)
+
+    log_with_category(LogCategory.USAGE, logging.INFO, usage_data)
 
     return response_json, usage_data
 

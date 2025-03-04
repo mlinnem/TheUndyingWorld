@@ -10,13 +10,13 @@ from .format_utils import *
 import logging
 logger = logging.getLogger(__name__)
 
+from .logger_config import LogCategory, log_with_category, preview
+
 # In modules where you want DEBUG output:
-from .logger_config import set_console_level_for_module
 import logging
 
 logger = logging.getLogger(__name__)
-set_console_level_for_module(__name__, logging.DEBUG)  # Only this module will show DEBUG in console
-
+world_gen_logger = logging.getLogger('world_gen')
 
 
 CONVERSATIONS_DIR = "persistent/conversations"
@@ -193,6 +193,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
     new_messages = []
 
     if should_create_generated_plot_info:
+        log_with_category(LogCategory.WORLD_GEN, logging.INFO, "Initiating world generation sequence")
         logger.debug("...Request to run boot sequence identified...")
         # First create the generated plot info
         plot_messages = create_dynamic_world_gen_data_messages(conversation['messages'], conversation['game_setup_system_prompt'])
@@ -209,8 +210,10 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
         conversation = update_conversation_cache_points_2(conversation)
         
         logger.debug("Boot sequence and cache point setup completed successfully")
+        world_gen_logger.info("World generation sequence completed successfully")
         return conversation, new_messages
         # Check if we need to inject the begin game message
+
       
    
     else:
@@ -246,7 +249,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
 
         # Get coaching feedback if we have enough messages since boot
         logger.debug(f"conversation['game_has_begun']: {conversation['game_has_begun']}")
-        if conversation['game_has_begun']:
+        if False: # COACHING DISABLED FOR NOW
             logger.debug("game has begun")
             # Get boot sequence end index
             boot_sequence_end_index = conversation.get('boot_sequence_end_index', -1)
@@ -300,21 +303,27 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
             'game_setup_system_prompt': game_setup_system_prompt
         }
 
-        logger.info(f"...Boot sequence contains {len(world_gen_instructions_w_omit_data)} instructions...")
+        log_with_category(LogCategory.WORLD_GEN, logging.INFO, f"Boot sequence contains {len(world_gen_instructions_w_omit_data)} instructions")
         
         final_messages = []
         
         for i, world_gen_instruction_w_omit_data in enumerate(world_gen_instructions_w_omit_data):
             try:
+                log_with_category(LogCategory.WORLD_GEN, logging.INFO, f"Processing boot sequence instruction {i+1}/{len(world_gen_instructions_w_omit_data)}")
                 # Convert and add user message with timestamp
                 world_gen_instruction = convert_user_text_to_message(world_gen_instruction_w_omit_data['text'])
                 world_gen_instruction['timestamp'] = datetime.now().isoformat()
                 temp_conversation['messages'].append(world_gen_instruction)
                 
-                # Get GM response with timestamp
-                gm_response, usage_data = get_next_gm_response(temp_conversation['messages'],temp_conversation['game_setup_system_prompt'], temperature=0.84)
+                dynamic_cache_index = (len(temp_conversation['messages']) -1) - (len(temp_conversation['messages']) % 8)
+                permanent_cache_index = (len(temp_conversation['messages']) -1) - (len(temp_conversation['messages']) % 24)
+                
+                gm_response, usage_data = get_next_gm_response(temp_conversation['messages'],temp_conversation['game_setup_system_prompt'], temperature=0.84, dynamic_cache_index=dynamic_cache_index, permanent_cache_index=permanent_cache_index)
+
                 gm_response['timestamp'] = datetime.now().isoformat()
                 temp_conversation['messages'].append(gm_response)
+
+                
 
                 if not world_gen_instruction_w_omit_data['omit_result']:
                     final_messages.append(gm_response)
@@ -345,7 +354,7 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
                         final_messages.append(tool_result)
                         final_messages.append(tool_response)
                 logger.info(f"...Completed boot sequence instruction {i+1}/{len(world_gen_instructions_w_omit_data)}...")
-                
+
             except Exception as e:
                 logger.error(f"Error in boot sequence at message '{world_gen_instruction_w_omit_data['text']}': {e}")
                 raise

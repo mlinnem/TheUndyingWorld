@@ -6,7 +6,6 @@ import traceback
 
 import logging
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
 routes = Blueprint('routes', __name__, url_prefix='')
 

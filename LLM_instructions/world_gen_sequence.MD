@@ -19,7 +19,9 @@ Information in the 'core lore' document is available both now, and will also be 
 
 We will also be stripping the instructions themselves from the official record, so make sure to reiterate any details from the instructions themselves that you feel are important to be retained in the final document.
 
-Before we proceed, please confirm that you understand.
+Most instructions will be associated with a minimum and maximum token length for the response. It is VERY IMPORTANT that you stick to these bounds, as exceeding the upper bounds can cause this session, and subsequent game sessions, to exceed the context window of this LLM, leading to failure of the world gen session as well as substantial constraint on any subsequent gaming session using this material.
+
+Before we proceed, please very briefly confirm that you understand.
 
 # Instruction
 
@@ -29,6 +31,8 @@ Describe the previously identified geographic setting in detail (without necessa
 Note that the prior response will not be included in the final output, so repeat any details including the name of the location in this section.
 
 Note: Do not attempt to include any post-egg details such as factions, artifacts, etc. within these zones yet. This will be done later.
+
+(Note: it is critically important that your respond be no more than 8000 characters, and ideal substantially less)
 
 
 # Instruction (omit result later)
@@ -47,29 +51,40 @@ Note: Do not attempt to include any post-egg details such as factions, artifacts
 
 "
 
-Before we continue, please confirm that you understand.
+Before we continue, please very briefly confirm that you understand.
 
 # Instruction (omit result later)
 
 Describe what happens to be in the core zone of the egg before the event that created the egg.
 
+(Note: it is critically important that your respond be no more than 2400 characters, and ideal substantially less)
+
 # Instruction (omit result later)
 
 Describe the contents of each of the four zones of the inner ring, before the event that created the egg.
+
+(Note: it is critically important that your respond be no more than 4000 characters, and ideal substantially less)
 
 # Instruction (omit result later)
 
   
 Describe the contents of each of the four zones of the middle ring, before the event that created the egg.
 
+(Note: it is critically important that your respond be no more than 4800 characters, and ideal substantially less)
+
 # Instruction (omit result later)
 
 
 Describe the contents of each of the four zones of the outer ring, before the event that created the egg.
+
+(Note: it is critically important that your respond be no more than 8000 characters, and ideal substantially less)
 # Instruction (omit result later)
 
   
 Describe how each zone relates to the zones adjacent to them. Describe each adjacency in turn.
+
+(Note: it is critically important that your respond be no more than 4000 characters, and ideal substantially less)
+
 
 # Instruction (omit result later)
 
@@ -102,12 +117,15 @@ Note: Do not attempt to include any details such as factions, characters, artifa
 
 "
 
-Before we continue, please confirm that you understand.
+Before we continue, please very briefly confirm that you understand.
 
 # Instruction (omit result later) 
 
 
 Describe the effect the egg has had on the core zone.
+
+(Note: it is critically important that your respond be no more than 2000 characters, and ideally substantially less)
+
 
 # Instruction (omit result later)
 
@@ -115,6 +133,8 @@ Describe the effect the egg has had on the core zone.
 For each zone in the inner ring...
 
 Describe the effect the egg has had on this zone.
+
+(Note: it is critically important that your respond be no more than 3200 characters, and ideally substantially less)
 
  
 # Instruction (omit result later)
@@ -124,6 +144,9 @@ For each zone in the middle ring...
 
 Describe the effect the egg has had on this zone.
 
+(Note: it is critically important that your respond be no more than 4000 characters, and ideally substantially less)
+
+
   
 # Instruction (omit result later)
 
@@ -131,10 +154,15 @@ Describe the effect the egg has had on this zone.
 For each zone in the outer ring...
 
 Describe the effect the egg has had on this zone.
+
+(Note: it is critically important that your respond be no more than 4800 characters, and ideally substantially less)
+
   
 # Instruction (omit result later)
 
 Describe anything new implied about the adjacencies between each zone, given our newly defined info on the effect the egg has had on them.
+
+(Note: it is critically important that your respond be no more than 2000 characters, and ideally substantially less)
 
 # Instruction (omit result later)
 
@@ -164,13 +192,15 @@ Recall that we are not defining the expected player challenge around acquiring t
 These responses will be preserved and are canonical with respect to the artifacts themselves.
 "
 
-Before we proceed, please confirm that you understand.
+Before we proceed, please very briefly confirm that you understand.
 
 # Instruction
 
 Describe the three main quest artifacts.
 
 Define how they are related to each other.
+
+(Token output bounds for this instruction: between 300 and 1200)
 
 Custom Guidance:
 
@@ -185,9 +215,14 @@ In terms of location, two should originate in the middle ring, and one in the in
 
 Describe now the artifact at the center of the 'Guide Humanity's Evolution' or 'Hacking' ending.
 
+(Note: it is critically important that your respond be no more than 2400 characters, and ideally substantially less)
+
 # Instruction
 
 Describe now the three artifacts that are crucial to achieving one of the two ultimate total-win-condition endings of the game: 'The Path of Collective Sacrifice.'
+
+(Note: it is critically important that your respond be no more than 4800 characters, and ideally substantially less)
+
 
 Custom guidance:
 
@@ -210,9 +245,13 @@ The artifacts' descriptions should support the core theme of this ending: that t
 
 Describe now the artifact at the center of the 'dark ending'
 
+(Note: it is critically important that your respond be no more than 2800 characters, and ideally substantially less)
+
 # Instruction
 
 Describe six 'protective' artifacts.
+
+(Note: it is critically important that your respond be no more than 7000 characters, and ideally substantially less)
 
 Custom Guidance:
 
@@ -253,7 +292,7 @@ This generative guidance will not be available to the LLM during gameplay, so an
 We will be separately generating power-based and knowledge-based artifacts. For each, recall previously discussed information on each.
 
 
-Before we continue, please confirm that you understand.
+Before we continue, please very briefly confirm that you understand.
 
 # Instruction
 
@@ -261,9 +300,12 @@ Describe now 8 incidental non-knowledge artifacts
 
 Make two associated with the inner ring, and six associated with the middle ring. 
 
+(Note: it is critically important that your respond be no more than 8800 characters, and ideally substantially less)
 # Instruction
 
 Describe now 9 incidental non-knowledge artifacts, all associated with the outer ring.
+
+(Note: it is critically important that your respond be no more than 8800 characters, and ideally substantially less)
 
 # Instruction (omit result later)
 
@@ -294,15 +336,15 @@ Knowledge artifacts should not bake in exactly what info they will reveal, in or
 
 The way that it reveals information may also be baked into it
 
-4) It might give a vision
-5) It might speak to the player
+1) It might give a vision
+2) It might speak to the player
 
 Its 'personality' might also be baked in
 
-6) It might tell the player things they do not want to hear
-7) It might tell them things that they deeply desire
-8) It might reveal the secrets of others
-9) etc.
+1) It might tell the player things they do not want to hear
+2) It might tell them things that they deeply desire
+3) It might reveal the secrets of others
+4) etc.
 
 
 Knowledge artifacts are intended to be 'one shot' for the player. They bestow information once, and can no longer be used by the player. This may destroy the artifact, OR the artifact may remain, but can only be used again by another individual. The knowledge revealed to one person (player or non player) may not be the same as the knowledge revealed to another.
@@ -310,19 +352,27 @@ Knowledge artifacts are intended to be 'one shot' for the player. They bestow in
 This generative guidance will not be available to the LLM during gameplay, so any info described above that is pertinent to understanding a given artifact's power should be incorporated into the artifact's description itself.
 "
 
-Before we proceed, please confirm that you understand.
+Before we proceed, please very briefly confirm that you understand.
 
 # Instruction
 
 Describe now 9 knowledge artifacts: three associated with the inner ring, and six associated with the middle ring.
 
+(Note: it is critically important that your respond be no more than 8000 characters, and ideally substantially less)
+
 # Instruction
 
 Describe now 8 knowledge artifacts associated with the outer ring. 
 
+(Note: it is critically important that your respond be no more than 8000 characters, and ideally substantially less)
+
+
 # Instruction (omit result later)
 
 Describe now six potential artifacts available for the player to choose from at the beginning of the game.
+
+(Note: it is critically important that your respond be no more than 4000 characters, and ideally substantially less)
+
 
 Custom guidance:
 
@@ -338,6 +388,9 @@ I choose the following artifacts to be available to the player: <<<6>>>, <<<6>>,
 Note: If the numbers above are duplicates, you (the GM) may make a choice of the additional artifact(s) from the list of minor artifacts to make available to the player.
 
 Describe these selected artifacts in more detail.
+
+(Note: it is critically important that your respond be no more than 3200 characters, and ideally substantially less)
+
 
 # Instruction (omit result later)
 
@@ -371,6 +424,9 @@ Don't be tempted to associated each faction with a certain quadrant, given there
 
 Do not attempt to associate any artifacts to these factions (yet). This will occur in a subsequent instruction in which we develop the challenges associated with each artifact.
 
+(Note: it is critically important that your respond be no more than 16000 characters, and ideally substantially less)
+
+
 # Instruction (omit result later)
 
 Describe 3 territory-holding minor factions
@@ -393,6 +449,8 @@ Number each faction for purposes of referring to them in subsequent instructions
 
 Do not attempt to associate any artifacts to these factions (yet). This will occur in a subsequent instruction in which we develop the challenges associated with each artifact.
 
+(Note: it is critically important that your respond be no more than 7600 characters, and ideally substantially less)
+
 # Instruction (omit result later)
 
 Describe 4 non-territory holding minor groups
@@ -413,6 +471,8 @@ Some possibilities might include:
 * Quirk - [Something unusual about this group]
 * Objectives - [What are they currently looking to accomplish]
 
+(Note: it is critically important that your respond be no more than 6000 characters, and ideally substantially less)
+
 # Instruction (omit result later)
 
 Describe the relationships between each of the major factions.
@@ -421,6 +481,7 @@ Describe also the relationship between any minor factions (territory holding or 
 
 Feel free to revise or incorporate new information into the existing faction description, as the faction info provided so far is not final, and will ultimately be revised to take this response into account.
 
+(Note: it is critically important that your respond be no more than 10,000 characters, and ideally substantially less)
 # Instruction (omit result later)
 
 Recall all the information in the core lore on "Golden Ending 2: Defy the egg through collective rejection of power."
@@ -432,6 +493,9 @@ For each of these factions, associate one of the anchor artifacts with them. It 
 Describe each faction's use of their artifact. How it affected their history. What their relationship is with that artifact's power (do they embrace it, use it begrudgingly, hide it, hold on to it but not use it,  etc.)
 
 Feel free to revise or incorporate new information into the existing faction description, as the faction info provided so far is not final, and will ultimately be revised to take this response into account.
+
+(Note: it is critically important that your respond be no more than 6400 characters, and ideally substantially less)
+
 
 # Instruction (omit result later)
 
@@ -456,35 +520,69 @@ Consider the following guidance for each subsequent instruction:
 * Territory - [What territory do they control, if they control any]
 
 Define also their relationship with each other major faction, and any pertinent minor factions.
+
+
 "
 
 # Instruction
 
 Redescribe major faction #1
 
+(Note: it is critically important that your respond be no more than 10,000 characters, and ideally substantially less)
+
+
+
 # Instruction
 
 Redescribe major faction #2
 
+(Note: it is critically important that your respond be no more than 10,000 characters, and ideally substantially less)
+
+
+
 # Instruction
 
 Redescribe major faction #3
+
+(Note: it is critically important that your respond be no more than 10,000 characters, and ideally substantially less)
+
+
 # Instruction
 
-Reescribe major faction #4
+Redescribe major faction #4
+
+(Note: it is critically important that your respond be no more than 10,000 characters, and ideally substantially less)
+
+
 # Instruction
 
-Reescribe faction #5.  
+Redescribe faction #5.  
+
+(Note: it is critically important that your respond be no more than 10,000 characters, and ideally substantially less)
+
+
 # Instruction
 
 Redescribe the 3 territory-holding minor factions
+
+(Note: it is critically important that your respond be no more than 10,000 characters, and ideally substantially less)
+
+
 # Instruction
 
-Redescribe the 3 non-territory-holding minor factions.
+Redescribe the 4 non-territory-holding minor factions.
+
+(Note: it is critically important that your respond be no more than 10,000 characters, and ideally substantially less)
+
+
 
 # Instruction
 
 Finally, please identify and describe all significant areas of the map that are not controlled(de facto and/or de jur) by a particular faction. These could be mundane areas that are simply too far from the center of power of any particular faction. Or they could be simply too unimportant for any particular faction to claim. They could be areas that are unclaimed due to certain phenomena making their control untenable. They could be areas that aren't claimed due to being inhospitable (either from egg related phenomena, or otherwise). They could be areas that are in fact claimed by multiple factions, where ownership is unclear. It could be related to two factions having a positive relationship with one another such that specific delineation of territory is not a priority. Or it could related to one or more factions propensity to not even think in terms of territorial claims.
+
+(Note: it is critically important that your response be no more than 8,800 characters, and ideally substantially less)
+
+
 # Instruction (omit result later)
 
 We will now begin a section of instructions related to characters.
@@ -516,30 +614,40 @@ Note: Never give a character the name Sarah Chen, the last name Chen, or any var
 
 Describe 2-4 character associated with faction #1
 
+(Note: it is critically important that your response be no more than 6,000 characters, and ideally substantially less)
+
 # Instruction
 
 Describe 2-4 character associated with faction #2
+
+(Note: it is critically important that your response be no more than 6,000 characters, and ideally substantially less)
 
 # Instruction
 
 Describe 2-4 character associated with faction #3
 
+(Note: it is critically important that your response be no more than 6,000 characters, and ideally substantially less)
+
 # Instruction
 
 Describe 2-4 character associated with faction #4
 
-
+(Note: it is critically important that your response be no more than 6,000 characters, and ideally substantially less)
 # Instruction
 
 For each of the minor territory holding factions:
 
 Describe 1-2 character associated with this faction.
 
+(Note: it is critically important that your response be no more than 2,800 characters, and ideally substantially less)
+
 # Instruction
 
 For each of the minor non-territory-holding factions:
 
 Describe 1-2 character associated with this faction.
+
+(Note: it is critically important that your response be no more than 2,800 characters, and ideally substantially less)
 
 # Instruction
 
@@ -556,18 +664,22 @@ Example agents include
 * A rogue scientist bent risking their life to understand the nature of the egg.
 * A previously undisclosed prior agent of the U.S. government
 
+(Note: it is critically important that your response be no more than 8,000 characters, and ideally substantially less)
+
 # Instruction
 
 Describe 5 characters unaffiliated with any faction
+
+
+(Note: it is critically important that your response be no more than 7,000 characters, and ideally substantially less)
+
+(Important: This is an extra reminder to not exceed the token output bounds for this or any subsequent instructions)
 
 # Instruction
 
 Describe 1-2 characters that will occur in the initial briefing experience prior to the player entering the egg. One should be the primary 'handler' for the player that will be the primary contact for the briefing. The other is optional.
 
-# Instruction
-
-Describe 2 characters that will be present in the initial briefing
-
+(Note: it is critically important that your response be no more than 3,6000 characters, and ideally substantially less)
 # Instruction (omit result later)
 
 We are now entering a section in which we will be executing instructions to produce the authoritative information on each questline, complementary to details that have been established previously in the core lore and generated record.
@@ -600,11 +712,13 @@ Keep in mind in all of this that we can in no way dictate the circumstances unde
 
 Because this will become the canonical reference material for this questline, feel free to elaborate at length on this topic, up to the limit allowed in a single LLM response.
 
-Before we proceed, please confirm that you understand.
+Before we proceed, please very briefly confirm that you understand.
 
 # Instructions
 
 Describe the questline to obtain the 3 main artifacts, associated with 'ending 2' in the core lore.
+
+(Note: it is critically important that your response be no more than 15,000 characters, and ideally substantially less)
 
 Custom guidance:
 
@@ -613,6 +727,8 @@ Recall all prior lore described around this question, including that this questl
 # Instructions
 
 Describe the circumstances and challenge surrounding reaching the epicenter of the egg.
+
+(Note: it is critically important that your response be no more than 3,200 characters, and ideally substantially less)
 
 Custom guidance:
 
@@ -624,6 +740,8 @@ Note that this ending is expected to open the option for ending 7: 'save yoursel
 
 Describe the circumstances and challenge surrounding destroying the egg (ending 6.)
 
+(Note: it is critically important that your response be no more than 2,800 characters, and ideally substantially less)
+
 Custom guidance:
 
 This is not intended to be a questline per se, as there is not intended to be any prescribed sequence of events or milestones towards the destruction of the egg. The player must simply reach the epicenter of the egg, and destroy it. See information in the core lore on this ending. Detail the circumstances and challenge a player might encounter if attempting to destroy what lies at the epicenter of the egg.
@@ -632,11 +750,15 @@ This is not intended to be a questline per se, as there is not intended to be an
 
 For the previously defined protective artifacts, describe the circumstances and anticipated challenge of obtaining each of these artifact in turn, and also some of the various ways we imagine a player might find hints towards each of these artifacts.
 
+(Note: it is critically important that your response be no more than 12,000 characters, and ideally substantially less)
+
 # Instruction
 
 Describe the 'transformation reversing' artifact, in keeping with our previous framework for defining new artifacts.
 
 Then, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
+
+(Note: it is critically important that your response be no more than 2,800 characters, and ideally substantially less)
 
 # Instruction
 
@@ -652,9 +774,14 @@ This includes any challenges we would anticipate with finding the children, brin
 
 Circumstances are expected to be quite different for each child.
 
+(Note: it is critically important that your response be no more than 5,200 characters, and ideally substantially less)
+
+
 # Instruction
 
 For the 'ark of humanity' quest line and associated ending (ending 8), describe the circumstances and anticipated challenges associated with the different moments of the questline.
+
+(Note: it is critically important that your response be no more than 10,000 characters, and ideally substantially less)
 
 Custom guidance:
 
@@ -671,6 +798,8 @@ You may also describe various circumstances within the egg that might hint at ke
 
 Describe the 'dark ending' questline (the one which results in ending 9.)
 
+(Note: it is critically important that your response be no more than 4,800 characters, and ideally substantially less)
+
 Custom guidance:
 
 Include potential ways the player might find information pointing towards this questline, information on the current holders of this artifact, and the broad strokes of the expected interaction at the epicenter.
@@ -681,6 +810,8 @@ You may invent additional characters and/or minor factions (territory holding or
 # Instruction
 
 For the questline for "Save humanity by changing it" / "Hack the egg", which results in golden ending #1, describe the circumstances and anticipated challenges associated with the different moments of the questline.
+
+(Note: it is critically important that your response be no more than 7,000 characters, and ideally substantially less)
 
 Custom guidance:
 
@@ -695,6 +826,8 @@ For the questline for "Defy the egg through collective rejection of power", whic
 
 The prior response related to golden ending #2, defining faction relationships, will not be part of the canonical record, so any details there that are not clear from the canonical faction record should be expressed in this response.
 
+(Note: it is critically important that your response be no more than 12,000 characters, and ideally substantially less)
+
 Custom guidance:
 
 This should take notes heavily from the prior content generated around the 3 anchor artifacts and their faction associations.
@@ -705,25 +838,42 @@ You may invent additional characters in order to support this questline, or you 
 
 For each of the previously defined incidental inner ring non-knowledge artifacts, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
 
+(Note: it is critically important that your response be no more than 4,000 characters, and ideally substantially less)
+
+
 # Instruction
 
-For each of the previously defined incidental middle ring non-knowledge artifacts, describe the circumstances and anticipated challenge of obtaining tartifact, as well as ways that the player may find hints towards this artifact.
+For each of the previously defined incidental middle ring non-knowledge artifacts, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
+
+
+(Note: it is critically important that your response be no more than 8,000 characters, and ideally substantially less)
+
 
 # Instruction
 
 For each of the previously defined incidental outer ring non-knowledge artifacts, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
 
+(Note: it is critically important that your response be no more than 12,000 characters, and ideally substantially less)
+
 # Instruction
 
 For the previously defined incidental inner ring knowledge artifacts, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
 
-# Instruction
-
-For the previously defined incidental middle ring knowledge artifacts, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
+(Note: it is critically important that your response be no more than 4,000 characters, and ideally substantially less)
 
 # Instruction
 
 For the previously defined incidental middle ring knowledge artifacts, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
+
+(Note: it is critically important that your response be no more than 7,000 characters, and ideally substantially less)
+
+
+# Instruction
+
+For the previously defined incidental outer ring knowledge artifacts, describe the circumstances and anticipated challenge of obtaining this artifact, as well as ways that the player may find hints towards this artifact.
+
+(Note: it is critically important that your response be no more than 10,000 characters, and ideally substantially less)
+
 
 # Instruction
 
@@ -731,6 +881,7 @@ Identify inconsistencies or errors in the data generated so far. For each incons
 
 These corrections will become a canonical edit to the original description. Make sure to include the fact that these corrections are canonical in your response, so that fact is retained in the record.
 
+(Note: it is critically important that your response be no more than 8,000 characters, and ideally substantially less)
 # Instruction (omit result later)
 
   
@@ -763,75 +914,124 @@ All prior descriptions of the zones will be discarded, so any significant detail
 Information on factions, characters, artifacts, and questlines will continue to be preserved in their prior canonical form in the previously generated records, so you do not need to reproduce that information here, however you should reference the fact that they exist in the zone for purposes of using this record as canonical with respect to the zone itself and its contents.
 
 Feel free to be as verbose as you like. This is meant to be comprehensive.
-
 "
 
-Before we proceed with generating the final descriptions of each zone, please confirm that you understand these instructions.
+(Important: This is an extra reminder to not exceed the token output bounds for this or any subsequent instructions)
+
+Before we proceed with generating the final descriptions of each zone, please very briefly confirm that you understand these instructions.
 
 # Instruction
 
 Describe what exists at the epicenter of the core zone for the final time.
+
+(Note: it is critically important that your response be no more than 3,000 characters, and ideally substantially less)
+
 # Instruction
   
 Describe the core zone for the final time.
+
+(Note: it is critically important that your response be no more than 6,000 characters, and ideally substantially less)
+
 # Instruction
 
 Describe the northwest zone of the inner ring for the final time.
+
+(Note: it is critically important that your response be no more than 7,000 characters, and ideally substantially less)
+
 
 # Instruction
 
 
 Describe the northwest zone of the middle ring for the final time.
 
+(Note: it is critically important that your response be no more than 8,000 characters, and ideally substantially less)
+
+
 # Instruction
 
 Describe the northwest zone of the outer ring for the final time. 
+
+(Note: it is critically important that your response be no more than 9,000 characters, and ideally substantially less)
+
 
 
 # Instruction
 
 Describe the northeast zone of the inner ring for the final time. 
 
+(Note: it is critically important that your response be no more than 7,000 characters, and ideally substantially less)
+
 # Instruction
 
 Describe the northeast zone of the middle ring for the final time. 
+
+(Note: it is critically important that your response be no more than 8,000 characters, and ideally substantially less)
+
 
 # Instruction
 
 Describe the northeast zone of the outer ring for the final time. 
 
+(Note: it is critically important that your response be no more than 8,500 characters, and ideally substantially less)
+
+
+
 # Instruction
 
 Describe the southeast zone of the inner ring for the final time. 
+
+(Note: it is critically important that your response be no more than 7,000 characters, and ideally substantially less)
+
 
 # Instruction
 
 Describe the southeast zone of the middle ring for the final time. 
 
+(Note: it is critically important that your response be no more than 8,000 characters, and ideally substantially less)
+
+
 # Instruction
 
 Describe the southeast zone of the outer ring for the final time. 
+
+(Note: it is critically important that your response be no more than 8,500 characters, and ideally substantially less)
+
 
 
 # Instruction
 
 Describe the southwest zone of the inner ring for the final time. 
 
+(Note: it is critically important that your response be no more than 7,000 characters, and ideally substantially less)
+
+
 # Instruction
 
 Describe the southwest zone of the middle ring for the final time. 
+
+(Note: it is critically important that your response be no more than 8,000 characters, and ideally substantially less)
+
 
 # Instruction
 
 Describe the southwest zone of the outer ring for the final time. 
 
+(Note: it is critically important that your response be no more than 8,500 characters, and ideally substantially less)
+
+
 # Instruction
 
 Describe the adjacencies between each zone again, for the final time.
 
+(Note: it is critically important that your response be no more than 12,000 characters, and ideally substantially less)
+
+
 # Instruction
 
 Briefly describe the four possible locations in which the player could be inserted into the egg. There should be one option for each outer ring zone. The location will be at the periphery of these zones, at the edge of the egg's external barrier. Note that because the U.S. government knows very little about the contents of the egg, they are choosing these locations based on their understanding of the region in question prior to the egg appearing. Perhaps they choose an area that is likely to be less populated, or more open territory.
+
+(Note: it is critically important that your response be no more than 7,000 characters, and ideally substantially less)
+
 
 # Instruction
 
