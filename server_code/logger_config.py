@@ -9,13 +9,14 @@ class LogCategory:
     LLM = "LLM"
     USAGE = "USAGE" # Only in normal conversation, not summarization or coaching
     DICE_ROLLS = "DICE_ROLLS"
-
+    CACHING = "CACHING"
 # Default levels for each category
 category_levels = {
     LogCategory.WORLD_GEN: logging.INFO,
     LogCategory.LLM: logging.INFO,
     LogCategory.USAGE: logging.INFO,
     LogCategory.DICE_ROLLS: logging.INFO,
+    LogCategory.CACHING: logging.INFO,
 }
 
   # Create formatter (will be used by all handlers)

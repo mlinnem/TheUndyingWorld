@@ -175,10 +175,12 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
             if i == permanent_cache_index:
                 logger.info("Adding permanent cache control at index: " + str(i))
                 clean_content['cache_control'] = {"type": "ephemeral"}
+                log_with_category(LogCategory.CACHING, logging.INFO, "Placing permanent cache point on message " + str(i))
             elif i == dynamic_cache_index:
                 logger.info("Adding dynamic cache control at index: " + str(i))
                 clean_content['cache_control'] = {"type": "ephemeral"}
                 logger.info(f"clean_content: {clean_content}")
+                log_with_category(LogCategory.CACHING, logging.INFO, "Placing dynamic cache point on message " + str(i))
             cleaned_content.append(clean_content)
             
         cleaned_messages.append({
@@ -358,6 +360,10 @@ def summarize_with_gm_2(conversation):
                     "cache_control": {"type": "ephemeral"}
                 }]
             }
+
+
+            log_with_category(LogCategory.CACHING, logging.INFO, "summarization message created with cache point on it: " + preview(summary_message, 20))
+
             
             # Update conversation messages
             conversation['messages'] = (

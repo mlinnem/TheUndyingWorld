@@ -12,6 +12,8 @@ GAME_SEEDS_DIR = "persistent/game_seeds"
 if not os.path.exists(CONVERSATIONS_DIR):
     os.makedirs(CONVERSATIONS_DIR)
 
+from .logger_config import LogCategory, log_with_category, preview
+
 
 # Conversation functions
 
@@ -278,6 +280,9 @@ def get_game_setup_system_prompt():
     """
     core_lore = _get_llm_instructions('core_lore')
     generative_primer = _get_llm_instructions('generative_primer')
+
+    log_with_category(LogCategory.CACHING, logging.INFO, "Retrieving game system prompt, which includes a cache point")
+
     return [{
         "type": "text",
         "text": core_lore + "\n\n" + generative_primer,
@@ -290,6 +295,10 @@ def get_gameplay_system_prompt():
     """
     core_lore = _get_llm_instructions('core_lore')
     game_manual = _get_llm_instructions('game_manual')
+
+    log_with_category(LogCategory.CACHING, logging.INFO, "Retrieving gameplay prompt, which includes a cache point")
+
+
     return [{
         "type": "text",
         "text": core_lore + "\n\n" + game_manual,
@@ -301,6 +310,9 @@ def get_summarizer_system_prompt():
     Returns the summarizer instructions as a formatted system prompt.
     """
     summarizer = _get_llm_instructions('summarizer')
+
+    log_with_category(LogCategory.CACHING, logging.INFO, "Retrieving summarizer prompt, which includes a cache point")
+
     return [{
         "type": "text",
         "text": summarizer,
@@ -314,6 +326,9 @@ def get_coach_system_prompt():
     coach_part = _get_llm_instructions('coach_instruction')
     core_lore = _get_llm_instructions('core_lore')
     game_manual = _get_llm_instructions('game_manual')
+
+    log_with_category(LogCategory.CACHING, logging.INFO, "Retrieving coach prompt, which includes a cache point")
+
     return [{
         "type": "text",
         "text": coach_part + "\n\n" + core_lore + "\n\n" + game_manual,
