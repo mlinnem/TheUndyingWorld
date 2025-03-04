@@ -7,8 +7,9 @@ from logging.handlers import RotatingFileHandler
 class LogCategory:
     WORLD_GEN = "WORLD_GEN"
     LLM = "LLM"
-    USAGE = "USAGE"
+    USAGE = "USAGE" # Only in normal conversation, not summarization or coaching
     DICE_ROLLS = "DICE_ROLLS"
+
 # Default levels for each category
 category_levels = {
     LogCategory.WORLD_GEN: logging.INFO,

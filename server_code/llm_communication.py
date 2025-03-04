@@ -67,7 +67,7 @@ def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cac
         ]
     }]
 
-    
+    log_with_category(LogCategory.USAGE, logging.INFO, "** SENDING ** : " + preview(messages_string, 50))
 
     response = client.messages.create(
         model="claude-3-5-haiku-20241022",
@@ -76,6 +76,8 @@ def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cac
         max_tokens=MAX_OUTPUT_TOKENS,
         temperature=temperature,
     )
+
+    log_with_category(LogCategory.USAGE, logging.INFO, "** RECEIVED ** : " + preview(response.content[0].text, 50))
 
     logger.info(f"response (from getting coaching message): {response}")
 
@@ -313,6 +315,8 @@ def summarize_with_gm_2(conversation):
 
         try:
             logger.debug("Calling Claude API for summarization...")
+
+            log_with_category(LogCategory.USAGE, logging.INFO, "** SENDING ** : " + preview(formatted_messages, 50))
             response = client.messages.create(
                 model="claude-3-7-sonnet-20250219",
                 messages=[{
@@ -326,6 +330,15 @@ def summarize_with_gm_2(conversation):
                 max_tokens=MAX_OUTPUT_TOKENS,
                 temperature=0.6,
             )
+
+            log_with_category(LogCategory.USAGE, logging.INFO, "** RECEIVED ** : " + preview(response.content[0].text, 50))
+
+            usage_data = {
+                "uncached_input_tokens": response.usage.input_tokens,
+                "cached_input_tokens": response.usage.cache_read_input_tokens + response.usage.cache_creation_input_tokens,
+                "total_input_tokens": response.usage.input_tokens + response.usage.cache_read_input_tokens + response.usage.cache_creation_input_tokens,
+            }
+
 
             logger.debug(f"Response: {response}")
             summary = response.content[0].text
