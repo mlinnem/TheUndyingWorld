@@ -49,7 +49,7 @@ category_levels = {
     LogCategory.SUMMARIZATION: LogLevel.INFO,
     LogCategory.CONVERT_MESSAGES_TO_COS: LogLevel.ERROR,
     LogCategory.COACHING: LogLevel.INFO,
-    LogCategory.ADVANCE_CONVERSATION_LOGIC: LogLevel.DEBUG,
+    LogCategory.ADVANCE_CONVERSATION_LOGIC: LogLevel.WARNING,
     LogCategory.PERSISTENCE: LogLevel.WARNING,
 }
 
