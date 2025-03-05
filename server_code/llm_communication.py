@@ -180,7 +180,7 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
                 logger.info("Adding dynamic cache control at index: " + str(i))
                 clean_content['cache_control'] = {"type": "ephemeral"}
                 logger.info(f"clean_content: {clean_content}")
-                log_with_category(LogCategory.CACHING, logging.INFO, "Placing dynamic cache point on message " + str(i))
+                log_with_category(LogCategory.CACHING, logging.INFO, "Placing dynamic cache point on message " + str(i) + "(out of " + str(len(filtered_messages)) + "messages)")
             cleaned_content.append(clean_content)
             
         cleaned_messages.append({

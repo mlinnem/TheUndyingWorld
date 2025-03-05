@@ -65,6 +65,7 @@ def convert_messages_to_cos(messages):
                                                 log_with_category(LogCategory.CONVERT_MESSAGES_TO_COS, LogLevel.WARNING, f"Invalid negative difficulty target: {integer}")
                                                 continue
                                             cos.append({'type': 'difficulty_roll', 'integer': integer})
+                                            log_with_category(LogCategory.DIFFICULTY_ROLL, LogLevel.INFO, f"Difficulty roll: {integer}")
                                         except ValueError:
                                             log_with_category(LogCategory.CONVERT_MESSAGES_TO_COS, LogLevel.ERROR, f"Invalid difficulty roll value: {body}")
                                             continue
@@ -75,6 +76,7 @@ def convert_messages_to_cos(messages):
                                                 log_with_category(LogCategory.CONVERT_MESSAGES_TO_COS, LogLevel.WARNING, f"Invalid negative reveal roll: {integer}")
                                                 continue
                                             cos.append({'type': 'world_reveal_roll', 'integer': integer})
+                                            log_with_category(LogCategory.REVEAL_ROLL, LogLevel.INFO, f"Reveal roll: {integer}")
                                         except ValueError:
                                             log_with_category(LogCategory.CONVERT_MESSAGES_TO_COS, LogLevel.ERROR, f"Invalid world reveal roll value: {body}")
                                             continue
@@ -128,6 +130,7 @@ def convert_messages_to_cos(messages):
                                             cos.append({'type': 'world_gen_data', 'text': body})
                                         elif 'difficulty analysis' in c_header:
                                             log_with_category(LogCategory.CONVERT_MESSAGES_TO_COS, LogLevel.VERBOSE_DEBUG, f"Difficulty analysis: {body}")
+                                            log_with_category(LogCategory.DIFFICULTY_ANALYSIS, LogLevel.INFO, f"Difficulty analysis: {preview(body, 500)}")
                                             cos.append({'type': 'difficulty_analysis', 'text': body})
                                         elif 'difficulty target' in c_header:
                                             try:
@@ -136,20 +139,24 @@ def convert_messages_to_cos(messages):
                                                     log_with_category(LogCategory.CONVERT_MESSAGES_TO_COS, LogLevel.WARNING, f"Invalid negative difficulty target: {integer}")
                                                     continue
                                                 cos.append({'type': 'difficulty_target', 'text': integer})
+                                                log_with_category(LogCategory.DIFFICULTY_TARGET, LogLevel.INFO, f"Difficulty target: {integer}")   
                                             except ValueError:
                                                 # This is to handle the case when it is 'Trivial' but we might want to validate more here.
                                                 cos.append({'type': 'difficulty_target', 'text': body})
                                         elif 'reveal analysis' in c_header:
                                             log_with_category(LogCategory.CONVERT_MESSAGES_TO_COS, LogLevel.VERBOSE_DEBUG, f"reveal analysis: {body}")
                                             cos.append({'type': 'world_reveal_analysis', 'text': body})
+                                            log_with_category(LogCategory.REVEAL_ANALYSIS, LogLevel.INFO, f"Reveal analysis: {preview(body, 500)}")
                                         elif 'reveal level' in c_header:
                                             log_with_category(LogCategory.CONVERT_MESSAGES_TO_COS, LogLevel.VERBOSE_DEBUG, f"reveal level: {body}")
                                             cos.append({'type': 'world_reveal_level', 'text': body})
+                                            log_with_category(LogCategory.REVEAL_LEVEL, LogLevel.INFO, f"Reveal level: {body}")
                                         elif 'resulting scene' in c_header:
                                             log_with_category(LogCategory.CONVERT_MESSAGES_TO_COS, LogLevel.VERBOSE_DEBUG, f"Resulting scene description: {body}")
                                             cos.append({'type': 'resulting_scene_description', 'text': body})
                                         elif 'tracked operations' in c_header:
                                             log_with_category(LogCategory.CONVERT_MESSAGES_TO_COS, LogLevel.VERBOSE_DEBUG, f"Tracked operations: {body}")
+                                            log_with_category(LogCategory.TRACKED_OPERATIONS, LogLevel.INFO, f"Tracked operations: {preview(body, 500)}")
                                             cos.append({'type': 'tracked_operations', 'text': body})
                                         elif 'condition' in c_header:
                                             log_with_category(LogCategory.CONVERT_MESSAGES_TO_COS, LogLevel.VERBOSE_DEBUG, f"Condition table: {body}")
