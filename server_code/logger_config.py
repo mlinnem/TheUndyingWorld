@@ -10,13 +10,26 @@ class LogCategory:
     USAGE = "USAGE" # Only in normal conversation, not summarization or coaching
     DICE_ROLLS = "DICE_ROLLS"
     CACHING = "CACHING"
+    MESSAGE_FILTERING = "MESSAGE_FILTERING"
+    CONVERT_MESSAGES_TO_COS = "CONVERT_MESSAGES_TO_COS"
+
+class LogLevel:
+    VERBOSE_DEBUG = 5
+    DEBUG = 10
+    INFO = 20
+    WARNING = 30
+    ERROR = 40
+    CRITICAL = 50
+
 # Default levels for each category
 category_levels = {
     LogCategory.WORLD_GEN: logging.INFO,
     LogCategory.LLM: logging.INFO,
-    LogCategory.USAGE: logging.INFO,
-    LogCategory.DICE_ROLLS: logging.INFO,
-    LogCategory.CACHING: logging.INFO,
+    LogCategory.USAGE: LogLevel.INFO,
+    LogCategory.DICE_ROLLS: LogLevel.INFO,
+    LogCategory.CACHING: LogLevel.INFO,
+    LogCategory.MESSAGE_FILTERING: LogLevel.WARNING,
+    LogCategory.CONVERT_MESSAGES_TO_COS: LogLevel.WARNING,
 }
 
   # Create formatter (will be used by all handlers)
