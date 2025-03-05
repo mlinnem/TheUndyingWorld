@@ -44,7 +44,7 @@ def get_game_seed_listings():
 
 
 def save_conversation(conversation):
-    logger.debug(f"Saving conversation {conversation['conversation_id']}")
+    log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, f"Saving conversation {conversation['conversation_id']}")
     conversation['last_updated'] = datetime.now().isoformat()
     conversation['message_count'] = len(conversation['messages'])
     write_conversation(conversation)
@@ -72,7 +72,7 @@ def generate_conversation_id():
     return datetime.now().strftime("%Y%m%d%H%M%S")
 
 def create_new_conversation_from_scratch():
-    logger.debug("Creating new conversation from scratch")
+    log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "Creating new conversation from scratch")
     
     conversation_id = generate_conversation_id()
     conversation = {
@@ -91,32 +91,32 @@ def create_new_conversation_from_scratch():
         'summarizer_system_prompt_date' : datetime.now().isoformat(),
     }
 
-    logger.debug(f"Created conversation with ID: {conversation['conversation_id']}")
+    log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, f"Created conversation with ID: {conversation['conversation_id']}")
     
     # Save the updated conversation
 
     save_conversation(conversation)
-    logger.debug("Saved conversation")
+    log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "Saved conversation")
 
-    logger.debug(f"Conversation created:" + conversation_id)
+    log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, f"Conversation created:" + conversation_id)
     
     return conversation
 
 def create_conversation_from_seed(seed_id):
-    logger.debug("Creating new conversation based on seed: " + seed_id)
+    log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "Creating new conversation based on seed: " + seed_id)
 
     seed = read_game_seed(seed_id)
 
     # Filter out user messages from seed, keeping only assistant messages
 
-    logger.debug("Filtering out user messages from seed")
-    logger.debug("Pre-filtering messages: " + str(len(seed['messages'])))
+    log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "Filtering out user messages from seed")
+    log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "Pre-filtering messages: " + str(len(seed['messages'])))
 
     # No user messages in initial conversation (if we haven't already filtered out elsewhere)
 
     seed['messages'] = [msg for msg in seed['messages'] if msg['role'] == 'assistant']
  
-    logger.debug("Post-filtering messages: " + str(len(seed['messages'])))
+    log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "Post-filtering messages: " + str(len(seed['messages'])))
     
     conversation_id = generate_conversation_id()
     # Create short date string for conversation name
@@ -193,7 +193,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
     new_messages = []
 
     if should_create_generated_plot_info:
-        log_with_category(LogCategory.WORLD_GEN, logging.INFO, "Initiating world generation sequence")
+        log_with_category([LogCategory.WORLD_GEN, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.INFO, "Initiating world generation sequence")
         logger.debug("...Request to run boot sequence identified...")
         # First create the generated plot info
         plot_messages = create_dynamic_world_gen_data_messages(conversation['messages'], conversation['game_setup_system_prompt'])
@@ -201,16 +201,16 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
         new_messages.extend(plot_messages)
         
         # Then execute the final startup instruction
-        logger.debug("Executing final startup instruction")
+        log_with_category([LogCategory.WORLD_GEN, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "Executing final startup instruction")
         conversation, final_messages = execute_final_startup_instruction(conversation)
         new_messages.extend(final_messages)
         
         # Update cache points after boot sequence is complete
-        logger.debug("Boot sequence completed, updating cache points")
+        log_with_category([LogCategory.WORLD_GEN, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "Boot sequence completed, updating cache points")
         conversation = update_conversation_cache_points_2(conversation)
         
-        logger.debug("Boot sequence and cache point setup completed successfully")
-        world_gen_logger.info("World generation sequence completed successfully")
+        log_with_category([LogCategory.WORLD_GEN, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "Boot sequence and cache point setup completed successfully")
+        log_with_category([LogCategory.WORLD_GEN, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.INFO, "World generation sequence completed successfully")
         return conversation, new_messages
         # Check if we need to inject the begin game message
 
@@ -218,7 +218,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
    
     else:
         # Add debug logging for incoming user message
-        logger.debug(f"Received user message: {user_message}")
+        log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, f"Received user message: {preview(user_message, 500)}")
         
         # Add timestamp to user message
         user_message['timestamp'] = datetime.now().isoformat()
@@ -231,7 +231,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
         new_messages = [gm_response_json]
 
         if (isToolUseRequest(gm_response_json)):
-            logger.debug("tool use request detected")
+            log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "tool use request detected")
             # Generate and save tool result with timestamp
             tool_result_json = generate_tool_result(gm_response_json)
             tool_result_json['timestamp'] = datetime.now().isoformat()
@@ -244,13 +244,13 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
             conversation['messages'].append(tool_use_response_json)
             new_messages.append(tool_use_response_json)
         else:
-            logger.debug("no tool use request detected")
+            log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "no tool use request detected")
 
 
         # Get coaching feedback if we have enough messages since boot
-        logger.debug(f"conversation['game_has_begun']: {conversation['game_has_begun']}")
+        log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, f"conversation['game_has_begun']: {conversation['game_has_begun']}")
         if conversation['game_has_begun']:
-            log_with_category(LogCategory.COACHING, logging.DEBUG, "Getting coaching feedback")
+            log_with_category([LogCategory.COACHING, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "Getting coaching feedback")
             # Get boot sequence end index
             boot_sequence_end_index = conversation.get('boot_sequence_end_index', -1)
             
@@ -258,10 +258,10 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
             post_boot_messages = conversation['messages'][boot_sequence_end_index + 1:]
             
             # If we have at least one message since boot, get coaching feedback
-            log_with_category(LogCategory.COACHING, logging.DEBUG, f"len(post_boot_messages): {len(post_boot_messages)}")
+            log_with_category([LogCategory.COACHING, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, f"len(post_boot_messages): {len(post_boot_messages)}")
             if len(post_boot_messages) > 0:
-                log_with_category(LogCategory.COACHING, logging.DEBUG, "post boot messages found")
-                log_with_category(LogCategory.COACHING, logging.DEBUG, f"Getting coaching feedback on {len(post_boot_messages)} messages since boot")
+                log_with_category([LogCategory.COACHING, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "post boot messages found")
+                log_with_category([LogCategory.COACHING, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, f"Getting coaching feedback on {len(post_boot_messages)} messages since boot")
                 messages_to_coach = post_boot_messages[-10:] if len(post_boot_messages) > 10 else post_boot_messages
                 coaching_response, _ = get_coaching_message(
                     messages_to_coach, 
@@ -277,10 +277,10 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
 
         # update caching or perform summarization if necessary
         if usage_data['total_input_tokens'] >= MAX_TOTAL_INPUT_TOKENS:
-            log_with_category(LogCategory.SUMMARIZATION, logging.INFO, "Identified need to summarize conversation with GM, because total input tokens are at " + str(usage_data['total_input_tokens']) + " (max is " + str(MAX_TOTAL_INPUT_TOKENS) + ")")
-            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, "...Identified need to summarize conversation with GM...")
+            log_with_category([LogCategory.SUMMARIZATION, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.INFO, "Identified need to summarize conversation with GM, because total input tokens are at " + str(usage_data['total_input_tokens']) + " (max is " + str(MAX_TOTAL_INPUT_TOKENS) + ")")
+            log_with_category([LogCategory.SUMMARIZATION, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "...Identified need to summarize conversation with GM...")
             conversation = summarize_with_gm_2(conversation)
-            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, "...Summarization produced (not yet saved)...")
+            log_with_category([LogCategory.SUMMARIZATION, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "...Summarization produced (not yet saved)...")
             update_conversation_cache_points_2(conversation)
         elif usage_data['uncached_input_tokens'] >= MAX_UNCACHED_INPUT_TOKENS:
             conversation = update_conversation_cache_points_2(conversation)

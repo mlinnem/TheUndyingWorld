@@ -20,6 +20,10 @@ class LogCategory:
     DIFFICULTY_ROLL = "DIFFICULTY_ROLL"
     SUMMARIZATION = "SUMMARIZATION"
     COACHING = "COACHING"
+    ADVANCE_CONVERSATION_LOGIC = "ADVANCE_CONVERSATION_LOGIC"
+    PERSISTENCE = "PERSISTENCE"
+
+
 class LogLevel:
     VERBOSE_DEBUG = 5
     DEBUG = 10
@@ -45,6 +49,8 @@ category_levels = {
     LogCategory.SUMMARIZATION: LogLevel.INFO,
     LogCategory.CONVERT_MESSAGES_TO_COS: LogLevel.ERROR,
     LogCategory.COACHING: LogLevel.INFO,
+    LogCategory.ADVANCE_CONVERSATION_LOGIC: LogLevel.DEBUG,
+    LogCategory.PERSISTENCE: LogLevel.WARNING,
 }
 
   # Create formatter (will be used by all handlers)
