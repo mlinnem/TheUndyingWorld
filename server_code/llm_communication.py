@@ -217,11 +217,11 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
     logger.info(f"...received response from GM...")
 
     # Print the first 30 characters of the response content
-    if response.content and len(response.content) > 0:
+    if response.content and len(response.content) > 0 and response.content[0].type == "text" and response.content[0].text:
         response_text = response.content[0].text
-        log_with_category(LogCategory.LLM, logging.INFO, "** RECEIVED ** : " + preview(response_text, 50))
+        __debug__ and log_with_category(LogCategory.LLM, logging.INFO, "** RECEIVED ** : " + preview(response_text, 50))
     else:
-        logger.info("No content found in response from GM")
+        logger.info("No content found in response from GM, or it was not a text response")
 
     logger.debug(f"response (from getting next GM response): {response}")
     logger.info(f"response.usage: {response.usage}")

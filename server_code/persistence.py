@@ -281,7 +281,7 @@ def get_game_setup_system_prompt():
     core_lore = _get_llm_instructions('core_lore')
     generative_primer = _get_llm_instructions('generative_primer')
 
-    log_with_category(LogCategory.CACHING, logging.INFO, "Retrieving game system prompt, which includes a cache point")
+    log_with_category(LogCategory.CACHING, logging.DEBUG, "Retrieving game system prompt, which includes a cache point")
 
     return [{
         "type": "text",
@@ -296,7 +296,7 @@ def get_gameplay_system_prompt():
     core_lore = _get_llm_instructions('core_lore')
     game_manual = _get_llm_instructions('game_manual')
 
-    log_with_category(LogCategory.CACHING, logging.INFO, "Retrieving gameplay prompt, which includes a cache point")
+    log_with_category(LogCategory.CACHING, logging.DEBUG, "Retrieving gameplay prompt, which includes a cache point")
 
 
     return [{
@@ -311,7 +311,7 @@ def get_summarizer_system_prompt():
     """
     summarizer = _get_llm_instructions('summarizer')
 
-    log_with_category(LogCategory.CACHING, logging.INFO, "Retrieving summarizer prompt, which includes a cache point")
+    log_with_category(LogCategory.CACHING, logging.DEBUG, "Retrieving summarizer prompt, which includes a cache point")
 
     return [{
         "type": "text",
@@ -327,7 +327,7 @@ def get_coach_system_prompt():
     core_lore = _get_llm_instructions('core_lore')
     game_manual = _get_llm_instructions('game_manual')
 
-    log_with_category(LogCategory.CACHING, logging.INFO, "Retrieving coach prompt, which includes a cache point")
+    log_with_category(LogCategory.CACHING, logging.DEBUG, "Retrieving coach prompt, which includes a cache point")
 
     return [{
         "type": "text",
