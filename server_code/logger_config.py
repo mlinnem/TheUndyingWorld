@@ -8,7 +8,6 @@ class LogCategory:
     WORLD_GEN = "WORLD_GEN"
     LLM = "LLM"
     USAGE = "USAGE" # Only in normal conversation, not summarization or coaching
-    DICE_ROLLS = "DICE_ROLLS"
     CACHING = "CACHING"
     MESSAGE_FILTERING = "MESSAGE_FILTERING"
     CONVERT_MESSAGES_TO_COS = "CONVERT_MESSAGES_TO_COS"
@@ -19,6 +18,8 @@ class LogCategory:
     DIFFICULTY_ANALYSIS = "DIFFICULTY_ANALYSIS"
     DIFFICULTY_TARGET = "DIFFICULTY_TARGET"
     DIFFICULTY_ROLL = "DIFFICULTY_ROLL"
+    SUMMARIZATION = "SUMMARIZATION"
+    COACHING = "COACHING"
 class LogLevel:
     VERBOSE_DEBUG = 5
     DEBUG = 10
@@ -29,10 +30,9 @@ class LogLevel:
 
 # Default levels for each category
 category_levels = {
-    LogCategory.WORLD_GEN: logging.INFO,
-    LogCategory.LLM: logging.INFO,
+    LogCategory.WORLD_GEN: LogLevel.INFO,
+    LogCategory.LLM: LogLevel.INFO,
     LogCategory.USAGE: LogLevel.INFO,
-    LogCategory.DICE_ROLLS: LogLevel.INFO,
     LogCategory.DIFFICULTY_ANALYSIS: LogLevel.INFO,
     LogCategory.DIFFICULTY_TARGET: LogLevel.INFO,
     LogCategory.DIFFICULTY_ROLL: LogLevel.INFO,
@@ -42,7 +42,9 @@ category_levels = {
     LogCategory.TRACKED_OPERATIONS: LogLevel.INFO,
     LogCategory.CACHING: LogLevel.INFO,
     LogCategory.MESSAGE_FILTERING: LogLevel.WARNING,
-    LogCategory.CONVERT_MESSAGES_TO_COS: LogLevel.WARNING,
+    LogCategory.SUMMARIZATION: LogLevel.INFO,
+    LogCategory.CONVERT_MESSAGES_TO_COS: LogLevel.ERROR,
+    LogCategory.COACHING: LogLevel.INFO,
 }
 
   # Create formatter (will be used by all handlers)
@@ -204,17 +206,30 @@ def set_category_level(category: str, level: int | str):
     category_levels[category] = level
     logger.info(f"Set {category} logging level to {logging.getLevelName(level)}")
 
-def log_with_category(category: str, level: int, message: str):
+def log_with_category(category: str | list[str], level: int, message: str):
     """
-    Log a message if it meets the category's level threshold.
+    Log a message if it meets any category's level threshold.
     
     Args:
-        category: The category of the log message
+        category: The category or list of categories of the log message
         level: The logging level for this message
         message: The message to log
     """
-    # Remove debug print
-    logging.log(level, f"[{category}] {message}")
+    if isinstance(category, str):
+        categories = [category]
+    else:
+        categories = category
+
+    # Check if message meets threshold for any category
+    should_log = any(
+        level >= category_levels.get(cat, logging.INFO)
+        for cat in categories
+    )
+    
+    if should_log:
+        # Format categories as [CAT1|CAT2|CAT3]
+        category_str = '|'.join(categories)
+        logging.log(level, f"[{category_str}] {message}")
 
 def preview(message: str, preview_length: int = 50):
     """

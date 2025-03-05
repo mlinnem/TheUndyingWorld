@@ -233,50 +233,50 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
     return response_json, usage_data
 
 def summarize_with_gm_2(conversation):
-    logger.debug(f"Starting summarization for conversation {conversation['conversation_id']}")
+    log_with_category(LogCategory.SUMMARIZATION, logging.INFO, f"Starting summarization for conversation {conversation['conversation_id']}")
     
     permanent_cache_index = conversation.get('permanent_cache_index')
     
     if permanent_cache_index is None or permanent_cache_index == -1:
-        logger.debug("No permanent cache point found, skipping summarization")
+        log_with_category(LogCategory.SUMMARIZATION, logging.WARNING, "No permanent cache point found, skipping summarization")
         return conversation
 
-    logger.debug(f"Using permanent cache point at message index {permanent_cache_index}")
+    log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Using permanent cache point at message index {permanent_cache_index}")
 
     # Calculate initial range to summarize
     start_index = permanent_cache_index + 1
-    logger.debug(f"Initial start index is: {start_index}")
-    logger.debug(f"The message there is as follows: {conversation['messages'][start_index]}")
+    log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Initial start index is: {start_index}")
+    log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"The message there is as follows: {preview(conversation['messages'][start_index], 50)}")
     # Skip any tool_use or tool_result messages at the start
     while start_index < len(conversation['messages']):
-        logger.debug(f"Let's check the first message at index {start_index} to see if it's a tool message")
+        log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Let's check the first message at index {start_index} to see if it's a tool message")
         first_message = conversation['messages'][start_index]
-        logger.debug(f"First message looks like this: {first_message}")
+        log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"First message looks like this: {preview(first_message, 50)}")
         found_a_tool = False
         for content_bit in first_message['content']:
-            logger.debug(f"This message has a content bit that looks like this: {content_bit}")
+            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"This message has a content bit that looks like this: {preview(content_bit, 50)}")
             if content_bit['type'] == 'tool_use' or content_bit['type'] == 'tool_result':
-                logger.debug(f"Found a tool message at index {start_index}")
+                log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Found a tool message at index {start_index}")
                 found_a_tool = True
                 break
         if found_a_tool:
-            logger.debug(f"Moving to the next message at index {start_index + 1}")
+            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Moving to the next message at index {start_index + 1}")
             start_index += 1
         else:
-            logger.debug(f"No tool message found at index {start_index}, breaking out of the loop")
+            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"No tool message found at index {start_index}, breaking out of the loop")
             break
 
-    logger.debug(f"We've found the first non-tool message at index {start_index}, so that should be it going forward")
+    log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"We've found the first non-tool message at index {start_index}, so that should be it going forward")
  
 
     end_index = min(start_index + SUMMARIZATION_BLOCK_SIZE, len(conversation['messages']) - 1)
     # Skip any tool_use or tool_result messages at the end
     while end_index < len(conversation['messages']):
         last_message = conversation['messages'][end_index]
-        logger.debug(f"Last message: {last_message}")
+        log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Last message: {preview(last_message, 50)}")
         found_a_tool = False
         for content_bit in last_message['content']:
-            logger.debug(f"Content bit: {content_bit}")
+            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Content bit: {preview(content_bit, 50)}")
             if content_bit['type'] == 'tool_use' or content_bit['type'] == 'tool_result':
                 found_a_tool = True
                 break
@@ -284,17 +284,17 @@ def summarize_with_gm_2(conversation):
             end_index += 1
         else:
             break
-        logger.debug(f"Skipped tool message at end, new end_index: {end_index}")
+        log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Skipped tool message at end, new end_index: {end_index}")
     
     messages_to_summarize = conversation['messages'][start_index:end_index + 1]
     remaining_messages = conversation['messages'][end_index + 1:]
 
-    logger.debug(f"Preparing to summarize messages from index {start_index} to {end_index}")
-    logger.debug(f"Number of messages to summarize: {len(messages_to_summarize)}")
-    logger.debug(f"Number of remaining messages: {len(remaining_messages)}")
+    log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Preparing to summarize messages from index {start_index} to {end_index}")
+    log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Number of messages to summarize: {len(messages_to_summarize)}")
+    log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Number of remaining messages: {len(remaining_messages)}")
 
     if len(messages_to_summarize) > 0:
-        logger.debug("Loading summarizer instructions...")
+        log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, "Loading summarizer instructions...")
         summarizer_instructions = conversation['summarizer_system_prompt']
 
         formatted_messages = "\n\n".join([
@@ -302,7 +302,7 @@ def summarize_with_gm_2(conversation):
             for msg in messages_to_summarize
         ])
 
-        logger.debug("Preparing to call Claude for summarization...")
+        log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, "Preparing to call Claude for summarization...")
 
         # Extract just the text from the system prompt if it's in the wrong format
         if isinstance(summarizer_instructions, list):
@@ -313,12 +313,12 @@ def summarize_with_gm_2(conversation):
         else:
             system_prompt = summarizer_instructions
 
-        logger.debug(f"System prompt: {system_prompt}")
+        log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"System prompt: {preview(system_prompt, 50)}")
 
         try:
-            logger.debug("Calling Claude API for summarization...")
+            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, "Calling Claude API for summarization...")
 
-            log_with_category(LogCategory.USAGE, logging.INFO, "** SENDING ** : " + preview(formatted_messages, 50))
+            log_with_category([LogCategory.LLM, LogCategory.SUMMARIZATION], logging.INFO, "** SENDING ** : " + preview(formatted_messages, 50))
             response = client.messages.create(
                 model="claude-3-7-sonnet-20250219",
                 messages=[{
@@ -333,7 +333,7 @@ def summarize_with_gm_2(conversation):
                 temperature=0.6,
             )
 
-            log_with_category(LogCategory.USAGE, logging.INFO, "** RECEIVED ** : " + preview(response.content[0].text, 50))
+            log_with_category([LogCategory.LLM, LogCategory.SUMMARIZATION], logging.INFO, "** RECEIVED ** : " + preview(response.content[0].text, 50))
 
             usage_data = {
                 "uncached_input_tokens": response.usage.input_tokens,
@@ -342,13 +342,13 @@ def summarize_with_gm_2(conversation):
             }
 
 
-            logger.debug(f"Response: {response}")
+            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Response: {preview(response, 50)}")
             summary = response.content[0].text
-            logger.debug("Successfully generated summary")
-            logger.debug(f"Summary: {summary}")
+            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, "Successfully generated summary")
+            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Summary: {preview(summary, 50)}")
             
             # Reconstruct conversation
-            logger.debug("Reconstructing conversation with summary...")
+            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, "Reconstructing conversation with summary...")
             original_length = len(conversation['messages'])
             
             # Create summary message with cache control
@@ -384,16 +384,16 @@ def summarize_with_gm_2(conversation):
             conversation['dynamic_cache_index'] = None
             
             new_length = len(conversation['messages'])
-            logger.debug(f"Conversation length changed from {original_length} to {new_length} messages")
-            logger.debug(f"Successfully replaced {len(messages_to_summarize)} messages with summary")
-            logger.debug(f"New permanent cache index set to {conversation['permanent_cache_index']}")
+            log_with_category(LogCategory.SUMMARIZATION, logging.INFO, f"Conversation length changed from {original_length} to {new_length} messages")
+            log_with_category(LogCategory.SUMMARIZATION, logging.INFO, f"Successfully replaced {len(messages_to_summarize)} messages with summary")
+            log_with_category([LogCategory.SUMMARIZATION, LogCategory.CACHING], logging.INFO, f"New permanent cache index set to {conversation['permanent_cache_index']}")
             
         except Exception as e:
-            logger.error(f"Error during summarization process: {str(e)}", exc_info=True)
+            log_with_category(LogCategory.SUMMARIZATION, logging.ERROR, f"Error during summarization process: {str(e)}", exc_info=True)
             return conversation
 
     else:
-        logger.debug("No messages to summarize after permanent cache point")
+        log_with_category(LogCategory.SUMMARIZATION, logging.INFO, "No messages to summarize after permanent cache point")
 
     return conversation
 

@@ -43,9 +43,6 @@ def generate_tool_result(gm_response_json):
             }
         ]
     }
-
-    log_with_category(LogCategory.DICE_ROLLS, logging.INFO, f"{roll_string}")
-
     
 
     return tool_result

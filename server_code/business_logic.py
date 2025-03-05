@@ -156,18 +156,18 @@ def create_conversation_from_seed(seed_id):
 
 
 def update_conversation_cache_points_2(conversation):
-    logger.debug(f"Updating cache points for conversation {conversation['conversation_id']}")
-    logger.debug(f"Current permanent_cache_index: {conversation.get('permanent_cache_index')}")
-    logger.debug(f"Current dynamic_cache_index: {conversation.get('dynamic_cache_index')}")
+    log_with_category(LogCategory.CACHING, logging.DEBUG, f"Updating cache points for conversation {conversation['conversation_id']}")
+    log_with_category(LogCategory.CACHING, logging.DEBUG, f"Current permanent_cache_index: {conversation.get('permanent_cache_index')}")
+    log_with_category(LogCategory.CACHING, logging.DEBUG, f"Current dynamic_cache_index: {conversation.get('dynamic_cache_index')}")
 
     num_boot_sequence_messages = conversation.get('boot_sequence_end_index', -1) + 1
     num_messages = len(conversation['messages'])
 
     if num_messages > CACHE_EVERY_N_MESSAGES:
         dynamic_cache_index = num_messages - (num_messages % CACHE_EVERY_N_MESSAGES) - 1
-        logger.info(f"...Dynamic cache index set to {dynamic_cache_index}...")
+        log_with_category(LogCategory.CACHING, logging.INFO, f"...Dynamic cache index set to {dynamic_cache_index}..." + "(out of " + str(num_messages) + " messages)")
     else:
-        logger.debug("Not enough messages for dynamic cache")
+        log_with_category(LogCategory.CACHING, logging.INFO, "Not enough messages for dynamic cache")
         dynamic_cache_index = None
 
     conversation['dynamic_cache_index'] = dynamic_cache_index
@@ -176,16 +176,16 @@ def update_conversation_cache_points_2(conversation):
     if conversation.get('permanent_cache_index') is None:
         if num_messages > num_boot_sequence_messages + MESSAGES_TO_PRESERVE_AFTER_BOOT_SEQUENCE:
             new_permanent_index = num_boot_sequence_messages + MESSAGES_TO_PRESERVE_AFTER_BOOT_SEQUENCE - 1
-            logger.debug(f"Setting initial permanent cache index to {new_permanent_index}")
+            log_with_category(LogCategory.CACHING, logging.DEBUG, f"Setting initial permanent cache index to {new_permanent_index}" + "(out of " + str(num_messages) + " messages)")
             conversation['permanent_cache_index'] = new_permanent_index
-            logger.info(f"...Permanent cache index set to {conversation['permanent_cache_index']}...")
+            log_with_category(LogCategory.CACHING, logging.INFO, f"...Permanent cache index set to {conversation['permanent_cache_index']}..." + "(out of " + str(num_messages) + " messages)")
         else:
-            logger.debug("Not enough messages after boot sequence for permanent cache")
+            log_with_category(LogCategory.CACHING, logging.DEBUG, "Not enough messages after boot sequence for permanent cache")
             conversation['permanent_cache_index'] = None
     else:
-        logger.debug("Permanent cache index already set")
+        log_with_category(LogCategory.CACHING, logging.DEBUG, "Permanent cache index already set")
 
-    logger.debug(f"Final cache indices - permanent: {conversation.get('permanent_cache_index')}, dynamic: {conversation.get('dynamic_cache_index')}")
+    log_with_category(LogCategory.CACHING, logging.DEBUG, f"Final cache indices - permanent: {conversation.get('permanent_cache_index')}, dynamic: {conversation.get('dynamic_cache_index')}")
     return conversation
 
 
@@ -249,8 +249,8 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
 
         # Get coaching feedback if we have enough messages since boot
         logger.debug(f"conversation['game_has_begun']: {conversation['game_has_begun']}")
-        if False: # COACHING DISABLED FOR NOW
-            logger.debug("game has begun")
+        if conversation['game_has_begun']:
+            log_with_category(LogCategory.COACHING, logging.DEBUG, "Getting coaching feedback")
             # Get boot sequence end index
             boot_sequence_end_index = conversation.get('boot_sequence_end_index', -1)
             
@@ -258,10 +258,10 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
             post_boot_messages = conversation['messages'][boot_sequence_end_index + 1:]
             
             # If we have at least one message since boot, get coaching feedback
-            logger.debug(f"len(post_boot_messages): {len(post_boot_messages)}")
+            log_with_category(LogCategory.COACHING, logging.DEBUG, f"len(post_boot_messages): {len(post_boot_messages)}")
             if len(post_boot_messages) > 0:
-                logger.debug("post boot messages found")
-                logger.debug(f"Getting coaching feedback on {len(post_boot_messages)} messages since boot")
+                log_with_category(LogCategory.COACHING, logging.DEBUG, "post boot messages found")
+                log_with_category(LogCategory.COACHING, logging.DEBUG, f"Getting coaching feedback on {len(post_boot_messages)} messages since boot")
                 messages_to_coach = post_boot_messages[-10:] if len(post_boot_messages) > 10 else post_boot_messages
                 coaching_response, _ = get_coaching_message(
                     messages_to_coach, 
@@ -269,17 +269,18 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
                     temperature=0.4 
                 )
                 conversation['messages'].append(coaching_response)
-                logger.info(f"Coaching feedback received: {coaching_response}")
+                log_with_category(LogCategory.COACHING, logging.INFO, f"Coaching feedback received: {preview(coaching_response, 500)}")
         else:
-            logger.debug("game has not begun")
+            log_with_category(LogCategory.COACHING, logging.DEBUG, "game has not begun")
         
 
 
         # update caching or perform summarization if necessary
         if usage_data['total_input_tokens'] >= MAX_TOTAL_INPUT_TOKENS:
-            logger.info("...Identified need to summarize conversation with GM...")
+            log_with_category(LogCategory.SUMMARIZATION, logging.INFO, "Identified need to summarize conversation with GM, because total input tokens are at " + str(usage_data['total_input_tokens']) + " (max is " + str(MAX_TOTAL_INPUT_TOKENS) + ")")
+            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, "...Identified need to summarize conversation with GM...")
             conversation = summarize_with_gm_2(conversation)
-            logger.info("...Summarization produced (not yet saved)...")
+            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, "...Summarization produced (not yet saved)...")
             update_conversation_cache_points_2(conversation)
         elif usage_data['uncached_input_tokens'] >= MAX_UNCACHED_INPUT_TOKENS:
             conversation = update_conversation_cache_points_2(conversation)
@@ -328,7 +329,6 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
                 if i == len(world_gen_instructions_w_omit_data) - 1 - 1: # -1 to reveal the final message to user, -1 to adjust for length vs index
                     logger.debug("Marking last GM response as boot sequence end")
                     gm_response['is_boot_sequence_end'] = True
-
                     # Add the last message to the final messages, as it will inform several messages to come
                     final_messages.append(world_gen_instruction)
                     
