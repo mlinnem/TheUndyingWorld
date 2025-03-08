@@ -11,7 +11,9 @@ from .route_utils import *
 from .logger_config import LogCategory, log_with_category, preview
 
 import logging
+import traceback  
 logger = logging.getLogger(__name__)
+  
 
 
 load_dotenv()
@@ -77,11 +79,9 @@ def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cac
         temperature=temperature,
     )
 
-    log_with_category(LogCategory.USAGE, logging.INFO, "** RECEIVED ** : " + preview(response.content[0].text, 50))
-
-    logger.info(f"response (from getting coaching message): {response}")
-
     logger.info(f"...received response from GM...")
+
+    _log_response_if_able(response, [LogCategory.LLM, LogCategory.COACHING])
 
     logger.info(f"response.usage: {response.usage}")
 
@@ -180,7 +180,7 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
                 logger.info("Adding dynamic cache control at index: " + str(i))
                 clean_content['cache_control'] = {"type": "ephemeral"}
                 logger.info(f"clean_content: {clean_content}")
-                log_with_category(LogCategory.CACHING, logging.INFO, "Placing dynamic cache point on message " + str(i) + "(out of " + str(len(filtered_messages)) + "messages)")
+                log_with_category(LogCategory.CACHING, logging.INFO, "Placing dynamic cache point on message " + str(i) + " (out of " + str(len(filtered_messages)) + " messages)")
             cleaned_content.append(clean_content)
             
         cleaned_messages.append({
@@ -216,14 +216,8 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
     )
     logger.info(f"...received response from GM...")
 
-    # Print the first 30 characters of the response content
-    if response.content and len(response.content) > 0 and response.content[0].type == "text" and response.content[0].text:
-        response_text = response.content[0].text
-        __debug__ and log_with_category(LogCategory.LLM, logging.INFO, "** RECEIVED ** : " + preview(response_text, 50))
-    else:
-        logger.info("No content found in response from GM, or it was not a text response")
+    _log_response_if_able(response, [LogCategory.LLM])
 
-    logger.debug(f"response (from getting next GM response): {response}")
     logger.info(f"response.usage: {response.usage}")
 
     response_json, usage_data = _process_response(response)
@@ -342,7 +336,10 @@ def summarize_with_gm_2(conversation):
             }
 
 
-            log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Response: {preview(response, 50)}")
+                # Print the first 30 characters of the response content
+            
+            _log_response_if_able(response, [LogCategory.SUMMARIZATION, LogCategory.LLM])
+
             summary = response.content[0].text
             log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, "Successfully generated summary")
             log_with_category(LogCategory.SUMMARIZATION, logging.DEBUG, f"Summary: {preview(summary, 50)}")
@@ -389,7 +386,8 @@ def summarize_with_gm_2(conversation):
             log_with_category([LogCategory.SUMMARIZATION, LogCategory.CACHING], logging.INFO, f"New permanent cache index set to {conversation['permanent_cache_index']}")
             
         except Exception as e:
-            log_with_category(LogCategory.SUMMARIZATION, logging.ERROR, f"Error during summarization process: {str(e)}", exc_info=True)
+            full_traceback = traceback.format_exc()
+            log_with_category(LogCategory.SUMMARIZATION, logging.ERROR, f"Error during summarization process: {str(e)}\nFull traceback:\n{full_traceback}")
             return conversation
 
     else:
@@ -483,3 +481,10 @@ def _process_response(response):
     logger.debug(f"response.usage: {response.usage}")
 
     return response_json, usage_data
+
+def _log_response_if_able(response, categories):
+    if response.content and len(response.content) > 0 and response.content[0].type == "text" and response.content[0].text:
+        response_text = response.content[0].text
+        __debug__ and log_with_category(categories, logging.INFO, "** RECEIVED ** : " + preview(response_text, 50))
+    else:
+        logger.info("No content found in response from GM, or it was not a text response")

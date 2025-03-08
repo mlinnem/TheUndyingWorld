@@ -269,7 +269,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
                     temperature=0.4 
                 )
                 conversation['messages'].append(coaching_response)
-                log_with_category(LogCategory.COACHING, logging.INFO, f"Coaching feedback received: {preview(coaching_response, 500)}")
+                log_with_category(LogCategory.COACHING, logging.INFO, f"Coaching feedback received: {coaching_response}")
         else:
             log_with_category(LogCategory.COACHING, logging.DEBUG, "game has not begun")
         

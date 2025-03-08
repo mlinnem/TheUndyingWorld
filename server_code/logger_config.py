@@ -79,7 +79,7 @@ def setup_logging():
     # Create and configure debug file handler (captures everything)
     debug_file_handler = RotatingFileHandler(debug_log_file, maxBytes=1024*1024*30, backupCount=5)
     debug_file_handler.setFormatter(log_formatter)
-    debug_file_handler.setLevel(logging.INFO)
+    debug_file_handler.setLevel(logging.DEBUG)
     
     # Create and configure info file handler (captures INFO and above)
     info_file_handler = RotatingFileHandler(info_log_file, maxBytes=1024*1024*30, backupCount=5)
@@ -151,45 +151,6 @@ def set_console_level_for_module(module_name: str, level: int | str):
             
     logger.info(f"Set console logging level to {logging.getLevelName(level)} for {module_name}")
 
-def setup_coaching_logger():
-    """
-    Set up a specialized logger for the coaching system that can be used across multiple files.
-    Returns the logger instance.
-    """
-    # Create logs directory if it doesn't exist
-    log_dir = 'persistent/conversation_logs/'
-    coaching_log_file = os.path.join(log_dir, 'coaching.log')
-    
-    # Create coaching logger
-    coach_logger = logging.getLogger('coaching')
-    coach_logger.setLevel(logging.INFO)  # Capture everything at logger level
-    
-    # Create coaching file handler (DEBUG level)
-    coaching_file_handler = RotatingFileHandler(
-        coaching_log_file, 
-        maxBytes=1024*1024*30,  # 30MB
-        backupCount=5
-    )
-    coaching_file_handler.setFormatter(log_formatter)
-    coaching_file_handler.setLevel(logging.DEBUG)  # File gets all debug messages
-    
-    # Create console handler specific to coaching (DEBUG level)
-    coaching_console_handler = logging.StreamHandler()
-    coaching_console_handler.setFormatter(log_formatter)
-    coaching_console_handler.setLevel(logging.DEBUG)  # Console gets DEBUG and above for coaching
-    
-    # Remove any existing handlers
-    coach_logger.handlers.clear()
-    
-    # Add the handlers
-    coach_logger.addHandler(coaching_file_handler)
-    coach_logger.addHandler(coaching_console_handler)
-    
-    # Prevent propagation to avoid duplicate logs
-    coach_logger.propagate = False
-    
-    return coach_logger
-
 # Call setup_logging when this module is imported
 setup_logging()
 
@@ -214,28 +175,47 @@ def set_category_level(category: str, level: int | str):
 
 def log_with_category(category: str | list[str], level: int, message: str):
     """
-    Log a message if it meets any category's level threshold.
-    
-    Args:
-        category: The category or list of categories of the log message
-        level: The logging level for this message
-        message: The message to log
+    Log a message with different behaviors for console and file outputs:
+    - Console: Only show if message meets category's level threshold
+    - Info file: All messages of INFO level and above
+    - Debug file: All messages of DEBUG level and above
     """
     if isinstance(category, str):
         categories = [category]
     else:
         categories = category
 
-    # Check if message meets threshold for any category
-    should_log = any(
-        level >= category_levels.get(cat, logging.INFO)
-        for cat in categories
+    # Format categories as [CAT1|CAT2|CAT3]
+    category_str = '|'.join(categories)
+    formatted_message = f"[{category_str}] {message}"
+
+    # Get the root logger
+    root_logger = logging.getLogger()
+    
+    # Create the log record once
+    record = root_logger.makeRecord(
+        root_logger.name,
+        level,
+        "(unknown file)", 0,
+        formatted_message,
+        None,
+        None
     )
     
-    if should_log:
-        # Format categories as [CAT1|CAT2|CAT3]
-        category_str = '|'.join(categories)
-        logging.log(level, f"[{category_str}] {message}")
+    # Log to each handler based on its type and level
+    for handler in root_logger.handlers:
+        if isinstance(handler, logging.StreamHandler):
+            # Console handler: Apply category-based filtering
+            should_log = any(
+                level >= category_levels.get(cat, logging.INFO)
+                for cat in categories
+            )
+            if should_log:
+                handler.handle(record)
+        else:
+            # File handlers: Use standard severity-based filtering
+            if level >= handler.level:
+                handler.handle(record)
 
 def preview(message: str, preview_length: int = 50):
     """
