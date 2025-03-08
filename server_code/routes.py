@@ -35,7 +35,7 @@ def load_game_route():
 def game_route(conversation_id):
     logger.info(f"Received request for game with conversation_id: {conversation_id}")
 
-    conversation = get_conversation(conversation_id)
+    conversation = getConversation(conversation_id)
     if not conversation:
         logger.warning(f"Conversation not found: {conversation_id}. Redirecting to main menu.")
         return redirect(url_for('routes.index_route'))
@@ -54,7 +54,7 @@ def game_route(conversation_id):
 @routes.route('/get_game_world_listings', methods=['GET'])
 def get_seed_listings_route():
     logger.info("Received request for game seed listings data...")
-    game_seed_listings = get_game_seed_listings()    
+    game_seed_listings = getGameSeedListings()    
     logger.info("...Game seed listings returned")
     return jsonify({'game_seed_listings': game_seed_listings})
 
@@ -89,7 +89,7 @@ def advance_conversation_route():
         raw_user_message = data.get('user_message')
         user_message_for_server = convert_user_text_to_message(raw_user_message)
 
-        conversation = get_conversation(conversation_id)
+        conversation = getConversation(conversation_id)
         if not conversation:
             logger.error(f"...Conversation for id: {conversation_id} not found. Returning error.")
             return jsonify({
@@ -102,8 +102,8 @@ def advance_conversation_route():
                 'parsing_errors': [],
             }), 404
             
-        conversation, new_messages = advance_conversation(user_message_for_server, conversation, should_run_boot_sequence)
-        save_conversation(conversation)
+        conversation, new_messages = advanceConversation(user_message_for_server, conversation, should_run_boot_sequence)
+        saveConversation(conversation)
         user_message_was_persisted = True
 
         logger.info(f"...Conversation with id {conversation_id} advanced from {len(conversation['messages']) - 1} messages to {len(conversation['messages'])} messages and saved...")
@@ -153,10 +153,10 @@ def create_conversation_from_seed_route():
                 'message': 'No seed ID provided'
             }), 400
 
-        conversation = create_conversation_from_seed(seed_id)
+        conversation = createConversationFromSeed(seed_id)
 
         # Save the seeded conversation
-        save_conversation(conversation)
+        saveConversation(conversation)
         logger.info(f"...Conversation with id {conversation['conversation_id']} created from seed and saved...")
         logger.info(f"...Returning instruction to redirect to new conversation (based on our seed) with id: {conversation['conversation_id']}")
         return jsonify({
@@ -181,7 +181,7 @@ def create_conversation_route():
         logger.info("Received new conversation creation request...")
         
         # Create the conversation
-        conversation = create_new_conversation_from_scratch()
+        conversation = createNewConversationFromScratch()
         conversation_id = conversation['conversation_id']
         logger.info(f"...New conversation with id: {conversation_id} created...")
         # Instead of returning JSON, return a redirect URL
@@ -218,7 +218,7 @@ def delete_conversation_route():
 @routes.route('/get_conversation_listings', methods=['GET'])
 def get_conversation_listings_route():
     logger.info("Received request for conversation listings...")
-    conversation_listings = get_conversation_listings()
+    conversation_listings = getConversationListings()
     logger.info("...Conversation listings returned")
     return jsonify({'conversation_listings': conversation_listings})
 
@@ -237,7 +237,7 @@ def get_conversation_route():
             }), 400
             
         logger.info(f"Received request for conversation with id: {conversation_id}...")
-        conversation = get_conversation(conversation_id)
+        conversation = getConversation(conversation_id)
         
         if conversation:
             conversation_objects = convert_messages_to_cos(conversation['messages'])

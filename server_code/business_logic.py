@@ -25,7 +25,7 @@ if not os.path.exists(CONVERSATIONS_DIR):
     os.makedirs(CONVERSATIONS_DIR)
 
 
-def get_game_seed_listings():
+def getGameSeedListings():
     game_seed_ids = read_all_game_seed_ids()
     game_seed_listings = []
     for game_seed_id in game_seed_ids:
@@ -43,16 +43,16 @@ def get_game_seed_listings():
     return game_seed_listings
 
 
-def save_conversation(conversation):
+def saveConversation(conversation):
     log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, f"Saving conversation {conversation['conversation_id']}")
     conversation['last_updated'] = datetime.now().isoformat()
     conversation['message_count'] = len(conversation['messages'])
     write_conversation(conversation)
 
-def get_conversation(conversation_id):
+def getConversation(conversation_id):
     return read_conversation(conversation_id)
 
-def get_conversation_listings():
+def getConversationListings():
     conversation_ids = read_all_conversation_ids()
     conversation_listings = []
     for conversation_id in conversation_ids:
@@ -68,13 +68,13 @@ def get_conversation_listings():
         conversation_listings.append(conversation_listing)
     return sorted(conversation_listings, key=lambda x: x['last_updated'], reverse=True)
 
-def generate_conversation_id():
+def generateConversationID():
     return datetime.now().strftime("%Y%m%d%H%M%S")
 
-def create_new_conversation_from_scratch():
+def createNewConversationFromScratch():
     log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "Creating new conversation from scratch")
     
-    conversation_id = generate_conversation_id()
+    conversation_id = generateConversationID()
     conversation = {
         'conversation_id': conversation_id,
         'name': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -95,14 +95,14 @@ def create_new_conversation_from_scratch():
     
     # Save the updated conversation
 
-    save_conversation(conversation)
+    saveConversation(conversation)
     log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "Saved conversation")
 
     log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, f"Conversation created:" + conversation_id)
     
     return conversation
 
-def create_conversation_from_seed(seed_id):
+def createConversationFromSeed(seed_id):
     log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "Creating new conversation based on seed: " + seed_id)
 
     seed = read_game_seed(seed_id)
@@ -118,7 +118,7 @@ def create_conversation_from_seed(seed_id):
  
     log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "Post-filtering messages: " + str(len(seed['messages'])))
     
-    conversation_id = generate_conversation_id()
+    conversation_id = generateConversationID()
     # Create short date string for conversation name
     short_date = datetime.now().strftime("%b %d")
 
@@ -155,7 +155,7 @@ def create_conversation_from_seed(seed_id):
 
 
 
-def updateConversationCachPoints(conversation):
+def updateConversationCachePoints(conversation):
     log_with_category(LogCategory.CACHING, logging.DEBUG, f"Updating cache points for conversation {conversation['conversation_id']}")
     log_with_category(LogCategory.CACHING, logging.DEBUG, f"Current permanent_cache_index: {conversation.get('permanent_cache_index')}")
     log_with_category(LogCategory.CACHING, logging.DEBUG, f"Current dynamic_cache_index: {conversation.get('dynamic_cache_index')}")
@@ -189,25 +189,25 @@ def updateConversationCachPoints(conversation):
     return conversation
 
 
-def advance_conversation(user_message, conversation, should_create_generated_plot_info):
+def advanceConversation(user_message, conversation, should_create_generated_plot_info):
     new_messages = []
 
     if should_create_generated_plot_info:
         log_with_category([LogCategory.WORLD_GEN, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.INFO, "Initiating world generation sequence")
         logger.debug("...Request to run boot sequence identified...")
         # First create the generated plot info
-        plot_messages = create_dynamic_world_gen_data_messages(conversation['messages'], conversation['game_setup_system_prompt'])
+        plot_messages = createDynamicWorldGenDataMessages(conversation['messages'], conversation['game_setup_system_prompt'])
         conversation['messages'].extend(plot_messages)
         new_messages.extend(plot_messages)
         
         # Then execute the final startup instruction
         log_with_category([LogCategory.WORLD_GEN, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "Executing final startup instruction")
-        conversation, final_messages = execute_final_startup_instruction(conversation)
+        conversation, final_messages = executeFinalStartupInstruction(conversation)
         new_messages.extend(final_messages)
         
         # Update cache points after boot sequence is complete
         log_with_category([LogCategory.WORLD_GEN, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "Boot sequence completed, updating cache points")
-        conversation = updateConversationCachPoints(conversation)
+        conversation = updateConversationCachePoints(conversation)
         
         log_with_category([LogCategory.WORLD_GEN, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "Boot sequence and cache point setup completed successfully")
         log_with_category([LogCategory.WORLD_GEN, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.INFO, "World generation sequence completed successfully")
@@ -281,16 +281,16 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
             log_with_category([LogCategory.SUMMARIZATION, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "...Identified need to summarize conversation with GM...")
             conversation = summarizeWithGM(conversation)
             log_with_category([LogCategory.SUMMARIZATION, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "...Summarization produced (not yet saved)...")
-            updateConversationCachPoints(conversation)
+            updateConversationCachePoints(conversation)
         elif usage_data['uncached_input_tokens'] >= MAX_UNCACHED_INPUT_TOKENS:
-            conversation = updateConversationCachPoints(conversation)
+            conversation = updateConversationCachePoints(conversation)
 
         conversation['game_has_begun'] = True
         conversation['game_has_begun_date'] = datetime.now().isoformat()
 
         return conversation, new_messages
 
-def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_prompt):
+def createDynamicWorldGenDataMessages(existing_messages, game_setup_system_prompt):
     logger.debug("Creating dynamic world gen data messages")
     try:
         import random
@@ -376,7 +376,7 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
 
         # Create and save game seed after boot sequence
         game_seed = {
-            'conversation_id': generate_conversation_id(),
+            'conversation_id': generateConversationID(),
             'messages': final_messages,
             'location': "Custom World",  # Use first line as location
             'description': "This is a custom world created by the player at " + datetime.now().isoformat(),
@@ -403,7 +403,7 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
         logger.error(f"Error reading boot sequence messages: {e}")
         raise
 
-def execute_final_startup_instruction(conversation: Dict):
+def executeFinalStartupInstruction(conversation: Dict):
     """
     Execute the final startup instruction after world generation is complete.
     Returns the updated conversation and any new messages.
