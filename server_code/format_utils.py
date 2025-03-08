@@ -9,27 +9,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def produce_intro_blurb_for_server(intro_blurb):
-    return {
-        "role": "assistant",
-        "content": [{
-            "type": "text",
-            "text": "# OOC Message\n\n" + intro_blurb
-        }]
-    }
 
-def produce_user_message_for_server(user_message):
-    return {
-        "role": "user",
-        "content": [{
-            "type": "text",
-            "text": user_message
-        }]
-    }
 
 # TODO: This is a bit messy, and could be cleaned up.
 
-def _format_user_message(user_message):
+def _formatUserMessage(user_message):
     user_block = user_message['content'][0]['text']
 
     return [{
@@ -38,7 +22,7 @@ def _format_user_message(user_message):
         "user_message": user_block
     }]
 
-def _format_analysis(analysis_message):
+def _formatAnalysis(analysis_message):
     analysis_block = analysis_message['content'][0]['text']
     analysis_sections = analysis_block.split('#')[1:]
 
@@ -75,7 +59,7 @@ def _format_analysis(analysis_message):
 
     return analysis_objects
 
-def _format_rolls(roll_message):
+def _formatRolls(roll_message):
     logger.debug(f"Formatting rolls: {roll_message}")
     roll_block = roll_message['content'][0]['content']
     logger.debug(f"roll_block: {roll_block}")
@@ -104,7 +88,7 @@ def _format_rolls(roll_message):
             # Don't add this to the roll_messages
     return roll_objects
 
-def _format_result(result_message):
+def _formatResult(result_message):
     # Check if the message has the expected structure
     if not result_message.get('content') or not result_message['content'][0].get('text'):
         logger.error("Result message missing expected content structure")
@@ -153,9 +137,9 @@ def _format_result(result_message):
 
 
 # TODO: Make this and related functions smarter about map, quadrants, zones, etc.
-def _format_world_gen_data(world_gen_data_message):
+def _formatWorldGenData(world_gen_data_message):
     world_gen_data_block = world_gen_data_message['content'][0]['text']
-    data = _all_but_header(world_gen_data_block)
+    data = _allButHeader(world_gen_data_block)
     
     return [{
         "source": "llm",
@@ -163,13 +147,13 @@ def _format_world_gen_data(world_gen_data_message):
         "world_gen_data": data
     }]
 
-def _format_ooc_message(ooc_message):
+def _formatOOCMessage(ooc_message):
     ooc_block = ooc_message['content'][0]['text']
     if "#" in ooc_block:
         # Split by '#' and take sections after the first '#'
         sections = ooc_block.split('#')[1:]
         # For each section, remove the first line (header) and join remaining lines
-        text = _all_but_header(sections[0])
+        text = _allButHeader(sections[0])
     else:
         text = ooc_block
 
@@ -179,10 +163,10 @@ def _format_ooc_message(ooc_message):
         "ooc_message": text
     }]
 
-def _all_but_header(text):
+def _allButHeader(text):
     return '\n'.join(text.split('\n')[1:])
 
-def format_error_object(error_type, error_message, original_message=None):
+def formatErrorObject(error_type, error_message, original_message=None):
     return [{
         "source": "server",
         "type": "error",
@@ -191,7 +175,7 @@ def format_error_object(error_type, error_message, original_message=None):
         "original_message": original_message
     }]
 
-def _split_message_sections(text):
+def _splitMessageSections(text):
     """Split a message into sections based on # headers, preserving any text before the first #"""
     parts = text.split('#')
     sections = []
@@ -211,44 +195,6 @@ def _split_message_sections(text):
     
     return sections
 
-def _process_mixed_content(message):
-    """Process a message that might contain multiple types of content"""
-    objects = []
-    text = message['content'][0]['text']
-    sections = _split_message_sections(text)
-    
-    for header_type, content in sections:
-        if not header_type or not content:
-            continue
-            
-        if header_type == 'ooc':
-            objects.extend([{
-                "source": "llm",
-                "type": "ooc_message",
-                "ooc_message": content
-            }])
-        else:
-            # Reconstruct the section with its header for existing processors
-            reconstructed = f"#{header_type}\n{content}"
-            if any(term in header_type for term in ['difficulty', 'world']):
-                objects.extend(_format_analysis({'content': [{'text': reconstructed}]}))
-            elif 'result' in header_type:
-                objects.extend(_format_result({'content': [{'text': reconstructed}]}))
-            elif any(term in header_type for term in ['map', 'zone', 'quadrant']):
-                objects.extend(_format_world_gen_data({'content': [{'text': reconstructed}]}))
-
-    return objects
-
-def produce_final_startup_instruction():
-    return {
-        "role": "user",
-        "content": [{
-            "type": "text",
-            "text": get_final_startup_instruction_string()
-        }],
-        "is_begin_game": True
-    }
-
 def _is_begin_game(message):
     logger.debug(f"Checking if message is begin game: {message}")
     if message['role'] == 'assistant':
@@ -259,7 +205,7 @@ def _is_begin_game(message):
 
 def _format_begin_game(message):
     begin_game_block = message['content'][0]['text']
-    text = _all_but_header(begin_game_block)
+    text = _allButHeader(begin_game_block)
     
     return [{
         "source": "llm",
@@ -275,37 +221,37 @@ def produce_conversation_objects_for_client(messages):
         try:
             if _is_user_message(message):
                 logger.debug(f"Formatting user message: {message}")
-                objects_for_client.extend(_format_user_message(message))
+                objects_for_client.extend(_formatUserMessage(message))
             elif _is_begin_game(message):
                 logger.debug(f"Formatting begin game message: {message}")
                 objects_for_client.extend(_format_begin_game(message))
             elif _is_analysis(message):
                 logger.debug(f"Formatting analysis: {message}")
-                objects_for_client.extend(_format_analysis(message))
+                objects_for_client.extend(_formatAnalysis(message))
             elif _is_rolls(message):
                 logger.debug(f"Formatting rolls: {message}")
-                objects_for_client.extend(_format_rolls(message))
+                objects_for_client.extend(_formatRolls(message))
             elif _is_result(message):
                 logger.debug(f"Formatting result: {message}")
-                objects_for_client.extend(_format_result(message))
+                objects_for_client.extend(_formatResult(message))
             elif is_world_gen_data(message):
                 logger.debug(f"Formatting world gen data: {message}")
-                objects_for_client.extend(_format_world_gen_data(message))
+                objects_for_client.extend(_formatWorldGenData(message))
             elif _is_ooc_message(message):
                 logger.debug(f"Formatting OOC message: {message}")
-                objects_for_client.extend(_format_ooc_message(message))
+                objects_for_client.extend(_formatOOCMessage(message))
             else:
                 error_msg = f"Unable to identify a block type for message: {message}"
                 logger.error(error_msg)
                 logger.error(f"Full traceback:\n{traceback.format_exc()}")
-                objects_for_client.extend(format_error_object("parsing_message_error", error_msg))
+                objects_for_client.extend(formatErrorObject("parsing_message_error", error_msg))
                 parsing_errors.append(f"Message of unknown type at index {index}: {error_msg}")
         except Exception as e:
             error_msg = f"Error formatting message at index {index}: {str(e)}"
             logger.error(error_msg)
             logger.error(f"Full traceback:\n{traceback.format_exc()}")
             logger.error(f"Problem message: {message}")
-            objects_for_client.extend(format_error_object("parsing_message_error", "Failed to format message", message))
+            objects_for_client.extend(formatErrorObject("parsing_message_error", "Failed to format message", message))
             parsing_errors.append(error_msg)
 
     return objects_for_client, parsing_errors
