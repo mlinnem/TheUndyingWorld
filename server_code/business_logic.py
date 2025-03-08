@@ -155,7 +155,7 @@ def create_conversation_from_seed(seed_id):
 
 
 
-def update_conversation_cache_points_2(conversation):
+def updateConversationCachPoints(conversation):
     log_with_category(LogCategory.CACHING, logging.DEBUG, f"Updating cache points for conversation {conversation['conversation_id']}")
     log_with_category(LogCategory.CACHING, logging.DEBUG, f"Current permanent_cache_index: {conversation.get('permanent_cache_index')}")
     log_with_category(LogCategory.CACHING, logging.DEBUG, f"Current dynamic_cache_index: {conversation.get('dynamic_cache_index')}")
@@ -207,7 +207,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
         
         # Update cache points after boot sequence is complete
         log_with_category([LogCategory.WORLD_GEN, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "Boot sequence completed, updating cache points")
-        conversation = update_conversation_cache_points_2(conversation)
+        conversation = updateConversationCachPoints(conversation)
         
         log_with_category([LogCategory.WORLD_GEN, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "Boot sequence and cache point setup completed successfully")
         log_with_category([LogCategory.WORLD_GEN, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.INFO, "World generation sequence completed successfully")
@@ -279,11 +279,11 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
         if usage_data['total_input_tokens'] >= MAX_TOTAL_INPUT_TOKENS:
             log_with_category([LogCategory.SUMMARIZATION, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.INFO, "Identified need to summarize conversation with GM, because total input tokens are at " + str(usage_data['total_input_tokens']) + " (max is " + str(MAX_TOTAL_INPUT_TOKENS) + ")")
             log_with_category([LogCategory.SUMMARIZATION, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "...Identified need to summarize conversation with GM...")
-            conversation = summarize_with_gm_2(conversation)
+            conversation = summarizeWithGM(conversation)
             log_with_category([LogCategory.SUMMARIZATION, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "...Summarization produced (not yet saved)...")
-            update_conversation_cache_points_2(conversation)
+            updateConversationCachPoints(conversation)
         elif usage_data['uncached_input_tokens'] >= MAX_UNCACHED_INPUT_TOKENS:
-            conversation = update_conversation_cache_points_2(conversation)
+            conversation = updateConversationCachPoints(conversation)
 
         conversation['game_has_begun'] = True
         conversation['game_has_begun_date'] = datetime.now().isoformat()

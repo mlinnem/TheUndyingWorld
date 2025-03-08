@@ -226,7 +226,7 @@ def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cac
 
     return response_json, usage_data
 
-def summarize_with_gm_2(conversation):
+def summarizeWithGM(conversation):
     log_with_category(LogCategory.SUMMARIZATION, logging.INFO, f"Starting summarization for conversation {conversation['conversation_id']}")
     
     permanent_cache_index = conversation.get('permanent_cache_index')
