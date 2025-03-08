@@ -45,7 +45,7 @@ with open(tools_path, 'r') as file:
     tools = json.load(file)
 
 
-def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cache_index=None, dynamic_cache_index=None):
+def getCoachingMessage(messages, system_prompt, temperature=0.4, permanent_cache_index=None, dynamic_cache_index=None):
     # Convert messages into a single string
     messages_string = "The following is the last few messages between a player and the GM of the game. This is the subject that you are expected to provided coaching around. This conversation data is provided to you as a single message from an apparent user, but in its original form it is a conventional sequence of messages back and forth between a player and the GM of the game (with other messages including tool use and results, and the like.) The following is the content of those messages: \n\n\n\n"
 
@@ -110,7 +110,7 @@ def get_coaching_message(messages, system_prompt, temperature=0.4, permanent_cac
         
     return response_json, usage_data
 
-def get_next_gm_response(messages, system_prompt, temperature=0.7, permanent_cache_index=None, dynamic_cache_index=None):
+def getNextGMResponse(messages, system_prompt, temperature=0.7, permanent_cache_index=None, dynamic_cache_index=None):
     # Add debug logging for most recent user message
     for msg in reversed(messages):
         if msg['role'] == 'user':
@@ -412,39 +412,6 @@ def format_message_content(content):
             formatted_parts.append(f"[Unknown content type: {item['type']}]")
     
     return " ".join(formatted_parts)
-
-def log_conversation_messages(messages):
-    """Log conversation messages to a file with timestamp."""
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    log_dir = "conversation_logs"
-    
-    # Create logs directory if it doesn't exist
-    if not os.path.exists(log_dir):
-        os.makedirs(log_dir)
-        
-    log_file = os.path.join(log_dir, "conversation_logs.txt")
-    
-    with open(log_file, "a", encoding='utf-8') as f:
-        f.write(f"\n\n=== Conversation Log {timestamp} ===\n")
-        for msg in messages:
-            role = msg['role']
-            
-            # Handle different message content types
-            if isinstance(msg['content'], list):
-                # Process each content item
-                for content_item in msg['content']:
-                    logger.debug(f"Processing content item: {content_item}")
-                    if content_item['type'] == 'text':
-                        f.write(f"\n{role.upper()}: {content_item['text']}\n")
-                    elif content_item['type'] == 'tool_use':
-                        f.write(f"\n{role.upper()} TOOL REQUEST: {content_item['name']}\n")
-                    elif content_item['type'] == 'tool_result':
-                        f.write(f"\n{role.upper()} TOOL RESULT: {content_item['content']}\n")
-            else:
-                # Handle legacy format
-                f.write(f"\n{role.upper()}: {msg['content']}\n")
-                
-        f.write("\n" + "="*50)
 
 def _process_response(response):
     logger.debug(f"response.usage: {response.usage}")

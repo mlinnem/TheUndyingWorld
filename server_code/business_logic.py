@@ -225,7 +225,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
         conversation['messages'].append(user_message)
         
         # Get and save gm response with timestamp
-        gm_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.5, permanent_cache_index=conversation.get('permanent_cache_index', None), dynamic_cache_index=conversation.get('dynamic_cache_index', None))
+        gm_response_json, usage_data = getNextGMResponse(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.5, permanent_cache_index=conversation.get('permanent_cache_index', None), dynamic_cache_index=conversation.get('dynamic_cache_index', None))
         gm_response_json['timestamp'] = datetime.now().isoformat()
         conversation['messages'].append(gm_response_json)
         new_messages = [gm_response_json]
@@ -239,7 +239,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
             new_messages.append(tool_result_json)
 
             # Get and save gm response to tool result with timestamp
-            tool_use_response_json, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.8, permanent_cache_index=conversation.get('permanent_cache_index', None), dynamic_cache_index=conversation.get('dynamic_cache_index', None))
+            tool_use_response_json, usage_data = getNextGMResponse(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.8, permanent_cache_index=conversation.get('permanent_cache_index', None), dynamic_cache_index=conversation.get('dynamic_cache_index', None))
             tool_use_response_json['timestamp'] = datetime.now().isoformat()
             conversation['messages'].append(tool_use_response_json)
             new_messages.append(tool_use_response_json)
@@ -263,7 +263,7 @@ def advance_conversation(user_message, conversation, should_create_generated_plo
                 log_with_category([LogCategory.COACHING, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, "post boot messages found")
                 log_with_category([LogCategory.COACHING, LogCategory.ADVANCE_CONVERSATION_LOGIC], logging.DEBUG, f"Getting coaching feedback on {len(post_boot_messages)} messages since boot")
                 messages_to_coach = post_boot_messages[-10:] if len(post_boot_messages) > 10 else post_boot_messages
-                coaching_response, _ = get_coaching_message(
+                coaching_response, _ = getCoachingMessage(
                     messages_to_coach, 
                     conversation['coaching_system_prompt'],
                     temperature=0.4 
@@ -319,7 +319,7 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
                 dynamic_cache_index = (len(temp_conversation['messages']) -1) - (len(temp_conversation['messages']) % 8)
                 permanent_cache_index = (len(temp_conversation['messages']) -1) - (len(temp_conversation['messages']) % 24)
                 
-                gm_response, usage_data = get_next_gm_response(temp_conversation['messages'],temp_conversation['game_setup_system_prompt'], temperature=0.84, dynamic_cache_index=dynamic_cache_index, permanent_cache_index=permanent_cache_index)
+                gm_response, usage_data = getNextGMResponse(temp_conversation['messages'],temp_conversation['game_setup_system_prompt'], temperature=0.84, dynamic_cache_index=dynamic_cache_index, permanent_cache_index=permanent_cache_index)
 
                 gm_response['timestamp'] = datetime.now().isoformat()
                 temp_conversation['messages'].append(gm_response)
@@ -347,7 +347,7 @@ def create_dynamic_world_gen_data_messages(existing_messages, game_setup_system_
                     tool_result['timestamp'] = datetime.now().isoformat()
                     temp_conversation['messages'].append(tool_result)
                     
-                    tool_response, _ = get_next_gm_response(temp_conversation['messages'], game_setup_system_prompt, temperature=0.8)
+                    tool_response, _ = getNextGMResponse(temp_conversation['messages'], game_setup_system_prompt, temperature=0.8)
                     tool_response['timestamp'] = datetime.now().isoformat()
                     temp_conversation['messages'].append(tool_response)     
                     
@@ -419,7 +419,7 @@ def execute_final_startup_instruction(conversation: Dict):
         conversation['messages'].append(user_message)
         
         # Get GM response with timestamp
-        gm_response, usage_data = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.7)
+        gm_response, usage_data = getNextGMResponse(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.7)
         gm_response['timestamp'] = datetime.now().isoformat()
         conversation['messages'].append(gm_response)
         new_messages = [gm_response]
@@ -432,7 +432,7 @@ def execute_final_startup_instruction(conversation: Dict):
             conversation['messages'].append(tool_result)
             new_messages.append(tool_result)
             
-            tool_response, _ = get_next_gm_response(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.7)
+            tool_response, _ = getNextGMResponse(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.7)
             tool_response['timestamp'] = datetime.now().isoformat()
             conversation['messages'].append(tool_response)
             new_messages.append(tool_response)
