@@ -1,6 +1,6 @@
 import os
-
-from datetime import datetime
+import datetime
+from datetime import datetime as dt
 from .config import *
 from .persistence import *
 from .route_utils import *
@@ -45,7 +45,7 @@ def getGameSeedListings():
 
 def saveConversation(conversation):
     log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, f"Saving conversation {conversation['conversation_id']}")
-    conversation['last_updated'] = datetime.now().isoformat()
+    conversation['last_updated'] = dt.now().isoformat()
     conversation['message_count'] = len(conversation['messages'])
     write_conversation(conversation)
 
@@ -69,7 +69,7 @@ def getConversationListings():
     return sorted(conversation_listings, key=lambda x: x['last_updated'], reverse=True)
 
 def generateConversationID():
-    return datetime.now().strftime("%Y%m%d%H%M%S")
+    return dt.now().strftime("%Y%m%d%H%M%S")
 
 def createNewConversationFromScratch():
     log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "Creating new conversation from scratch")
@@ -77,18 +77,18 @@ def createNewConversationFromScratch():
     conversation_id = generateConversationID()
     conversation = {
         'conversation_id': conversation_id,
-        'name': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'name': dt.now().strftime("%Y-%m-%d %H:%M:%S"),
         'messages': [],
-        'last_updated': datetime.now().isoformat(),
-        'created_at': datetime.now().isoformat(),
+        'last_updated': dt.now().isoformat(),
+        'created_at': dt.now().isoformat(),
         'cache_points': [],
         'game_has_begun': False,
         'gameplay_system_prompt': get_gameplay_system_prompt(),
-        'gameplay_system_prompt_date' : datetime.now().isoformat(),
+        'gameplay_system_prompt_date' : dt.now().isoformat(),
         'game_setup_system_prompt': get_game_setup_system_prompt(),
-        'game_setup_system_prompt_date' : datetime.now().isoformat(),
+        'game_setup_system_prompt_date' : dt.now().isoformat(),
         'summarizer_system_prompt': get_summarizer_system_prompt(),
-        'summarizer_system_prompt_date' : datetime.now().isoformat(),
+        'summarizer_system_prompt_date' : dt.now().isoformat(),
     }
 
     log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, f"Created conversation with ID: {conversation['conversation_id']}")
@@ -120,7 +120,7 @@ def createConversationFromSeed(seed_id):
     
     conversation_id = generateConversationID()
     # Create short date string for conversation name
-    short_date = datetime.now().strftime("%b %d")
+    short_date = dt.now().strftime("%b %d")
 
     conversation = {
         'conversation_id': conversation_id,
@@ -128,8 +128,8 @@ def createConversationFromSeed(seed_id):
         'location': seed['location'],
         'messages': seed['messages'],
         'boot_sequence_end_index': seed.get('boot_sequence_end_index', None),
-        'last_updated': datetime.now().isoformat(),
-        'created_at': datetime.now().isoformat(),
+        'last_updated': dt.now().isoformat(),
+        'created_at': dt.now().isoformat(),
         'cache_points': [],
         'intro_blurb': seed['intro_blurb'],
         'intro_blurb_date': seed['intro_blurb_date'],
@@ -221,12 +221,12 @@ def advanceConversation(user_message, conversation, should_create_generated_plot
         log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, f"Received user message: {preview(user_message, 500)}")
         
         # Add timestamp to user message
-        user_message['timestamp'] = datetime.now().isoformat()
+        user_message['timestamp'] = dt.now().isoformat()
         conversation['messages'].append(user_message)
         
         # Get and save gm response with timestamp
         gm_response_json, usage_data = getNextGMResponse(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.5, permanent_cache_index=conversation.get('permanent_cache_index', None), dynamic_cache_index=conversation.get('dynamic_cache_index', None))
-        gm_response_json['timestamp'] = datetime.now().isoformat()
+        gm_response_json['timestamp'] = dt.now().isoformat()
         conversation['messages'].append(gm_response_json)
         new_messages = [gm_response_json]
 
@@ -234,13 +234,13 @@ def advanceConversation(user_message, conversation, should_create_generated_plot
             log_with_category(LogCategory.ADVANCE_CONVERSATION_LOGIC, logging.DEBUG, "tool use request detected")
             # Generate and save tool result with timestamp
             tool_result_json = generate_tool_result(gm_response_json)
-            tool_result_json['timestamp'] = datetime.now().isoformat()
+            tool_result_json['timestamp'] = dt.now().isoformat()
             conversation['messages'].append(tool_result_json)
             new_messages.append(tool_result_json)
 
             # Get and save gm response to tool result with timestamp
             tool_use_response_json, usage_data = getNextGMResponse(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.8, permanent_cache_index=conversation.get('permanent_cache_index', None), dynamic_cache_index=conversation.get('dynamic_cache_index', None))
-            tool_use_response_json['timestamp'] = datetime.now().isoformat()
+            tool_use_response_json['timestamp'] = dt.now().isoformat()
             conversation['messages'].append(tool_use_response_json)
             new_messages.append(tool_use_response_json)
         else:
@@ -286,7 +286,7 @@ def advanceConversation(user_message, conversation, should_create_generated_plot
             conversation = updateConversationCachePoints(conversation)
 
         conversation['game_has_begun'] = True
-        conversation['game_has_begun_date'] = datetime.now().isoformat()
+        conversation['game_has_begun_date'] = dt.now().isoformat()
 
         return conversation, new_messages
 
@@ -313,7 +313,7 @@ def createDynamicWorldGenDataMessages(existing_messages, game_setup_system_promp
                 log_with_category(LogCategory.WORLD_GEN, logging.INFO, f"Processing boot sequence instruction {i+1}/{len(world_gen_instructions_w_omit_data)}")
                 # Convert and add user message with timestamp
                 world_gen_instruction = convert_user_text_to_message(world_gen_instruction_w_omit_data['text'])
-                world_gen_instruction['timestamp'] = datetime.now().isoformat()
+                world_gen_instruction['timestamp'] = dt.now().isoformat()
                 temp_conversation['messages'].append(world_gen_instruction)
                 
                 dynamic_cache_index = (len(temp_conversation['messages']) -1) - (len(temp_conversation['messages']) % 8)
@@ -321,7 +321,7 @@ def createDynamicWorldGenDataMessages(existing_messages, game_setup_system_promp
                 
                 gm_response, usage_data = getNextGMResponse(temp_conversation['messages'],temp_conversation['game_setup_system_prompt'], temperature=0.84, dynamic_cache_index=dynamic_cache_index, permanent_cache_index=permanent_cache_index)
 
-                gm_response['timestamp'] = datetime.now().isoformat()
+                gm_response['timestamp'] = dt.now().isoformat()
                 temp_conversation['messages'].append(gm_response)
 
                 
@@ -344,11 +344,11 @@ def createDynamicWorldGenDataMessages(existing_messages, game_setup_system_promp
                     logger.debug("Tool use requested during boot sequence")  
                     tool_result = generate_tool_result(gm_response)
                     logger.debug(f"Tool result: {tool_result}")
-                    tool_result['timestamp'] = datetime.now().isoformat()
+                    tool_result['timestamp'] = dt.now().isoformat()
                     temp_conversation['messages'].append(tool_result)
                     
                     tool_response, _ = getNextGMResponse(temp_conversation['messages'], game_setup_system_prompt, temperature=0.8)
-                    tool_response['timestamp'] = datetime.now().isoformat()
+                    tool_response['timestamp'] = dt.now().isoformat()
                     temp_conversation['messages'].append(tool_response)     
                     
                     if i == len(world_gen_instructions_w_omit_data) - 1:
@@ -379,18 +379,18 @@ def createDynamicWorldGenDataMessages(existing_messages, game_setup_system_promp
             'conversation_id': generateConversationID(),
             'messages': final_messages,
             'location': "Custom World",  # Use first line as location
-            'description': "This is a custom world created by the player at " + datetime.now().isoformat(),
+            'description': "This is a custom world created by the player at " + dt.now().isoformat(),
             'boot_sequence_end_index': boot_sequence_end_index,
-            'created_at': datetime.now().isoformat(),
-            'last_updated': datetime.now().isoformat(),
+            'created_at': dt.now().isoformat(),
+            'last_updated': dt.now().isoformat(),
             'intro_blurb': get_intro_blurb_string(),
-            'intro_blurb_date': datetime.now().isoformat(),
+            'intro_blurb_date': dt.now().isoformat(),
             'gameplay_system_prompt': get_gameplay_system_prompt(),
-            'gameplay_system_prompt_date': datetime.now().isoformat(),
+            'gameplay_system_prompt_date': dt.now().isoformat(),
             'game_setup_system_prompt': game_setup_system_prompt,
-            'game_setup_system_prompt_date': datetime.now().isoformat(),
+            'game_setup_system_prompt_date': dt.now().isoformat(),
             'summarizer_system_prompt': get_summarizer_system_prompt(),
-            'summarizer_system_prompt_date': datetime.now().isoformat(),
+            'summarizer_system_prompt_date': dt.now().isoformat(),
             'game_has_begun': False
         }
         
@@ -415,12 +415,12 @@ def executeFinalStartupInstruction(conversation: Dict):
         
         # Convert the instruction to a user message with timestamp
         user_message = convert_user_text_to_message(final_instruction)
-        user_message['timestamp'] = datetime.now().isoformat()
+        user_message['timestamp'] = dt.now().isoformat()
         conversation['messages'].append(user_message)
         
         # Get GM response with timestamp
         gm_response, usage_data = getNextGMResponse(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.7)
-        gm_response['timestamp'] = datetime.now().isoformat()
+        gm_response['timestamp'] = dt.now().isoformat()
         conversation['messages'].append(gm_response)
         new_messages = [gm_response]
         
@@ -428,12 +428,12 @@ def executeFinalStartupInstruction(conversation: Dict):
         if isToolUseRequest(gm_response):
             logger.debug("Tool use requested during final startup instruction")
             tool_result = generate_tool_result(gm_response)
-            tool_result['timestamp'] = datetime.now().isoformat()
+            tool_result['timestamp'] = dt.now().isoformat()
             conversation['messages'].append(tool_result)
             new_messages.append(tool_result)
             
             tool_response, _ = getNextGMResponse(conversation['messages'], conversation['gameplay_system_prompt'], temperature=0.7)
-            tool_response['timestamp'] = datetime.now().isoformat()
+            tool_response['timestamp'] = dt.now().isoformat()
             conversation['messages'].append(tool_response)
             new_messages.append(tool_response)
         
