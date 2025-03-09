@@ -1,9 +1,6 @@
-from flask import jsonify, session
-
-
+from flask import session
 import json
 import traceback
-from .persistence import *
 
 import logging
 logger = logging.getLogger(__name__)
@@ -13,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 # TODO: This is a bit messy, and could be cleaned up.
 
-def _formatUserMessage(user_message):
+def _format_user_message(user_message):
     user_block = user_message['content'][0]['text']
 
     return [{
@@ -22,7 +19,7 @@ def _formatUserMessage(user_message):
         "user_message": user_block
     }]
 
-def _formatAnalysis(analysis_message):
+def _format_analysis(analysis_message):
     analysis_block = analysis_message['content'][0]['text']
     analysis_sections = analysis_block.split('#')[1:]
 
@@ -34,32 +31,36 @@ def _formatAnalysis(analysis_message):
         analysis_type = analysis.split("\n")[0].strip().lower()
         analysis_content = "\n".join(analysis.split("\n")[1:])
 
-        analysis_value_string = analysis_sections[i + 1].split('\n')[1].strip()
-        if "difficulty" in analysis_type:
-            analysis_value = int(analysis_value_string)
+        # Check if there's a paired section before accessing it
+        if i + 1 < len(analysis_sections):
+            analysis_value_string = analysis_sections[i + 1].split('\n')[1].strip()
+            if "difficulty" in analysis_type:
+                analysis_value = int(analysis_value_string)
 
-            analysis_object = {
-                "source": "llm",
-                "type": "difficulty_analysis",
-                "difficulty_analysis": analysis_content,
-                "difficulty_target": analysis_value
-            }
-            analysis_objects.append(analysis_object)
-        elif "world" in analysis_type:
-            analysis_value = analysis_value_string
-            analysis_object = {
-                "source": "llm",
-                "type": "world_analysis",
-                "world_analysis": analysis_content,
-                "world_level": analysis_value
-            }
-            analysis_objects.append(analysis_object)
+                analysis_object = {
+                    "source": "llm",
+                    "type": "difficulty_analysis",
+                    "difficulty_analysis": analysis_content,
+                    "difficulty_target": analysis_value
+                }
+                analysis_objects.append(analysis_object)
+            elif "world" in analysis_type:
+                analysis_value = analysis_value_string
+                analysis_object = {
+                    "source": "llm",
+                    "type": "world_analysis",
+                    "world_analysis": analysis_content,
+                    "world_level": analysis_value
+                }
+                analysis_objects.append(analysis_object)
+            else:
+                logger.error(f"Unknown analysis type: {analysis_type}")
         else:
-            logger.error(f"Unknown analysis type: {analysis_type}")
+            logger.error(f"Missing paired section for analysis type: {analysis_type}")
 
     return analysis_objects
 
-def _formatRolls(roll_message):
+def _format_rolls(roll_message):
     logger.debug(f"Formatting rolls: {roll_message}")
     roll_block = roll_message['content'][0]['content']
     logger.debug(f"roll_block: {roll_block}")
@@ -69,26 +70,30 @@ def _formatRolls(roll_message):
     roll_objects = []
     for roll_section in roll_sections:
         logger.debug(f"roll_section: {roll_section}")
-        if _header_contains(roll_section, ['difficulty', 'skill']):
-            roll_object = {
-                "source": "server",
-                "type": "difficulty_roll",
-                "difficulty_roll": int(roll_section.split('\n')[1].strip())
-            }
-            roll_objects.append(roll_object)
-        elif _header_contains(roll_section, ['world', 'reveal']):
-            roll_object = {
-                "source": "server",
-                "type": "world_roll",
-                "world_roll": int(roll_section.split('\n')[1].strip())
-            }
-            roll_objects.append(roll_object)
-        else:
-            logger.error(f"Unknown roll message: {roll_section}")
-            # Don't add this to the roll_messages
+        try:
+            if _header_contains(roll_section, ['difficulty', 'skill']):
+                roll_object = {
+                    "source": "server",
+                    "type": "difficulty_roll",
+                    "difficulty_roll": int(roll_section.split('\n')[1].strip())
+                }
+                roll_objects.append(roll_object)
+            elif _header_contains(roll_section, ['world', 'reveal']):
+                roll_object = {
+                    "source": "server",
+                    "type": "world_roll",
+                    "world_roll": int(roll_section.split('\n')[1].strip())
+                }
+                roll_objects.append(roll_object)
+            else:
+                logger.error(f"Unknown roll message: {roll_section}")
+                # Don't add this to the roll_messages
+        except Exception as e:
+            logger.error(f"Error processing roll section: {str(e)}")
+            logger.error(f"Problematic roll section: {roll_section}")
     return roll_objects
 
-def _formatResult(result_message):
+def _format_result(result_message):
     # Check if the message has the expected structure
     if not result_message.get('content') or not result_message['content'][0].get('text'):
         logger.error("Result message missing expected content structure")
@@ -137,9 +142,9 @@ def _formatResult(result_message):
 
 
 # TODO: Make this and related functions smarter about map, quadrants, zones, etc.
-def _formatWorldGenData(world_gen_data_message):
+def _format_world_gen_data(world_gen_data_message):
     world_gen_data_block = world_gen_data_message['content'][0]['text']
-    data = _allButHeader(world_gen_data_block)
+    data = _all_but_header(world_gen_data_block)
     
     return [{
         "source": "llm",
@@ -147,13 +152,13 @@ def _formatWorldGenData(world_gen_data_message):
         "world_gen_data": data
     }]
 
-def _formatOOCMessage(ooc_message):
+def _format_ooc_message(ooc_message):
     ooc_block = ooc_message['content'][0]['text']
     if "#" in ooc_block:
         # Split by '#' and take sections after the first '#'
         sections = ooc_block.split('#')[1:]
         # For each section, remove the first line (header) and join remaining lines
-        text = _allButHeader(sections[0])
+        text = _all_but_header(sections[0])
     else:
         text = ooc_block
 
@@ -163,10 +168,10 @@ def _formatOOCMessage(ooc_message):
         "ooc_message": text
     }]
 
-def _allButHeader(text):
+def _all_but_header(text):
     return '\n'.join(text.split('\n')[1:])
 
-def formatErrorObject(error_type, error_message, original_message=None):
+def format_error_object(error_type, error_message, original_message=None):
     return [{
         "source": "server",
         "type": "error",
@@ -175,7 +180,7 @@ def formatErrorObject(error_type, error_message, original_message=None):
         "original_message": original_message
     }]
 
-def _splitMessageSections(text):
+def _split_message_sections(text):
     """Split a message into sections based on # headers, preserving any text before the first #"""
     parts = text.split('#')
     sections = []
@@ -205,7 +210,7 @@ def _is_begin_game(message):
 
 def _format_begin_game(message):
     begin_game_block = message['content'][0]['text']
-    text = _allButHeader(begin_game_block)
+    text = _all_but_header(begin_game_block)
     
     return [{
         "source": "llm",
@@ -221,37 +226,37 @@ def produce_conversation_objects_for_client(messages):
         try:
             if _is_user_message(message):
                 logger.debug(f"Formatting user message: {message}")
-                objects_for_client.extend(_formatUserMessage(message))
+                objects_for_client.extend(_format_user_message(message))
             elif _is_begin_game(message):
                 logger.debug(f"Formatting begin game message: {message}")
                 objects_for_client.extend(_format_begin_game(message))
             elif _is_analysis(message):
                 logger.debug(f"Formatting analysis: {message}")
-                objects_for_client.extend(_formatAnalysis(message))
+                objects_for_client.extend(_format_analysis(message))
             elif _is_rolls(message):
                 logger.debug(f"Formatting rolls: {message}")
-                objects_for_client.extend(_formatRolls(message))
+                objects_for_client.extend(_format_rolls(message))
             elif _is_result(message):
                 logger.debug(f"Formatting result: {message}")
-                objects_for_client.extend(_formatResult(message))
-            elif is_world_gen_data(message):
+                objects_for_client.extend(_format_result(message))
+            elif _is_world_gen_data(message):
                 logger.debug(f"Formatting world gen data: {message}")
-                objects_for_client.extend(_formatWorldGenData(message))
+                objects_for_client.extend(_format_world_gen_data(message))
             elif _is_ooc_message(message):
                 logger.debug(f"Formatting OOC message: {message}")
-                objects_for_client.extend(_formatOOCMessage(message))
+                objects_for_client.extend(_format_ooc_message(message))
             else:
                 error_msg = f"Unable to identify a block type for message: {message}"
                 logger.error(error_msg)
                 logger.error(f"Full traceback:\n{traceback.format_exc()}")
-                objects_for_client.extend(formatErrorObject("parsing_message_error", error_msg))
+                objects_for_client.extend(format_error_object("parsing_message_error", error_msg))
                 parsing_errors.append(f"Message of unknown type at index {index}: {error_msg}")
         except Exception as e:
             error_msg = f"Error formatting message at index {index}: {str(e)}"
             logger.error(error_msg)
             logger.error(f"Full traceback:\n{traceback.format_exc()}")
             logger.error(f"Problem message: {message}")
-            objects_for_client.extend(formatErrorObject("parsing_message_error", "Failed to format message", message))
+            objects_for_client.extend(format_error_object("parsing_message_error", "Failed to format message", message))
             parsing_errors.append(error_msg)
 
     return objects_for_client, parsing_errors
@@ -314,7 +319,7 @@ def _is_ooc_message(message):
                 return True
     return False
 
-def is_world_gen_data(message):
+def _is_world_gen_data(message):
     logger.debug(f"Checking if message is map data: {message}")
     if message['role'] == 'assistant':
         if message['content'][0]['type'] == 'text':
