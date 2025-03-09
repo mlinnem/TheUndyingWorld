@@ -1,6 +1,15 @@
 from flask import session
 import json
 import traceback
+import datetime
+from typing import Dict, List, Optional, Any, Union, Tuple
+from pydantic import ValidationError
+
+from .message_models import (
+    UserMessage, AssistantMessage, ErrorMessage, 
+    TextContent, ToolUseContent, ToolResultContent,
+    create_user_message, create_error_message, base_message_to_client_format
+)
 
 import logging
 logger = logging.getLogger(__name__)
@@ -10,14 +19,65 @@ logger = logging.getLogger(__name__)
 
 # TODO: This is a bit messy, and could be cleaned up.
 
-def _format_user_message(user_message):
-    user_block = user_message['content'][0]['text']
-
-    return [{
-        "source": "client",
-        "type": "user_message",
-        "user_message": user_block
-    }]
+def _format_user_message(user_message: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """
+    Formats a user message into a standardized structure using the Pydantic models.
+    
+    Args:
+        user_message (Dict): The user message to format
+        
+    Returns:
+        List[Dict]: Formatted message object
+    """
+    try:
+        # Try to create a validated UserMessage using our model
+        if 'role' not in user_message:
+            user_message['role'] = 'user'  # Ensure role is set
+            
+        # Convert to our model for validation
+        validated_message = UserMessage.model_validate(user_message)
+        
+        # Get the text content
+        text_content = next((c for c in validated_message.content if c.type == "text"), None)
+        if not text_content:
+            raise ValueError("User message must contain text content")
+            
+        # Convert to client format
+        return [{
+            "source": "client",
+            "type": "user_message",
+            "user_message": text_content.text,
+            "timestamp": datetime.datetime.now().isoformat()
+        }]
+        
+    except (ValidationError, ValueError, StopIteration) as e:
+        logger.error(f"Error validating user message: {type(e).__name__}: {str(e)}")
+        logger.debug(f"Problematic message structure: {user_message}")
+        
+        # Try a more direct approach if the validation fails
+        try:
+            if isinstance(user_message, dict) and 'content' in user_message:
+                content = user_message['content']
+                if isinstance(content, list) and content and 'text' in content[0]:
+                    user_text = content[0]['text']
+                    logger.info(f"Recovered user message text using fallback method")
+                    
+                    return [{
+                        "source": "client",
+                        "type": "user_message",
+                        "user_message": user_text,
+                        "timestamp": datetime.datetime.now().isoformat()
+                    }]
+        except Exception as fallback_error:
+            logger.error(f"Fallback extraction also failed: {str(fallback_error)}")
+        
+        # Return an error object if all extraction methods fail
+        return format_error_object(
+            error_type="user_message_format_error",
+            error_message=f"Invalid user message format: {str(e)}",
+            original_message=user_message,
+            error_code="USER_MSG_FMT_001"
+        )
 
 def _format_analysis(analysis_message):
     analysis_block = analysis_message['content'][0]['text']
@@ -171,34 +231,50 @@ def _format_ooc_message(ooc_message):
 def _all_but_header(text):
     return '\n'.join(text.split('\n')[1:])
 
-def format_error_object(error_type, error_message, original_message=None):
-    return [{
-        "source": "server",
-        "type": "error",
-        "error_type": error_type,
-        "error_message": error_message,
-        "original_message": original_message
-    }]
-
-def _split_message_sections(text):
-    """Split a message into sections based on # headers, preserving any text before the first #"""
-    parts = text.split('#')
-    sections = []
+def format_error_object(error_type: str, error_message: str, 
+                     original_message: Optional[Any] = None, 
+                     error_context: Optional[Dict[str, Any]] = None, 
+                     error_code: Optional[str] = None) -> List[Dict[str, Any]]:
+    """
+    Creates a standardized error object for client consumption.
     
-    # If there's content before the first #, treat it as OOC
-    if parts[0].strip():
-        sections.append(('ooc', parts[0].strip()))
+    Args:
+        error_type (str): Category of error (e.g., 'parsing_error', 'validation_error')
+        error_message (str): Human-readable error description
+        original_message (dict, optional): The original message that caused the error
+        error_context (dict, optional): Additional context about where/why the error occurred
+        error_code (str, optional): Machine-readable error code for client handling
     
-    # Process the rest of the sections
-    for section in parts[1:]:
-        if not section.strip():
-            continue
-        lines = section.split('\n')
-        header = lines[0].strip().lower()
-        content = '\n'.join(lines[1:])
-        sections.append((header, content))
-    
-    return sections
+    Returns:
+        list: A list containing a single error object dictionary
+    """
+    try:
+        # Create a validated error message using our model
+        error_obj = create_error_message(
+            error_type=error_type,
+            error_message=error_message,
+            original_message=original_message,
+            error_context=error_context,
+            error_code=error_code
+        )
+        
+        # Convert to dictionary and return as a list to maintain compatibility
+        return [error_obj.model_dump(exclude_none=True)]
+        
+    except ValidationError as e:
+        # Log validation errors but still return something useful
+        logger.error(f"Error creating error object: {str(e)}")
+        
+        # Fall back to manual construction if validation fails
+        fallback_error = {
+            "source": "server",
+            "type": "error",
+            "error_type": "internal_error",
+            "error_message": f"Failed to create error object: {error_message}",
+            "timestamp": datetime.datetime.now().isoformat()
+        }
+        
+        return [fallback_error]
 
 def _is_begin_game(message):
     logger.debug(f"Checking if message is begin game: {message}")
@@ -218,67 +294,141 @@ def _format_begin_game(message):
         "begin_game_message": text
     }]
 
-def produce_conversation_objects_for_client(messages):
+def produce_conversation_objects_for_client(messages: List[Dict[str, Any]]) -> tuple[List[Dict[str, Any]], List[str]]:
+    """
+    Processes a list of messages and converts them to client-friendly objects.
+    
+    Args:
+        messages (List[Dict]): List of messages to process
+        
+    Returns:
+        Tuple[List[Dict], List[str]]: Processed objects and any parsing errors
+    """
     objects_for_client = []
     parsing_errors = []
+    
+    if not isinstance(messages, list):
+        error_msg = f"Expected messages to be a list, got {type(messages).__name__}"
+        logger.error(error_msg)
+        return format_error_object("invalid_input", error_msg, error_code="INVALID_MSGS_001"), [error_msg]
+    
     for index, message in enumerate(messages):
+        message_context = {"index": index, "message_type": message.get('role', 'unknown')}
         
         try:
+            # Log message type identification - but in debug mode to avoid log spam
+            logger.debug(f"Processing message at index {index}, role: {message.get('role')}")
+            
+            # Process the message based on its type
             if _is_user_message(message):
-                logger.debug(f"Formatting user message: {message}")
+                logger.debug(f"Identified as user message: {message}")
                 objects_for_client.extend(_format_user_message(message))
             elif _is_begin_game(message):
-                logger.debug(f"Formatting begin game message: {message}")
+                logger.debug(f"Identified as begin game message")
                 objects_for_client.extend(_format_begin_game(message))
             elif _is_analysis(message):
-                logger.debug(f"Formatting analysis: {message}")
+                logger.debug(f"Identified as analysis message")
                 objects_for_client.extend(_format_analysis(message))
             elif _is_rolls(message):
-                logger.debug(f"Formatting rolls: {message}")
+                logger.debug(f"Identified as rolls message")
                 objects_for_client.extend(_format_rolls(message))
             elif _is_result(message):
-                logger.debug(f"Formatting result: {message}")
+                logger.debug(f"Identified as result message")
                 objects_for_client.extend(_format_result(message))
             elif _is_world_gen_data(message):
-                logger.debug(f"Formatting world gen data: {message}")
+                logger.debug(f"Identified as world gen data message")
                 objects_for_client.extend(_format_world_gen_data(message))
             elif _is_ooc_message(message):
-                logger.debug(f"Formatting OOC message: {message}")
+                logger.debug(f"Identified as OOC message")
                 objects_for_client.extend(_format_ooc_message(message))
             else:
-                error_msg = f"Unable to identify a block type for message: {message}"
-                logger.error(error_msg)
-                logger.error(f"Full traceback:\n{traceback.format_exc()}")
-                objects_for_client.extend(format_error_object("parsing_message_error", error_msg))
-                parsing_errors.append(f"Message of unknown type at index {index}: {error_msg}")
+                # Unknown message type - capture detailed information
+                error_msg = f"Unable to identify message type at index {index}"
+                error_context = {
+                    "message_index": index,
+                    "role": message.get('role', 'unknown'),
+                    "content_type": (message.get('content', [{}])[0].get('type') 
+                                    if isinstance(message.get('content'), list) and message.get('content') 
+                                    else "unknown")
+                }
+                
+                logger.error(f"{error_msg}: {error_context}")
+                logger.error(f"Full message: {message}")
+                
+                objects_for_client.extend(format_error_object(
+                    error_type="unknown_message_type", 
+                    error_message=error_msg,
+                    original_message=message,
+                    error_context=error_context,
+                    error_code="UNKNOWN_MSG_001"
+                ))
+                parsing_errors.append(f"Message of unknown type at index {index}")
+                
         except Exception as e:
-            error_msg = f"Error formatting message at index {index}: {str(e)}"
-            logger.error(error_msg)
-            logger.error(f"Full traceback:\n{traceback.format_exc()}")
-            logger.error(f"Problem message: {message}")
-            objects_for_client.extend(format_error_object("parsing_message_error", "Failed to format message", message))
+            # Handle any errors that occurred during formatting
+            error_msg = f"Error processing message at index {index}: {str(e)}"
+            error_context = {
+                "message_index": index,
+                "error_type": type(e).__name__,
+                "message_role": message.get('role', 'unknown')
+            }
+            
+            logger.error(error_msg, exc_info=True)
+            logger.error(f"Problematic message: {message}")
+            
+            objects_for_client.extend(format_error_object(
+                error_type="message_processing_error", 
+                error_message=f"Failed to process message: {str(e)}",
+                original_message=message,
+                error_context=error_context,
+                error_code="PROCESS_ERROR_001"
+            ))
             parsing_errors.append(error_msg)
 
     return objects_for_client, parsing_errors
 
-def _is_user_message(message):
-    logger.debug(f"Checking if message is user: {message}")
+def _is_user_message(message: Dict[str, Any]) -> bool:
+    """
+    Determines if a message is a valid user message using our Pydantic model for validation.
+    
+    Args:
+        message: The message to check
+        
+    Returns:
+        bool: True if message is a valid user message, False otherwise
+    """
     try:
-        # Check if message is a dict and has required keys
-        if not isinstance(message, dict) or 'role' not in message or 'content' not in message:
+        # Only log at debug level to prevent log spam
+        logger.debug("Checking if message is user message")
+        
+        # Quick preliminary checks before trying Pydantic validation
+        if not isinstance(message, dict):
+            logger.debug("Message is not a dictionary")
             return False
             
-        # Check if content is a non-empty list
-        if not isinstance(message['content'], list) or not message['content']:
+        if 'role' not in message or message['role'] != 'user':
+            logger.debug(f"Message role is not 'user': {message.get('role')}")
             return False
             
-        # Check if first content item has required structure
-        if not isinstance(message['content'][0], dict) or 'type' not in message['content'][0]:
+        if 'content' not in message or not isinstance(message['content'], list) or not message['content']:
+            logger.debug("Message has invalid or missing content")
             return False
-            
-        return message['role'] == 'user' and message['content'][0]['type'] == 'text'
+        
+        # Try to validate with our Pydantic model
+        UserMessage.model_validate(message)
+        
+        # If we got here, validation passed
+        return True
+        
+    except ValidationError as e:
+        # Don't log the full error at ERROR level to prevent log spam
+        logger.debug(f"Message failed UserMessage validation: {str(e)}")
+        return False
+        
     except Exception as e:
-        logger.error(f"Error in _is_user_message: {str(e)}")
+        # Log other errors with the specific exception type for better debugging
+        logger.error(f"Error in _is_user_message: {type(e).__name__}: {str(e)}")
+        logger.debug(f"Problematic message structure: {message}")
         return False
 
 def _is_analysis(message):
